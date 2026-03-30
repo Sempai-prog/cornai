@@ -1,0 +1,30 @@
+name = "cornai-workers"
+main = "src/workers/index.ts"
+compatibility_date = "2024-12-01"
+
+[triggers]
+crons = [
+  "0 */6 * * *",   # Scraping toutes les 6 heures
+  "0 8 * * *",     # Digest quotidien à 8h
+  "0 9 * * 1",     # Rapport hebdo lundi 9h
+]
+
+[[kv_namespaces]]
+binding = "CORNAI_KV"
+id = ""
+
+[[r2_buckets]]
+binding = "CORNAI_R2"
+bucket_name = "cornai-docs"
+
+[[queues.producers]]
+binding = "PARSE_QUEUE"
+queue = "cornai-parse-queue"
+
+[[queues.consumers]]
+queue = "cornai-parse-queue"
+max_batch_size = 5
+max_retries = 3
+
+[vars]
+ENVIRONMENT = "production"
