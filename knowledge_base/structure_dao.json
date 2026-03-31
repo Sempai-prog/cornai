@@ -1,0 +1,117 @@
+//L'analyse transversale des Dossiers Types d'Appel d'Offres (DTAO) fournis (Fournitures, Travaux, Services, Systèmes d'Information, Assurances, etc.) révèle que l'architecture des DAO camerounais est hautement standardisée. Notre IA (Sous-module 41.3) peut s'appuyer sur cette arborescence fixe pour extraire dynamiquement les informations clés.
+
+{
+  "structure_dao_universelle": {
+    "partie_1_avis_ao": {
+      "nom_standard": "Avis d'Appel d'Offres (AAO)",
+      "contenu": "Résumé officiel de l'Appel d'Offres tel que publié par voie d'affichage, dans les journaux ou en ligne.",
+      "infos_a_extraire": [
+        "objet_du_marche",
+        "maitre_ouvrage",
+        "cout_previsionnel",
+        "delai_execution_ou_livraison",
+        "montant_caution_soumission",
+        "date_et_heure_limite_depot",
+        "lieu_depot"
+      ],
+      "present_dans": "100% des DAO",
+      "variations": "Peut être en français et en anglais (bilingue) [1, 2].",
+      "exemple": "« Toutes les soumissions doivent être accompagnées d’une caution de soumission de [montant]... et doivent être remises à [adresse] au plus tard à [heure] le [date] » [3, 4]."
+    },
+    "partie_2_rgao": {
+      "nom_standard": "Règlement Général de l'Appel d'Offres (RGAO) - Généralement Pièce n°2 ou 3",
+      "contenu": "Règles générales et standardisées régissant la procédure de passation. Document type verrouillé par la réglementation.",
+      "infos_a_extraire": [
+        "Aucune extraction dynamique requise par l'IA (texte statique)"
+      ],
+      "present_dans": "100% des DAO",
+      "variations": "Aucune variation autorisée.",
+      "exemple": "« Cette pièce contient des articles types à ne pas modifier » [1, 5]."
+    },
+    "partie_3_rpao": {
+      "nom_standard": "Règlement Particulier de l'Appel d'Offres (RPAO) - Généralement Pièce n°3 ou 4",
+      "contenu": "Document crucial adaptant le RGAO aux spécificités du marché en cours. C'est le cœur de l'évaluation.",
+      "sous_sections": {
+        "criteres_eliminatoires": {
+          "contenu": "Conditions minimales requises entraînant le rejet de l'offre si non respectées [6].",
+          "infos_a_extraire": ["liste_pieces_obligatoires", "seuil_technique_minimum", "fichiers_numeriques_exiges"]
+        },
+        "criteres_essentiels": {
+          "contenu": "Grille de notation ou d'évaluation (binaire ou par points) [7].",
+          "infos_a_extraire": ["profil_personnel_cle", "materiel_requis", "references_exigees", "capacite_financiere"]
+        },
+        "modalites_depot": {
+          "contenu": "Règles de présentation des plis (physique vs COLEPS) [8, 9].",
+          "infos_a_extraire": ["nombre_copies", "format_fichiers_coleps", "mentions_enveloppe"]
+        }
+      },
+      "present_dans": "100% des DAO",
+      "exemple": "« La pièce n°3 a pour objet d’aider le Maître d’Ouvrage... à fournir les informations spécifiques correspondant aux articles du RGAO » [10, 11]."
+    },
+    "partie_4_ccap": {
+      "nom_standard": "Cahier des Clauses Administratives Particulières (CCAP)",
+      "contenu": "Conditions juridiques, financières et administratives d'exécution du futur contrat.",
+      "sous_sections": {
+        "execution_et_delais": {
+          "infos_a_extraire": ["delai_global", "planning_livraison"]
+        },
+        "paiements": {
+          "infos_a_extraire": ["avance_demarrage", "frequence_decomptes", "retenue_garantie", "domiciliation_bancaire"]
+        },
+        "penalites": {
+          "infos_a_extraire": ["taux_penalite_retard", "plafond_penalites"]
+        }
+      },
+      "present_dans": "100% des DAO",
+      "exemple": "« Indépendamment des pénalités pour dépassement du délai contractuel, le cocontractant est passible des pénalités particulières suivantes... » [12, 13]."
+    },
+    "partie_5_cctp_tdr": {
+      "nom_standard": "Spécifications Techniques (CCTP) ou Termes de Référence (TDR)",
+      "contenu": "Description détaillée du besoin, des prestations attendues ou des travaux à réaliser.",
+      "variations": "CCTP (Cahier des Clauses Techniques Particulières) pour Travaux et Fournitures ; TDR pour Services et Prestations Intellectuelles [14-16].",
+      "infos_a_extraire": [
+        "normes_exigees",
+        "plans",
+        "liste_livrables",
+        "profil_experts_demandes"
+      ],
+      "present_dans": "100% des DAO",
+      "exemple": "« Plan de travail et méthodologie proposés en rapport avec les Termes de référence » [14]."
+    },
+    "partie_6_offre_financiere": {
+      "nom_standard": "Volume 3 : Offre Financière (BPU / DQE / SDP)",
+      "contenu": "Cadres de bordereaux à remplir par le soumissionnaire pour justifier son prix.",
+      "sous_sections": {
+        "lettre_soumission": {
+          "infos_a_extraire": ["modele_lettre_soumission"]
+        },
+        "bpu": {
+          "nom": "Bordereau des Prix Unitaires",
+          "infos_a_extraire": ["liste_prix_a_renseigner"]
+        },
+        "dqe": {
+          "nom": "Détail Quantitatif et Estimatif",
+          "infos_a_extraire": ["quantites", "totaux"]
+        },
+        "sdp": {
+          "nom": "Sous-Détail des Prix",
+          "infos_a_extraire": ["decompositions_prix"]
+        }
+      },
+      "present_dans": "100% des DAO",
+      "exemple": "« Le RPAO précise les éléments permettant de justifier le coût des prestations, à savoir: ... le Bordereau des Prix Unitaires... le Détail Quantitatif et Estimatif... » [16-18]."
+    },
+    "partie_7_annexes": {
+      "nom_standard": "Annexes et Modèles de formulaires",
+      "contenu": "Modèles vierges que la PME doit remplir, signer ou faire viser par sa banque.",
+      "infos_a_extraire": [
+        "modele_caution_soumission",
+        "modele_declaration_abandon",
+        "charte_integrite",
+        "modele_accord_cadre"
+      ],
+      "present_dans": "100% des DAO",
+      "exemple": "« ANNEXE N° 3 : MODELE DE CAUTIONNEMENT DEFINITIF » [19, 20]."
+    }
+  }
+}

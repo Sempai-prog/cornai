@@ -1,0 +1,207 @@
+{
+  "systemes_evaluation": {
+    "binaire": {
+      "applicable_a": [
+        "travaux",
+        "fournitures",
+        "services_quantifiables"
+      ],
+      "logique": "Le système de notation des offres par attribution des points est proscrit au profit du mode binaire (oui ou non) [5], [2], [6]. Chaque critère principal obtient un 'Oui' uniquement si un nombre défini de sous-critères est validé [7], [8].",
+      "seuil_type": "Le rejet est prononcé pour non-respect d’au moins X critères essentiels (X renvoyant au seuil de qualification des offres techniques) sur Y (Y renvoyant au nombre total de critères essentiels) [9], [10], [11].",
+      "grilles_par_type": {
+        "travaux_et_fournitures": {
+          "seuil_qualification": "Validation requise d'au moins X critères sur Y pour franchir l'étape technique [9], [10].",
+          "criteres_essentiels": [
+            {
+              "critere": "Présentation générale de l'offre",
+              "sous_criteres": [
+                "Lisibilité [7]",
+                "Pièces dans l'ordre du RPAO [7]",
+                "Sommaires et pagination [7]"
+              ],
+              "justificatifs": [
+                "Vérification visuelle du dossier relié [7], [12]"
+              ],
+              "source": "DTAO Fournitures / Travaux, RPAO [7], [12]"
+            },
+            {
+              "critere": "Expérience générale et spécifique du soumissionnaire",
+              "sous_criteres": [
+                "Expérience dans des marchés exécutés à titre d’entrepreneur au cours des 3 à 5 dernières années [7], [12]",
+                "Avoir effectivement exécuté de manière satisfaisante au moins X marchés similaires avec une valeur minimale [13], [14], [15]"
+              ],
+              "justificatifs": [
+                "Copies des premières et dernières pages du contrat [14], [16]",
+                "PV de réception provisoire ou définitive, ou attestation de bonne fin signée par le Maître d'Ouvrage [17]"
+              ],
+              "source": "DTAO Fournitures / Travaux, RPAO [14], [16], [17]"
+            },
+            {
+              "critere": "Qualifications et compétence du personnel clé",
+              "sous_criteres": [
+                "Diplômes (Bac+X, spécialité souhaitée) [18]",
+                "Expérience générale et spécifique [19]"
+              ],
+              "justificatifs": [
+                "CV datés et signés, copies certifiées des diplômes [20]",
+                "Pour les agents publics : document officiel justifiant la libération de l'Administration (Sinon non évalué) [21], [22]"
+              ],
+              "source": "DTAO Fournitures / Travaux, RPAO [21], [20], [22], [18]"
+            },
+            {
+              "critere": "Matériel et moyens logistiques",
+              "sous_criteres": [
+                "Disponibilité du matériel minimal requis [23]",
+                "Preuve de propriété ou de location [23]"
+              ],
+              "justificatifs": [
+                "Copies certifiées des cartes grises pour matériels roulants [23]",
+                "Factures d'achat ou engagements de location signés [23]"
+              ],
+              "source": "DTAO Travaux / Fournitures, RPAO [24], [23]"
+            },
+            {
+              "critere": "Méthodologie, organisation et planning",
+              "sous_criteres": [
+                "Pertinence de la méthodologie [25], [26]",
+                "Planning et calendrier d'exécution / livraison [25], [26]"
+              ],
+              "justificatifs": [
+                "Note méthodologique descriptive [27]",
+                "Diagramme de planning [26]"
+              ],
+              "source": "DTAO Travaux / Fournitures, RPAO [25], [26], [27]"
+            },
+            {
+              "critere": "Capacité financière",
+              "sous_criteres": [
+                "Attestation de capacité financière [28]",
+                "Chiffre d'affaires des exercices précédents [24]"
+              ],
+              "justificatifs": [
+                "Attestation délivrée par une banque de premier ordre agréée par le MINFI [28], [24]",
+                "Bilans financiers certifiés [24]"
+              ],
+              "source": "DTAO Travaux, RPAO [28], [24]"
+            }
+          ]
+        }
+      }
+    },
+    "par_points": {
+      "applicable_a": [
+        "prestations_intellectuelles",
+        "services_non_quantifiables",
+        "assurances"
+      ],
+      "logique": "Les offres techniques seront évaluées sur cent (100) points selon les critères essentiels [3], [4]. La sélection finale combine le score technique (St) et le score financier (Sf) selon le système Qualité-Coût [29], [30].",
+      "seuil_type": "Seules les offres financières des soumissionnaires ayant atteint la note technique minimale requise (souvent 70 ou 80 points sur 100) seront ouvertes et évaluées [31], [32], [33].",
+      "grilles_par_type": {
+        "prestations_intellectuelles_et_si": {
+          "seuil_eliminatoire": "Généralement 70/100 ou 80/100 à préciser par le Maître d'Ouvrage [31], [32].",
+          "criteres": [
+            {
+              "critere": "Présentation générale de l'offre",
+              "points_max": 5,
+              "sous_criteres": [
+                "Reliure, agencement, lisibilité, intercalaires de couleur [34], [35], [36]"
+              ],
+              "source": "DTAO SPI / SI, RPAO [34], [35], [36]"
+            },
+            {
+              "critere": "Références du soumissionnaire dans les missions similaires",
+              "points_max": 20,
+              "sous_criteres": [
+                "Expérience générale [34]",
+                "Expérience spécifique en prestations similaires [37], [38]"
+              ],
+              "source": "DTAO SPI / SI, RPAO [34], [37], [38]"
+            },
+            {
+              "critere": "Plan de travail et méthodologie (Adéquation avec les TDR)",
+              "points_max": 40,
+              "sous_criteres": [
+                "Compréhension des TDR et suggestions [39], [40]",
+                "Calendrier d'exécution et pertinence de la méthodologie [25], [18]"
+              ],
+              "source": "DTAO SPI / SI, RPAO [25], [18], [39]"
+            },
+            {
+              "critere": "Qualifications et compétence du personnel clé",
+              "points_max": 50,
+              "sous_criteres": [
+                "Diplômes (Bac+X, spécialité) [25], [18]",
+                "Années d'expérience générale et spécifique [25], [18]"
+              ],
+              "source": "DTAO SPI / SI, RPAO [25], [18]"
+            },
+            {
+              "critere": "Qualité de la solution proposée (Spécifique Systèmes d'Information)",
+              "points_max": 50,
+              "sous_criteres": [
+                "Adéquation de la solution aux objectifs, richesses fonctionnelles, qualité de l'architecture technique [41], [19]"
+              ],
+              "source": "DTAO SI, RPAO [41], [19]"
+            },
+            {
+              "critere": "Solvabilité et capacité financière",
+              "points_max": 5,
+              "sous_criteres": [
+                "États financiers certifiés des dernières années [42]"
+              ],
+              "source": "DTAO SPI, RPAO [42]"
+            }
+          ]
+        },
+        "assurances_non_quantifiables": {
+          "seuil_eliminatoire": "Généralement 70/100 ou 80/100 à préciser par le Maître d'Ouvrage [33], [43].",
+          "criteres": [
+            {
+              "critere": "Références générales du soumissionnaire",
+              "points_max": 6,
+              "sous_criteres": [
+                "Ancienneté, représentativité territoriale, chiffre d'affaires global [44], [45]"
+              ],
+              "source": "DTAO Assurances, RPAO [44], [45]"
+            },
+            {
+              "critere": "Références spécifiques dans les risques similaires (3 dernières années)",
+              "points_max": 15,
+              "sous_criteres": [
+                "Chiffre d'affaires de la branche spécifique [40], [46]",
+                "Nombre de polices d'assurance émises (Nb >= 10 points max) [47], [48]",
+                "Taux de satisfaction client (100% = points max) [47]"
+              ],
+              "source": "DTAO Assurances, RPAO [40], [47], [46]"
+            },
+            {
+              "critere": "Description détaillée des garanties offertes",
+              "points_max": 16,
+              "sous_criteres": [
+                "Conformité des plafonds, franchises, exclusions et déchéances par rapport aux TDR [49], [48]"
+              ],
+              "source": "DTAO Assurances, RPAO [49], [48]"
+            },
+            {
+              "critere": "Couverture des engagements réglementés et marge de solvabilité",
+              "points_max": 45,
+              "sous_criteres": [
+                "Taux de couverture des engagements réglementés (Cer > 110%) [50], [51]",
+                "Taux de couverture de la marge de solvabilité (Cms > 200%) [50], [51]"
+              ],
+              "source": "DTAO Assurances, RPAO (États C4 et C11 de la CIMA) [50], [52]"
+            },
+            {
+              "critere": "Cadence de règlement des sinistres",
+              "points_max": 20,
+              "sous_criteres": [
+                "Moyenne de la cadence de règlement par rapport à la meilleure cadence [53], [54]"
+              ],
+              "source": "DTAO Assurances, RPAO (État C10b) [53], [54]"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

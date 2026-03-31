@@ -1,0 +1,416 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Extraction Appel d'Offres (MarchésPublics.ai)",
+  "description": "Schéma JSON complet pour le parsing par l'IA des Dossiers d'Appel d'Offres (DAO) de la République du Cameroun, basé sur les DTAO et le RGAO [1, 2].",
+  "type": "object",
+  "required": [
+    "identifiant",
+    "maitre_ouvrage",
+    "objet_et_allotissement",
+    "conditions_soumission",
+    "criteres_eliminatoires",
+    "criteres_essentiels_et_notation"
+  ],
+  "properties": {
+    "identifiant": {
+      "type": "object",
+      "description": "Données d'identification uniques de la procédure [5].",
+      "required": ["numero_avis", "type_procedure", "exercice_budgetaire"],
+      "properties": {
+        "numero_avis": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9_/-]+$",
+          "description": "Numéro officiel de l'avis [6].",
+          "examples": ["0001/AONO/MINMAP/2024"]
+        },
+        "objet_court": {
+          "type": "string",
+          "description": "Titre abrégé de la prestation [7]."
+        },
+        "type_procedure": {
+          "type": "string",
+          "enum": ["AONO", "AONR", "AOIO", "AOIR", "DC", "AC", "Gré à gré"],
+          "description": "Mode de passation légal selon le Code des Marchés Publics [4, 8, 9]."
+        },
+        "exercice_budgetaire": {
+          "type": "integer",
+          "minimum": 2024,
+          "description": "Année d'imputation budgétaire [5]."
+        },
+        "financement": {
+          "type": "object",
+          "properties": {
+            "source": {
+              "type": "string",
+              "examples": ["BIP", "Bailleur de fonds", "Fonds propres"]
+            },
+            "imputation": {
+              "type": "string"
+            },
+            "est_finance_bailleur": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        }
+      }
+    },
+    "maitre_ouvrage": {
+      "type": "object",
+      "required": ["institution", "personne_responsable", "commission_competente"],
+      "properties": {
+        "institution": {
+          "type": "string",
+          "examples": ["MINMAP", "Commune de Yaoundé 1"]
+        },
+        "personne_responsable": {
+          "type": "string",
+          "enum": ["Maître d'Ouvrage", "Maître d'Ouvrage Délégué", "Autorité Contractante"],
+          "description": "Désignation légale de l'entité contractante [4, 10]."
+        },
+        "adresse_retrait_dao": {
+          "type": "string",
+          "description": "Lieu physique où retirer le dossier contre quittance [10]."
+        },
+        "commission_competente": {
+          "type": "string",
+          "description": "Commission de Passation des Marchés (CPM) ou Commission Centrale (CCCM) [4]."
+        },
+        "cout_achat_dao": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Frais d'acquisition du DAO en FCFA [11]."
+        },
+        "lieu_paiement_dao": {
+          "type": "string",
+          "enum": ["CAS-ARMP", "Trésor Public", "Recette Municipale"],
+          "description": "Où payer les frais d'achat du dossier [11]."
+        }
+      }
+    },
+    "objet_et_allotissement": {
+      "type": "object",
+      "required": ["nature_marche", "est_alloti"],
+      "properties": {
+        "nature_marche": {
+          "type": "string",
+          "enum": [
+            "Travaux",
+            "Fournitures_Locales",
+            "Fournitures_Importées",
+            "Services_Quantifiables",
+            "Prestations_Intellectuelles",
+            "Assurances"
+          ],
+          "description": "Classification macro du marché (détermine les pièces exigées) [12-14]."
+        },
+        "est_alloti": {
+          "type": "boolean",
+          "default": false
+        },
+        "lots": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["numero_lot", "description"],
+            "properties": {
+              "numero_lot": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "description": {
+                "type": "string"
+              },
+              "cout_previsionnel_ttc": {
+                "type": "number",
+                "description": "Budget prévisionnel TTC en FCFA du lot [7]."
+              },
+              "lieu_execution": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "tranches_conditionnelles": {
+          "type": "object",
+          "properties": {
+            "prevues": {
+              "type": "boolean",
+              "default": false
+            },
+            "details": {
+              "type": "string",
+              "description": "Spécification de la tranche ferme vs conditionnelle [15]."
+            }
+          }
+        }
+      }
+    },
+    "conditions_soumission": {
+      "type": "object",
+      "required": ["mode_soumission", "langue_requise"],
+      "properties": {
+        "mode_soumission": {
+          "type": "string",
+          "enum": ["Physique", "En_Ligne_COLEPS", "Mixte"],
+          "description": "Mode de réception des plis exigé [16, 17]."
+        },
+        "modalites_physiques": {
+          "type": "object",
+          "properties": {
+            "nombre_exemplaires": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Généralement 1 original et 6 copies [18]."
+            },
+            "offre_temoin_armp_requise": {
+              "type": "boolean",
+              "description": "Obligatoire pour les AONR : 7ème exemplaire sous pli scellé pour l'ARMP [19, 20]."
+            }
+          }
+        },
+        "modalites_numeriques_coleps": {
+          "type": "object",
+          "properties": {
+            "lien_plateforme": {
+              "type": "string",
+              "default": "http://www.marchespublics.cm",
+              "description": "Portail E-Procurement [21]."
+            },
+            "copie_sauvegarde_physique_requise": {
+              "type": "boolean",
+              "default": true,
+              "description": "Obligation de déposer une clé USB/CD de sauvegarde [17]."
+            }
+          }
+        },
+        "langue_requise": {
+          "type": "string",
+          "enum": ["Francais", "Anglais", "Bilingue"],
+          "description": "Langue de rédaction de l'offre [22]."
+        }
+      }
+    },
+    "calendrier_critique": {
+      "type": "object",
+      "properties": {
+        "date_limite_soumission": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "date_ouverture_plis": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "visite_site": {
+          "type": "object",
+          "properties": {
+            "obligatoire": {
+              "type": "boolean",
+              "default": false
+            },
+            "delivre_attestation": {
+              "type": "boolean",
+              "description": "Délivrance d'une attestation de visite de site [23]."
+            }
+          }
+        }
+      }
+    },
+    "garanties_et_cautions": {
+      "type": "object",
+      "properties": {
+        "caution_soumission": {
+          "type": "object",
+          "properties": {
+            "exigee": {
+              "type": "boolean",
+              "default": true
+            },
+            "montant_fcfa": {
+              "type": "number",
+              "description": "Plafonné légalement à 2% du montant TTC prévisionnel [24, 25]."
+            },
+            "banques_agreees": {
+              "type": "string",
+              "description": "Référence à la Pièce 14 listant les banques de 1er rang agréées par le MINFI [26]."
+            }
+          }
+        },
+        "retenue_garantie": {
+          "type": "object",
+          "properties": {
+            "exigee": {
+              "type": "boolean",
+              "default": true
+            },
+            "pourcentage": {
+              "type": "number",
+              "maximum": 10,
+              "description": "Maximum 10% retenus sur les décomptes, sauf si présentation d'une caution de bonne exécution [24, 27]."
+            }
+          }
+        }
+      }
+    },
+    "criteres_eliminatoires": {
+      "type": "object",
+      "description": "Causes de rejet immédiat de l'offre (Article 15.1 du RPAO) [28].",
+      "properties": {
+        "vices_administratifs": {
+          "type": "array",
+          "items": {"type": "string"},
+          "examples": [
+            "Absence de la caution de soumission à l'ouverture des plis",
+            "Non-production d'une pièce administrative au-delà du délai de 48h",
+            "Fausses déclarations ou pièces falsifiées"
+          ]
+        },
+        "vices_techniques": {
+          "type": "array",
+          "items": {"type": "string"},
+          "examples": [
+            "Non-respect d’au moins X critères essentiels sur Y [28, 29]",
+            "Absence de l’agrément ou de l’autorisation du fabricant [29]",
+            "Non-respect du format des fichiers COLEPS [30]"
+          ]
+        },
+        "vices_financiers": {
+          "type": "array",
+          "items": {"type": "string"},
+          "examples": [
+            "Absence d’un prix unitaire quantifié dans l’offre financière [31]",
+            "Présence d'informations financières dans l'offre technique [32]"
+          ]
+        },
+        "documents_ethiques_manquants": {
+          "type": "array",
+          "items": {"type": "string"},
+          "examples": [
+            "Absence de la charte d’intégrité datée et signée [33]",
+            "Absence d’une déclaration de n’avoir pas abandonné de chantier [30]"
+          ]
+        }
+      }
+    },
+    "criteres_essentiels_et_notation": {
+      "type": "object",
+      "required": ["mode_evaluation"],
+      "properties": {
+        "mode_evaluation": {
+          "type": "string",
+          "enum": ["Binaire_Oui_Non", "Points_sur_100"],
+          "description": "Le système par points est proscrit pour les fournitures et travaux au profit du binaire [34, 35]."
+        },
+        "evaluation_binaire": {
+          "type": "object",
+          "properties": {
+            "seuil_qualification": {
+              "type": "string",
+              "description": "Ex: 'Validation de 5 critères sur 7' [28, 29]."
+            }
+          }
+        },
+        "evaluation_par_points": {
+          "type": "object",
+          "properties": {
+            "seuil_eliminatoire_note": {
+              "type": "number",
+              "maximum": 100,
+              "description": "Note technique minimale requise sur 100 (ex: 70/100) pour ouvrir l'offre financière [36]."
+            },
+            "grille_notation": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "critere": {"type": "string"},
+                  "poids_points": {"type": "number"}
+                }
+              },
+              "examples": [
+                {"critere": "Qualifications et compétence du personnel clé", "poids_points": 50},
+                {"critere": "Plan de travail et méthodologie", "poids_points": 30}
+              ]
+            }
+          }
+        },
+        "pieges_notation": {
+          "type": "object",
+          "properties": {
+            "agent_public_sans_liberation": {
+              "type": "boolean",
+              "default": true,
+              "description": "Règle stricte: Tout agent public proposé sans document de libération ne sera pas évalué (0 point) [37, 38]."
+            }
+          }
+        }
+      }
+    },
+    "specifications_techniques_cctp": {
+      "type": "object",
+      "properties": {
+        "incoterm_exige": {
+          "type": "string",
+          "enum": ["DAP", "CIP", "Non Applicable"],
+          "description": "Généralement DAP (Delivered At Place) pour les fournitures locales [39]."
+        },
+        "agrement_fabricant_requis": {
+          "type": "boolean",
+          "default": false,
+          "description": "Souvent éliminatoire dans les marchés de matériel spécifique (IT, Médical) [40, 41]."
+        },
+        "certifications_specifiques": {
+          "type": "array",
+          "items": {"type": "string"},
+          "examples": ["Autorisation de Mise sur le Marché (AMM)", "Certificat OMS"]
+        }
+      }
+    },
+    "offre_financiere_bpu_dqe": {
+      "type": "object",
+      "properties": {
+        "pieces_requises": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "Lettre de soumission (Volume 3)",
+              "Bordereau des Prix Unitaires (BPU)",
+              "Détail Quantitatif et Estimatif (DQE)",
+              "Sous-Détail des Prix Unitaires (SDPU)"
+            ]
+          },
+          "description": "Pièces obligatoires de la proposition financière [4, 42, 43]."
+        },
+        "monnaie": {
+          "type": "string",
+          "default": "FCFA",
+          "description": "La monnaie de conversion est le Franc CFA [44]."
+        }
+      }
+    },
+    "metadonnees_extraction_ia": {
+      "type": "object",
+      "properties": {
+        "horodatage_parsing": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "taux_confiance_global": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "champs_incertains": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "action_recommandee_app": {
+          "type": "string",
+          "examples": ["Déclencher pipeline de validation binaire (Fournitures)", "Alerter sur l'agrément fabricant bloquant"]
+        }
+      }
+    }
+  }
+}

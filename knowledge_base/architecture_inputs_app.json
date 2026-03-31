@@ -1,0 +1,486 @@
+{
+  "version": "1.0",
+  "composant": "Data Input & Processing Pipeline",
+  "plateforme": "CORNAi (Web + WhatsApp)",
+  "date_mise_a_jour": "2025-07",
+  "audit_conformite": "Validé contre DTAO, RPAO, RGAO — Juillet 2025",
+
+  "references_legales_globales": {
+    "plateforme_officielle": "COLEPS (Cameroon Online E-Procurement System)",
+    "texte_principal": "DTAO Fournitures/Travaux, RPAO Article 12",
+    "regle_fondamentale": "Seuls les formats PDF et JPEG sont acceptés pour les soumissions officielles",
+    "regle_structure_fichiers": "[AUDIT] L'offre comprend exactement 3 fichiers électroniques correspondant aux 3 volumes (Article 23.5/18.5 RGAO)",
+    "regle_copie_sauvegarde": "[AUDIT] Copie de sauvegarde sur support physique OBLIGATOIRE sous pli scellé (Article 22.2a et 23.6 RGAO/RPAO)",
+    "regle_nommage": "[AUDIT] Chaque fichier doit porter un nom renvoyant à la nature de son contenu (Article 23.5/18.5 RGAO)"
+  },
+
+  "modalites": [
+    {
+      "id": "input_document",
+      "type_input": "Document (PDF)",
+      "priorite": "P0 — Critique",
+      "statut_legal": "ACCEPTÉ pour soumission officielle",
+
+      "usages": [
+        "Upload pièces administratives (CNE, ANR, CNPS, Patente, RCCM)",
+        "Upload offre technique (méthodologie, planning, CV personnel)",
+        "Upload offre financière (BPU, DQE, Soumission)",
+        "Réception des DAO scrapés depuis ARMP/COLEPS",
+        "Réception des avis publiés au JDM (Journal des Marchés)"
+      ],
+
+      "contraintes_legales": {
+        "formats_autorises": ["PDF"],
+        "formats_rejetes": ["DOC", "DOCX", "ODT", "XLS", "XLSX", "PPT", "PNG"],
+        "tailles_max": {
+          "volume_1_offre_administrative": {
+            "taille_max_mo": 5,
+            "contenu": "Pièces administratives (RCCM, NIU, Patente, ANR, CNPS, Caution...)",
+            "audit_note": "[AUDIT] Confirmé — aucune exception par type de marché"
+          },
+          "volume_2_offre_technique": {
+            "taille_max_mo": 15,
+            "contenu": "Méthodologie, planning, CV, liste matériel, références",
+            "audit_note": "[AUDIT] Confirmé — universel tous types de marchés"
+          },
+          "volume_3_offre_financiere": {
+            "taille_max_mo": 5,
+            "contenu": "Lettre de soumission, BPU, DQE, SDPU",
+            "audit_note": "[AUDIT] Confirmé — universel tous types de marchés"
+          }
+        },
+        "nombre_fichiers_par_volume": {
+          "valeur": 1,
+          "audit_note": "[AUDIT] COLEPS attend UN SEUL fichier PDF par volume. Le backend DOIT fusionner (merge) tous les PDF d'un volume en un fichier unique avant upload.",
+          "reference": "Article 23.5/18.5 RGAO"
+        },
+        "nommage_obligatoire": {
+          "actif": true,
+          "convention": {
+            "volume_1": "Vol1_Offre_Administrative_{NomEntreprise}.pdf",
+            "volume_2": "Vol2_Offre_Technique_{NomEntreprise}.pdf",
+            "volume_3": "Vol3_Offre_Financiere_{NomEntreprise}.pdf"
+          },
+          "audit_note": "[AUDIT] Obligation légale — Article 23.5/18.5 RGAO : chaque fichier doit porter un nom renvoyant à la nature de son contenu",
+          "reference": "Article 23.5/18.5 RGAO"
+        },
+        "obligation_compression": {
+          "statut": "recommandation_forte",
+          "audit_note": "[AUDIT] CORRECTION — La compression n'est pas une obligation légale mais une recommandation pratique forte. Le non-respect des tailles (5/15/5) entraîne un blocage de l'offre sur COLEPS.",
+          "texte_source": "Le candidat veillera à utiliser des logiciels de compression afin de réduire éventuellement la taille des fichiers à transmettre",
+          "reference": "DTAO — Section format des fichiers"
+        },
+        "copie_sauvegarde_physique": {
+          "obligatoire": true,
+          "eliminatoire_si_absent": true,
+          "audit_note": "[AUDIT] CONFIRMÉ OBLIGATOIRE ET ÉLIMINATOIRE — Article 22.2(a) et 23.6 RGAO/RPAO",
+          "detail": "Copie de sauvegarde sur clé USB ou CD/DVD déposée sous pli scellé parallèlement à l'envoi électronique",
+          "critere_eliminatoire": "Absence de la copie de sauvegarde en cas de dysfonctionnement de la plateforme COLEPS",
+          "reference_eliminatoire": "Article 15.1/14.1 RPAO — Grille d'évaluation",
+          "references": ["Article 22.2(a) RGAO/RPAO", "Article 23.6 RGAO/RPAO", "Article 15.1/14.1 RPAO"]
+        }
+      },
+
+      "pipeline_technique": {
+        "etapes": [
+          {
+            "ordre": 1,
+            "action": "reception",
+            "detail": "Réception via webhook WhatsApp (document attaché) ou upload webapp",
+            "formats_acceptes_entree": ["PDF", "DOC", "DOCX", "JPG", "PNG"],
+            "note": "On accepte plus de formats en entrée que COLEPS, on convertit ensuite"
+          },
+          {
+            "ordre": 2,
+            "action": "validation",
+            "detail": "Vérification du type MIME réel (pas juste l'extension)",
+            "regle": "Rejeter les exécutables, archives et fichiers corrompus",
+            "taille_max_upload": "20 MO (notre limite interne)"
+          },
+          {
+            "ordre": 3,
+            "action": "conversion",
+            "detail": "Si DOC/DOCX → convertir en PDF automatiquement",
+            "outil_suggere": "libreoffice-convert ou api2pdf",
+            "si_image": "Si JPG/PNG → intégrer dans un PDF avec OCR"
+          },
+          {
+            "ordre": 4,
+            "action": "compression",
+            "detail": "[AUDIT] Recommandation forte — compresser pour respecter les limites COLEPS",
+            "outil_suggere": "ghostscript ou pdf-lib",
+            "seuils": {
+              "si_volume_admin_superieur_a": "4.5 MO → compresser automatiquement",
+              "si_volume_tech_superieur_a": "14 MO → compresser automatiquement",
+              "si_volume_fin_superieur_a": "4.5 MO → compresser automatiquement"
+            },
+            "alerte_si_impossible": "Si après compression le fichier dépasse toujours la limite → alerter la PME avec instructions de réduction manuelle"
+          },
+          {
+            "ordre": 5,
+            "action": "extraction_ia",
+            "detail": "Gemini Flash analyse le contenu du PDF",
+            "sous_actions": [
+              "OCR si le PDF est scanné (image)",
+              "Extraction des champs clés (dates, montants, noms)",
+              "Identification du type de document (RCCM, ANR, Caution...)",
+              "Vérification de la date d'expiration si applicable"
+            ]
+          },
+          {
+            "ordre": 6,
+            "action": "stockage",
+            "detail": "Stockage dans Cloudflare R2",
+            "metadata": {
+              "entreprise_id": "UUID",
+              "piece_id": "Référence vers pieces_administratives",
+              "date_upload": "timestamp",
+              "date_expiration_detectee": "date ou null",
+              "taille_originale_octets": "number",
+              "taille_compressee_octets": "number",
+              "hash_sha256": "pour détecter les doublons"
+            }
+          },
+          {
+            "ordre": 7,
+            "action": "mise_a_jour_profil",
+            "detail": "Mettre à jour documents_entreprise avec statut = 'disponible'",
+            "declencheur": "Relancer le calcul de conformité si une soumission est en cours"
+          },
+          {
+            "ordre": 8,
+            "action": "[AUDIT] fusion_volumes",
+            "detail": "Avant export COLEPS, fusionner tous les PDF d'un volume en un fichier unique",
+            "regle": "COLEPS attend 1 fichier par volume, pas plusieurs",
+            "outil_suggere": "pdf-lib (merge)",
+            "nommage_automatique": true,
+            "convention_nommage": "Vol{X}_{TypeOffre}_{NomEntreprise}.pdf",
+            "reference": "Article 23.5/18.5 RGAO"
+          }
+        ],
+
+        "export_coleps": {
+          "format_final": "[AUDIT] Exactement 3 fichiers PDF nommés selon la convention",
+          "structure": {
+            "fichier_1": "Vol1_Offre_Administrative_{NomEntreprise}.pdf (max 5 Mo)",
+            "fichier_2": "Vol2_Offre_Technique_{NomEntreprise}.pdf (max 15 Mo)",
+            "fichier_3": "Vol3_Offre_Financiere_{NomEntreprise}.pdf (max 5 Mo)"
+          },
+          "copie_physique": {
+            "obligatoire": true,
+            "eliminatoire_si_absent": true,
+            "format": "Les 3 mêmes fichiers sur clé USB ou CD/DVD sous pli scellé",
+            "generation_auto": false,
+            "note": "Feature future — pour le MVP, instructions manuelles envoyées par WhatsApp"
+          },
+          "message_whatsapp_export": "📦 *Votre dossier COLEPS est prêt !*\n\n3 fichiers générés :\n📄 Vol1_Admin ({taille1} Mo)\n📄 Vol2_Tech ({taille2} Mo)\n📄 Vol3_Fin ({taille3} Mo)\n\n⚠️ *IMPORTANT* : Vous DEVEZ aussi déposer une copie sur *clé USB* sous pli scellé avant la date limite. C'est *éliminatoire* si vous oubliez !\n(Article 22.2a RGAO)"
+        }
+      },
+
+      "messages_whatsapp": {
+        "reception_ok": "✅ Document reçu ! Je l'analyse...",
+        "analyse_ok": "📄 J'ai identifié : *{type_document}*\n📅 Validité : {statut_validite}\n✅ Ajouté à votre dossier.",
+        "trop_gros": "⚠️ Votre fichier fait {taille} Mo. La limite COLEPS est de {limite} Mo.\nJe vais essayer de le compresser automatiquement.",
+        "compression_ok": "✅ Fichier compressé : {taille_avant} Mo → {taille_apres} Mo. Conforme COLEPS !",
+        "compression_impossible": "🔴 Impossible de compresser sous {limite} Mo.\n\nConseils :\n• Réduisez la qualité des images dans votre document\n• Divisez en fichiers plus petits\n• Scannez à 150 DPI au lieu de 300 DPI",
+        "format_invalide": "❌ Format non accepté par COLEPS.\n\nFormats autorisés :\n• 📄 *PDF* pour les documents\n• 📸 *JPEG* pour les images\n\nLes fichiers Word (.doc), Excel (.xls) et PNG ne sont *pas acceptés*.",
+        "document_expire": "⏰ Attention : ce document semble expirer le {date}. Renouvelez-le avant la date limite de soumission.",
+        "rappel_copie_physique": "🔴 *RAPPEL CRITIQUE* : N'oubliez pas la copie de sauvegarde sur *clé USB* sous pli scellé !\nSon absence est *éliminatoire* (Art. 22.2a RGAO)."
+      }
+    },
+
+    {
+      "id": "input_image",
+      "type_input": "Image (JPEG uniquement pour COLEPS)",
+      "priorite": "P1 — Important",
+      "statut_legal": "ACCEPTÉ pour soumission officielle (JPEG exclusivement)",
+
+      "usages": [
+        "Photo des pièces administratives (RCCM, Patente, Quittance)",
+        "Photo des avis affichés sur babillards communaux",
+        "Photo des tableaux d'affichage des CTD",
+        "Scan de reçus et factures",
+        "Photo de prospectus et catalogues fabricant (pour les fournitures)"
+      ],
+
+      "contraintes_legales": {
+        "formats_autorises_coleps": ["JPEG"],
+        "formats_rejetes_coleps": ["PNG", "GIF", "WEBP", "HEIC", "SVG", "BMP", "TIFF"],
+        "audit_note": "[AUDIT] CONFIRMÉ — PNG n'est PAS accepté par COLEPS. JPEG est le SEUL format image autorisé. Aucune exception trouvée dans les sources.",
+        "resolution_dpi": {
+          "minimum": "Non spécifié dans les textes",
+          "maximum": "Non spécifié dans les textes",
+          "recommandation_app": "150-200 DPI (compromis lisibilité/taille)",
+          "audit_note": "[AUDIT] Aucune contrainte de résolution trouvée dans les sources — à vérifier auprès de la DSI du MINMAP"
+        },
+        "references": ["DTAO Fournitures/Travaux, RPAO (Formats acceptés)"]
+      },
+
+      "pipeline_technique": {
+        "etapes": [
+          {
+            "ordre": 1,
+            "action": "reception",
+            "detail": "Réception via caméra WhatsApp ou upload webapp",
+            "formats_acceptes_entree": ["JPEG", "JPG", "PNG", "WEBP", "HEIC"],
+            "note": "[AUDIT] On accepte tous les formats en entrée mais on DOIT convertir en JPEG pour COLEPS"
+          },
+          {
+            "ordre": 2,
+            "action": "conversion_obligatoire_jpeg",
+            "detail": "[AUDIT] Conversion STRICTE en JPEG — PNG et autres formats sont INTERDITS sur COLEPS",
+            "outil_suggere": "sharp (Node.js)",
+            "qualite_jpeg": 85,
+            "resolution_max": "2048x2048 (suffisant pour OCR, compact pour COLEPS)"
+          },
+          {
+            "ordre": 3,
+            "action": "amelioration",
+            "detail": "Amélioration de la lisibilité pour l'OCR",
+            "sous_actions": [
+              "Rotation automatique (EXIF)",
+              "Correction de perspective si photo prise en angle",
+              "Augmentation du contraste si document sombre",
+              "Deskew (redressement)"
+            ],
+            "outil_suggere": "sharp pour les transformations basiques, Gemini Vision pour la correction intelligente"
+          },
+          {
+            "ordre": 4,
+            "action": "ocr_extraction",
+            "detail": "Extraction du texte via Gemini Flash Vision (multimodal)",
+            "sous_actions": [
+              "OCR du texte visible",
+              "Identification du type de document",
+              "Extraction des champs clés (numéros, dates, montants)",
+              "Détection de la langue (FR/EN)"
+            ],
+            "prompt_gemini": "Analyse cette image. C'est un document administratif camerounais. Extrais : le type de document, les noms, numéros d'identification, dates, et montants visibles."
+          },
+          {
+            "ordre": 5,
+            "action": "integration_pdf",
+            "detail": "[AUDIT] Pour les soumissions COLEPS, les images DOIVENT être intégrées dans le PDF du volume correspondant (1 fichier par volume)",
+            "raison": "COLEPS attend 1 fichier PDF par volume, pas des images séparées",
+            "reference": "Article 23.5/18.5 RGAO"
+          },
+          {
+            "ordre": 6,
+            "action": "stockage",
+            "detail": "Cloudflare R2 — même structure que les documents PDF"
+          }
+        ]
+      },
+
+      "messages_whatsapp": {
+        "reception_ok": "📸 Photo reçue ! Je lis le document...",
+        "ocr_ok": "✅ J'ai identifié : *{type_document}*\n{resume_contenu}\nVoulez-vous l'ajouter à votre dossier ?",
+        "ocr_illisible": "😕 La photo n'est pas assez nette. Reprenez la photo en vous assurant :\n• Bonne lumière 💡\n• Document bien cadré 📐\n• Pas de reflet ni d'ombre",
+        "avis_detecte": "📋 J'ai détecté un *Avis d'Appel d'Offres* !\n{resume_ao}\nVoulez-vous que je l'analyse en détail ?",
+        "format_converti": "ℹ️ Votre image était en {format_original}. Je l'ai convertie en *JPEG* (seul format accepté par COLEPS)."
+      }
+    },
+
+    {
+      "id": "input_audio",
+      "type_input": "Audio (Notes vocales WhatsApp)",
+      "priorite": "P1 — Important",
+      "statut_legal": "NON RECEVABLE pour soumission — Usage interne uniquement",
+
+      "usages": [
+        "Dictée de la méthodologie d'exécution des travaux",
+        "Description du profil de l'entreprise à l'inscription",
+        "Description du personnel clé (expérience, qualifications)",
+        "Questions en langage naturel à CORNAi",
+        "Instructions pour le chiffrage (quantités, prix)"
+      ],
+
+      "contraintes_legales": {
+        "statut_soumission": "INTERDIT — Les offres doivent être rédigées en format texte (PDF)",
+        "langues_acceptees": ["Français", "Anglais"],
+        "langues_potentielles_utilisateur": ["Français", "Anglais", "Pidgin English", "Français camerounais"],
+        "note": "L'audio est transformé en texte puis en PDF — jamais soumis tel quel",
+        "references": ["Code des Marchés Publics, dispositions sur la langue des soumissions"]
+      },
+
+      "pipeline_technique": {
+        "etapes": [
+          {
+            "ordre": 1,
+            "action": "reception",
+            "detail": "Réception du fichier audio via webhook WhatsApp",
+            "format_whatsapp": "OGG Opus (.ogg)",
+            "taille_max": "16 MO (limite WhatsApp)",
+            "duree_max_recommandee": "5 minutes par message vocal"
+          },
+          {
+            "ordre": 2,
+            "action": "transcription",
+            "detail": "Speech-to-Text via Gemini Flash (multimodal audio natif)",
+            "configuration": {
+              "langues": ["fr-CM", "en-CM"],
+              "detecter_langue_auto": true,
+              "ponctuation_auto": true,
+              "noms_propres_camerounais": true
+            },
+            "alternative": "Whisper API (OpenAI) en fallback",
+            "prompt_gemini": "Transcris ce message vocal en français. Le locuteur est un entrepreneur camerounais qui parle de marchés publics. Corrige les hésitations et les répétitions mais conserve le sens exact."
+          },
+          {
+            "ordre": 3,
+            "action": "structuration_ia",
+            "detail": "Gemini restructure le texte brut en format professionnel",
+            "exemples": {
+              "si_methodologie": "Transformer la dictée en sections numérotées (Phase 1, Phase 2...) conformes à l'Annexe Descriptif de la méthodologie",
+              "si_cv": "Transformer en fiche CV structurée (Nom, Formation, Expérience, Références)",
+              "si_question": "Router vers le handler FAQ"
+            }
+          },
+          {
+            "ordre": 4,
+            "action": "validation_humaine",
+            "detail": "Envoyer le texte restructuré à la PME pour validation AVANT intégration au dossier",
+            "obligatoire": true,
+            "raison": "L'IA peut mal transcrire — la PME doit vérifier"
+          },
+          {
+            "ordre": 5,
+            "action": "generation_pdf",
+            "detail": "Si validé, générer un PDF formaté intégrable dans l'offre technique",
+            "outil": "jspdf ou docx",
+            "integration": "[AUDIT] Le PDF généré sera fusionné dans le fichier unique du volume correspondant"
+          }
+        ]
+      },
+
+      "messages_whatsapp": {
+        "reception_ok": "🎙️ Message vocal reçu ({duree}). Je transcris...",
+        "transcription_ok": "📝 Voici ce que j'ai compris :\n\n_{transcription}_\n\n✅ C'est correct ? Tapez *OUI* pour valider ou *NON* pour réenregistrer.",
+        "transcription_echec": "😕 Je n'ai pas bien compris votre message. Pouvez-vous :\n• Parler plus lentement\n• Réduire le bruit de fond\n• Réessayer en français ou anglais",
+        "trop_long": "⚠️ Message vocal trop long ({duree}). Limitez-vous à 5 minutes par message. Vous pouvez envoyer plusieurs messages courts."
+      }
+    },
+
+    {
+      "id": "input_video",
+      "type_input": "Vidéo",
+      "priorite": "P3 — Futur",
+      "statut_legal": "STRICTEMENT INTERDIT pour soumission",
+
+      "usages": [
+        "Tutoriels et formation (e-learning interne)",
+        "MOOC ARMP (liens externes)",
+        "JAMAIS intégré dans un dossier de soumission"
+      ],
+
+      "contraintes_legales": {
+        "statut_soumission": "INTERDIT — Éliminatoire (non-respect du format des fichiers)",
+        "references": ["Article 15.1/14.1 du RPAO (Critères éliminatoires)", "COLEPS — Formats acceptés"]
+      },
+
+      "pipeline_technique": {
+        "etapes": [
+          {
+            "ordre": 1,
+            "action": "detection_et_rejet",
+            "detail": "Si une PME envoie une vidéo, REJETER immédiatement",
+            "formats_detectes": ["MP4", "AVI", "MOV", "MKV", "3GP", "WEBM"]
+          },
+          {
+            "ordre": 2,
+            "action": "alerte_pedagogique",
+            "detail": "Envoyer un message éducatif expliquant pourquoi"
+          }
+        ]
+      },
+
+      "messages_whatsapp": {
+        "rejet": "🚫 *Attention !* Les vidéos ne sont PAS acceptées par COLEPS.\n\n📜 Base légale : Article 15.1 RPAO — le non-respect du format des fichiers est *éliminatoire*.\n\nPour votre soumission, envoyez uniquement :\n• 📄 Des documents *PDF*\n• 📸 Des photos *JPEG*\n\nBesoin d'aide ? Tapez *AIDE*"
+      }
+    },
+
+    {
+      "id": "input_texte",
+      "type_input": "Texte (Message WhatsApp / Formulaire Web)",
+      "priorite": "P0 — Critique",
+      "statut_legal": "Canal de commande — pas un format de soumission",
+
+      "usages": [
+        "Inscription et profilage de la PME",
+        "Questions FAQ et glossaire",
+        "Commandes au bot (1, 2, 3, CHECKLIST, AIDE...)",
+        "Saisie de données (nom, NIU, RCCM...)",
+        "Recherche d'AO",
+        "Instructions pour la rédaction assistée"
+      ],
+
+      "pipeline_technique": {
+        "etapes": [
+          {
+            "ordre": 1,
+            "action": "reception",
+            "detail": "Webhook WhatsApp (texte) ou formulaire webapp"
+          },
+          {
+            "ordre": 2,
+            "action": "nettoyage",
+            "detail": "Trim, normalisation unicode, suppression des emojis parasites"
+          },
+          {
+            "ordre": 3,
+            "action": "detection_intention",
+            "detail": "Le router WhatsApp identifie l'intention",
+            "methodes": [
+              "Pattern matching simple (commandes : 1, 2, 3, OK, CHECKLIST)",
+              "Recherche par mots-clés dans FAQ/Glossaire",
+              "Gemini Flash pour les requêtes complexes ou ambiguës"
+            ]
+          },
+          {
+            "ordre": 4,
+            "action": "traitement",
+            "detail": "Router vers le handler approprié"
+          }
+        ]
+      },
+
+      "messages_whatsapp": {
+        "non_compris": "🤔 Je n'ai pas compris votre message. Vous pouvez :\n• Taper *AIDE* pour voir ce que je sais faire\n• Taper *1* pour voir vos opportunités\n• Poser une question sur les marchés publics"
+      }
+    }
+  ],
+
+  "regles_transversales": {
+    "securite": {
+      "scan_antivirus": "Tous les fichiers uploadés sont scannés",
+      "types_mime_verifies": "Vérification du type MIME réel, pas juste l'extension",
+      "pas_de_executables": "Rejet immédiat de .exe, .bat, .sh, .js, .py",
+      "chiffrement": "Tous les fichiers stockés chiffrés au repos (R2 encryption)"
+    },
+    "conformite_donnees": {
+      "rgpd_cameroun": "Les documents contiennent des données personnelles — politique de confidentialité obligatoire",
+      "retention": "Documents conservés 2 ans après la fin du marché ou la date de soumission",
+      "suppression_sur_demande": "L'entreprise peut demander la suppression de ses documents"
+    },
+    "limites_techniques": {
+      "taille_max_upload_interne": "20 MO par fichier",
+      "taille_max_message_whatsapp": "16 MO (limite WhatsApp)",
+      "nombre_max_fichiers_par_dossier": 50,
+      "nombre_fichiers_export_coleps": "[AUDIT] Exactement 3 fichiers (1 par volume)",
+      "formats_entree_acceptes": ["PDF", "DOC", "DOCX", "JPG", "JPEG", "PNG", "WEBP", "HEIC", "OGG"],
+      "formats_sortie_coleps": ["PDF", "JPEG"],
+      "format_sortie_unique_recommande": "[AUDIT] Tout fusionner en PDF — même les images JPEG — pour simplifier"
+    },
+    "bailleurs_internationaux": {
+      "banque_mondiale": {
+        "portail": "STEP (Systematic Tracking of Exchanges in Procurement)",
+        "regles_coleps_applicables": "[AUDIT] Non confirmé — si le bailleur impose son propre portail, les règles COLEPS ne s'appliquent pas",
+        "statut": "À vérifier au cas par cas",
+        "note": "Feature future — détection automatique si le marché est financé par un bailleur et adaptation des règles"
+      },
+      "bad_afd": {
+        "statut": "[AUDIT] Non trouvé dans les sources — mêmes incertitudes que pour la BM"
+      }
+    }
+  }
+}

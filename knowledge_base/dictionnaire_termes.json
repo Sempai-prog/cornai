@@ -1,0 +1,224 @@
+{
+  "termes": [
+    {
+      "id": "terme_001",
+      "terme": "Maître d'Ouvrage",
+      "abreviation": "MO",
+      "definition_legale": "Chef de département ministériel ou assimilé, chef de l’exécutif d’une collectivité territoriale décentralisée, et directeur général ou directeur d'un établissement public.",
+      "definition_simple": "L'autorité publique (Ministère, Mairie, Société d'État) qui a besoin d'un service ou de travaux. C'est votre 'client' final direct qui signe le contrat et autorise vos paiements.",
+      "synonymes": ["Autorité contractante", "Client", "Donneur d'ordre", "MO", "MOD"],
+      "contexte": "Présent sur la page de garde du DAO, dans l'Avis d'Appel d'Offres (AAO) et signataire du contrat (CCAP).",
+      "reference": "VF Guide amendé du suivi et du contrôle de l'exécution des marchés publics (Glossaire)",
+      "embedding_keywords": ["maître", "ouvrage", "autorité", "contractante", "donneur", "ordre", "client", "maire", "ministre"]
+    },
+    {
+      "id": "terme_002",
+      "terme": "Maître d'Œuvre",
+      "abreviation": "MOE",
+      "definition_legale": "Personne physique ou morale de droit public ou privé chargée par le maître d’ouvrage d’assurer la défense de ses intérêts aux stades de la définition, de l’élaboration, de l’exécution et de la réception des prestations.",
+      "definition_simple": "Le cabinet ou l'expert technique (architecte, ingénieur) engagé par l'État pour surveiller, valider et contrôler la qualité de votre travail sur le chantier.",
+      "synonymes": ["Mission de contrôle", "MDC", "Contrôleur"],
+      "contexte": "Mentionné dans le CCAP (Article 3) et sur les formulaires de décompte où sa signature (visa) est obligatoire pour être payé.",
+      "reference": "VF Guide amendé du suivi et du contrôle de l'exécution des marchés publics",
+      "embedding_keywords": ["maître", "œuvre", "contrôle", "mission", "surveillance", "ingénieur", "cabinet"]
+    },
+    {
+      "id": "terme_003",
+      "terme": "Ingénieur du Marché",
+      "abreviation": null,
+      "definition_legale": "Personne physique ou morale de droit public accréditée par le Maître d’Ouvrage pour le suivi de l’exécution du marché. Responsable du suivi technique et financier, il apprécie, décide et donne toutes les instructions n’entraînant aucune incidence financière.",
+      "definition_simple": "Le fonctionnaire ou représentant technique de l'État qui suit l'avancement de votre marché au quotidien. Il doit viser vos factures (décomptes) avant paiement.",
+      "synonymes": ["Chef de projet technique", "Représentant technique de l'État"],
+      "contexte": "CCAP, Ordres de Service, et formulaires de Décomptes (Document 33).",
+      "reference": "VF Guide amendé du suivi et du contrôle de l'exécution des marchés publics",
+      "embedding_keywords": ["ingénieur", "marché", "suivi", "technique", "financier", "visa", "décompte", "facture"]
+    },
+    {
+      "id": "terme_004",
+      "terme": "Commission de Passation des Marchés",
+      "abreviation": "CPM",
+      "definition_legale": "Organe d'appui technique chargé de l'examen et de l'évaluation des offres. Elle adopte le rapport d'analyse de la Sous-Commission d'Analyse (SCAO) et propose l'attribution du marché au Maître d'Ouvrage.",
+      "definition_simple": "Le comité officiel indépendant qui ouvre vos enveloppes (plis), évalue vos offres techniques et financières, et décide si vous gagnez le marché ou si vous êtes éliminé.",
+      "synonymes": ["CIPM", "CDPM", "CCCM", "Commission interne", "Commission des marchés"],
+      "contexte": "Règlement Général de l'Appel d'Offres (RGAO) et Procès-verbal d'ouverture des plis.",
+      "reference": "Rapport de synthèse 2019-2021 de l'ARMP (Rôle des acteurs)",
+      "embedding_keywords": ["commission", "passation", "marchés", "CIPM", "évaluation", "attribution", "jury", "dépouillement"]
+    },
+    {
+      "id": "terme_005",
+      "terme": "Dossier d'Appel d'Offres",
+      "abreviation": "DAO",
+      "definition_legale": "Dossier élaboré par le Maître d'Ouvrage contenant toutes les informations nécessaires à la préparation, la recevabilité des offres, les critères d’évaluation et le mode d’attribution du marché, ainsi que l’ossature du futur contrat.",
+      "definition_simple": "Le cahier des charges complet que vous achetez à l'administration. Il contient les règles du jeu, ce qu'on vous demande de faire, et les critères sur lesquels vous serez noté.",
+      "synonymes": ["DCE", "Dossier de Consultation des Entreprises", "Cahier des charges", "DTAO"],
+      "contexte": "Vendu contre quittance ou téléchargeable sur le portail COLEPS.",
+      "reference": "VF Manuel des Procédures de Passation des Marchés",
+      "embedding_keywords": ["dossier", "appel", "offres", "cahier", "charges", "consultation", "DCE", "achat"]
+    },
+    {
+      "id": "terme_006",
+      "terme": "Règlement Particulier de l'Appel d'Offres",
+      "abreviation": "RPAO",
+      "definition_legale": "Pièce du DAO contenant les dispositions de l'Avis qui doivent être complétées ou précisées dans le cadre de l’appel d’offres concerné, incluant spécifiquement les critères d'évaluation et d'élimination.",
+      "definition_simple": "C'est la pièce la plus importante pour vous : elle liste les documents exacts à fournir, les pièges éliminatoires et la méthode de notation spécifique à votre marché.",
+      "synonymes": ["Pièce 3", "Pièce 4", "Règlement de la consultation", "RC"],
+      "contexte": "Généralement la Pièce n°3 ou 4 du Volume 1 du DAO (Dossier Administratif).",
+      "reference": "DTAO Travaux / Fournitures (Note relative au RPAO)",
+      "embedding_keywords": ["règlement", "particulier", "appel", "offres", "RPAO", "critères", "éliminatoires", "essentiels", "pièce 3", "pièce 4"]
+    },
+    {
+      "id": "terme_007",
+      "terme": "Cahier des Clauses Administratives Particulières",
+      "abreviation": "CCAP",
+      "definition_legale": "Document qui exprime l’ensemble des droits et obligations des parties, traitant de l’exécution du marché, de la livraison, des pénalités de retard, de la réception et des paiements y relatifs.",
+      "definition_simple": "Le brouillon de votre futur contrat. Il fixe les règles administratives : comment vous serez payé (avances, retenues), les délais exacts à respecter, et les pénalités financières si vous êtes en retard.",
+      "synonymes": ["Pièce 5", "Clauses administratives", "Contrat"],
+      "contexte": "Volume 2 du DAO (Projet de Marché).",
+      "reference": "DTAO Travaux / DTAO Fournitures / DTAO SPI",
+      "embedding_keywords": ["cahier", "clauses", "administratives", "particulières", "CCAP", "contrat", "paiement", "pénalités", "avances"]
+    },
+    {
+      "id": "terme_008",
+      "terme": "Termes de Référence",
+      "abreviation": "TDR",
+      "definition_legale": "Cahier des spécifications techniques pour les services comprenant le contexte, l'objectif, les résultats attendus, la méthodologie, l'organisation du travail et le profil des consultants.",
+      "definition_simple": "Le document technique qui explique très précisément le problème de l'administration et le travail (étude, nettoyage, informatique, audit) que vous devez réaliser pour elle.",
+      "synonymes": ["Cahier des Spécifications Techniques", "CCTP", "Descriptif de la fourniture"],
+      "contexte": "DAO Services, Assurances et Prestations Intellectuelles (SPI).",
+      "reference": "DTAO Autres SPI / DTAO Services Non Quantifiables",
+      "embedding_keywords": ["termes", "référence", "TDR", "spécifications", "techniques", "besoin", "consultants", "études", "cctp"]
+    },
+    {
+      "id": "terme_009",
+      "terme": "Bordereau des Prix Unitaires",
+      "abreviation": "BPU",
+      "definition_legale": "Document de l'offre financière listant la désignation des tâches et leur prix unitaire fixé en chiffres et en lettres.",
+      "definition_simple": "Le tableau où vous fixez votre prix pour UNE seule unité de chaque produit ou tâche (ex: le prix d'un seul ordinateur, ou d'une heure d'expert). Attention : en cas d'erreur, le prix écrit en lettres gagne toujours contre les chiffres !",
+      "synonymes": ["Bordereau des prix", "Grille tarifaire"],
+      "contexte": "Volume 3 de l'Offre (Offre financière).",
+      "reference": "RGAO / Volume 3 DTAO",
+      "embedding_keywords": ["bordereau", "prix", "unitaires", "BPU", "tarif", "chiffres", "lettres", "financier", "unité"]
+    },
+    {
+      "id": "terme_010",
+      "terme": "Détail Quantitatif et Estimatif",
+      "abreviation": "DQE",
+      "definition_legale": "Document croisant les quantités estimées par le Maître d'Ouvrage avec les prix unitaires proposés par le soumissionnaire pour évaluer le coût total prévisionnel de l'offre.",
+      "definition_simple": "Votre devis total. C'est le tableau final qui multiplie vos prix unitaires (BPU) par les quantités demandées pour calculer le montant total de votre offre. Laisser une case vide ici entraîne votre élimination automatique.",
+      "synonymes": ["Devis estimatif", "DE", "Devis Quantitatif et Estimatif", "CDQE"],
+      "contexte": "Volume 3 de l'Offre (Offre financière).",
+      "reference": "Article 15.1 du RPAO / DTAO",
+      "embedding_keywords": ["détail", "quantitatif", "estimatif", "DQE", "devis", "total", "montant", "multiplication", "vide"]
+    },
+    {
+      "id": "terme_011",
+      "terme": "Ordre de Service",
+      "abreviation": "OS",
+      "definition_legale": "Acte administratif par lequel le Maître d’Ouvrage ou l'Ingénieur donne des instructions au cocontractant. L'Ordre de Service de Démarrage (OSD) marque le point de départ du délai contractuel d'exécution.",
+      "definition_simple": "Le feu vert officiel. Même si vous avez signé le contrat, ne commencez jamais à travailler sans avoir reçu l'Ordre de Service de démarrage, sinon l'État peut refuser de vous payer les jours travaillés en avance.",
+      "synonymes": ["OS", "OSD", "Ordre de Service de Démarrage", "Instruction"],
+      "contexte": "Phase d'exécution, notifié au prestataire après la signature du marché.",
+      "reference": "VF Manuel des Procédures de Passation des Marchés / CCAP",
+      "embedding_keywords": ["ordre", "service", "OS", "OSD", "démarrage", "délai", "instruction", "commencer", "travaux"]
+    },
+    {
+      "id": "terme_012",
+      "terme": "Décompte",
+      "abreviation": "N/A",
+      "definition_legale": "Document financier validant les prestations réalisées (décompte provisoire) ou arrêtant le solde du marché après réception définitive (Décompte Général et Définitif - DGD).",
+      "definition_simple": "C'est votre facture validée. C'est le document officiel que les ingénieurs signent pour confirmer que vous avez bien travaillé, et qui permet au Trésor Public de virer l'argent sur votre compte bancaire.",
+      "synonymes": ["Facture", "Décompte provisoire", "DGD", "Solde"],
+      "contexte": "Phase de paiement et de clôture du marché.",
+      "reference": "VF RECUEIL DES DOCUMENTS DE FACILITATION (Documents 32 et 33)",
+      "embedding_keywords": ["décompte", "général", "définitif", "DGD", "facture", "paiement", "solde", "clôture", "argent"]
+    },
+    {
+      "id": "terme_013",
+      "terme": "Retenue de Garantie",
+      "abreviation": "RDG",
+      "definition_legale": "Fraction du montant du marché (généralement inférieure ou égale à 10% du TTC) prélevée sur les décomptes pour garantir la bonne exécution jusqu'à la réception définitive. Peut être remplacée par une caution bancaire.",
+      "definition_simple": "Une partie de votre argent (maximum 10%) que l'État garde en otage sur vos factures comme assurance contre les malfaçons. Vous récupérez cet argent à la fin totale du projet (Réception définitive).",
+      "synonymes": ["Garantie de retenue", "Pourcentage de garantie"],
+      "contexte": "CCAP Article 11 ou 12, et sur les tableaux de Décompte provisoire.",
+      "reference": "DTAO Fournitures / Travaux / Formulaire de Décompte",
+      "embedding_keywords": ["retenue", "garantie", "10%", "RDG", "décompte", "réception", "malfaçons", "reliquat"]
+    },
+    {
+      "id": "terme_014",
+      "terme": "Cautionnement de soumission",
+      "abreviation": "N/A",
+      "definition_legale": "Garantie émise par un organisme financier agréé (plafonnée à 2% du coût estimatif TTC) pour assurer le maintien et le sérieux de l'offre du soumissionnaire pendant sa période de validité.",
+      "definition_simple": "Un document bancaire prouvant que vous avez les épaules solides. Si vous gagnez le marché mais fuyez sans signer, la banque verse cet argent (2% du marché) à l'État pour le dédommager. Si vous perdez, la caution est annulée.",
+      "synonymes": ["Caution de soumission", "Bid bond", "Garantie de soumission", "Cautionnement provisoire"],
+      "contexte": "Pièce n°1 obligatoire du dossier administratif.",
+      "reference": "Article 15.1 du RPAO / Annexe Modèle de caution",
+      "embedding_keywords": ["cautionnement", "soumission", "caution", "garantie", "banque", "2%", "bid bond", "sérieux"]
+    },
+    {
+      "id": "terme_015",
+      "terme": "Appel d'Offres National Ouvert",
+      "abreviation": "AONO",
+      "definition_legale": "Procédure de passation des marchés par laquelle toute entreprise nationale qualifiée peut soumettre une offre sans étape de présélection préalable.",
+      "definition_simple": "Une compétition publique ouverte à toutes les entreprises camerounaises. Si vous avez les documents administratifs demandés, vous pouvez participer librement et directement.",
+      "synonymes": ["AO", "Avis d'Appel d'Offres"],
+      "contexte": "Précisé dans l'Avis et le mode de passation de l'identifiant du DAO.",
+      "reference": "RSGMP / Code des Marchés Publics",
+      "embedding_keywords": ["appel", "offres", "national", "ouvert", "AONO", "public", "libre", "concurrence", "sans présélection"]
+    },
+    {
+      "id": "terme_016",
+      "terme": "Demande de Cotation",
+      "abreviation": "DC",
+      "definition_legale": "Procédure simplifiée de passation de marchés, conduisant à l'établissement d'une Lettre-Commande pour des achats ou prestations de faible montant.",
+      "definition_simple": "Une procédure allégée et plus rapide qu'un grand Appel d'Offres. C'est idéal pour de petits marchés (fournitures de bureau, nettoyage) avec moins de paperasse compliquée.",
+      "synonymes": ["DC", "Cotation", "Lettre-Commande"],
+      "contexte": "Spécifié dans l'Avis de Consultation.",
+      "reference": "RSGMP / Dossier-type de Demande de Cotation (DTDC)",
+      "embedding_keywords": ["demande", "cotation", "DC", "simplifié", "lettre-commande", "petit", "marché", "rapide"]
+    },
+    {
+      "id": "terme_017",
+      "terme": "Sous-Détail des Prix Unitaires",
+      "abreviation": "SDPU",
+      "definition_legale": "Justification analytique de la construction d'un prix unitaire comprenant les déboursés secs (matériaux, main-d'œuvre, matériel) ainsi que les frais généraux et bénéfices du cocontractant.",
+      "definition_simple": "L'explication transparente de votre prix. L'administration veut voir en détail combien vous coûte la matière première, la main-d'œuvre, et quelle est la marge de bénéfice que vous comptez faire sur chaque article.",
+      "synonymes": ["CSDP", "Cadre du Sous Détail des Prix", "SDP"],
+      "contexte": "Volume 3 de l'Offre (Offre financière).",
+      "reference": "DTAO Fournitures / DTAO Travaux",
+      "embedding_keywords": ["sous-détail", "prix", "unitaires", "SDPU", "déboursés", "marge", "bénéfice", "analytique", "justification"]
+    },
+    {
+      "id": "terme_018",
+      "terme": "COLEPS",
+      "abreviation": "COLEPS",
+      "definition_legale": "Cameroon Online E-Procurement System : Plateforme gouvernementale pour la passation des marchés publics en ligne permettant la soumission dématérialisée des offres.",
+      "definition_simple": "Le site web officiel de l'État (marchespublics.cm) où vous pouvez consulter les appels d'offres et envoyer votre dossier complet par internet (au format PDF).",
+      "synonymes": ["Plateforme de soumission en ligne", "E-procurement", "Portail des marchés publics"],
+      "contexte": "Pièce 14 ou 15 du DAO (Procédure de soumission en ligne).",
+      "reference": "DTAO Fournitures / DTAO Travaux (Procédure de soumission en ligne)",
+      "embedding_keywords": ["COLEPS", "ligne", "dématérialisation", "internet", "plateforme", "e-procurement", "upload", "numérique"]
+    },
+    {
+      "id": "terme_019",
+      "terme": "Accord-Cadre",
+      "abreviation": "AC",
+      "definition_legale": "Contrat par lequel l'Autorité Contractante s'engage à passer des marchés subséquents ou des bons de commande à un ou plusieurs prestataires pendant une période donnée, en fixant les prix à l'avance.",
+      "definition_simple": "Un grand contrat où vous vous mettez d'accord sur les tarifs avec l'État pour 1 à 3 ans. Ensuite, l'administration vous fera des 'bons de commande' réguliers selon ses besoins, sans avoir à refaire de concours.",
+      "synonymes": ["Contrat-cadre", "Accord à bons de commande", "Marché subséquent"],
+      "contexte": "DTAO spécifique aux Accords-Cadres.",
+      "reference": "DTAO AC F (Accord-Cadre Fournitures) / DTAO AC Services",
+      "embedding_keywords": ["accord-cadre", "AC", "bons", "commande", "marché", "subséquent", "répétitif", "fournitures courantes"]
+    },
+    {
+      "id": "terme_020",
+      "terme": "Observateur Indépendant",
+      "abreviation": "OI",
+      "definition_legale": "Personne physique ou morale recrutée par l'ARMP pour veiller de manière indépendante à la régularité du déroulement des travaux de la Commission de Passation des Marchés.",
+      "definition_simple": "L'œil de l'ARMP. C'est un auditeur externe, neutre, qui s'assoit avec la commission pour vérifier qu'il n'y a pas de fraude, de corruption ou d'injustice lors de l'élimination des candidats.",
+      "synonymes": ["Auditeur ARMP", "Observateur externe"],
+      "contexte": "Mentionné dans la liste des ampliations pour les recours, et dans les séances d'ouverture des plis.",
+      "reference": "VF GUIDE AMENDE DE LA REGULATION (Liste des acteurs)",
+      "embedding_keywords": ["observateur", "indépendant", "OI", "régularité", "transparence", "audit", "commission", "ARMP", "fraude"]
+    }
+  ]
+}

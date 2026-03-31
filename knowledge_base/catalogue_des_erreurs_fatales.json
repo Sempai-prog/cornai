@@ -1,0 +1,152 @@
+// Ce catalogue recense de manière exhaustive tous les motifs de rejet direct d'une offre (critères éliminatoires), extraits rigoureusement des Dossiers Types d'Appel d'Offres (DTAO). Il servira de socle de règles au moteur de vérification pré-dépôt de notre application pour garantir qu'aucune PME ne soit éliminée pour une erreur évitable.
+
+
+{
+  "catalogue_erreurs_fatales": {
+    "Vices de forme et de soumission": [
+      {
+        "erreur": "Non-respect du format de fichier des offres (soumission en ligne)",
+        "consequence": "Élimination de l'offre",
+        "frequence_estimee": "Moyenne",
+        "detail": "Fichiers non conformes aux exigences de la plateforme électronique COLEPS (ex: PDF requis, taille dépassée) [1, 2].",
+        "reference": "Article 15.1 du RPAO (DAO Systèmes d'Information et Assurances) [1, 2]",
+        "comment_eviter": "Vérifier le format et le poids de chaque fichier avant l'upload.",
+        "notre_app_fait": "Conversion et compression automatiques des fichiers au standard de la plateforme au sein du module 41.7."
+      },
+      {
+        "erreur": "Présence d'informations financières dans l'offre technique",
+        "consequence": "Rejet immédiat du dossier",
+        "frequence_estimee": "Fréquente (surtout pour les prestataires de services)",
+        "detail": "Le soumissionnaire glisse un devis, un coût ou un taux dans le volume technique, violant le principe de séparation des offres [2].",
+        "reference": "Article 15.1 du RPAO (Spécifique aux Assurances et Prestations Intellectuelles) [2]",
+        "comment_eviter": "S'assurer qu'aucun montant en FCFA ne figure dans la note méthodologique ou les CV.",
+        "notre_app_fait": "Scan NLP du PDF de l'offre technique pour détecter et signaler toute mention monétaire (FCFA) avant la compilation."
+      },
+      {
+        "erreur": "Absence de l'offre financière témoin",
+        "consequence": "Irrecevabilité de l'offre",
+        "frequence_estimee": "Rare (Spécifique aux Appels d'Offres Restreints)",
+        "detail": "Oubli de la copie supplémentaire scellée et destinée spécifiquement à l'ARMP [1].",
+        "reference": "Article 15.1 du RPAO (DAO Systèmes d'Information) [1]",
+        "comment_eviter": "Préparer l'enveloppe témoin selon la procédure exacte.",
+        "notre_app_fait": "Alerte bloquante dans la checklist de colisage si le mode de passation est AONR/AOIR."
+      }
+    ],
+    "Cautions et Pièces Administratives": [
+      {
+        "erreur": "Absence du cautionnement de soumission à l'ouverture des plis",
+        "consequence": "Élimination directe sans délai de rattrapage",
+        "frequence_estimee": "Très fréquente",
+        "detail": "Contrairement aux autres pièces, si la caution manque ou est présentée physiquement pendant la séance, l'offre est rejetée [1, 2].",
+        "reference": "Article 15.1 du RPAO [1, 2]",
+        "comment_eviter": "Vérifier la présence de l'original de la caution (et sa validité de 30 jours au-delà des offres) dans le pli administratif.",
+        "notre_app_fait": "Alerte rouge J-7 et J-3 pour s'assurer que la PME a récupéré l'original à la banque."
+      },
+      {
+        "erreur": "Non-production au-delà de 48h d'une pièce administrative absente ou non conforme",
+        "consequence": "Rejet du dossier administratif",
+        "frequence_estimee": "Très fréquente",
+        "detail": "Expiration du délai de grâce de 48 heures accordé par la commission pour régulariser une pièce (ex: CNPS, Attestation de non-redevance) [1, 2].",
+        "reference": "Article 15.1 du RPAO [1, 2]",
+        "comment_eviter": "Préparer des copies certifiées conformes de moins de 3 mois avant le dépôt.",
+        "notre_app_fait": "Surveillance des dates d'expiration des pièces dans le Profil PME et alerte de renouvellement anticipé."
+      }
+    ],
+    "Ordre général, Éthique et Fraude": [
+      {
+        "erreur": "Fausses déclarations, manœuvres frauduleuses ou pièces falsifiées",
+        "consequence": "Élimination directe et risque de suspension",
+        "frequence_estimee": "Moyenne",
+        "detail": "Falsification d'une attestation fiscale, d'un diplôme ou d'un contrat de référence [1, 2].",
+        "reference": "Article 15.1 du RPAO [1, 2]",
+        "comment_eviter": "Toujours utiliser des documents authentiques et vérifiables (QR code).",
+        "notre_app_fait": "Validation humaine ou par API (quand disponible) des attestations fiscales de la PME."
+      },
+      {
+        "erreur": "Absence de la déclaration sur l'honneur de non abandon des prestations au cours des trois dernières années",
+        "consequence": "Élimination",
+        "frequence_estimee": "Moyenne",
+        "detail": "Document attestant de la bonne conduite passée de l'entreprise [1, 2].",
+        "reference": "Article 15.1 du RPAO [1, 2]",
+        "comment_eviter": "Rédiger et signer cette déclaration pour chaque offre.",
+        "notre_app_fait": "Génération automatique de la déclaration sur papier en-tête de la PME, prête à signer."
+      },
+      {
+        "erreur": "Absence de la charte d'intégrité datée et signée",
+        "consequence": "Élimination",
+        "frequence_estimee": "Fréquente",
+        "detail": "Oubli d'inclure ou de signer le modèle officiel de lutte contre la corruption fourni dans le DAO [1, 2].",
+        "reference": "Article 15.1 du RPAO [1, 2]",
+        "comment_eviter": "Remplir méticuleusement le formulaire du DAO.",
+        "notre_app_fait": "Intégration systématique du modèle dans le bundle documentaire généré par l'application."
+      },
+      {
+        "erreur": "Absence de la déclaration d'engagement au respect des clauses environnementales et sociales datée et signée",
+        "consequence": "Élimination",
+        "frequence_estimee": "Moyenne",
+        "detail": "Oubli de signer l'engagement ESHS [1].",
+        "reference": "Article 15.1 du RPAO [1]",
+        "comment_eviter": "Vérifier la présence et la signature du document ESHS.",
+        "notre_app_fait": "Ajout automatique à la checklist des signatures obligatoires."
+      }
+    ],
+    "Offre Technique (Seuils et Profils)": [
+      {
+        "erreur": "Note technique inférieure au seuil de qualification (X points sur 100)",
+        "consequence": "Non-ouverture de l'offre financière et élimination",
+        "frequence_estimee": "Très fréquente",
+        "detail": "Le score technique cumulé (Références, Méthodologie, Experts, Capacité financière) n'atteint pas le minimum requis (généralement 70 ou 80/100) [1, 2].",
+        "reference": "Article 15.1 du RPAO / Grille d'évaluation [1, 2]",
+        "comment_eviter": "S'assurer d'avoir les diplômes exacts et les preuves de références (1ère page + PV de réception).",
+        "notre_app_fait": "Simulateur de notation (Scoring prédictif) qui calcule la note technique avant le dépôt et alerte si le score est trop faible."
+      },
+      {
+        "erreur": "Non-respect du profil du chef de mission ou du personnel clé",
+        "consequence": "Zéro pointé sur le critère, entraînant souvent l'élimination",
+        "frequence_estimee": "Fréquente",
+        "detail": "Le diplôme, les années d'expérience ou les certifications de l'expert proposé ne correspondent pas exactement à la demande [1].",
+        "reference": "Article 15.1 du RPAO [1]",
+        "comment_eviter": "Lire rigoureusement les profils exigés dans les TDR.",
+        "notre_app_fait": "Matching IA entre les TDR et la base de CV de l'entreprise pour sélectionner le meilleur profil."
+      },
+      {
+        "erreur": "Absence d'agrément, de certification spécifique ou sanction CIMA",
+        "consequence": "Élimination",
+        "frequence_estimee": "Moyenne",
+        "detail": "Absence d'attestation de catégorisation [1], ou entreprise d'assurance sous administration provisoire ou redressement par la CIMA [2].",
+        "reference": "Article 15.1 du RPAO [1, 2]",
+        "comment_eviter": "Vérifier la validité des agréments institutionnels nécessaires à l'exercice du métier.",
+        "notre_app_fait": "Vérification en base de données du statut réglementaire du secteur d'activité."
+      }
+    ],
+    "Offre Financière": [
+      {
+        "erreur": "Absence d'un élément de l'offre financière (la soumission, les BPU, le DQE)",
+        "consequence": "Rejet de l'offre",
+        "frequence_estimee": "Rare (Erreur de colisage)",
+        "detail": "Le soumissionnaire oublie d'imprimer ou d'insérer l'un des trois documents financiers fondamentaux [1].",
+        "reference": "Article 15.1 du RPAO [1]",
+        "comment_eviter": "Pointer minutieusement le Volume 3.",
+        "notre_app_fait": "Checklist de colisage physique final avec validation."
+      },
+      {
+        "erreur": "Absence d'un prix unitaire quantifié dans l'Offre financière",
+        "consequence": "Élimination",
+        "frequence_estimee": "Très fréquente",
+        "detail": "Une ligne du Bordereau des Prix Unitaires (BPU) ou du Détail Quantitatif et Estimatif (DQE) a été laissée vide ou non valorisée [1, 2].",
+        "reference": "Article 15.1 du RPAO [1, 2]",
+        "comment_eviter": "Mettre impérativement un chiffre (même 0 FCFA ou 'Inclus') dans toutes les lignes des tableaux financiers.",
+        "notre_app_fait": "Le module de chiffrage (41.6) bloque l'export PDF du BPU/DQE si une cellule est vide."
+      },
+      {
+        "erreur": "Non-respect du tarif minimum officiel obligatoire (Assurances)",
+        "consequence": "Élimination",
+        "frequence_estimee": "Moyenne",
+        "detail": "Tarification d'une prime (ex: RC automobile) en dessous du barème plancher imposé par l'État/CIMA, considérée comme une offre anormalement basse et frauduleuse [2].",
+        "reference": "Article 15.1 du RPAO (Assurances) [2]",
+        "comment_eviter": "Chiffrer strictement au-dessus du tarif de la CIMA.",
+        "notre_app_fait": "Intégration du barème CIMA dans la base de contrôle des prix pour interdire les saisies hors normes."
+      }
+    ]
+  }
+}

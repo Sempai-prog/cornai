@@ -1,0 +1,151 @@
+//Ces templates constituent l'ossature du Sous-module 41.5 (Rédaction Assistée). Ils permettent à l'IA de générer automatiquement la trame d'une offre technique parfaitement conforme aux exigences spécifiques de chaque catégorie de Dossier Type d'Appel d'Offres (DTAO). L'objectif est de garantir à la PME qu'aucune section éliminatoire ou essentielle ne sera omise lors de la structuration de sa proposition
+
+
+{
+  "templates_offres_techniques": {
+    "travaux_btp_genie_civil": {
+      "titre_document": "OFFRE TECHNIQUE — MARCHÉ DE TRAVAUX",
+      "contexte_utilisation": "Appels d'offres pour la construction, l'entretien routier (GENIS) ou la réhabilitation d'infrastructures.",
+      "sections_obligatoires": [
+        {
+          "section": "I. LETTRE DE SOUMISSION",
+          "instructions_ia": "Insérer le modèle exact fourni à la Pièce n°7 du DAO, sans modifier la structure.",
+          "variables": ["[MONTANT_TTC]", "[DELAI_EXECUTION]", "[DATE_SIGNATURE]"],
+          "source_legale": "(Source : DAOTravaux.pdf, Pièce 7) [3, 4]"
+        },
+        {
+          "section": "II. PRÉSENTATION DE L'ENTREPRISE ET CAPACITÉ FINANCIÈRE",
+          "instructions_ia": "Générer un tableau résumant l'historique de la PME et lister les pièces justifiant la capacité financière.",
+          "contenu_attendu": "Attestation de capacité financière délivrée par une banque de 1er ordre (figurant à la Pièce 14), Chiffre d'affaires des exercices précédents.",
+          "source_legale": "(Source : DAO Type GENIS, Critères d'évaluation) [5, 6]"
+        },
+        {
+          "section": "III. EXPÉRIENCE ET RÉFÉRENCES (MARCHÉS SIMILAIRES)",
+          "instructions_ia": "Extraire du Profil PME les marchés de travaux similaires exécutés. Pour chaque marché, l'IA doit créer un bloc contenant les preuves exigées.",
+          "contenu_attendu": "Tableau des références. Joindre obligatoirement : 1ère et dernière page des contrats + Procès-verbaux de réception (provisoire ou définitive).",
+          "source_legale": "(Source : DTAO Travaux, Grille d'évaluation) [7]"
+        },
+        {
+          "section": "IV. PERSONNEL D'ENCADREMENT (PERSONNEL CLÉ)",
+          "instructions_ia": "Formater les CV selon l'Annexe du DAO. Vérifier le diplôme du Conducteur des Travaux.",
+          "contenu_attendu": "CV datés et signés, copies certifiées des diplômes, attestations de disponibilité. Si fonctionnaire : joindre impérativement le document de libération de la Fonction Publique.",
+          "source_legale": "(Source : DAO Type GENIS, Article 14.1 / DAOTravaux.pdf) [8, 9]"
+        },
+        {
+          "section": "V. MATÉRIEL ET ÉQUIPEMENTS LOGISTIQUES",
+          "instructions_ia": "Lister le matériel affecté au chantier en séparant le matériel en propre et le matériel en location.",
+          "contenu_attendu": "Tableau du matériel. Joindre obligatoirement : Cartes grises, factures d'achat (si propriétaire) ou contrats de location en bonne et due forme.",
+          "source_legale": "(Source : DAOTravaux.pdf, Grille d'évaluation) [7]"
+        },
+        {
+          "section": "VI. MÉTHODOLOGIE ET ORGANISATION DU CHANTIER",
+          "instructions_ia": "Générer une note méthodologique basée sur le CCTP (Cahier des Clauses Techniques Particulières).",
+          "contenu_attendu": "Compréhension des travaux, installation de chantier, gestion des approvisionnements, mesures environnementales et sociales, hygiène et sécurité (ESHS).",
+          "source_legale": "(Source : DAOTravaux.pdf, RPAO / DAO TYPE GENIS) [10]"
+        },
+        {
+          "section": "VII. PLANNING D'EXÉCUTION (DIAGRAMME)",
+          "instructions_ia": "Générer un planning cohérent avec le délai global exigé par le Maître d'Ouvrage.",
+          "contenu_attendu": "Les quantités, les rendements journaliers, la durée d’exécution des prestations et les ralentissements (incidence des saisons de pluies) devront ressortir clairement.",
+          "source_legale": "(Source : Avant projet DTA FOURNITURES, Annexe 7 / DAOTravaux) [11]"
+        },
+        {
+          "section": "VIII. ATTESTATION DE VISITE DE SITE",
+          "instructions_ia": "Vérifier si le RPAO exige une visite de site sanctionnée par une attestation.",
+          "contenu_attendu": "Attestation signée par le Maître d'Ouvrage ou sur l'honneur par le soumissionnaire (selon l'exigence du DAO). L'absence rend le dossier technique incomplet (éliminatoire).",
+          "source_legale": "(Source : DAOTravaux.pdf, Article 7.1 / RPAO 6.1) [12-14]"
+        }
+      ]
+    },
+    "fournitures_et_materiels": {
+      "titre_document": "OFFRE TECHNIQUE — MARCHÉ DE FOURNITURES",
+      "contexte_utilisation": "Appels d'offres pour l'acquisition de matériels médicaux, informatiques, véhicules, ou fournitures scolaires.",
+      "sections_obligatoires": [
+        {
+          "section": "I. LETTRE DE SOUMISSION",
+          "instructions_ia": "Insérer le modèle de soumission (Volume 3).",
+          "variables": ["[MONTANT_TTC]", "[INCOTERM_DAP]", "[DELAI_LIVRAISON]"],
+          "source_legale": "(Source : DTAOFournImp.pdf / DTAO Fournitures) [15]"
+        },
+        {
+          "section": "II. SPÉCIFICATIONS TECHNIQUES ET PROSPECTUS",
+          "instructions_ia": "Lier les descriptions de l'offre aux exigences du CCTP. Alerte IA : L'absence de prospectus est un motif d'élimination.",
+          "contenu_attendu": "Tableau de conformité (Spécification DAO vs Spécification Proposée). Joindre obligatoirement : Prospectus originaux (souvent exigés en couleur), catalogues, fiches techniques du fabricant.",
+          "source_legale": "(Source : DTAO fournitures MATERIEL MEDICAL, Article 15.1) [16-18]"
+        },
+        {
+          "section": "III. AGRÉMENT OU AUTORISATION DU FABRICANT",
+          "instructions_ia": "Insérer la preuve de représentation officielle.",
+          "contenu_attendu": "Agrément ou autorisation du fabricant dûment remplie selon le modèle de l'Annexe du DAO (Modèle Annexe n°7). Indispensable pour éviter l'élimination.",
+          "source_legale": "(Source : DTAOFournImp.pdf, Article 15.1 / Annexe 7) [19, 20]"
+        },
+        {
+          "section": "IV. CERTIFICATIONS SPÉCIFIQUES (SANTÉ / ALIMENTAIRE)",
+          "instructions_ia": "Section conditionnelle : Ne s'active que pour le matériel médical, agricole ou sensible.",
+          "contenu_attendu": "Certificat de produit pharmaceutique conforme à l'OMS, Autorisation de Mise sur le Marché (AMM) au Cameroun ou dans le pays d'origine, Traçabilité des lots.",
+          "source_legale": "(Source : DTAO fournitures MATERIEL MEDICAL) [16, 21, 22]"
+        },
+        {
+          "section": "V. CALENDRIER DE LIVRAISON ET SERVICES CONNEXES",
+          "instructions_ia": "Générer le tableau de calendrier de livraison selon les Incoterms (DAP : Delivered At Place).",
+          "contenu_attendu": "Délai de livraison au plus tôt, Délai au plus tard, Date de réalisation des services connexes (Installation, formation des utilisateurs, mise en service).",
+          "source_legale": "(Source : DTAOFournLocal.pdf, Annexe Tableau de livraison) [1, 23]"
+        },
+        {
+          "section": "VI. GARANTIE ET SERVICE APRÈS-VENTE (SAV)",
+          "instructions_ia": "Détailler les conditions de remplacement des pièces défectueuses.",
+          "contenu_attendu": "Preuve de la période de garantie du matériel (ex: 12 mois à compter de la réception provisoire), engagements de maintenance.",
+          "source_legale": "(Source : Avant projet DAO type fourniture et installation des SI) [24]"
+        }
+      ]
+    },
+    "services_et_prestations_intellectuelles": {
+      "titre_document": "OFFRE TECHNIQUE — PRESTATIONS INTELLECTUELLES (SPI)",
+      "contexte_utilisation": "Appels d'offres pour des études, audits, maîtrise d'œuvre, ou développement de Systèmes d'Information. Évaluation par points (sur 100).",
+      "sections_obligatoires": [
+        {
+          "section": "I. LETTRE DE SOUMISSION DE LA PROPOSITION TECHNIQUE",
+          "instructions_ia": "Insérer le modèle Tableau 4A. Attention : AUCUNE INFORMATION FINANCIÈRE ne doit y figurer sous peine d'élimination.",
+          "variables": ["[NOM_DU_CONSULTANT]", "[OBJET_DE_LA_MISSION]"],
+          "source_legale": "(Source : DTAOAutresSPI.pdf, Formulaire 4A) [25]"
+        },
+        {
+          "section": "II. RÉFÉRENCES DU CONSULTANT / CABINET",
+          "instructions_ia": "Générer le Tableau 4B basé sur les expériences des 10 dernières années de la PME.",
+          "contenu_attendu": "Nom de la mission, pays, nom du client, valeur du contrat. Preuves exigées : 1ère et dernière page des contrats, Lettres de satisfecit ou Attestations de bonne fin.",
+          "source_legale": "(Source : DTAOAutresSPI.pdf / DAO Type_Serv_NonQ) [25, 26]"
+        },
+        {
+          "section": "III. OBSERVATIONS ET SUGGESTIONS SUR LES TDR",
+          "instructions_ia": "L'IA analyse les Termes de Référence (TDR) et propose des améliorations pertinentes (Tableau 4C).",
+          "contenu_attendu": "Commentaires sur les données, services et installations que doit fournir le Maître d'Ouvrage. (C'est un critère noté).",
+          "source_legale": "(Source : DTAOAutresSPI.pdf) [25]"
+        },
+        {
+          "section": "IV. MÉTHODOLOGIE ET PLAN DE TRAVAIL",
+          "instructions_ia": "Rédiger le descriptif de la méthodologie (Tableau 4D) pour atteindre les objectifs des TDR.",
+          "contenu_attendu": "Approche technique, organisation des tâches, livrables attendus, transfert de compétences.",
+          "source_legale": "(Source : DTAOAutresSPI.pdf) [25]"
+        },
+        {
+          "section": "V. COMPOSITION DE L'ÉQUIPE ET TÂCHES",
+          "instructions_ia": "Générer le Tableau 4E listant le personnel clé et le personnel d'appui.",
+          "contenu_attendu": "Nom de l'expert, domaine d'expertise, poste assigné, tâches assignées.",
+          "source_legale": "(Source : DTAOAutresSPI.pdf) [25]"
+        },
+        {
+          "section": "VI. CURRICULUM VITAE (CV) DU PERSONNEL CLÉ",
+          "instructions_ia": "Formater strictement selon le modèle Tableau 4F. Poids très fort dans la notation (50-60%).",
+          "contenu_attendu": "CV datés et signés par l'expert et le représentant autorisé. Copies certifiées des diplômes. Si l'expert est un agent public : document justifiant sa libération de l'Administration.",
+          "source_legale": "(Source : DTAO SPI, NB d'évaluation des experts) [8, 25]"
+        },
+        {
+          "section": "VII. CALENDRIER D'INTERVENTION DU PERSONNEL",
+          "instructions_ia": "Générer le Tableau 4G (Diagramme d'intervention en Hommes/Mois).",
+          "contenu_attendu": "Mois d'intervention par expert, indiquant clairement le temps plein et le temps partiel.",
+          "source_legale": "(Source : DTAOAutresSPI.pdf) [25]"
+        }
+      ]
+    }
+  }
+}

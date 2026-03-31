@@ -209,12 +209,13 @@ export const matchings = pgTable('matchings', {
   entrepriseId: uuid('entreprise_id').references(() => entreprises.id, { onDelete: 'cascade' }).notNull(),
   appelOffreId: uuid('appel_offre_id').references(() => appelsOffres.id, { onDelete: 'cascade' }).notNull(),
 
-  scoreTotal: integer('score_total'),
-  scoreSecteur: integer('score_secteur'),
-  scoreBudget: integer('score_budget'),
-  scoreLocalisation: integer('score_localisation'),
-  scoreExperience: integer('score_experience'),
-  scoreDocuments: integer('score_documents'),
+  scoreTotal: integer('score_total').notNull().default(0),
+  scoreSecteur: integer('score_secteur').notNull().default(0),
+  scoreBudget: integer('score_budget').notNull().default(0),
+  scoreLocalisation: integer('score_localisation').notNull().default(0),
+  scoreExperience: integer('score_experience').notNull().default(0),
+  scoreDocuments: integer('score_documents').notNull().default(0),
+  scoreDelai: integer('score_delai').notNull().default(0),
   details: jsonb('details'),
 
   notifie: boolean('notifie').default(false),
@@ -222,6 +223,7 @@ export const matchings = pgTable('matchings', {
   reponsePme: varchar('reponse_pme', { length: 20 }),
 
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow(),
 }, (table) => [
   uniqueIndex('idx_matching_unique').on(table.entrepriseId, table.appelOffreId),
   index('idx_matching_score').on(table.scoreTotal),

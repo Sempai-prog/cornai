@@ -1,0 +1,92 @@
+// Ce livrable consolide toutes les règles et paramètres de calcul financier extraits des Dossiers Types d'Appel d'Offres (DTAO) et des formulaires de décompte du MINMAP. Notre module de chiffrage intelligent (Sous-module 41.6) utilisera ces données pour générer automatiquement les offres financières des PME et évaluer leur rentabilité. Conformément à nos principes, les taux exacts qui dépendent du Code Général des Impôts annuel et non précisés dans les DAO sont marqués à vérifier.
+
+
+{
+  "regles_calcul_financier": [
+    {
+      "regle": "Taxe sur la Valeur Ajoutée (TVA)",
+      "taux_ou_formule": "19,25%",
+      "base_de_calcul": "Montant Hors Taxes (HT) ou Hors Taxe sur la Valeur Ajoutée (HTVA)",
+      "conditions": "Applicable par défaut à tous les montants facturés, sauf disposition contraire ou financement extérieur spécifique l'excluant.",
+      "liberation": "N/A",
+      "reference_legale": "Formulaire de soumission financière (Volume 3) et Tableau récapitulatif du décompte provisoire/final.",
+      "impact_sur_tresorerie": "Collectée par la PME mais reversée à l'État, ou retenue directement à la source par le Maître d'Ouvrage selon la nature du marché."
+    },
+    {
+      "regle": "Acompte de l'Impôt sur le Revenu (AIR) / Précompte",
+      "taux_ou_formule": "2,2% (Régime Réel) ou 5,5% (Régime Simplifié)",
+      "base_de_calcul": "Montant HT déduit de l'avance de démarrage et de la retenue de garantie (Base = Montant HT)",
+      "conditions": "Le taux dépend exclusivement du régime fiscal du cocontractant (PME).",
+      "liberation": "N/A",
+      "reference_legale": "Formulaire de Décompte Provisoire / Final (Règle : AIR (G) = (B-C) x R/100).",
+      "impact_sur_tresorerie": "L'État retient ce montant à la source sur chaque facture (décompte) payée à la PME. Cela réduit le 'Net à mandater' perçu."
+    },
+    {
+      "regle": "Retenue de garantie",
+      "taux_ou_formule": "10% maximum",
+      "base_de_calcul": "Montant TTC du marché (et prélevée sur chaque décompte provisoire)",
+      "conditions": "Applicable aux marchés de Travaux et Fournitures. ATTENTION : La retenue de garantie n'est pas requise pour les marchés de Services et de Prestations Intellectuelles.",
+      "liberation": "Restitution effectuée dans un délai d'un mois après la date de la réception définitive sur mainlevée délivrée par le Maître d'Ouvrage.",
+      "reference_legale": "Article 11.2 (ou 12.2) du CCAP et exceptions aux Articles 11.2 des DAO Services/PI.",
+      "impact_sur_tresorerie": "Bloque jusqu'à 10% de la trésorerie totale de l'entreprise pendant toute la durée d'exécution ET la période de garantie (souvent 12 mois après exécution)."
+    },
+    {
+      "regle": "Cautionnement définitif (Caution de bonne exécution)",
+      "taux_ou_formule": "Entre 2% et 5% maximum",
+      "base_de_calcul": "Montant TTC du marché",
+      "conditions": "Obligatoire. Il est constitué et transmis au Chef de Service du marché dans un délai maximum de vingt (20) jours à compter de la date de notification du marché.",
+      "liberation": "Restitution dans un délai d'un mois suivant la date de réception provisoire des travaux ou prestations.",
+      "reference_legale": "Article 11.1 ou 12.1 du CCAP (Garanties et cautions).",
+      "impact_sur_tresorerie": "Exige de la PME qu'elle mobilise une ligne de crédit bancaire ou bloque des fonds dès la notification du marché pour obtenir cette caution."
+    },
+    {
+      "regle": "Avance de démarrage et Caution d'avance",
+      "taux_ou_formule": "20% maximum",
+      "base_de_calcul": "Montant TTC du marché",
+      "conditions": "Optionnelle. Si demandée, elle doit être cautionnée à 100% par un organisme financier. ATTENTION : Aucune avance de démarrage n'est consentie pour les marchés d'Assurances.",
+      "liberation": "Remboursée progressivement par prélèvement sur les décomptes provisoires, ce qui libère la caution bancaire proportionnellement.",
+      "reference_legale": "Article 11.3 (ou 12.3) du CCAP et interdiction formelle dans les DAO Assurances.",
+      "impact_sur_tresorerie": "Impact très positif au démarrage (financera l'installation de chantier), mais la PME doit avoir la capacité bancaire d'obtenir la caution correspondante."
+    },
+    {
+      "regle": "Taxe Spéciale sur le Revenu (TSR)",
+      "taux_ou_formule": "Non trouvé dans les sources disponibles — à vérifier (dépend du Code Général des Impôts)",
+      "base_de_calcul": "Montant des prestations",
+      "conditions": "Particulièrement mentionnée dans les marchés d'Assurances et de Prestations intellectuelles pour les entités ou réassureurs étrangers.",
+      "liberation": "N/A",
+      "reference_legale": "Article 12 du CCAP Assurance (Montant de la TSR/IR).",
+      "impact_sur_tresorerie": "Taxe retenue à la source réduisant le montant net à payer."
+    },
+    {
+      "regle": "Pénalités de retard",
+      "taux_ou_formule": "Non trouvé dans les sources disponibles — à vérifier (généralement 1/1000 ou 1/2000 par jour de retard, fixé dans le CCAP de chaque projet)",
+      "base_de_calcul": "Montant du marché ou de la tranche concernée",
+      "conditions": "Décomptées automatiquement en cas de dépassement du délai d'exécution de l'Ordre de Service. Un plafond maximal est défini, au-delà duquel le marché est résilié.",
+      "liberation": "N/A",
+      "reference_legale": "Le principe des pénalités est mentionné dans le modèle de Décompte et au CCAP, mais la formule mathématique exacte n'est pas remplie dans les documents types.",
+      "impact_sur_tresorerie": "Retenues directement sur les factures de l'entreprise (décomptes), ce qui détruit la marge bénéficiaire."
+    },
+    {
+      "regle": "Révision et Actualisation des prix",
+      "taux_ou_formule": "Non trouvé dans les sources disponibles — à vérifier (Formule polynomiale définie par le Maître d'Ouvrage)",
+      "base_de_calcul": "Indices officiels des coûts (main d'œuvre, matériaux, transport)",
+      "conditions": "Applicable si le CCAP le prévoit (Article 12, 13, 14), généralement pour les marchés dont le délai d'exécution est très long.",
+      "liberation": "N/A",
+      "reference_legale": "Articles 12, 13, 14 du CCAP (Variation des prix, Formules de révision, Formules d'actualisation).",
+      "impact_sur_tresorerie": "Mécanisme de sécurité qui protège la PME contre l'inflation (ex: hausse du prix du ciment pendant un chantier de 2 ans)."
+    },
+    {
+      "regle": "Droits d'enregistrement et Frais de timbre",
+      "taux_ou_formule": "Non trouvé dans les sources disponibles — à vérifier",
+      "base_de_calcul": "Montant du marché",
+      "conditions": "Exigence légale pour valider le contrat. A la charge exclusive du cocontractant.",
+      "liberation": "N/A",
+      "reference_legale": "Mention des exigences d'enregistrement (ENREGISTRE, LE...) sur la page de signature du marché.",
+      "impact_sur_tresorerie": "Dépense administrative à sortir 'de sa poche' par la PME avant même de percevoir le moindre acompte."
+    }
+  ]
+}
+```
+
+
+// Grâce à ce livrable, notre outil de chiffrage financier (Sous-module 41.6) effectuera un **calcul de rentabilité nette** avant soumission. Exemple : Si la PME chiffre un projet à 10 000 000 FCFA HT, l'application calculera automatiquement : `TVA (19,25%) = 1 925 000 FCFA`. L'application déduira virtuellement `l'AIR (5,5% pour une PME au régime simplifié) = 550 000 FCFA` et affichera à la PME : *"Attention, votre bénéfice réel sera impacté par l'AIR. De plus, 1 192 500 FCFA (10%) seront bloqués par l'État comme retenue de garantie jusqu'à l'année prochaine. Assurez-vous d'avoir assez de fonds de roulement"*

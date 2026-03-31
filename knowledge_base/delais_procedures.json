@@ -1,0 +1,119 @@
+// Ce guide retrace chronologiquement les délais réglementaires régissant le cycle de vie d'un marché public au Cameroun, de la publication à la libération des garanties. Construit exclusivement à partir des dispositions des DTAO, du Code et des rapports de l'ARMP fournis, il intègre également les délais de carence observés sur le terrain. L'application utilisera ce référentiel pour séquencer les rappels automatisés du tableau de bord de la PME.
+
+
+{
+  "cycle_vie_marches_publics": [
+    {
+      "etape": "1. Publication AO → Délai de soumission",
+      "delai_reglementaire": "Non trouvé dans les sources disponibles — à vérifier (Le délai exact en jours n'est pas explicitement chiffré dans les extraits, mais le RGAO Art. 19 permet un report si un additif est publié) [1, 2].",
+      "delai_pratique": "Variable selon les statistiques ARMP (Marge de performance) : <= 40 jours pour les Demandes de Cotation, <= 60 jours pour les AONO, et jusqu'à 160 jours pour les AOIR [3].",
+      "responsable": "Maître d'Ouvrage (MO) ou Maître d'Ouvrage Délégué (MOD)",
+      "document_produit": "Avis d'Appel d'Offres (AAO) et Dossier d'Appel d'Offres (DAO)",
+      "point_attention": "Les dates limites de dépôt exigent une ponctualité absolue. Toute soumission hors délai est irrecevable."
+    },
+    {
+      "etape": "2. Soumission → Dépouillement",
+      "delai_reglementaire": "Non trouvé dans les sources disponibles — à vérifier.",
+      "delai_pratique": "Non trouvé dans les sources disponibles — à vérifier.",
+      "responsable": "Commission de Passation des Marchés (CPM) / Commission Interne (CIPM)",
+      "document_produit": "Procès-verbal de la séance d'ouverture des plis",
+      "point_attention": "L'absence de la caution de soumission à l'ouverture des plis (ou la présentation de celle-ci séance tenante) entraîne le rejet systématique de l'offre sans rattrapage possible [4-6]."
+    },
+    {
+      "etape": "3. Dépouillement → Évaluation technique",
+      "delai_reglementaire": "Délai de grâce de 48 heures calendaires accordé par la Commission après l'ouverture des plis pour régulariser une pièce administrative absente ou jugée non conforme [4, 5, 7].",
+      "delai_pratique": "Non trouvé dans les sources disponibles — à vérifier.",
+      "responsable": "Sous-Commission d'Analyse des Offres (SCAO)",
+      "document_produit": "Rapport d'analyse des offres techniques et financières [8, 9]",
+      "point_attention": "Ce sursis de 48h s'applique à toutes les pièces administratives SAUF la caution de soumission. Toute fausse déclaration ou falsification détectée ici entraîne l'élimination directe [4, 7]."
+    },
+    {
+      "etape": "4. Évaluation technique → Attribution provisoire",
+      "delai_reglementaire": "Non trouvé dans les sources disponibles — à vérifier.",
+      "delai_pratique": "Non trouvé dans les sources disponibles — à vérifier.",
+      "responsable": "Commission de Passation des Marchés (Adoption du rapport d'analyse et proposition d'attribution) [10]",
+      "document_produit": "Décision d'attribution de la lettre-commande ou proposition d'attribution du marché [10]",
+      "point_attention": "L'évaluation stricte se fait selon le mode binaire (Oui/Non) pour Travaux/Fournitures, ou par points (ex: 70/100 minimum) pour les Prestations Intellectuelles et Assurances [11-13]."
+    },
+    {
+      "etape": "5. Attribution → Publication des résultats",
+      "delai_reglementaire": "Communication des résultats dans un délai maximal de cinq (5) jours après publication à tout soumissionnaire qui en fait la requête [14-17].",
+      "delai_pratique": "Transmission du communiqué pour publication dans le Journal des Marchés Publics (JDM) et publication sous 24 heures par l'ARMP (dans le cas spécifique des pré-qualifications) [10].",
+      "responsable": "Autorité Contractante / Maître d'Ouvrage",
+      "document_produit": "Publication des résultats d'attribution et Rapport de l'Observateur Indépendant (sur demande) [14, 16].",
+      "point_attention": "Les offres non retirées dans un délai maximal de quinze (15) jours après publication des résultats seront détruites, sans qu'il y ait lieu à réclamation [18-20]."
+    },
+    {
+      "etape": "6. Résultats → Recours possibles",
+      "delai_reglementaire": "Délai maximal de cinq (5) jours ouvrables après publication des résultats pour exercer un recours [21]. Un autre délai de 14 jours avant l'ouverture est applicable pour les recours sur le DAO [22].",
+      "delai_pratique": "Non trouvé dans les sources disponibles — à vérifier.",
+      "responsable": "Soumissionnaire lésé",
+      "document_produit": "Lettre de recours ou de réclamation",
+      "point_attention": "Le recours doit impérativement être adressé au Ministre en charge des Marchés Publics, avec copies obligatoires à l'ARMP, au Maître d'Ouvrage et au Président de la Commission [18-20]."
+    },
+    {
+      "etape": "7. Attribution définitive → Notification",
+      "delai_reglementaire": "Non trouvé dans les sources disponibles — à vérifier.",
+      "delai_pratique": "Non trouvé dans les sources disponibles — à vérifier.",
+      "responsable": "Autorité Contractante / Maître d'Ouvrage",
+      "document_produit": "Marché ou Lettre-Commande (LC)",
+      "point_attention": "La notification constitue le point de départ juridique de la relation contractuelle, bien que le délai d'exécution ne démarre qu'à l'Ordre de Service."
+    },
+    {
+      "etape": "8. Notification → Signature du marché",
+      "delai_reglementaire": "Non trouvé dans les sources disponibles — à vérifier.",
+      "delai_pratique": "Non trouvé dans les sources disponibles — à vérifier.",
+      "responsable": "Le Cocontractant (Fournisseur) et le Maître d'Ouvrage",
+      "document_produit": "Contrat paraphé et signé (ex: Sept exemplaires originaux)",
+      "point_attention": "Les frais de timbrage et d'enregistrement du marché sont entièrement à la charge du fournisseur, conformément à la réglementation [23]."
+    },
+    {
+      "etape": "9. Signature → Ordre de service (OS) de démarrage",
+      "delai_reglementaire": "Quinze (15) jours calendaires accordés au Maître d'Ouvrage après notification du marché pour délivrer l'OS de démarrage [24-28]. L'Autorité Contractante a max 30 jours pour notifier via le MO, faute de quoi elle se substitue à lui [29-32].",
+      "delai_pratique": "Non trouvé dans les sources disponibles — à vérifier.",
+      "responsable": "Autorité Contractante ou Maître d'Ouvrage (selon seuils)",
+      "document_produit": "Ordre de Service de Démarrage (OSD)",
+      "point_attention": "Le délai contractuel d'exécution ou de livraison court exclusivement à compter de la date de notification de cet OS de démarrage [33-35]."
+    },
+    {
+      "etape": "10. OS → Délais de projet et d'exécution",
+      "delai_reglementaire": "Le cocontractant dispose d'un délai de quinze (15) jours pour émettre des réserves sur tout OS reçu. Le projet d'exécution doit être soumis au plus tard un (01) mois après notification de l'OSD [36-38].",
+      "delai_pratique": "Le Chef de service dispose de 5 à 15 jours pour approuver (Bon pour Exécution) ou rejeter le projet d'exécution. En cas de rejet, le prestataire a 8 jours pour présenter un nouveau projet [39-42].",
+      "responsable": "Le Cocontractant (PME) pour les réserves, le Chef de Service pour l'approbation.",
+      "document_produit": "Projet d'exécution, Programme ou Note méthodologique approuvée.",
+      "point_attention": "Émettre des réserves ne dispense pas le prestataire d'exécuter l'OS reçu [36, 43]. Sans 'Bon pour Exécution', aucune prestation ne sera payée [42]."
+    },
+    {
+      "etape": "11. Exécution → Réception provisoire",
+      "delai_reglementaire": "Fixé par le délai global du marché stipulé au CCAP (en mois ou semaines) [33, 34, 44].",
+      "delai_pratique": "Non trouvé dans les sources disponibles — à vérifier.",
+      "responsable": "Commission de Réception, Maître d'Ouvrage, Ingénieur",
+      "document_produit": "Procès-verbal de réception provisoire / Attestation de bonne exécution",
+      "point_attention": "La réception provisoire permet le déclenchement de la facturation majeure, mais impose la correction des réserves. Pour les marchés à tranches conditionnelles, l'achèvement et la réception de la tranche ferme conditionne le démarrage de la suivante [43, 45-47]."
+    },
+    {
+      "etape": "12. Réception provisoire → Réception définitive",
+      "delai_reglementaire": "Période de garantie contractuelle (Non trouvé dans les sources disponibles — à vérifier pour la durée exacte standard, variable selon le marché) [48-51].",
+      "delai_pratique": "Non trouvé dans les sources disponibles — à vérifier.",
+      "responsable": "Le Cocontractant (PME)",
+      "document_produit": "Ordres de service de réparation (si désordres constatés) [49-51]",
+      "point_attention": "L'entrepreneur est tenu de remédier à ses frais à tous les désordres signalés par OS qui ne relèvent pas d'une utilisation normale pendant cette période [49-51]."
+    },
+    {
+      "etape": "13. Réception définitive → Paiement final",
+      "delai_reglementaire": "Délai de paiement fixé à quatre-vingt-dix (90) jours ouvrables à compter de la transmission au comptable des constatations ouvrant droit à paiement (Article 165 alinéa 3 du CMP) [52].",
+      "delai_pratique": "Les délais observés dépassent largement les 90 jours ouvrables en raison de la faible mobilisation des ressources, entraînant de lourds intérêts moratoires à la charge de l'État (2,5 milliards FCFA en 2020) et fragilisant les PME [52].",
+      "responsable": "Organisme Payeur / Comptable Public",
+      "document_produit": "Décompte final / Facture visée",
+      "point_attention": "Le paiement est strictement soumis à la règle du service fait, intervenant après réception conforme par la Commission (excepté l'avance de démarrage) [53]."
+    },
+    {
+      "etape": "14. Libération des garanties",
+      "delai_reglementaire": "La caution de soumission reste valide 30 jours au-delà de la validité des offres [5, 6, 54]. La caution de bonne exécution (Final bond) doit être libérée dans un délai fixé après la date de réception provisoire [55].",
+      "delai_pratique": "Non trouvé dans les sources disponibles — à vérifier.",
+      "responsable": "Banque émettrice / Autorité Contractante",
+      "document_produit": "Mainlevée de caution",
+      "point_attention": "Passé le délai contractuel après la réception provisoire, la caution de bonne exécution devient caduque et doit être retournée sans requête expresse de la banque [55]."
+    }
+  ]
+}

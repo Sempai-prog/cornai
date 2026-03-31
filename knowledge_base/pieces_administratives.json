@@ -1,0 +1,749 @@
+{
+    "id": "piece_001",
+    "nom_canonique": "Cautionnement de soumission",
+    "variantes_nom": [
+      "Caution de soumission",
+      "Garantie de soumission",
+      "Bid bond",
+      "Cautionnement provisoire"
+    ],
+    "categorie": "financiere",
+    "obligatoire_par_defaut": true,
+    "eliminatoire_si_absent": true,
+    "rattrapable_48h": false,
+    "emetteur": "Institution bancaire de premier ordre ou organisme financier agréé par le Ministre en charge des Finances",
+    "ou_obtenir": {
+      "lieu": "Banques commerciales ou organismes agréés listés à la Pièce 14 du DAO",
+      "villes": ["Toutes villes"],
+      "contact": null
+    },
+    "cout_estime_fcfa": {
+      "min": null,
+      "max": null,
+      "base_calcul": "Le montant de la caution est fixé par l'AO (Max 2% du TTC). Frais bancaires non trouvés dans les sources - à vérifier auprès de la banque."
+    },
+    "delai_obtention_jours": {
+      "min": null,
+      "max": null
+    },
+    "duree_validite": "Trente (30) jours au-delà de la date initiale de validité des offres",
+    "format_requis": "Original obligatoire dans le pli",
+    "reference_legale": "Article 15.1 du RPAO, Article 19.7 du RGAO",
+    "applicable_types_marches": [
+      "travaux",
+      "fournitures",
+      "services",
+      "prestations_intellectuelles",
+      "assurances"
+    ],
+    "non_applicable": ["demande_cotation", "lettre_commande", "gre_a_gre"],
+    "regex_detection": "(?i)(absence|défaut|manque|non[- ]?(présentation|production|fourniture)).{0,40}(caution|cautionnement|garantie).{0,30}(soumission)",
+    "message_alerte_whatsapp": "⚠️ CAUTION OBLIGATOIRE ! L'absence de la caution de soumission = REJET DIRECT à l'ouverture. Aucun délai de 48h accordé.",
+    "message_action_whatsapp": "📋 OBTENIR TA CAUTION : 1. Trouve une banque agréée (Pièce 14 du DAO). 2. Demande ta caution (Max 2% du TTC). 3. Insère L'ORIGINAL dans le pli administratif.",
+    "pieges_courants": [
+      "Absence à l'ouverture des plis (élimination directe)",
+      "Présentation séance tenante (irrecevable)",
+      "Délivrée par un organisme non listé dans la Pièce 14",
+      "Durée de validité inférieure à l'exigence (Validité offre + 30 jours)"
+    ]
+  },
+  
+{
+    "id": "piece_002",
+    "nom_canonique": "Déclaration sur l'honneur de non-abandon de marchés",
+    "variantes_nom": [
+      "Attestation de non abandon de marchés",
+      "Déclaration de non abandon des prestations au cours des trois dernières années"
+    ],
+    "categorie": "ethique",
+    "obligatoire_par_defaut": true,
+    "eliminatoire_si_absent": true,
+    "rattrapable_48h": true,
+    "emetteur": "Le soumissionnaire (Représentant légal de la PME)",
+    "ou_obtenir": {
+      "lieu": "Généré par la PME sur son papier en-tête",
+      "villes": ["Toutes villes"],
+      "contact": null
+    },
+    "cout_estime_fcfa": {
+      "min": 0,
+      "max": 0,
+      "base_calcul": "Gratuit (rédaction interne)"
+    },
+    "delai_obtention_jours": {
+      "min": 0,
+      "max": 1
+    },
+    "duree_validite": "Atteste de la conformité sur les trois (03) dernières années",
+    "format_requis": "Original signé et daté",
+    "reference_legale": "Article 15.1 du RPAO",
+    "applicable_types_marches": [
+      "travaux",
+      "fournitures",
+      "services",
+      "prestations_intellectuelles",
+      "assurances"
+    ],
+    "non_applicable": [],
+    "regex_detection": "(?i)(absence|défaut|manque).{0,40}(déclaration|attestation).{0,40}(non[- ]?abandon|abandonné).{0,30}(chantier|marché|prestation|travaux).{0,40}(trois|3)",
+    "message_alerte_whatsapp": "🛑 DÉCLARATION NON-ABANDON : Tu dois certifier n'avoir abandonné aucun marché ces 3 dernières années. Oubli = ÉLIMINATION !",
+    "message_action_whatsapp": "📋 Sur ton papier en-tête, rédige : 'Je soussigné [Nom] certifie sur l'honneur n'avoir abandonné aucun marché au cours des 3 dernières années'. Date et signe le document.",
+    "pieges_courants": [
+      "Oubli pur et simple du document",
+      "Déclaration couvrant une période inférieure aux 3 ans",
+      "Document non daté ou non signé par le représentant habilité"
+    ]
+  },
+  
+{
+    "id": "piece_003",
+    "nom_canonique": "Charte d'intégrité",
+    "variantes_nom": [
+      "Charte d'intégrité datée et signée",
+      "Formulaire de la charte d'intégrité"
+    ],
+    "categorie": "ethique",
+    "obligatoire_par_defaut": true,
+    "eliminatoire_si_absent": true,
+    "rattrapable_48h": true,
+    "emetteur": "Modèle imposé par l'Administration (MINMAP)",
+    "ou_obtenir": {
+      "lieu": "Annexes du DAO (Généralement Pièce n°10 ou 11)",
+      "villes": ["Toutes villes"],
+      "contact": null
+    },
+    "cout_estime_fcfa": {
+      "min": 0,
+      "max": 0,
+      "base_calcul": "Gratuit"
+    },
+    "delai_obtention_jours": {
+      "min": 0,
+      "max": 1
+    },
+    "duree_validite": "Liée à la procédure de l'appel d'offres",
+    "format_requis": "Original strictement conforme au modèle, daté et signé",
+    "reference_legale": "Article 15.1 du RPAO",
+    "applicable_types_marches": [
+      "travaux",
+      "fournitures",
+      "services",
+      "prestations_intellectuelles",
+      "assurances"
+    ],
+    "non_applicable": [],
+    "regex_detection": "(?i)(absence|défaut|manque).{0,40}(charte[- ]?d'intégrité)",
+    "message_alerte_whatsapp": "🤝 CHARTE D'INTÉGRITÉ OBLIGATOIRE ! L'absence ou l'oubli de signature est un motif d'élimination.",
+    "message_action_whatsapp": "📋 Va dans les annexes de ton DAO, trouve le formulaire exact de la 'Charte d'intégrité', remplis-le, mets la date d'aujourd'hui et signe.",
+    "pieges_courants": [
+      "Document inséré mais non daté",
+      "Document inséré mais non signé",
+      "Utilisation d'un ancien modèle non conforme à l'annexe du DAO"
+    ]
+  },
+  
+{
+    "id": "piece_004",
+    "nom_canonique": "Déclaration d'engagement au respect des clauses environnementales et sociales",
+    "variantes_nom": [
+      "Engagement social et environnemental",
+      "Clauses ESHS"
+    ],
+    "categorie": "ethique",
+    "obligatoire_par_defaut": true,
+    "eliminatoire_si_absent": true,
+    "rattrapable_48h": true,
+    "emetteur": "Modèle imposé par l'Administration",
+    "ou_obtenir": {
+      "lieu": "Annexes du DAO (Généralement Pièce n°11 ou 12)",
+      "villes": ["Toutes villes"],
+      "contact": null
+    },
+    "cout_estime_fcfa": {
+      "min": 0,
+      "max": 0,
+      "base_calcul": "Gratuit"
+    },
+    "delai_obtention_jours": {
+      "min": 0,
+      "max": 1
+    },
+    "duree_validite": "Pour l'exécution du marché concerné",
+    "format_requis": "Original daté et signé",
+    "reference_legale": "Article 15.1 du RPAO",
+    "applicable_types_marches": [
+      "travaux",
+      "fournitures",
+      "services",
+      "prestations_intellectuelles"
+    ],
+    "non_applicable": [
+      "assurances"
+    ],
+    "regex_detection": "(?i)(absence|défaut|manque).{0,40}(engagement[- ]?social[- ]?et[- ]?environnemental|clauses[- ]?environnementales)",
+    "message_alerte_whatsapp": "🌍 ENGAGEMENT ENVIRONNEMENTAL ! Ce formulaire annexé au DAO doit obligatoirement être signé.",
+    "message_action_whatsapp": "📋 Cherche l'annexe 'Engagement ESHS' dans le DAO. Remplis les champs, signe et date. À glisser dans ton dossier administratif.",
+    "pieges_courants": [
+      "Oubli de la date ou de la signature"
+    ]
+  },
+  
+{
+    "id": "piece_005",
+    "nom_canonique": "Attestation de non-redevance",
+    "variantes_nom": [
+      "ANR",
+      "Attestation de mise à jour fiscale"
+    ],
+    "categorie": "administrative",
+    "obligatoire_par_defaut": true,
+    "eliminatoire_si_absent": true,
+    "rattrapable_48h": true,
+    "emetteur": "Direction Générale des Impôts",
+    "ou_obtenir": {
+      "lieu": "Centre des Impôts de rattachement (Souvent en ligne via le portail DGI)",
+      "villes": ["Toutes villes"],
+      "contact": null
+    },
+    "cout_estime_fcfa": {
+      "min": null,
+      "max": null,
+      "base_calcul": "Non trouvé dans les sources - à vérifier auprès des services fiscaux"
+    },
+    "delai_obtention_jours": {
+      "min": null,
+      "max": null
+    },
+    "duree_validite": "Moins de trois (03) mois",
+    "format_requis": "Original ou copie certifiée conforme par l'autorité émettrice",
+    "reference_legale": "Article 13.1 du RPAO",
+    "applicable_types_marches": [
+      "travaux",
+      "fournitures",
+      "services",
+      "prestations_intellectuelles",
+      "assurances"
+    ],
+    "non_applicable": [],
+    "regex_detection": "(?i)(attestation[- ]?de[- ]?non[- ]?redevance)",
+    "message_alerte_whatsapp": "📜 NON-REDEVANCE FISCALE : Document obligatoire. Expiré ? Tu auras 48h après l'ouverture pour fournir la bonne pièce.",
+    "message_action_whatsapp": "📋 Assure-toi que ton ANR date de moins de 3 mois. Fournis l'original (avec QR code lisible) ou une copie légalisée par les IMPÔTS (pas par la police !).",
+    "pieges_courants": [
+      "Document expiré (> 3 mois)",
+      "Document contrefait ou QR code invalide (Entraîne suspension par l'ARMP)",
+      "Copie certifiée par une autorité non compétente (ex: Commissariat)"
+    ]
+  },
+  
+{
+    "id": "piece_006",
+    "nom_canonique": "Attestation CNPS",
+    "variantes_nom": [
+      "Attestation de soumission CNPS",
+      "Mise à jour sociale"
+    ],
+    "categorie": "administrative",
+    "obligatoire_par_defaut": true,
+    "eliminatoire_si_absent": true,
+    "rattrapable_48h": true,
+    "emetteur": "Caisse Nationale de Prévoyance Sociale (CNPS)",
+    "ou_obtenir": {
+      "lieu": "Centre CNPS de rattachement",
+      "villes": ["Toutes villes"],
+      "contact": null
+    },
+    "cout_estime_fcfa": {
+      "min": null,
+      "max": null,
+      "base_calcul": "Non trouvé dans les sources - à vérifier"
+    },
+    "delai_obtention_jours": {
+      "min": null,
+      "max": null
+    },
+    "duree_validite": "Moins de trois (03) mois",
+    "format_requis": "Original ou copie certifiée conforme par l'autorité émettrice",
+    "reference_legale": "Article 13.1 du RPAO",
+    "applicable_types_marches": [
+      "travaux",
+      "fournitures",
+      "services",
+      "prestations_intellectuelles",
+      "assurances"
+    ],
+    "non_applicable": [],
+    "regex_detection": "(?i)(attestation[- ]?CNPS|caisse[- ]?nationale[- ]?de[- ]?prévoyance[- ]?sociale)",
+    "message_alerte_whatsapp": "👷 ATTESTATION CNPS : Obligatoire pour prouver ta régularité sociale.",
+    "message_action_whatsapp": "📋 Imprime ou récupère ton attestation CNPS valide (< 3 mois). L'original ou une copie légalisée par la CNPS est exigée.",
+    "pieges_courants": [
+      "Document expiré",
+      "Certifié par une autorité incompétente (commissariat au lieu de la CNPS)"
+    ]
+  },
+  
+{
+    "id": "piece_007",
+    "nom_canonique": "Attestation de non-faillite",
+    "variantes_nom": [
+      "Attestation de non-liquidation judiciaire"
+    ],
+    "categorie": "administrative",
+    "obligatoire_par_defaut": true,
+    "eliminatoire_si_absent": true,
+    "rattrapable_48h": true,
+    "emetteur": "Tribunal de Grande Instance ou Chambre de Commerce",
+    "ou_obtenir": {
+      "lieu": "Greffe du tribunal du lieu de résidence du soumissionnaire",
+      "villes": ["Toutes villes"],
+      "contact": null
+    },
+    "cout_estime_fcfa": {
+      "min": null,
+      "max": null,
+      "base_calcul": "Non trouvé dans les sources - à vérifier auprès du greffe"
+    },
+    "delai_obtention_jours": {
+      "min": null,
+      "max": null
+    },
+    "duree_validite": "Moins de trois (03) mois précédant la date de remise",
+    "format_requis": "Original ou copie certifiée conforme",
+    "reference_legale": "Article 13.1 du RPAO",
+    "applicable_types_marches": [
+      "travaux",
+      "fournitures",
+      "services",
+      "prestations_intellectuelles",
+      "assurances"
+    ],
+    "non_applicable": [],
+    "regex_detection": "(?i)(attestation[- ]?de[- ]?non[- ]?faillite|non[- ]?liquidation)",
+    "message_alerte_whatsapp": "⚖️ NON-FAILLITE : Prouve que ton entreprise n'est pas en liquidation judiciaire.",
+    "message_action_whatsapp": "📋 Rends-toi au Greffe du Tribunal de Grande Instance de ta ville pour obtenir cette attestation (datant de moins de 3 mois).",
+    "pieges_courants": [
+      "Document expiré au moment du dépôt",
+      "Confusion de ce document avec le CNE (Certificat de Non-Exclusion de l'ARMP)"
+    ]
+  },
+  
+{
+    "id": "piece_008",
+    "nom_canonique": "Certificat de Non-Exclusion des marchés publics",
+    "variantes_nom": [
+      "Attestation de non exclusion",
+      "CNE",
+      "e-CNE"
+    ],
+    "categorie": "administrative",
+    "obligatoire_par_defaut": true,
+    "eliminatoire_si_absent": true,
+    "rattrapable_48h": true,
+    "emetteur": "Agence de Régulation des Marchés Publics (ARMP)",
+    "ou_obtenir": {
+      "lieu": "Délivré par le Directeur Général de l'ARMP (souvent via e-CNE)",
+      "villes": ["En ligne", "Yaoundé"],
+      "contact": null
+    },
+    "cout_estime_fcfa": {
+      "min": null,
+      "max": null,
+      "base_calcul": "Non trouvé dans les sources - à vérifier auprès de l'ARMP"
+    },
+    "delai_obtention_jours": {
+      "min": null,
+      "max": null
+    },
+    "duree_validite": "Moins de trois (03) mois",
+    "format_requis": "Original (numérique avec code barre/QR ou papier)",
+    "reference_legale": "Article 13.1 du RPAO",
+    "applicable_types_marches": [
+      "travaux",
+      "fournitures",
+      "services",
+      "prestations_intellectuelles",
+      "assurances"
+    ],
+    "non_applicable": [],
+    "regex_detection": "(?i)(certificat|attestation).{0,30}(non[- ]?exclusion)",
+    "message_alerte_whatsapp": "🏛️ CERTIFICAT DE NON-EXCLUSION : L'ARMP doit certifier ton droit à soumissionner. Obligatoire !",
+    "message_action_whatsapp": "📋 Télécharge ton e-CNE valide de moins de 3 mois. Ne falsifie JAMAIS ce document sous peine d'exclusion de la commande publique pendant 2 ans.",
+    "pieges_courants": [
+      "Soumission d'un faux CNE (Le QR code révèle une autre entreprise lors du contrôle de la commission)",
+      "CNE expiré"
+    ]
+  },
+  
+{
+    "id": "piece_009",
+    "nom_canonique": "Agrément ou Autorisation du fabricant",
+    "variantes_nom": [
+      "Agrément du fournisseur",
+      "Autorisation du représentant",
+      "Lettre du fabricant"
+    ],
+    "categorie": "technique",
+    "obligatoire_par_defaut": false,
+    "eliminatoire_si_absent": true,
+    "rattrapable_48h": false,
+    "emetteur": "Fabricant du matériel ou Distributeur Agréé",
+    "ou_obtenir": {
+      "lieu": "Directement chez le constructeur ou partenaire officiel",
+      "villes": ["Cameroun", "International"],
+      "contact": null
+    },
+    "cout_estime_fcfa": {
+      "min": null,
+      "max": null,
+      "base_calcul": "Dépend des partenariats commerciaux"
+    },
+    "delai_obtention_jours": {
+      "min": null,
+      "max": null
+    },
+    "duree_validite": "Spécifique à l'appel d'offres (Modèle annexe du DAO) ou Annuelle",
+    "format_requis": "Original",
+    "reference_legale": "Article 15.1 du RPAO (Fournitures)",
+    "applicable_types_marches": [
+      "fournitures"
+    ],
+    "non_applicable": [
+      "travaux",
+      "services",
+      "prestations_intellectuelles"
+    ],
+    "regex_detection": "(?i)(absence|défaut|manque).{0,50}(agrément|autorisation[- ]?du[- ]?fabricant|distributeur[- ]?agréé)",
+    "message_alerte_whatsapp": "📦 AUTORISATION FABRICANT ! Sans cet agrément, ton offre de fourniture sera éliminée direct.",
+    "message_action_whatsapp": "📋 Envoie le modèle de l'annexe du DAO à ton fabricant pour signature. Si tu passes par un grossiste, il te faut son autorisation PLUS la preuve de son agrément par le fabricant.",
+    "pieges_courants": [
+      "Autorisation émise par un revendeur sans preuve de son propre agrément",
+      "Modèle rédigé librement ne respectant pas le formalisme strict de l'annexe du DAO"
+    ]
+  },
+  
+{
+    "id": "piece_010",
+    "nom_canonique": "Autorisation de Mise sur le Marché (AMM) / Certificat OMS",
+    "variantes_nom": [
+      "AMM",
+      "Certificat de produit pharmaceutique",
+      "Dérogation spéciale d'importation"
+    ],
+    "categorie": "technique",
+    "obligatoire_par_defaut": false,
+    "eliminatoire_si_absent": true,
+    "rattrapable_48h": false,
+    "emetteur": "Ministère de la Santé ou Organisme International (OMS)",
+    "ou_obtenir": {
+      "lieu": "Autorités Sanitaires",
+      "villes": ["Yaoundé", "International"],
+      "contact": null
+    },
+    "cout_estime_fcfa": {
+      "min": null,
+      "max": null,
+      "base_calcul": "Non trouvé dans les sources - à vérifier"
+    },
+    "delai_obtention_jours": {
+      "min": null,
+      "max": null
+    },
+    "duree_validite": "Conformément à la durée légale du produit",
+    "format_requis": "Original ou copie certifiée",
+    "reference_legale": "Article 15.1 du RPAO (Matériel Médical)",
+    "applicable_types_marches": [
+      "fournitures"
+    ],
+    "non_applicable": [
+      "travaux",
+      "services",
+      "prestations_intellectuelles"
+    ],
+    "regex_detection": "(?i)(absence|défaut|manque).{0,50}(AMM|autorisation[- ]?de[- ]?mise[- ]?sur[- ]?le[- ]?marché|certificat[- ]?OMS)",
+    "message_alerte_whatsapp": "🏥 CERTIFICAT MÉDICAL REQUIS ! AMM ou OMS exigé pour l'équipement médical.",
+    "message_action_whatsapp": "📋 Tu dois joindre une AMM du Cameroun (ou dérogation) et/ou un Certificat OMS pour CHAQUE article médical proposé. Sinon = Rejet.",
+    "pieges_courants": [
+      "Oublier l'AMM pour l'un des articles du lot"
+    ]
+  },
+  
+{
+    "id": "piece_011",
+    "nom_canonique": "Attestation de visite des lieux",
+    "variantes_nom": [
+      "Attestation de visite de site",
+      "Rapport de visite"
+    ],
+    "categorie": "technique",
+    "obligatoire_par_defaut": false,
+    "eliminatoire_si_absent": true,
+    "rattrapable_48h": false,
+    "emetteur": "Maître d'Ouvrage ou Soumissionnaire (Sur l'honneur)",
+    "ou_obtenir": {
+      "lieu": "Sur le site d'exécution du projet",
+      "villes": ["Lieu du projet"],
+      "contact": null
+    },
+    "cout_estime_fcfa": {
+      "min": 0,
+      "max": 0,
+      "base_calcul": "Gratuit (hors frais logistiques de déplacement)"
+    },
+    "delai_obtention_jours": {
+      "min": 1,
+      "max": 1
+    },
+    "duree_validite": "Exclusivement valable pour l'AO en cours",
+    "format_requis": "Original signé",
+    "reference_legale": "Article 15.1 du RPAO (Rend le dossier technique incomplet)",
+    "applicable_types_marches": [
+      "travaux"
+    ],
+    "non_applicable": [
+      "fournitures",
+      "prestations_intellectuelles",
+      "assurances"
+    ],
+    "regex_detection": "(?i)(absence|défaut|manque).{0,40}(attestation|rapport).{0,20}(visite|site|lieux)",
+    "message_alerte_whatsapp": "📍 VISITE DE CHANTIER : Indispensable pour ton offre technique BTP.",
+    "message_action_whatsapp": "📋 Rends-toi sur le lieu des futurs travaux. Fais signer l'attestation de visite par le Maître d'Ouvrage (ou signe-la sur l'honneur si le DAO le permet).",
+    "pieges_courants": [
+      "Défaut pur et simple du document rendant le dossier technique 'incomplet'"
+    ]
+  },
+  
+{
+    "id": "piece_012",
+    "nom_canonique": "Attestation de capacité financière",
+    "variantes_nom": [
+      "Capacité financière délivrée par une banque",
+      "Attestation bancaire de surface financière"
+    ],
+    "categorie": "financiere",
+    "obligatoire_par_defaut": false,
+    "eliminatoire_si_absent": false,
+    "rattrapable_48h": false,
+    "emetteur": "Banque de premier ordre agréée MINFI",
+    "ou_obtenir": {
+      "lieu": "Agence bancaire domiciliant les comptes de la PME",
+      "villes": ["Toutes villes"],
+      "contact": null
+    },
+    "cout_estime_fcfa": {
+      "min": null,
+      "max": null,
+      "base_calcul": "Frais bancaires non trouvés dans les sources - à vérifier"
+    },
+    "delai_obtention_jours": {
+      "min": null,
+      "max": null
+    },
+    "duree_validite": "Spécifique à l'AO",
+    "format_requis": "Original ou copie certifiée",
+    "reference_legale": "Grille d'évaluation technique (Critères essentiels)",
+    "applicable_types_marches": [
+      "travaux",
+      "fournitures",
+      "services"
+    ],
+    "non_applicable": [
+      "prestations_intellectuelles"
+    ],
+    "regex_detection": "(?i)(capacité[- ]?financière).{0,50}(banque|agréée)",
+    "message_alerte_whatsapp": "💰 CAPACITÉ FINANCIÈRE : Ce document rapporte des points cruciaux pour ton évaluation technique.",
+    "message_action_whatsapp": "📋 Demande à ta banque (qui doit être agréée par le MINFI) de te produire une attestation certifiant ta capacité financière pour le montant exigé dans le DAO.",
+    "pieges_courants": [
+      "Attestation délivrée par une microfinance non agréée COBAC/MINFI",
+      "Montant garanti inférieur au palier exigé dans la grille d'évaluation"
+    ]
+  }
+
+{
+    "id": "piece_013",
+    "nom_canonique": "Accord de groupement",
+    "variantes_nom": [
+      "Accord de groupement notarié",
+      "Accord de groupement sous seing privé",
+      "Convention de cotraitance",
+      "Accord de groupement solidaire ou conjoint"
+    ],
+    "categorie": "administrative",
+    "obligatoire_par_defaut": false,
+    "eliminatoire_si_absent": true,
+    "rattrapable_48h": true,
+    "emetteur": "Notaire (si forme notariée exigée) ou Membres du groupement",
+    "ou_obtenir": {
+      "lieu": "Cabinet de notaire ou établi en interne par les PME",
+      "villes": ["Toutes villes"],
+      "contact": null
+    },
+    "cout_estime_fcfa": {
+      "min": 10000,
+      "max": 100000,
+      "base_calcul": "Frais d'enregistrement et honoraires de notaire le cas échéant"
+    },
+    "delai_obtention_jours": {
+      "min": 1,
+      "max": 3
+    },
+    "duree_validite": "Valable pour la durée de validité de l'offre et l'exécution du marché si attributaire",
+    "format_requis": "Original (Notarié ou sous seing privé selon la précision du RPAO)",
+    "reference_legale": "Article 13.1 du RPAO (Pièces administratives)",
+    "applicable_types_marches": [
+      "travaux",
+      "fournitures",
+      "services",
+      "prestations_intellectuelles"
+    ],
+    "conditions_specifiques": "Exigé EXCLUSIVEMENT en cas de soumission en groupement (cotraitance). Il doit formellement désigner le mandataire.",
+    "regex_detection": "(?i)(accord|convention).{0,30}(groupement|cotraitance|solidaire|conjoint)",
+    "message_alerte_whatsapp": "⚠️ SOUMISSION EN GROUPEMENT : Votre offre sera rejetée si vous oubliez d'inclure l'Accord de groupement signé !",
+    "message_action_whatsapp": "📋 Rédigez l'accord avec votre partenaire (notarié ou sous seing privé selon le DAO). Précisez bien si le groupement est solidaire ou conjoint, et nommez le mandataire.",
+    "pieges_courants": [
+      "Oubli de désigner explicitement le mandataire dans l'acte",
+      "Non-respect de la forme notariée si le DAO l'exige expressément",
+      "Confusion entre groupement conjoint (chacun est payé pour sa part) et solidaire (le mandataire est payé pour tout)"
+    ]
+  },
+  
+{
+    "id": "piece_014",
+    "nom_canonique": "Attestation de domiciliation bancaire",
+    "variantes_nom": [
+      "Domiciliation bancaire",
+      "Attestation de compte bancaire"
+    ],
+    "categorie": "administrative",
+    "obligatoire_par_defaut": true,
+    "eliminatoire_si_absent": true,
+    "rattrapable_48h": true,
+    "emetteur": "Banque ou organisme financier agréé par le MINFI",
+    "ou_obtenir": {
+      "lieu": "Agence bancaire où l'entreprise a ouvert son compte",
+      "villes": ["Toutes villes"],
+      "contact": null
+    },
+    "cout_estime_fcfa": {
+      "min": 5000,
+      "max": 30000,
+      "base_calcul": "Frais de dossier ou de délivrance appliqués par la banque"
+    },
+    "delai_obtention_jours": {
+      "min": 1,
+      "max": 5
+    },
+    "duree_validite": "Liée au projet ou moins de trois (03) mois",
+    "format_requis": "Original ou copie certifiée conforme",
+    "reference_legale": "Article 13.1 du RPAO",
+    "applicable_types_marches": [
+      "travaux",
+      "fournitures",
+      "services",
+      "prestations_intellectuelles",
+      "assurances"
+    ],
+    "conditions_specifiques": "En cas de groupement solidaire, seule l'attestation du mandataire est requise. En cas de groupement conjoint, CHAQUE membre doit fournir une attestation pour le lot dont il est titulaire.",
+    "regex_detection": "(?i)(attestation|certificat).{0,30}(domiciliation|bancaire)",
+    "message_alerte_whatsapp": "🏦 DOMICILIATION BANCAIRE : L'État doit savoir où virer l'argent si vous gagnez. Document obligatoire !",
+    "message_action_whatsapp": "📋 Demandez à votre banque (agréée MINFI) une attestation de domiciliation bancaire mentionnant clairement la référence de l'Appel d'Offres.",
+    "pieges_courants": [
+      "Banque non agréée par le Ministère des Finances",
+      "En cas de groupement conjoint : l'oubli de la domiciliation par le partenaire (chaque membre doit avoir la sienne)",
+      "Délivrée par une microfinance de catégorie inférieure non habilitée"
+    ]
+  },
+  
+{
+    "id": "piece_015",
+    "nom_canonique": "Visa de maturité ou Justificatifs des études préalables",
+    "variantes_nom": [
+      "Visa de maturité",
+      "Justificatifs des études préalables",
+      "Pièce 12 du DAO",
+      "Pièce 13 du DAO"
+    ],
+    "categorie": "validation_projet",
+    "obligatoire_par_defaut": true,
+    "eliminatoire_si_absent": false,
+    "rattrapable_48h": false,
+    "emetteur": "Maître d'Ouvrage (MO) ou Maître d'Ouvrage Délégué (MOD)",
+    "ou_obtenir": {
+      "lieu": "Inclus directement dans les pièces du Dossier d'Appel d'Offres (DAO) physique ou téléchargé",
+      "villes": ["N/A"],
+      "contact": null
+    },
+    "cout_estime_fcfa": {
+      "min": 0,
+      "max": 0,
+      "base_calcul": "Aucun coût pour la PME, fourni par l'État"
+    },
+    "delai_obtention_jours": {
+      "min": 0,
+      "max": 0
+    },
+    "duree_validite": "N/A",
+    "format_requis": "N/A",
+    "reference_legale": "Circulaire N°003/CAB/PM du 18 avril 2008 / DTAO Pièce n°12 ou 13",
+    "applicable_types_marches": [
+      "travaux",
+      "fournitures",
+      "services",
+      "prestations_intellectuelles"
+    ],
+    "conditions_specifiques": "ATTENTION : Cette pièce N'EST PAS à fournir par la PME. Elle est remplie par le Maître d'Ouvrage dans le DAO pour attester que le projet a été étudié, maturité et que les financements sont disponibles.",
+    "regex_detection": "(?i)(visa|justificatif[s]?).{0,30}(maturité|études[- ]?préalables)",
+    "message_alerte_whatsapp": "🕵️ ASTUCE DE CONTRÔLE : Ne soumissionnez pas à l'aveugle ! Vérifiez que le DAO contient la pièce 'Visa de maturité'.",
+    "message_action_whatsapp": "📋 Regardez dans le DAO (souvent Pièce 12 ou 13). Si le Visa de maturité est absent, le projet est illégal (non maturé) et l'ARMP risque de l'annuler. Vous pourriez ne jamais être payé.",
+    "pieges_courants": [
+      "La PME croit à tort qu'elle doit fournir cette pièce dans son dossier administratif",
+      "Soumissionner à un marché dont le DAO ne contient pas ce visa, avec un risque élevé d'annulation de la procédure pour 'défaut de maturité'"
+    ]
+  },
+  
+{
+    "id": "piece_016",
+    "nom_canonique": "Quittance d'achat du Dossier d'Appel d'Offres",
+    "variantes_nom": [
+      "Quittance d'achat du DAO",
+      "Reçu de versement des frais du DAO",
+      "Preuve d'achat du DAO",
+      "Reçu CAS-ARMP"
+    ],
+    "categorie": "administrative",
+    "obligatoire_par_defaut": true,
+    "eliminatoire_si_absent": true,
+    "rattrapable_48h": true,
+    "emetteur": "Trésor Public, CAS-ARMP (BICEC), ou Recette Municipale",
+    "ou_obtenir": {
+      "lieu": "Lieu de paiement exact précisé au Point 10 de l'Avis d'Appel d'Offres",
+      "villes": ["Toutes villes"],
+      "contact": null
+    },
+    "cout_estime_fcfa": {
+      "min": 10000,
+      "max": 500000,
+      "base_calcul": "Fixé par le DAO selon un barème de l'ARMP proportionnel au coût estimatif du marché"
+    },
+    "delai_obtention_jours": {
+      "min": 0,
+      "max": 1
+    },
+    "duree_validite": "Strictement liée à l'Appel d'Offres concerné",
+    "format_requis": "Original (souvent exigé spécifiquement)",
+    "reference_legale": "Article 13.1 du RPAO / Point 10 du modèle d'AAO",
+    "applicable_types_marches": [
+      "travaux",
+      "fournitures",
+      "services",
+      "prestations_intellectuelles",
+      "assurances"
+    ],
+    "conditions_specifiques": "En cas de groupement d'entreprises, la quittance est OBLIGATOIREMENT achetée et présentée au nom du mandataire du groupement ou au nom du groupement.",
+    "regex_detection": "(?i)(quittance|reçu|preuve).{0,30}(achat|paiement|versement).{0,30}(dao|dossier)",
+    "message_alerte_whatsapp": "🧾 QUITTANCE DU DAO : Pas de quittance, pas de marché ! Vous devez prouver avoir acheté le dossier.",
+    "message_action_whatsapp": "📋 Insérez l'ORIGINAL de votre reçu de paiement (Trésor Public ou BICEC/CAS-ARMP) dans le volume administratif. En cas de groupement, achetez-le au nom du mandataire !",
+    "pieges_courants": [
+      "Mettre une photocopie alors que l'original est spécifiquement requis pour éviter qu'une PME achète un DAO pour plusieurs",
+      "Payer à la mauvaise caisse (ex: à la mairie au lieu du Compte CAS-ARMP de la BICEC, si le marché n'est pas sur fonds propres de la mairie)",
+      "En cas de groupement, la quittance est au nom du partenaire non-mandataire"
+    ]
+  }

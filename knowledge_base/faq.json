@@ -1,0 +1,1053 @@
+// la Base de Connaissances FAQ complète contenant les 105 questions requises, structurée en JSON pour l'intégration directe dans le moteur NLP de notre bot WhatsApp et webapp. Chaque réponse a été rigoureusement extraite et sourcée depuis le Code des Marchés Publics (CMP), le Règlement Général (RGAO), le Règlement Particulier (RPAO), les Cahiers des Clauses (CCAP/CCTP) et les manuels de l'ARMP fournis.
+
+
+{
+    "id": "faq_001",
+    "question": "Qui peut soumissionner à un Appel d'Offres National Ouvert (AONO) ?",
+    "reponse_courte": "Toute entreprise nationale qualifiée, en règle fiscalement et socialement, et non exclue des marchés publics par l'ARMP.",
+    "reponse_complete": "L'AONO est ouvert à toutes les personnes physiques ou morales installées au Cameroun, à condition qu'elles ne soient pas en état de faillite, qu'elles soient en règle avec l'administration fiscale (Impôts) et sociale (CNPS), et qu'elles possèdent le Certificat de Non-Exclusion (CNE) délivré par l'ARMP.",
+    "reference_legale": "Article 13.1 du RPAO / RSGMP",
+    "categorie": "ÉLIGIBILITÉ",
+    "mots_cles": ["AONO", "national", "ouvert"],
+    "questions_liees": ["faq_002", "faq_011"]
+  },
+  {
+    "id": "faq_002",
+    "question": "Puis-je soumissionner avec une Entreprise Individuelle (Ets) au lieu d'une SARL ?",
+    "reponse_courte": "Oui, la forme juridique (Ets, SARL, SA) importe peu, tant que vous possédez un RCCM, un NIU et les capacités requises.",
+    "reponse_complete": "Le Code des Marchés Publics n'exclut aucune forme juridique. Que vous soyez un Établissement ou une Société, l'essentiel est de justifier de votre capacité juridique (RCCM, patente) et de votre capacité technique et financière exigée dans le DAO.",
+    "reference_legale": "Article 13.1 du RPAO",
+    "categorie": "ÉLIGIBILITÉ",
+    "mots_cles": ["SARL", "individuelle", "statut"],
+    "questions_liees": ["faq_001"]
+  },
+  {
+    "id": "faq_003",
+    "question": "Une entreprise étrangère peut-elle soumissionner au Cameroun ?",
+    "reponse_courte": "Oui, mais uniquement dans le cadre d'un Appel d'Offres International (AOIO/AOIR) ou si une convention de financement l'autorise.",
+    "reponse_complete": "Pour les appels d'offres nationaux (AONO), la préférence est nationale. Les entreprises étrangères sont éligibles lors des AO internationaux, avec possibilité de chiffrer en devises (Option B) pour la part importée, mais doivent respecter les règles fiscales locales.",
+    "reference_legale": "Article 14 du RGAO / DTAO Fournitures Importées",
+    "categorie": "ÉLIGIBILITÉ",
+    "mots_cles": ["étranger", "AOIO", "international"],
+    "questions_liees": ["faq_064", "faq_100"]
+  },
+  {
+    "id": "faq_004",
+    "question": "Comment fonctionne le groupement d'entreprises (cotraitance) ?",
+    "reponse_courte": "Deux PME ou plus peuvent s'associer. Il faut un accord notarié désignant un mandataire qui sera l'interlocuteur unique de l'État.",
+    "reponse_complete": "Le groupement (conjoint ou solidaire) permet de cumuler les capacités financières et techniques. L'accord de groupement est une pièce obligatoire. Le mandataire reçoit seul les paiements et les Ordres de Service. Chaque membre doit fournir son dossier administratif complet.",
+    "reference_legale": "Article 12.8 du CCAP / DTAO Travaux",
+    "categorie": "ÉLIGIBILITÉ",
+    "mots_cles": ["groupement", "cotraitance", "mandataire"],
+    "questions_liees": ["faq_005"]
+  },
+  {
+    "id": "faq_005",
+    "question": "Qui doit fournir la caution de soumission dans un groupement ?",
+    "reponse_courte": "La caution doit être établie au nom du groupement ou du mandataire, couvrant l'ensemble des membres.",
+    "reponse_complete": "Dans le cadre d'un groupement, la garantie de soumission doit explicitement couvrir l'offre du groupement et non un seul de ses membres (sauf si elle est émise spécifiquement au nom du mandataire agissant pour le compte du groupement, selon les termes de l'accord).",
+    "reference_legale": "Pièce 10 Modèle de caution (DTAO)",
+    "categorie": "ÉLIGIBILITÉ",
+    "mots_cles": ["caution", "groupement", "mandataire"],
+    "questions_liees": ["faq_004", "faq_052"]
+  },
+  {
+    "id": "faq_006",
+    "question": "La sous-traitance est-elle autorisée ?",
+    "reponse_courte": "Oui, mais elle est plafonnée (généralement 30%) et le sous-traitant doit être formellement agréé par le Maître d'Ouvrage.",
+    "reponse_complete": "Vous pouvez sous-traiter une partie du marché, mais vous restez le seul responsable envers l'administration. La sous-traitance doit être déclarée à l'aide de l'Annexe 'Modèle de fiche des prestations à sous-traiter' et ne peut dépasser le plafond fixé par le CMP (souvent 30%).",
+    "reference_legale": "Annexe 9 DTAO / Article 133 du CMP",
+    "categorie": "ÉLIGIBILITÉ",
+    "mots_cles": ["sous-traitance", "plafond", "responsabilité"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_007",
+    "question": "Puis-je mettre un fonctionnaire de l'État dans mon offre technique (CV) ?",
+    "reponse_courte": "Oui, MAIS il doit obligatoirement prouver sa libération de la Fonction Publique, sinon son CV obtient 0 point.",
+    "reponse_complete": "L'utilisation de l'expertise d'agents publics est encadrée. Tout agent public listé qui ne présente pas le document officiel justifiant sa libération de l'Administration (mise en disponibilité) ne sera pas évalué, ce qui peut entraîner l'élimination technique de l'offre.",
+    "reference_legale": "Grille d'évaluation des DTAO (Note de bas de page)",
+    "categorie": "ÉLIGIBILITÉ",
+    "mots_cles": ["fonctionnaire", "expert", "libération"],
+    "questions_liees": ["faq_069"]
+  },
+  {
+    "id": "faq_008",
+    "question": "Y a-t-il des marchés réservés aux artisans et PME locales ?",
+    "reponse_courte": "Oui, le Code prévoit des marchés spécifiques ou des quotas réservés aux PME nationales et artisans pour favoriser le contenu local.",
+    "reponse_complete": "Le Code des Marchés Publics prévoit un mécanisme de préférence nationale et autorise la détermination d'une catégorie de marchés exclusivement réservés aux artisans, PME nationales et organisations communautaires à la base.",
+    "reference_legale": "Article 35 du RGAO / Rapport Synthèse ARMP",
+    "categorie": "ÉLIGIBILITÉ",
+    "mots_cles": ["artisans", "PME", "préférence"],
+    "questions_liees": ["faq_101"]
+  },
+  {
+    "id": "faq_009",
+    "question": "Que se passe-t-il si j'ai abandonné un marché l'année dernière ?",
+    "reponse_courte": "Vous serez éliminé. Une déclaration de non-abandon de chantier sur les 3 dernières années est obligatoire.",
+    "reponse_complete": "L'absence d'une déclaration sur l'honneur de n'avoir pas abandonné de chantier (ou prestations) durant les trois (3) dernières années est un critère éliminatoire d'ordre général dans tous les DAO.",
+    "reference_legale": "Article 15.1 du RPAO",
+    "categorie": "ÉLIGIBILITÉ",
+    "mots_cles": ["abandon", "élimination", "honneur"],
+    "questions_liees": ["faq_030"]
+  },
+  {
+    "id": "faq_010",
+    "question": "Une entreprise en redressement ou liquidation peut-elle soumissionner ?",
+    "reponse_courte": "Non. Vous devez fournir une attestation de non-faillite délivrée par le tribunal.",
+    "reponse_complete": "L'état de faillite ou de liquidation judiciaire rend l'entreprise inéligible. L'attestation de non-faillite (ou non-liquidation), datant de moins de 3 mois, est une pièce administrative obligatoire.",
+    "reference_legale": "Article 13.1 du RPAO",
+    "categorie": "ÉLIGIBILITÉ",
+    "mots_cles": ["faillite", "liquidation", "tribunal"],
+    "questions_liees": ["faq_020"]
+  },
+  {
+    "id": "faq_011",
+    "question": "C'est quoi l'exclusion de la commande publique ?",
+    "reponse_courte": "C'est une sanction de l'ARMP (souvent de 2 ans) interdisant à une entreprise de gagner des marchés, généralement pour fraude ou abandon.",
+    "reponse_complete": "Lorsqu'une entreprise falsifie des documents ou abandonne un chantier, l'ARMP publie une décision d'exclusion. Pour prouver que vous n'êtes pas sous le coup de cette sanction, vous devez inclure le Certificat de Non-Exclusion (CNE) dans votre offre.",
+    "reference_legale": "Article 13.1 du RPAO / RSGMP",
+    "categorie": "ÉLIGIBILITÉ",
+    "mots_cles": ["exclusion", "sanction", "CNE"],
+    "questions_liees": ["faq_017"]
+  },
+  {
+    "id": "faq_012",
+    "question": "Quelle est l'expérience minimale requise pour gagner un marché ?",
+    "reponse_courte": "Cela dépend du DAO (Grille d'évaluation). Généralement, on exige d'avoir exécuté 2 à 3 marchés similaires au cours des 3 à 5 dernières années.",
+    "reponse_complete": "La capacité technique est évaluée selon les critères essentiels. Le RPAO définit le nombre exact de marchés similaires que vous devez prouver (contrat + PV de réception) pour valider le sous-critère d'expérience.",
+    "reference_legale": "Grille d'évaluation DTAO Travaux/Fournitures",
+    "categorie": "ÉLIGIBILITÉ",
+    "mots_cles": ["expérience", "similaire", "références"],
+    "questions_liees": ["faq_068"]
+  },
+  {
+    "id": "faq_013",
+    "question": "Le Chiffre d'Affaires de mon entreprise compte-t-il ?",
+    "reponse_courte": "Oui, dans l'évaluation technique, un Chiffre d'Affaires moyen sur les 3 dernières années est souvent exigé comme critère essentiel.",
+    "reponse_complete": "La solidité financière est évaluée. Le DAO peut exiger la présentation des bilans financiers certifiés ou déclarations fiscales pour prouver que votre chiffre d'affaires permet de supporter l'envergure du projet.",
+    "reference_legale": "Article 6.1 du RPAO / Grille d'évaluation",
+    "categorie": "ÉLIGIBILITÉ",
+    "mots_cles": ["chiffre", "affaires", "bilan"],
+    "questions_liees": ["faq_035"]
+  },
+  {
+    "id": "faq_014",
+    "question": "Qu'est-ce que la catégorisation MINMAP ?",
+    "reponse_courte": "C'est un agrément officiel classant les PME du BTP. Être catégorisé vous dispense de fournir certaines pièces techniques lors d'un DAO.",
+    "reponse_complete": "La catégorisation pré-qualifie les entreprises selon leurs capacités. En cas de catégorisation, l'entreprise est dispensée de la production de certaines pièces techniques listées à l'article 13.1 du RPAO (matériel, personnel de base).",
+    "reference_legale": "DTAO Travaux / Lettre Circulaire N°000005/LC/MINMAP/CAB",
+    "categorie": "ÉLIGIBILITÉ",
+    "mots_cles": ["catégorisation", "MINMAP", "dispense"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_015",
+    "question": "Puis-je soumissionner si mon frère est dans la Commission de Passation ?",
+    "reponse_courte": "Non, c'est un conflit d'intérêts direct. Votre offre sera rejetée pour violation des principes éthiques.",
+    "reponse_complete": "Les principes d'éthique et de lutte contre la corruption interdisent à toute personne ayant un lien de parenté direct ou d'intérêts avec un membre de la CPM ou de l'Autorité Contractante de soumissionner. Cela entraîne la nullité de l'offre.",
+    "reference_legale": "Article 3 du RGAO (Principes éthiques)",
+    "categorie": "ÉLIGIBILITÉ",
+    "mots_cles": ["conflit", "intérêt", "éthique"],
+    "questions_liees": ["faq_029"]
+  },
+  {
+    "id": "faq_016",
+    "question": "Où puis-je obtenir la caution de soumission ?",
+    "reponse_courte": "Auprès d'une banque de 1er rang ou d'un organisme financier expressément agréé par le Ministre des Finances.",
+    "reponse_complete": "La caution doit être émise par une institution listée à la Pièce 14 du DAO. Une caution provenant d'une microfinance non agréée ou d'une compagnie d'assurance non listée entraînera le rejet de votre offre.",
+    "reference_legale": "Pièce 14 des DTAO",
+    "categorie": "DOCUMENTS",
+    "mots_cles": ["caution", "banque", "agréée"],
+    "questions_liees": ["faq_052", "faq_025"]
+  },
+  {
+    "id": "faq_017",
+    "question": "Où obtenir le Certificat de Non-Exclusion (CNE) ?",
+    "reponse_courte": "Uniquement auprès de l'ARMP. Il peut souvent être généré en ligne (e-CNE).",
+    "reponse_complete": "Le CNE est délivré par le Directeur Général de l'Agence de Régulation des Marchés Publics (ARMP). Le format e-CNE (numérique avec QR code) est désormais le standard pour lutter contre les falsifications.",
+    "reference_legale": "Article 13.1 du RPAO",
+    "categorie": "DOCUMENTS",
+    "mots_cles": ["CNE", "ARMP", "exclusion"],
+    "questions_liees": ["faq_011"]
+  },
+  {
+    "id": "faq_018",
+    "question": "Où obtenir l'Attestation de Non-Redevance (ANR) ?",
+    "reponse_courte": "Auprès de votre centre des impôts de rattachement (DGI). Elle prouve que vous n'avez pas de dette fiscale.",
+    "reponse_complete": "Délivrée par la Direction Générale des Impôts, elle est aujourd'hui générée en ligne avec un code de vérification. Toute ANR falsifiée entraîne la suspension immédiate par l'ARMP.",
+    "reference_legale": "Article 13.1 du RPAO",
+    "categorie": "DOCUMENTS",
+    "mots_cles": ["ANR", "impôts", "fiscalité"],
+    "questions_liees": ["faq_021"]
+  },
+  {
+    "id": "faq_019",
+    "question": "Où obtenir l'Attestation CNPS ?",
+    "reponse_courte": "À la Caisse Nationale de Prévoyance Sociale de votre localité.",
+    "reponse_complete": "Elle certifie que vous êtes à jour dans le paiement des cotisations sociales de vos employés. Comme l'ANR, c'est une pièce administrative éliminatoire si non produite après le délai de grâce.",
+    "reference_legale": "Article 13.1 du RPAO",
+    "categorie": "DOCUMENTS",
+    "mots_cles": ["CNPS", "social", "cotisations"],
+    "questions_liees": ["faq_021"]
+  },
+  {
+    "id": "faq_020",
+    "question": "Où obtenir l'attestation de non-faillite ?",
+    "reponse_courte": "Auprès du Greffe du Tribunal de Première Instance du siège de votre entreprise.",
+    "reponse_complete": "Ce document judiciaire certifie que votre entreprise n'est pas en liquidation ou redressement. Il doit dater de moins de 3 mois à la date limite de remise des offres.",
+    "reference_legale": "Article 13.1 du RPAO",
+    "categorie": "DOCUMENTS",
+    "mots_cles": ["faillite", "tribunal", "greffe"],
+    "questions_liees": ["faq_010"]
+  },
+  {
+    "id": "faq_021",
+    "question": "Quelle est la durée de validité des pièces administratives (CNPS, ANR, etc.) ?",
+    "reponse_courte": "Moins de trois (3) mois à la date limite initiale de remise des offres.",
+    "reponse_complete": "La réglementation est stricte : toutes les pièces administratives de base (ANR, CNPS, Non-faillite) doivent dater de moins de trois (03) mois précédant la date originale de dépôt des offres.",
+    "reference_legale": "Article 13.1 du RPAO",
+    "categorie": "DOCUMENTS",
+    "mots_cles": ["validité", "3 mois", "expiration"],
+    "questions_liees": ["faq_023"]
+  },
+  {
+    "id": "faq_022",
+    "question": "Quelle est la durée de validité de la caution de soumission ?",
+    "reponse_courte": "Trente (30) jours au-delà du délai de validité de votre offre.",
+    "reponse_complete": "Si votre offre est valide 90 jours (ce qui est standard), votre caution de soumission doit être valide pendant 120 jours (90 + 30). Une caution trop courte sera rejetée.",
+    "reference_legale": "Article 15.1 du RPAO",
+    "categorie": "DOCUMENTS",
+    "mots_cles": ["validité", "caution", "30 jours"],
+    "questions_liees": ["faq_049"]
+  },
+  {
+    "id": "faq_023",
+    "question": "Que faire si ma pièce fiscale a expiré hier ?",
+    "reponse_courte": "Ne la mettez pas, ou mettez-la en sachant qu'elle sera jugée non conforme. Vous aurez 48h après l'ouverture pour fournir une pièce valide.",
+    "reponse_complete": "Une pièce expirée est considérée comme non conforme. Lors du dépouillement, la commission vous accordera le sursis réglementaire de 48 heures pour produire une pièce valide.",
+    "reference_legale": "Article 15.1 du RPAO",
+    "categorie": "DOCUMENTS",
+    "mots_cles": ["expiré", "non conforme", "48h"],
+    "questions_liees": ["faq_024"]
+  },
+  {
+    "id": "faq_024",
+    "question": "Qu'est-ce que le délai de grâce de 48h ?",
+    "reponse_courte": "C'est un sursis accordé par la commission pour vous permettre de rattraper une pièce administrative absente ou non conforme.",
+    "reponse_complete": "L'Article 15.1 du RPAO prévoit que l'élimination ne survient qu'en cas de 'Non-production au-delà du délai de 48h après l'ouverture des plis, d'une pièce du dossier administratif jugée non conforme ou absente'. Ce délai ne s'applique PAS à la caution.",
+    "reference_legale": "Article 15.1 du RPAO",
+    "categorie": "DOCUMENTS",
+    "mots_cles": ["48h", "grâce", "rattrapage"],
+    "questions_liees": ["faq_023", "faq_025"]
+  },
+  {
+    "id": "faq_025",
+    "question": "J'ai oublié ma caution, puis-je la ramener dans les 48h ?",
+    "reponse_courte": "NON. L'absence de la caution à l'ouverture des plis entraîne l'élimination immédiate.",
+    "reponse_complete": "La réglementation fait une exception stricte : le délai de rattrapage de 48h s'applique à 'toutes les pièces excepté le cautionnement de soumission'. Même présentée séance tenante, elle sera irrecevable.",
+    "reference_legale": "Article 15.1 du RPAO",
+    "categorie": "DOCUMENTS",
+    "mots_cles": ["oubli", "caution", "élimination"],
+    "questions_liees": ["faq_024"]
+  },
+  {
+    "id": "faq_026",
+    "question": "Dois-je fournir les originaux ou les copies de mes documents ?",
+    "reponse_courte": "Vous devez fournir soit les originaux, soit des copies certifiées conformes par le service émetteur.",
+    "reponse_complete": "Le RPAO (Art 13.1) stipule que les pièces doivent être produites en originaux ou en copies certifiées conformes par le service émetteur ou l'autorité administrative compétente (ex: le Préfet ou Sous-Préfet, mais jamais la police pour une pièce fiscale).",
+    "reference_legale": "Article 13.1 du RPAO",
+    "categorie": "DOCUMENTS",
+    "mots_cles": ["original", "copie certifiée"],
+    "questions_liees": ["faq_027"]
+  },
+  {
+    "id": "faq_027",
+    "question": "Le commissariat de police peut-il légaliser mon Attestation CNPS ?",
+    "reponse_courte": "NON. Une copie certifiée par une autorité non compétente sera rejetée.",
+    "reponse_complete": "La certification doit être faite par le 'service émetteur' (donc la CNPS pour la CNPS) ou une autorité administrative reconnue compétente (Gouverneur, Préfet, Sous-Préfet). Les légalisations de police sur des pièces fiscales/sociales sont rejetées.",
+    "reference_legale": "Article 13.1 du RPAO",
+    "categorie": "DOCUMENTS",
+    "mots_cles": ["légalisation", "police", "émetteur"],
+    "questions_liees": ["faq_026"]
+  },
+  {
+    "id": "faq_028",
+    "question": "La quittance d'achat du DAO est-elle obligatoire ?",
+    "reponse_courte": "Oui, le reçu original du paiement des frais du dossier (Quittance) doit figurer dans l'enveloppe administrative.",
+    "reponse_complete": "L'achat du dossier est la condition pour soumissionner de manière recevable. Le reçu original, payé au Trésor ou au CAS-ARMP, est une pièce de base du Volume 1.",
+    "reference_legale": "Article 13.1 du RPAO",
+    "categorie": "DOCUMENTS",
+    "mots_cles": ["quittance", "achat", "reçu"],
+    "questions_liees": ["faq_036"]
+  },
+  {
+    "id": "faq_029",
+    "question": "Qu'est-ce que la Charte d'Intégrité ?",
+    "reponse_courte": "C'est un formulaire du DAO où vous vous engagez à ne pas corrompre les agents publics. L'oubli de signature = Élimination.",
+    "reponse_complete": "Ce document standardisé (généralement Pièce 10) vise à lutter contre la corruption. L'Article 15.1 du RPAO stipule que 'l'absence de la charte d'intégrité datée et signée' est un motif d'élimination.",
+    "reference_legale": "Article 15.1 du RPAO",
+    "categorie": "DOCUMENTS",
+    "mots_cles": ["charte", "intégrité", "corruption"],
+    "questions_liees": ["faq_034"]
+  },
+  {
+    "id": "faq_030",
+    "question": "Comment rédiger la déclaration de non-abandon de chantier ?",
+    "reponse_courte": "Sur votre papier en-tête, déclarez sur l'honneur n'avoir abandonné aucune prestation ces 3 dernières années, datez et signez.",
+    "reponse_complete": "Il n'y a pas de formulaire officiel dans le DAO. C'est à vous de produire cette déclaration sur l'honneur signée. Sans elle, votre offre est éliminée.",
+    "reference_legale": "Article 15.1 du RPAO",
+    "categorie": "DOCUMENTS",
+    "mots_cles": ["rédaction", "non-abandon", "honneur"],
+    "questions_liees": ["faq_009"]
+  },
+  {
+    "id": "faq_031",
+    "question": "L'Agrément du Fabricant est-il toujours exigé ?",
+    "reponse_courte": "Seulement pour certains marchés de Fournitures (Matériel informatique, médical, véhicules). Lisez bien le RPAO.",
+    "reponse_complete": "Si exigé, l'absence de l'autorisation du fabricant (ou d'un distributeur agréé par lui) est un critère éliminatoire. Il faut utiliser le modèle exact fourni en annexe du DAO.",
+    "reference_legale": "Article 15.1 du RPAO (Fournitures)",
+    "categorie": "DOCUMENTS",
+    "mots_cles": ["agrément", "fabricant", "fournitures"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_032",
+    "question": "Qu'est-ce qu'une AMM ?",
+    "reponse_courte": "L'Autorisation de Mise sur le Marché. Indispensable pour les marchés de santé (médicaments, matériel médical).",
+    "reponse_complete": "Pour les fournitures pharmaceutiques ou médicales, le DAO exige l'AMM et/ou le certificat de produit pharmaceutique OMS. Leur absence entraîne l'élimination.",
+    "reference_legale": "Article 15.1 du RPAO (Matériel Médical)",
+    "categorie": "DOCUMENTS",
+    "mots_cles": ["AMM", "OMS", "médical"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_033",
+    "question": "L'attestation de visite de site doit-elle être signée par le Maire ?",
+    "reponse_courte": "Lisez le RPAO. Parfois elle est délivrée par le Maître d'Ouvrage, parfois une simple déclaration sur l'honneur suffit.",
+    "reponse_complete": "Les règles varient. Certains DAO exigent une visite groupée signée par l'ingénieur de l'État, d'autres autorisent le soumissionnaire à signer une attestation sur l'honneur confirmant qu'il s'est rendu sur le site. Son absence rend le dossier technique incomplet.",
+    "reference_legale": "Grille d'évaluation technique DTAO Travaux",
+    "categorie": "DOCUMENTS",
+    "mots_cles": ["visite", "site", "attestation"],
+    "questions_liees": ["faq_041"]
+  },
+  {
+    "id": "faq_034",
+    "question": "Que risque-t-on si on falsifie l'ANR ou la CNPS ?",
+    "reponse_courte": "Élimination directe de l'offre et exclusion des marchés publics (souvent 2 ans) par l'ARMP, plus poursuites pénales.",
+    "reponse_complete": "La commission vérifie l'authenticité (via les QR codes DGI/CNPS). Les 'fausses déclarations ou pièces falsifiées' sont le critère éliminatoire le plus sévèrement puni par l'ARMP.",
+    "reference_legale": "Article 15.1 du RPAO",
+    "categorie": "DOCUMENTS",
+    "mots_cles": ["falsification", "fraude", "sanction"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_035",
+    "question": "L'attestation de capacité financière est-elle la même chose que la caution ?",
+    "reponse_courte": "Non. La caution est un blocage d'argent (garantie). L'attestation est une simple lettre de la banque confirmant que vous avez les reins solides.",
+    "reponse_complete": "La caution de soumission va dans le Volume 1 (Administratif) et est éliminatoire. L'attestation de capacité financière (surface financière) va dans le Volume 2 (Technique) et rapporte des points ou valide un critère essentiel.",
+    "reference_legale": "RPAO 13.1 / Grilles d'évaluation",
+    "categorie": "DOCUMENTS",
+    "mots_cles": ["capacité financière", "différence", "caution"],
+    "questions_liees": ["faq_052", "faq_060"]
+  },
+  {
+    "id": "faq_036",
+    "question": "Où acheter physiquement le DAO ?",
+    "reponse_courte": "Le lieu exact est précisé dans l'Avis d'Appel d'Offres (Point 10 : Acquisition du DAO).",
+    "reponse_complete": "L'AAO indique le service, le numéro de porte et le lieu de paiement. Le paiement se fait généralement au Compte Spécial CAS-ARMP (BICEC) pour les grandes structures, ou au Trésor/Recette Municipale pour les Communes.",
+    "reference_legale": "Point 10 du modèle d'AAO",
+    "categorie": "PROCÉDURE",
+    "mots_cles": ["achat", "DAO", "lieu"],
+    "questions_liees": ["faq_028"]
+  },
+  {
+    "id": "faq_037",
+    "question": "Puis-je déposer mon offre 5 minutes après l'heure limite ?",
+    "reponse_courte": "NON. Les offres arrivées après l'heure limite sont strictement irrecevables.",
+    "reponse_complete": "Le RGAO est formel : tout pli parvenu après la date et l'heure limites de dépôt fixées dans l'AAO sera refusé par le service de réception et retourné non ouvert.",
+    "reference_legale": "Article 23 et 25 du RGAO",
+    "categorie": "PROCÉDURE",
+    "mots_cles": ["retard", "heure limite", "irrecevable"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_038",
+    "question": "Combien d'exemplaires de mon dossier dois-je imprimer ?",
+    "reponse_courte": "Généralement sept (7) : Un original et six copies. Le chiffre exact est dans le RPAO.",
+    "reponse_complete": "La règle standard demande 7 exemplaires. Pourquoi ? Pour la commission, la sous-commission, l'ARMP (copie chrono), et les archives. Les originaux et copies doivent être marqués comme tels.",
+    "reference_legale": "Article 12.1 du RPAO / Point 11 de l'AAO",
+    "categorie": "PROCÉDURE",
+    "mots_cles": ["exemplaires", "copies", "original"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_039",
+    "question": "Que dois-je écrire sur la grande enveloppe qui contient mon dossier ?",
+    "reponse_courte": "UNIQUEMENT l'objet de l'AO, la référence et la mention 'A n'ouvrir qu'en séance de dépouillement'. AUCUN NOM.",
+    "reponse_complete": "L'anonymat est obligatoire jusqu'à la séance. Si vous écrivez le nom de votre entreprise sur l'enveloppe extérieure scellée, votre offre sera déclarée irrecevable pour vice de forme.",
+    "reference_legale": "Article 18 du RGAO (Cachetage et marquage)",
+    "categorie": "PROCÉDURE",
+    "mots_cles": ["enveloppe", "anonymat", "scellé"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_040",
+    "question": "Puis-je rédiger mon offre technique en Pidgin ou en langue locale ?",
+    "reponse_courte": "Non, les langues officielles de soumission exigées par le Code sont le Français ou l'Anglais.",
+    "reponse_complete": "L'Article 11 du RGAO précise que l'offre et toutes les correspondances doivent être rédigées dans l'une des deux langues officielles du Cameroun. Les documents imprimés dans une autre langue doivent être accompagnés d'une traduction certifiée.",
+    "reference_legale": "Article 11 du RGAO",
+    "categorie": "PROCÉDURE",
+    "mots_cles": ["langue", "français", "anglais"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_041",
+    "question": "La visite de site est-elle toujours obligatoire ?",
+    "reponse_courte": "Non, cela dépend de la nature du marché. C'est surtout obligatoire pour les Travaux (BTP) et certains services complexes.",
+    "reponse_complete": "Lisez l'Article 7 du RGAO/RPAO. Si la visite est obligatoire, le non-respect de cette exigence ou l'absence de l'attestation rend votre offre technique incomplète (élimination).",
+    "reference_legale": "Article 7 du RGAO / Grille d'évaluation",
+    "categorie": "PROCÉDURE",
+    "mots_cles": ["visite", "obligatoire", "BTP"],
+    "questions_liees": ["faq_033"]
+  },
+  {
+    "id": "faq_042",
+    "question": "C'est quoi l'offre financière témoin ?",
+    "reponse_courte": "Une enveloppe supplémentaire exigée dans les Appels d'Offres Restreints (AONR), envoyée directement à l'ARMP pour sécuriser les prix.",
+    "reponse_complete": "Dans certains DAO (notamment restreints ou complexes), il est exigé une enveloppe financière scellée spéciale pour l'ARMP. 'L'absence de l'offre financière témoin' est un motif d'élimination.",
+    "reference_legale": "Article 15.1 du RPAO (Critères éliminatoires)",
+    "categorie": "PROCÉDURE",
+    "mots_cles": ["témoin", "ARMP", "AONR"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_043",
+    "question": "Quel format de fichier utiliser pour soumissionner en ligne sur COLEPS ?",
+    "reponse_courte": "Obligatoirement PDF pour les textes, et JPEG pour les images. Le non-respect du format entraîne l'élimination.",
+    "reponse_complete": "La plateforme n'accepte pas les documents Word (.docx) ou Excel non convertis. De plus, les tailles sont limitées (souvent 5 Mo Admin, 15 Mo Technique, 5 Mo Financier).",
+    "reference_legale": "Pièce 15 du DAO (Procédure soumission ligne)",
+    "categorie": "PROCÉDURE",
+    "mots_cles": ["format", "PDF", "COLEPS"],
+    "questions_liees": ["faq_096"]
+  },
+  {
+    "id": "faq_044",
+    "question": "Qu'est-ce que la copie de sauvegarde (clé USB) ?",
+    "reponse_courte": "C'est une clé USB contenant votre offre numérique, à déposer physiquement, au cas où le site COLEPS plante le jour J.",
+    "reponse_complete": "Même en soumission électronique, la loi exige le dépôt physique sous pli scellé d'une copie de sauvegarde (USB ou CD/DVD) avant l'heure limite. Son absence est éliminatoire en cas de dysfonctionnement du système.",
+    "reference_legale": "RPAO 15.1 / Pièce 15 du DAO",
+    "categorie": "PROCÉDURE",
+    "mots_cles": ["sauvegarde", "USB", "COLEPS"],
+    "questions_liees": ["faq_043"]
+  },
+  {
+    "id": "faq_045",
+    "question": "Qui a le droit d'ouvrir mes enveloppes ?",
+    "reponse_courte": "La Commission de Passation des Marchés (CPM ou CIPM) siégeant en plénière.",
+    "reponse_complete": "L'ouverture des plis est un acte public réalisé par la Commission désignée par l'Autorité Contractante. Elle se fait généralement une heure après la clôture de la remise des offres.",
+    "reference_legale": "Article 27 du RGAO (Ouverture des plis)",
+    "categorie": "PROCÉDURE",
+    "mots_cles": ["ouverture", "plis", "CPM"],
+    "questions_liees": ["faq_046"]
+  },
+  {
+    "id": "faq_046",
+    "question": "Ai-je le droit d'assister à l'ouverture des plis ?",
+    "reponse_courte": "OUI, c'est votre droit absolu. Vous ou un représentant mandaté pouvez y assister.",
+    "reponse_complete": "La séance d'ouverture est publique pour les soumissionnaires. C'est l'occasion d'entendre la lecture à haute voix des montants, rabais éventuels et la vérification des pièces administratives.",
+    "reference_legale": "Article 27 du RGAO",
+    "categorie": "PROCÉDURE",
+    "mots_cles": ["présence", "ouverture", "public"],
+    "questions_liees": ["faq_045"]
+  },
+  {
+    "id": "faq_047",
+    "question": "Puis-je modifier mon offre après l'avoir déposée ?",
+    "reponse_courte": "Oui, mais UNIQUEMENT avant la date et l'heure limites de dépôt. Après, c'est interdit.",
+    "reponse_complete": "Vous pouvez retirer, substituer ou modifier votre offre en envoyant une notification écrite scellée avant l'heure limite. Aucune modification n'est autorisée après l'ouverture des plis.",
+    "reference_legale": "Article 26 du RGAO",
+    "categorie": "PROCÉDURE",
+    "mots_cles": ["modification", "retrait", "avant dépôt"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_048",
+    "question": "Le DAO n'est pas clair, puis-je poser des questions à l'Administration ?",
+    "reponse_courte": "Oui, vous avez jusqu'à 14 jours avant la date limite pour demander des éclaircissements par écrit.",
+    "reponse_complete": "L'Article 9 du RGAO vous autorise à demander des précisions au Maître d'Ouvrage. Ce dernier doit répondre par écrit à tous les acheteurs du DAO sans révéler qui a posé la question.",
+    "reference_legale": "Article 9 du RGAO",
+    "categorie": "PROCÉDURE",
+    "mots_cles": ["éclaircissements", "questions", "14 jours"],
+    "questions_liees": ["faq_050"]
+  },
+  {
+    "id": "faq_049",
+    "question": "Combien de temps mon offre reste-t-elle valide ?",
+    "reponse_courte": "Entre 60 et 120 jours selon le marché. Pendant ce temps, vous ne pouvez pas changer vos prix.",
+    "reponse_complete": "Le 'Délai de validité des offres' est fixé dans le RPAO. Si l'administration tarde à attribuer le marché, elle peut vous demander de prolonger cette validité (et celle de votre caution).",
+    "reference_legale": "Article 18 du RGAO",
+    "categorie": "PROCÉDURE",
+    "mots_cles": ["validité", "engagement", "délai"],
+    "questions_liees": ["faq_022"]
+  },
+  {
+    "id": "faq_050",
+    "question": "Que se passe-t-il si l'État modifie le DAO avant la clôture ?",
+    "reponse_courte": "L'État publie un 'Additif' au DAO. Si la modification est lourde, il doit repousser la date limite de dépôt.",
+    "reponse_complete": "Le Maître d'Ouvrage peut modifier le DAO par additif. Pour laisser aux PME le temps de s'adapter, la date de remise des offres est généralement reportée.",
+    "reference_legale": "Article 10 du RGAO (Modification du DAO)",
+    "categorie": "PROCÉDURE",
+    "mots_cles": ["additif", "modification", "report"],
+    "questions_liees": ["faq_048"]
+  },
+  {
+    "id": "faq_051",
+    "question": "Dans quelle monnaie dois-je faire mon devis ?",
+    "reponse_courte": "En Francs CFA (XAF) pour tous les appels d'offres nationaux.",
+    "reponse_complete": "L'Option A de l'Article 14 du RGAO s'applique aux marchés nationaux : les prix doivent être libellés entièrement en monnaie nationale. Les devises (Euros) sont pour l'international.",
+    "reference_legale": "Article 14 du RGAO",
+    "categorie": "FINANCIER",
+    "mots_cles": ["monnaie", "FCFA", "devise"],
+    "questions_liees": ["faq_064"]
+  },
+  {
+    "id": "faq_052",
+    "question": "Comment est calculée la caution de soumission ?",
+    "reponse_courte": "C'est un montant fixe imposé par le DAO, qui ne peut pas dépasser 2% du coût estimatif TTC du marché.",
+    "reponse_complete": "L'administration fixe un montant forfaitaire (ex: 1 500 000 FCFA). L'Arrêté en vigueur interdit que cette garantie dépasse 2% du budget prévisionnel pour protéger la trésorerie des PME.",
+    "reference_legale": "Article 19.7 du RGAO / Point 8 de l'AAO",
+    "categorie": "FINANCIER",
+    "mots_cles": ["calcul", "caution", "2%"],
+    "questions_liees": ["faq_016", "faq_022"]
+  },
+  {
+    "id": "faq_053",
+    "question": "J'ai oublié de mettre un prix dans une case du devis (DQE), c'est grave ?",
+    "reponse_courte": "TRÈS GRAVE. Votre offre sera éliminée ! Vous devez mettre un chiffre, même '0'.",
+    "reponse_complete": "C'est l'erreur la plus fatale en chiffrage. Le RPAO classe 'l'absence d'un prix unitaire quantifié dans l'offre financière' comme un critère éliminatoire absolu. Mettez '0' ou 'Inclus' si c'est gratuit.",
+    "reference_legale": "Article 15.1 du RPAO",
+    "categorie": "FINANCIER",
+    "mots_cles": ["oubli", "prix", "élimination"],
+    "questions_liees": ["faq_054"]
+  },
+  {
+    "id": "faq_054",
+    "question": "Sur mon BPU, le prix en chiffres et en lettres sont différents. Lequel compte ?",
+    "reponse_courte": "Le prix écrit en LETTRES gagne toujours en cas de contradiction.",
+    "reponse_complete": "Le Code des marchés impose que le montant libellé en toutes lettres fasse foi en cas de discordance avec les chiffres. La commission corrigera votre total sur la base du montant en lettres.",
+    "reference_legale": "RGAO (Correction des erreurs)",
+    "categorie": "FINANCIER",
+    "mots_cles": ["chiffres", "lettres", "discordance"],
+    "questions_liees": ["faq_053"]
+  },
+  {
+    "id": "faq_055",
+    "question": "C'est quoi une offre anormalement basse ?",
+    "reponse_courte": "Un prix tellement bas que la commission pense que vous allez faire faillite ou bâcler le travail.",
+    "reponse_complete": "Si votre prix est très inférieur à l'estimation ou aux autres, la Sous-Commission d'Analyse (SCA) a l'obligation de vous demander des justifications écrites (Sous-détail des prix). Si vous ne pouvez pas prouver votre rentabilité, vous êtes éliminé.",
+    "reference_legale": "RGAO (Évaluation des offres financières)",
+    "categorie": "FINANCIER",
+    "mots_cles": ["anormalement", "basse", "rejet"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_056",
+    "question": "Quel taux de TVA dois-je appliquer sur mon devis ?",
+    "reponse_courte": "Par défaut, 19,25%. Les devis doivent être en Toutes Taxes Comprises (TTC).",
+    "reponse_complete": "Sauf cas de financement extérieur spécifique (Bailleurs de fonds) qui exclurait les taxes, vous devez appliquer la TVA à 19,25% sur votre montant Hors Taxes dans la Lettre de soumission et le DQE.",
+    "reference_legale": "Grille de soumission financière / RPAO",
+    "categorie": "FINANCIER",
+    "mots_cles": ["TVA", "19,25%", "TTC"],
+    "questions_liees": ["faq_057"]
+  },
+  {
+    "id": "faq_057",
+    "question": "Qu'est-ce que l'AIR ou le Précompte sur les décomptes ?",
+    "reponse_courte": "C'est l'Acompte de l'Impôt sur le Revenu (2,2% ou 5,5%) que l'État retient à la source sur vos paiements.",
+    "reponse_complete": "Lors de la facturation, l'État ne vous paie pas 100%. Il prélève l'AIR en fonction de votre régime fiscal (souvent 5,5% pour les PME au régime simplifié). Cela réduit votre 'Net à mandater'.",
+    "reference_legale": "Formulaire de Décompte Provisoire",
+    "categorie": "FINANCIER",
+    "mots_cles": ["AIR", "précompte", "retenue"],
+    "questions_liees": ["faq_056"]
+  },
+  {
+    "id": "faq_058",
+    "question": "Qui paie l'enregistrement du contrat aux impôts ?",
+    "reponse_courte": "Le fournisseur (Vous). Ces frais sont entièrement à votre charge avant de recevoir l'Ordre de Service.",
+    "reponse_complete": "C'est une dépense de trésorerie immédiate. L'enregistrement du marché aux impôts est une formalité légale à la charge exclusive du cocontractant.",
+    "reference_legale": "Mentions du Projet de Marché (Page signature)",
+    "categorie": "FINANCIER",
+    "mots_cles": ["enregistrement", "impôts", "frais"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_059",
+    "question": "Qu'est-ce que la Retenue de Garantie (RDG) ?",
+    "reponse_courte": "L'État conserve 10% de vos factures jusqu'à la réception définitive pour couvrir d'éventuels défauts.",
+    "reponse_complete": "Sur chaque décompte (Travaux/Fournitures), l'administration retient jusqu'à 10%. Cet argent vous est restitué (Mainlevée) un mois après la réception définitive. *Non applicable aux prestations intellectuelles.*",
+    "reference_legale": "Article 11.2 / 12.2 du CCAP",
+    "categorie": "FINANCIER",
+    "mots_cles": ["retenue", "garantie", "10%"],
+    "questions_liees": ["faq_060", "faq_092"]
+  },
+  {
+    "id": "faq_060",
+    "question": "La Caution de Bonne Exécution est-elle obligatoire ?",
+    "reponse_courte": "Oui, elle représente 2% à 5% du marché et doit être fournie dans les 20 jours suivant la notification du contrat.",
+    "reponse_complete": "Aussi appelée cautionnement définitif, elle garantit que vous irez au bout du contrat. Si vous ne la fournissez pas, le marché peut être annulé et votre caution de soumission saisie.",
+    "reference_legale": "Article 11.1 / 12.1 du CCAP",
+    "categorie": "FINANCIER",
+    "mots_cles": ["bonne exécution", "caution", "définitive"],
+    "questions_liees": ["faq_059"]
+  },
+  {
+    "id": "faq_061",
+    "question": "Ai-je droit à une avance de démarrage ?",
+    "reponse_courte": "Oui (sauf en Assurance), souvent 20% du montant. MAIS il faut fournir une caution bancaire équivalente (100%).",
+    "reponse_complete": "L'avance permet de financer l'installation du chantier. Pour l'obtenir, vous devez fournir une 'Caution d'avance de démarrage' délivrée par une banque. Elle est ensuite remboursée sur vos factures.",
+    "reference_legale": "Article 11.3 du CCAP",
+    "categorie": "FINANCIER",
+    "mots_cles": ["avance", "démarrage", "trésorerie"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_062",
+    "question": "Quel est le délai de paiement de mes factures (décomptes) ?",
+    "reponse_courte": "Légalement 90 jours après la constatation des travaux, mais en pratique cela peut être beaucoup plus long.",
+    "reponse_complete": "Le Code prévoit 90 jours ouvrables. Les retards de paiement de l'État ouvrent théoriquement droit à des intérêts moratoires, bien que leur recouvrement par les PME soit complexe.",
+    "reference_legale": "Article 165 du CMP / Rapport de Synthèse",
+    "categorie": "FINANCIER",
+    "mots_cles": ["paiement", "décompte", "délai"],
+    "questions_liees": ["faq_094"]
+  },
+  {
+    "id": "faq_063",
+    "question": "Comment obtenir ma caution si je n'ai pas de liquidités ?",
+    "reponse_courte": "Par le 'nantissement' : vous donnez votre marché en garantie à la banque pour qu'elle avance les cautions.",
+    "reponse_complete": "Les banques acceptent de délivrer les cautions si vous domiciliez les paiements de l'État directement sur votre compte chez eux. C'est la clause de nantissement du CCAP.",
+    "reference_legale": "Article 3 du CCAP (Attributions et nantissement)",
+    "categorie": "FINANCIER",
+    "mots_cles": ["nantissement", "banque", "garantie"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_064",
+    "question": "Puis-je faire mon offre en Euros ?",
+    "reponse_courte": "Uniquement pour les Appels d'Offres Internationaux (Option B), et seulement pour la part des biens importés.",
+    "reponse_complete": "La réglementation impose le Franc CFA pour la part locale (installation, transport interne, taxes). L'utilisation de devises est strictement encadrée par le RGAO.",
+    "reference_legale": "Article 14 du RGAO",
+    "categorie": "FINANCIER",
+    "mots_cles": ["euros", "devises", "international"],
+    "questions_liees": ["faq_051"]
+  },
+  {
+    "id": "faq_065",
+    "question": "Puis-je mettre mon prix dans mon document de méthodologie pour être clair ?",
+    "reponse_courte": "Surtout pas ! L'offre technique et l'offre financière doivent être strictement séparées. C'est éliminatoire.",
+    "reponse_complete": "Pour les Prestations Intellectuelles et Assurances, la 'présence d'informations financières dans l'offre technique' rompt l'équité de l'évaluation technique et entraîne un rejet immédiat.",
+    "reference_legale": "Article 15.1 du RPAO (SPI)",
+    "categorie": "FINANCIER",
+    "mots_cles": ["technique", "séparation", "élimination"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_066",
+    "question": "Que doit contenir la note méthodologique ?",
+    "reponse_courte": "La compréhension du besoin, l'organisation de vos équipes, le matériel, le planning, et les mesures de sécurité.",
+    "reponse_complete": "C'est la pièce maîtresse évaluée par la commission. Elle doit répondre point par point au Cahier des Clauses Techniques (CCTP) ou aux Termes de Référence (TDR), en incluant toujours un volet sur l'hygiène et l'environnement.",
+    "reference_legale": "Grille d'évaluation technique DTAO",
+    "categorie": "TECHNIQUE",
+    "mots_cles": ["méthodologie", "note", "CCTP"],
+    "questions_liees": ["faq_067", "faq_075"]
+  },
+  {
+    "id": "faq_067",
+    "question": "Comment présenter le planning des travaux ?",
+    "reponse_courte": "Il faut un diagramme (ex: Gantt) cohérent avec le délai total exigé, montrant les différentes phases.",
+    "reponse_complete": "Le planning d'exécution est un critère essentiel. S'il dépasse le délai imposé par le Maître d'Ouvrage, ou s'il est incohérent (ex: faire la toiture avant les fondations), votre offre technique sera rejetée.",
+    "reference_legale": "Grille d'évaluation technique",
+    "categorie": "TECHNIQUE",
+    "mots_cles": ["planning", "diagramme", "délai"],
+    "questions_liees": ["faq_066"]
+  },
+  {
+    "id": "faq_068",
+    "question": "Comment prouver mes références passées ?",
+    "reponse_courte": "Il faut la première et la dernière page du contrat (signée) + le Procès-Verbal (PV) de réception des travaux.",
+    "reponse_complete": "Une simple facture ou lettre ne suffit pas pour les travaux. L'évaluation exige les justificatifs contractuels stricts prouvant que le marché a existé et a été achevé de manière satisfaisante.",
+    "reference_legale": "Grille d'évaluation technique",
+    "categorie": "TECHNIQUE",
+    "mots_cles": ["références", "preuve", "PV"],
+    "questions_liees": ["faq_012"]
+  },
+  {
+    "id": "faq_069",
+    "question": "Comment présenter les CV de mon personnel ?",
+    "reponse_courte": "Le CV doit être signé et daté par l'expert, et accompagné de la copie certifiée de son diplôme.",
+    "reponse_complete": "Pour valider le sous-critère 'Personnel clé', le diplôme certifié est obligatoire. Dans les prestations intellectuelles, le format strict de l'Annexe 'Modèle de CV' doit être respecté.",
+    "reference_legale": "Grille d'évaluation technique",
+    "categorie": "TECHNIQUE",
+    "mots_cles": ["CV", "personnel", "diplôme"],
+    "questions_liees": ["faq_007"]
+  },
+  {
+    "id": "faq_070",
+    "question": "Comment justifier la disponibilité du matériel ?",
+    "reponse_courte": "Par des copies certifiées des cartes grises (matériel roulant), des factures d'achat, ou des contrats de location signés.",
+    "reponse_complete": "Si vous louez le matériel, le contrat de location doit lier spécifiquement le propriétaire à votre entreprise. Une simple promesse de location verbale vaut 0.",
+    "reference_legale": "Grille d'évaluation technique",
+    "categorie": "TECHNIQUE",
+    "mots_cles": ["matériel", "justificatif", "location"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_071",
+    "question": "C'est quoi l'évaluation binaire (Oui/Non) ?",
+    "reponse_courte": "Un système où on ne donne pas de points. Vous avez les critères (Oui) ou pas (Non). Utilisé pour les Travaux et Fournitures.",
+    "reponse_complete": "La réglementation proscrit les points pour les marchés physiques. Pour passer à l'étape financière, vous devez obtenir un nombre minimum de 'Oui' (ex: 5 Oui sur 7 critères essentiels).",
+    "reference_legale": "RPAO / Note sur le mode d'évaluation",
+    "categorie": "TECHNIQUE",
+    "mots_cles": ["binaire", "oui/non", "évaluation"],
+    "questions_liees": ["faq_072"]
+  },
+  {
+    "id": "faq_072",
+    "question": "C'est quoi l'évaluation par points (sur 100) ?",
+    "reponse_courte": "Utilisé pour les Services et Assurances. Votre méthodologie et vos CV reçoivent une note. Il faut atteindre un seuil (ex: 70/100).",
+    "reponse_complete": "La qualité technique prime. Le personnel clé pèse souvent 50% de la note. Les offres sous le seuil éliminatoire (70 ou 80 points) sont rejetées et leur enveloppe financière est rendue non ouverte.",
+    "reference_legale": "RPAO (SPI et Assurances)",
+    "categorie": "TECHNIQUE",
+    "mots_cles": ["points", "seuil", "note"],
+    "questions_liees": ["faq_071"]
+  },
+  {
+    "id": "faq_073",
+    "question": "Faut-il mettre des prospectus en couleur ?",
+    "reponse_courte": "Oui, si c'est de la fourniture. Le DAO l'exige souvent comme critère éliminatoire pour vérifier la marque.",
+    "reponse_complete": "L'absence de prospectus en couleur, catalogues ou fiches techniques du fabricant dans l'original ET les copies est un motif d'élimination très fréquent dans les marchés de matériels.",
+    "reference_legale": "Article 15.1 du RPAO (Fournitures)",
+    "categorie": "TECHNIQUE",
+    "mots_cles": ["prospectus", "couleur", "fournitures"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_074",
+    "question": "Qu'est-ce que le SAV dans l'offre technique ?",
+    "reponse_courte": "Le Service Après-Vente. C'est la preuve que vous avez des pièces de rechange et des techniciens locaux.",
+    "reponse_complete": "Pour les fournitures lourdes ou l'informatique, vous devez prouver l'existence d'une représentation locale et un engagement sur la garantie (ex: 12 mois), évalués dans la grille technique.",
+    "reference_legale": "Grille d'évaluation (Fournitures)",
+    "categorie": "TECHNIQUE",
+    "mots_cles": ["SAV", "garantie", "maintenance"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_075",
+    "question": "Que sont les clauses ESHS ?",
+    "reponse_courte": "Environnement, Social, Hygiène et Sécurité. Vous devez vous engager à respecter les normes écologiques sur le chantier.",
+    "reponse_complete": "Une 'Déclaration d'engagement au respect des clauses environnementales et sociales' datée et signée est exigée (Pièce 11/12). L'oubli de ce formulaire est éliminatoire.",
+    "reference_legale": "Article 15.1 du RPAO",
+    "categorie": "TECHNIQUE",
+    "mots_cles": ["ESHS", "environnement", "sécurité"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_076",
+    "question": "Mon offre a été rejetée, ai-je le droit de contester ?",
+    "reponse_courte": "Oui, tout soumissionnaire s'estimant lésé peut introduire un recours non juridictionnel.",
+    "reponse_complete": "La loi vous protège. Si vous estimez avoir été éliminé injustement, vous pouvez faire un recours argumenté, qui bloquera provisoirement la signature du marché le temps de l'enquête.",
+    "reference_legale": "Article 5.7 du RGAO / Code des Marchés",
+    "categorie": "RECOURS",
+    "mots_cles": ["recours", "contestation", "rejet"],
+    "questions_liees": ["faq_077", "faq_078"]
+  },
+  {
+    "id": "faq_077",
+    "question": "Quel est le délai pour faire un recours après les résultats ?",
+    "reponse_courte": "Vous avez un délai MAXIMUM de cinq (5) jours ouvrables après la publication officielle.",
+    "reponse_complete": "Passé ce délai strict de 5 jours, votre requête sera déclarée irrecevable (forclose) et l'administration signera le contrat avec l'attributaire.",
+    "reference_legale": "Article 5.7 du RGAO",
+    "categorie": "RECOURS",
+    "mots_cles": ["délai", "5 jours", "forclusion"],
+    "questions_liees": ["faq_076"]
+  },
+  {
+    "id": "faq_078",
+    "question": "À qui dois-je adresser ma lettre de recours ?",
+    "reponse_courte": "Au Ministre des Marchés Publics (MINMAP) ou à l'Autorité Contractante, selon les seuils.",
+    "reponse_complete": "La requête est adressée à l'Autorité chargée des marchés publics. ATTENTION : Vous devez obligatoirement envoyer des copies (ampliations) à l'ARMP, au Maître d'Ouvrage et au Président de la Commission.",
+    "reference_legale": "Article 5.7 du RGAO",
+    "categorie": "RECOURS",
+    "mots_cles": ["MINMAP", "destinataire", "ampliation"],
+    "questions_liees": ["faq_079"]
+  },
+  {
+    "id": "faq_079",
+    "question": "Pourquoi envoyer une copie du recours à l'ARMP ?",
+    "reponse_courte": "Parce que l'ARMP est le régulateur. Elle anime le Comité d'Examen des Recours (CER) qui enquête sur votre plainte.",
+    "reponse_complete": "L'ARMP peut suspendre la procédure de manière conservatoire si le recours est sérieux. Elle analysera le rapport de l'Observateur Indépendant pour voir si la commission a fauté.",
+    "reference_legale": "Rapport sur les Actes de Régulation",
+    "categorie": "RECOURS",
+    "mots_cles": ["ARMP", "copie", "régulateur"],
+    "questions_liees": ["faq_078"]
+  },
+  {
+    "id": "faq_080",
+    "question": "Puis-je contester un DAO qui me semble truqué avant même de déposer mon offre ?",
+    "reponse_courte": "Oui, vous avez jusqu'à 14 jours avant la date limite pour attaquer un DAO discriminatoire.",
+    "reponse_complete": "Si un DAO exige une marque spécifique sans dire 'ou équivalent', ou met des critères sur mesure pour une entreprise, vous pouvez introduire un recours avant la soumission.",
+    "reference_legale": "Guide de la régulation ARMP / RGAO",
+    "categorie": "RECOURS",
+    "mots_cles": ["avant dépôt", "discriminatoire", "DAO"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_081",
+    "question": "Mon recours suspend-il la procédure ?",
+    "reponse_courte": "Pas automatiquement, mais l'ARMP ou le MINMAP peuvent ordonner une suspension conservatoire.",
+    "reponse_complete": "Le recours n'est pas suspensif de plein droit, mais l'autorité compétente bloque généralement la signature du marché le temps de vérifier la matérialité de vos accusations.",
+    "reference_legale": "Guide amendé de la régulation",
+    "categorie": "RECOURS",
+    "mots_cles": ["suspension", "conservatoire"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_082",
+    "question": "Que se passe-t-il si mon recours est jugé fondé ?",
+    "reponse_courte": "L'Autorité annule l'attribution injuste et ordonne à la Commission de réévaluer les offres.",
+    "reponse_complete": "Si le Comité d'Examen des Recours (CER) vous donne raison, la commission est obligée de reprendre les calculs ou le dépouillement. Le marché peut vous être réattribué.",
+    "reference_legale": "Guide amendé de la régulation",
+    "categorie": "RECOURS",
+    "mots_cles": ["fondé", "réévaluation", "annulation"],
+    "questions_liees": ["faq_084"]
+  },
+  {
+    "id": "faq_083",
+    "question": "Combien coûte le dépôt d'un recours ?",
+    "reponse_courte": "La procédure est gratuite au niveau administratif, mais nécessite la rédaction rigoureuse d'une requête formelle.",
+    "reponse_complete": "Les textes ne mentionnent pas de frais de dépôt. Cependant, si le recours est jugé abusif ou dilatoire pour bloquer un projet, vous risquez des sanctions de la part de l'ARMP.",
+    "reference_legale": "Code des Marchés Publics",
+    "categorie": "RECOURS",
+    "mots_cles": ["coût", "gratuit", "abusif"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_084",
+    "question": "Qu'est-ce qu'une déclaration d'infructuosité ?",
+    "reponse_courte": "L'administration déclare le marché 'Infructueux' quand personne ne gagne (aucun qualifié ou prix trop chers).",
+    "reponse_complete": "Si aucune offre technique ne passe le seuil, ou si les moins-disants dépassent largement le budget, la procédure est annulée. Vous pouvez aussi faire un recours contre cette décision.",
+    "reference_legale": "Guide amendé de la régulation",
+    "categorie": "RECOURS",
+    "mots_cles": ["infructueux", "annulation", "budget"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_085",
+    "question": "C'est quoi la 'Forclusion' dans un recours ?",
+    "reponse_courte": "C'est le rejet automatique de votre plainte parce que vous l'avez déposée en retard.",
+    "reponse_complete": "En droit des marchés, la forclusion frappe toute requête déposée hors du délai des 5 jours. La plainte n'est même pas lue au fond, elle est irrecevable sur la forme.",
+    "reference_legale": "RGAO",
+    "categorie": "RECOURS",
+    "mots_cles": ["forclusion", "retard", "irrecevable"],
+    "questions_liees": ["faq_077"]
+  },
+  {
+    "id": "faq_086",
+    "question": "Qu'est-ce qu'un Ordre de Service (OS) ?",
+    "reponse_courte": "C'est la lettre officielle de l'Administration qui vous ordonne de démarrer les travaux.",
+    "reponse_complete": "La signature du marché ne suffit pas. C'est l'OS de Démarrage (OSD) qui lance le chronomètre de votre délai d'exécution. Ne travaillez jamais sans OS.",
+    "reference_legale": "Article 8 et 9 du CCAP",
+    "categorie": "EXÉCUTION",
+    "mots_cles": ["OS", "démarrage", "délai"],
+    "questions_liees": ["faq_087"]
+  },
+  {
+    "id": "faq_087",
+    "question": "L'État peut-il mettre des mois à me donner l'OS de démarrage ?",
+    "reponse_courte": "Non, la loi impose à l'État de notifier l'OS dans les 15 à 30 jours après la signature.",
+    "reponse_complete": "Si l'administration tarde de manière abusive, vous avez le droit de demander la résiliation du contrat sans pénalité ou une actualisation de vos prix pour inflation.",
+    "reference_legale": "Guide d'exécution des marchés",
+    "categorie": "EXÉCUTION",
+    "mots_cles": ["retard OS", "délai notification"],
+    "questions_liees": ["faq_086"]
+  },
+  {
+    "id": "faq_088",
+    "question": "Comment fonctionnent les pénalités de retard ?",
+    "reponse_courte": "Elles sont déduites de vos factures (ex: 1/2000 du marché par jour de retard sur votre calendrier).",
+    "reponse_complete": "Si vous dépassez le délai de l'OS sans justification (force majeure), l'Ingénieur calcule les pénalités. Si le total des pénalités dépasse 10% du montant du contrat, le marché est résilié.",
+    "reference_legale": "Article 34/35 du CCAP",
+    "categorie": "EXÉCUTION",
+    "mots_cles": ["pénalités", "retard", "10%"],
+    "questions_liees": ["faq_089"]
+  },
+  {
+    "id": "faq_089",
+    "question": "L'État peut-il résilier mon contrat ?",
+    "reponse_courte": "Oui, pour 'Défaillance'. C'est le cas si vous abandonnez le chantier ou dépassez les 10% de pénalités.",
+    "reponse_complete": "La résiliation aux torts de l'entreprise est la sanction suprême. Elle entraîne la saisie de votre caution, et votre suspension par l'ARMP pour de futures soumissions.",
+    "reference_legale": "Rapport Actes de Régulation / CCAP",
+    "categorie": "EXÉCUTION",
+    "mots_cles": ["résiliation", "défaillance", "sanction"],
+    "questions_liees": ["faq_088"]
+  },
+  {
+    "id": "faq_090",
+    "question": "C'est quoi la réception provisoire ?",
+    "reponse_courte": "C'est le jour où l'État accepte vos travaux. Cela arrête les pénalités de retard et déclenche le gros du paiement.",
+    "reponse_complete": "Une commission vient sur le terrain. Si c'est bon, elle signe le PV de réception provisoire. Cela fait courir la période de garantie (souvent 1 an) pendant laquelle vous devez réparer les pannes.",
+    "reference_legale": "Guide du suivi et de contrôle de l'exécution",
+    "categorie": "EXÉCUTION",
+    "mots_cles": ["réception provisoire", "PV", "garantie"],
+    "questions_liees": ["faq_091", "faq_092"]
+  },
+  {
+    "id": "faq_091",
+    "question": "C'est quoi la période de garantie ?",
+    "reponse_courte": "Le délai (ex: 12 mois) entre la réception provisoire et la définitive. Vous devez réparer toute malfaçon gratuite.",
+    "reponse_complete": "L'entrepreneur est tenu de remédier à ses frais à tous les désordres signalés. C'est pour s'assurer de cela que l'État conserve la Retenue de Garantie de 10% sur vos paiements.",
+    "reference_legale": "Guide du suivi (I.2.4)",
+    "categorie": "EXÉCUTION",
+    "mots_cles": ["période", "garantie", "réparations"],
+    "questions_liees": ["faq_059", "faq_090"]
+  },
+  {
+    "id": "faq_092",
+    "question": "C'est quoi la réception définitive ?",
+    "reponse_courte": "La fin absolue du contrat (souvent 1 an après les travaux). L'État vous rend vos 10% de retenue de garantie.",
+    "reponse_complete": "Elle marque l'extinction de vos obligations contractuelles. Le PV de réception définitive vous permet d'obtenir le paiement du Décompte Général et Définitif (DGD).",
+    "reference_legale": "Guide du suivi / CCAP",
+    "categorie": "EXÉCUTION",
+    "mots_cles": ["réception", "définitive", "DGD"],
+    "questions_liees": ["faq_090", "faq_091"]
+  },
+  {
+    "id": "faq_093",
+    "question": "Comment demander un avenant si le projet change ?",
+    "reponse_courte": "C'est l'État qui initie l'Avenant. Il modifie le prix ou le délai, mais ne doit pas dépasser 30% du montant initial.",
+    "reponse_complete": "Si les quantités augmentent, un avenant est rédigé. S'il dépasse 30% du marché de base, il faut une dérogation spéciale de l'Autorité Contractante.",
+    "reference_legale": "Guide du Suivi (I.2.3 Cas des avenants)",
+    "categorie": "EXÉCUTION",
+    "mots_cles": ["avenant", "30%", "modification"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_094",
+    "question": "C'est quoi un Décompte ?",
+    "reponse_courte": "C'est votre facture formatée pour les marchés publics. Elle doit être visée (signée) par les ingénieurs pour être payée.",
+    "reponse_complete": "Le décompte constate l'état d'avancement physique. Il est signé par le Chef de Mission (Maître d'Œuvre), l'Ingénieur du marché, puis le Maître d'Ouvrage avant d'aller au Trésor.",
+    "reference_legale": "Recueil Doc 32, 33",
+    "categorie": "EXÉCUTION",
+    "mots_cles": ["décompte", "facture", "ingénieur"],
+    "questions_liees": ["faq_062"]
+  },
+  {
+    "id": "faq_095",
+    "question": "Que faire en cas de Force Majeure (pluie, guerre) ?",
+    "reponse_courte": "Vous devez signaler l'événement par écrit immédiatement à l'administration pour geler vos délais et éviter les pénalités.",
+    "reponse_complete": "Le CCAP prévoit une clause de force majeure. S'il y a un événement imprévisible et insurmontable, vos obligations sont suspendues sans pénalités si vous prévenez le MO dans les délais.",
+    "reference_legale": "CCAP",
+    "categorie": "EXÉCUTION",
+    "mots_cles": ["force majeure", "climat", "délais"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_096",
+    "question": "C'est quoi le COLEPS ?",
+    "reponse_courte": "C'est le système en ligne officiel du Cameroun (marchespublics.cm) pour soumettre son offre par internet.",
+    "reponse_complete": "Le Cameroon Online E-Procurement System permet la dématérialisation. Vous uploadez vos PDF et validez avec un certificat électronique. Une clé USB de sauvegarde reste exigée physiquement.",
+    "reference_legale": "Pièce 15 du DAO / Manuel COLEPS",
+    "categorie": "SPÉCIFIQUE CAMEROUN",
+    "mots_cles": ["COLEPS", "en ligne", "e-procurement"],
+    "questions_liees": ["faq_043", "faq_044"]
+  },
+  {
+    "id": "faq_097",
+    "question": "C'est quoi le BIP ?",
+    "reponse_courte": "Le Budget d'Investissement Public. C'est l'argent de l'État voté chaque année pour financer les projets.",
+    "reponse_complete": "La mention 'BIP 2024' ou 'BIP 2025' dans l'Avis indique la source de financement et l'exercice budgétaire du marché, garantissant que l'argent existe.",
+    "reference_legale": "Avis d'Appel d'Offres (Financement)",
+    "categorie": "SPÉCIFIQUE CAMEROUN",
+    "mots_cles": ["BIP", "budget", "financement"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_098",
+    "question": "Quelle est la différence entre l'ARMP et le MINMAP ?",
+    "reponse_courte": "Le MINMAP passe et signe les marchés (Exécutif). L'ARMP surveille, audite et sanctionne (Régulateur indépendant).",
+    "reponse_complete": "Le Ministère des Marchés Publics est l'Autorité chargée des marchés (bien que les Maires soient aussi maîtres d'ouvrage). L'Agence de Régulation (ARMP) contrôle le système a posteriori, gère les recours et publie le JDM.",
+    "reference_legale": "RSGMP / Missions ARMP",
+    "categorie": "SPÉCIFIQUE CAMEROUN",
+    "mots_cles": ["ARMP", "MINMAP", "différence"],
+    "questions_liees": ["faq_079"]
+  },
+  {
+    "id": "faq_099",
+    "question": "Qu'est-ce que le Journal des Marchés Publics (JDM) ?",
+    "reponse_courte": "C'est le journal officiel édité par l'ARMP où sont publiés tous les appels d'offres et les résultats d'attribution.",
+    "reponse_complete": "L'édition du JDM est une mission régalienne de l'ARMP. La loi impose qu'un marché soit publié dans le JDM (ou sur le portail) pour que la procédure soit légale et transparente.",
+    "reference_legale": "Plaquette ARMP",
+    "categorie": "SPÉCIFIQUE CAMEROUN",
+    "mots_cles": ["JDM", "journal", "publication"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_100",
+    "question": "Différence entre AONO et AOIO ?",
+    "reponse_courte": "AONO = National Ouvert (réservé au Cameroun). AOIO = International Ouvert (Monde entier).",
+    "reponse_complete": "Les délais sont plus longs pour l'International (90 jours) que pour le National (20 à 30 jours), et les monnaies étrangères (Devises) y sont acceptées.",
+    "reference_legale": "RSGMP",
+    "categorie": "SPÉCIFIQUE CAMEROUN",
+    "mots_cles": ["AONO", "AOIO", "national vs international"],
+    "questions_liees": ["faq_003"]
+  },
+  {
+    "id": "faq_101",
+    "question": "Qu'est-ce qu'une Demande de Cotation (DC) ?",
+    "reponse_courte": "C'est une procédure simplifiée et rapide pour les très petits marchés (souvent < 50 Millions FCFA).",
+    "reponse_complete": "Elle aboutit à une 'Lettre-Commande'. C'est le format le plus courant dans les Communes et Mairies. Le dossier est moins lourd qu'un AONO complet.",
+    "reference_legale": "RSGMP / DTAO Demande de Cotation",
+    "categorie": "SPÉCIFIQUE CAMEROUN",
+    "mots_cles": ["DC", "cotation", "Lettre-commande"],
+    "questions_liees": ["faq_102"]
+  },
+  {
+    "id": "faq_102",
+    "question": "C'est quoi une Lettre-Commande ?",
+    "reponse_courte": "C'est le nom du contrat signé à la fin d'une Demande de Cotation. Elle a la même valeur juridique qu'un Marché Public.",
+    "reponse_complete": "Bien que le montant soit faible, la Lettre-Commande (LC) vous engage totalement. Un abandon de Lettre-Commande entraîne les mêmes sanctions d'exclusion qu'un grand marché.",
+    "reference_legale": "Rapport de Synthèse / Code des Marchés",
+    "categorie": "SPÉCIFIQUE CAMEROUN",
+    "mots_cles": ["lettre-commande", "LC", "contrat"],
+    "questions_liees": ["faq_101"]
+  },
+  {
+    "id": "faq_103",
+    "question": "Qui est l'Observateur Indépendant (OI) ?",
+    "reponse_courte": "C'est un auditeur mandaté par l'ARMP pour s'asseoir dans la commission et vérifier qu'il n'y a pas de fraude.",
+    "reponse_complete": "Pour les marchés dépassant un certain seuil (souvent 50 millions FCFA), l'OI rédige un rapport de conformité. Son avis est crucial lors d'un recours.",
+    "reference_legale": "Guide de la régulation ARMP",
+    "categorie": "SPÉCIFIQUE CAMEROUN",
+    "mots_cles": ["observateur", "OI", "auditeur"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_104",
+    "question": "Qu'est-ce qu'un Accord-Cadre ?",
+    "reponse_courte": "L'État fixe les prix avec vous pour 1 à 3 ans, puis passe des 'Bons de Commande' selon ses besoins sans refaire de procédure.",
+    "reponse_complete": "Très utilisé pour les fournitures de bureau ou l'entretien. L'Accord-Cadre définit le bordereau de prix. Ensuite, l'exécution se fait via des marchés subséquents ou bons de commande ponctuels.",
+    "reference_legale": "DTAO Accord Cadre",
+    "categorie": "SPÉCIFIQUE CAMEROUN",
+    "mots_cles": ["accord-cadre", "bons de commande", "répétitif"],
+    "questions_liees": []
+  },
+  {
+    "id": "faq_105",
+    "question": "C'est quoi la CIMA dans les marchés d'assurances ?",
+    "reponse_courte": "C'est la Conférence Interafricaine (Régulateur) qui impose des tarifs planchers obligatoires aux assureurs.",
+    "reponse_complete": "Pour un marché d'assurance, chiffrer en dessous du barème CIMA (pour casser les prix) est une fraude et entraîne l'élimination automatique de l'offre.",
+    "reference_legale": "DTAO Assurances (Critères financiers)",
+    "categorie": "SPÉCIFIQUE CAMEROUN",
+    "mots_cles": ["CIMA", "assurance", "tarifs"],
+    "questions_liees": []
+  }

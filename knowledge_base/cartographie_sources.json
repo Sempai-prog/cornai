@@ -1,0 +1,111 @@
+// Conformément à nos principes, toutes les données purement techniques (comme la structure HTML exacte ou le volume mensuel) qui ne sont pas explicitement décrites dans les sources réglementaires ou les manuels sont marquées : "Non trouvé dans les sources — à vérifier techniquement par le développeur"
+
+
+{
+    "source": "COLEPS (Cameroon Online E-Procurement System)",
+    "url_principale": "http://www.marchespublics.cm",
+    "urls_specifiques": {
+      "page_liste_ao": "Menu d'accès direct > Avis d'Appel d'Offres",
+      "page_detail_ao": "Non trouvé dans les sources - à vérifier l'URL générée par le système",
+      "page_resultats": "Menu d'accès direct > Projets Programmés / Annonces des AC/MO"
+    },
+    "type_contenu": "HTML dynamique et Fichiers PDF",
+    "necessite_authentification": false,
+    "gratuit": true,
+    "frequence_publication": "quotidienne",
+    "format_donnees": {
+      "structure_html": "Non trouvé dans les sources - le menu liste 'Avis d'Appel d'Offres', 'Catalogue Électronique', 'Projets Programmés' (Source : Manuel COLEPS)",
+      "donnees_dans_pdf": true,
+      "pdf_scanné_ou_texte": "mixte (La plupart des DAO sont téléchargés gratuitement au format texte, mais certains éléments peuvent être scannés)"
+    },
+    "types_marches_publies": [
+      "AG (Approvisionnements Généraux)",
+      "AI (Autres infrastructures)",
+      "BEC (Bâtiments et Equipements Collectifs)",
+      "ROUTES (Routes et Infrastructures Routières)",
+      "SNQ-PI (Service Non Quantifiable - Prestations Intellectuelles)",
+      "SQ (Service Quantifiable)"
+    ],
+    "reference_legale": "Pièce 14/15 des DAO Types (Procédure de soumission en ligne)",
+    "volume_estime": "Non trouvé dans les sources - à vérifier techniquement",
+    "priorite_scraping": "P1",
+    "notes_techniques": "La consultation et le téléchargement des DAO sont gratuits (Source : AAO Article 3). Le système possède un 'Sitemap' et un module 'Recherche' qui faciliteront le ciblage par le scraper. Attention : l'URL alternative http://www.publiccontracts.cm pointe vers le même système. La soumission requiert une authentification (Enregistrement des Soumissionnaires)."
+  },
+  {
+    "source": "Plateforme ARMP et e-JDM (Journal des Marchés Publics)",
+    "url_principale": "http://www.armp.cm",
+    "urls_specifiques": {
+      "page_liste_ao": "e-JDM > Avis d’appel d’offres lancés",
+      "page_detail_ao": "Non trouvé dans les sources - à vérifier",
+      "page_resultats": "e-JDM > Attributions effectuées / Communiqués publiés"
+    },
+    "type_contenu": "HTML dynamique / PDF",
+    "necessite_authentification": true,
+    "gratuit": false,
+    "frequence_publication": "quotidienne",
+    "format_donnees": {
+      "structure_html": "Recherche multicritères (Secteur d’activité, Région d’intérêt, Surface financière)",
+      "donnees_dans_pdf": true,
+      "pdf_scanné_ou_texte": "texte (Application native e-JDM optimisée pour Smartphone/Tablette/PC)"
+    },
+    "types_marches_publies": [
+      "Tous types de marchés publics (AONO, AOIO, DC, etc.)"
+    ],
+    "reference_legale": "Article 86 du Code des Marchés Publics / Arrêté N°038 CAB/PM",
+    "volume_estime": "Non trouvé dans les sources - à vérifier",
+    "priorite_scraping": "P1",
+    "notes_techniques": "Le Journal des Marchés Publics (JDM) nécessite un abonnement (Source : 'Formulaire d'Abonnement au JDM'). Le scraper devra utiliser des credentials (compte abonné) pour simuler une session et accéder à la base complète des 'Avis d'appel d'offres lancés' et 'Attributions effectuées'. La fonctionnalité 'Recherche multicritères' native du e-JDM peut être rétro-ingénieriée (API endpoint) pour faciliter l'extraction ciblée."
+  },
+  {
+    "source": "PRIDESOFT (Système Intégré de Gestion Ouvert et Multiplateformes)",
+    "url_principale": "http://pridesoft.armp.cm",
+    "urls_specifiques": {
+      "page_liste_ao": "Non applicable directement (Orienté régulation et statistiques)",
+      "page_detail_ao": "http://pridesoft.armp.cm/_lib/file/doc/SiteWeb/Documents/Application for CNE 2024-1.pdf (Exemple de fichier hébergé)",
+      "page_resultats": "Dashboard Statistiques / Sanctions / CNE"
+    },
+    "type_contenu": "HTML dynamique / Base de données",
+    "necessite_authentification": true,
+    "gratuit": false,
+    "frequence_publication": "Continue",
+    "format_donnees": {
+      "structure_html": "Dashboards et Tableaux interactifs (Application Web & Mobile)",
+      "donnees_dans_pdf": true,
+      "pdf_scanné_ou_texte": "texte"
+    },
+    "types_marches_publies": [
+      "Données de régulation : Sanctions, CNE, Planifications budgétaires"
+    ],
+    "reference_legale": "Rapport ARMP (Dématérialisation des marchés publics, système intégré Pridesoft)",
+    "volume_estime": "Non applicable (Base de données globale)",
+    "priorite_scraping": "P2",
+    "notes_techniques": "Pridesoft est le système back-office de l'ARMP. Ce scraper ne cherchera pas les AO, mais ira extraire la liste des PME sanctionnées (module 'Sanction') et les données de 'Planification' pour alerter nos utilisateurs des marchés à venir (programmation budgétaire). Présence d'une application 'Pridesoft Mobile'."
+  },
+  {
+    "source": "Tableaux d'Affichage (Maîtres d'Ouvrage et Commissions)",
+    "url_principale": "N/A - Physique (Mairies, Ministères, Délégations)",
+    "urls_specifiques": {
+      "page_liste_ao": "N/A",
+      "page_detail_ao": "N/A",
+      "page_resultats": "N/A"
+    },
+    "type_contenu": "Papier imprimé punaisé sur babillard",
+    "necessite_authentification": false,
+    "gratuit": true,
+    "frequence_publication": "Au gré des sessions des Commissions (CPM)",
+    "format_donnees": {
+      "structure_html": "N/A",
+      "donnees_dans_pdf": false,
+      "pdf_scanné_ou_texte": "Image photo (JPEG/PNG) nécessitant OCR"
+    },
+    "types_marches_publies": [
+      "Lettres-Commandes (Demandes de Cotation)",
+      "AONO locaux",
+      "Avis d'Appel à Manifestation d'Intérêt (AAMI)",
+      "Résultats (Procès-verbaux d'attribution)"
+    ],
+    "reference_legale": "Mention 'Copies : Affichage' ou 'Noticeboards' obligatoire dans le modèle d'AAO (Source : DTAO)",
+    "volume_estime": "Très élevé (majorité des marchés locaux et communaux)",
+    "priorite_scraping": "P3",
+    "notes_techniques": "Pas de scraping web possible. Le backend doit exposer une API (Webhook WhatsApp ou Endpoint Upload) permettant à des agents terrain ('Veilleurs') d'envoyer la simple photo d'un Avis d'Appel d'Offres photographié sur le terrain. Le système devra intégrer une brique d'OCR (ex: Tesseract ou Google Vision) pour parser le texte de l'image JPG, isoler les mots-clés selon nos Regex (Livrable 3), et structurer le JSON final."
+  }

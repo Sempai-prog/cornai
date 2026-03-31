@@ -1,0 +1,87 @@
+// Ce fichier stratégique cartographie les risques juridiques et la conformité réglementaire de notre application vis-à-vis du Code des Marchés Publics camerounais. Il est formaté en JSON strict pour être intégré dans la documentation technique du backend, servir de base aux Conditions Générales d'Utilisation (CGU) de l'application, et dicter les règles de blocage (Hard-coded) aux développeurs
+
+
+
+{
+  "version": "1.0",
+  "date_mise_a_jour": "2026-03-30",
+  "description": "Matrice de conformité réglementaire et d'analyse des risques juridiques pour l'application SaaS/IA MarchésPublics.ai",
+  "disclaimer_general": "L'application est un outil d'Assistance à la Maîtrise de l'Appel d'Offres. La Commission de Passation des Marchés (CPM/CIPM) demeure la seule instance souveraine pour l'appréciation de la conformité des offres (Source : RGAO/RPAO) [4].",
+  "matrice_conformite": [
+    {
+      "id": "conf_001",
+      "activite_app": "Veille automatisée et Republication des Avis d'Appels d'Offres (Scraping)",
+      "base_legale": "Les Avis d'Appel d'Offres (AAO) sont des actes publics dont la réglementation exige une large publicité via affichage, journaux ou plateforme COLEPS [2, 5].",
+      "risque_juridique": "Faible",
+      "mitigation": "L'application doit toujours citer la source originelle du marché (Mairie, Ministère, ARMP) et préciser que seul le DAO officiel fait foi en cas de litige.",
+      "references_legales": [
+        "Avis d'Appel d'Offres (Mentions d'ampliation et d'affichage)"
+      ]
+    },
+    {
+      "id": "conf_002",
+      "activite_app": "Analyse du DAO et extraction des exigences par l'IA",
+      "base_legale": "L'examen des critères d'évaluation et de qualification obéit à des règles strictes définies dans le Règlement Particulier de l'Appel d'Offres (RPAO), dont les dispositions priment sur les autres pièces [6, 7].",
+      "risque_juridique": "Moyen",
+      "mitigation": "Risque d'omission ou d'hallucination de l'IA. L'application doit systématiquement afficher une clause de non-responsabilité indiquant que le bot est un assistant, mais que le RPAO original demeure la seule boussole légale [6].",
+      "references_legales": [
+        "Article 15 du RPAO",
+        "RGAO (Évaluation des offres)"
+      ]
+    },
+    {
+      "id": "conf_003",
+      "activite_app": "Génération de la documentation éthique et administrative",
+      "base_legale": "La soumission requiert des modèles stricts (Modèle de soumission, Charte d'intégrité, Déclaration d'engagement environnemental et social) fournis en annexe du DAO [8-10].",
+      "risque_juridique": "Élevé",
+      "mitigation": "Le rejet est immédiat pour 'Fausses déclarations, manœuvres frauduleuses ou falsification des pièces' [1, 11]. L'IA de l'application ne doit JAMAIS générer ou simuler des pièces délivrées par des tiers (CNPS, Impôts, Banques, Tribunaux). Elle doit se limiter à pré-remplir les modèles du DAO (Pièce 10/11) prêts à être signés par le gérant [8, 12].",
+      "references_legales": [
+        "Article 15.1 du RPAO (Critères éliminatoires d'ordre général)",
+        "Pièce 10/11 des DTAO (Modèles à utiliser par le soumissionnaire)"
+      ]
+    },
+    {
+      "id": "conf_004",
+      "activite_app": "Rédaction assistée de l'Offre Technique",
+      "base_legale": "Le soumissionnaire doit produire une proposition technique conforme aux Termes de Référence ou au Descriptif de la Fourniture, incluant méthodologie, plannings et CV [13, 14].",
+      "risque_juridique": "Élevé",
+      "mitigation": "Si l'IA glisse un montant financier dans le volume technique généré, la PME sera éliminée. L'application doit intégrer un filtre bloquant empêchant l'inclusion de la 'Présence d'informations financières dans l'offre technique' [3].",
+      "references_legales": [
+        "Article 15.1 du RPAO (Critères éliminatoires - Prestations Intellectuelles et Assurances)"
+      ]
+    },
+    {
+      "id": "conf_005",
+      "activite_app": "Chiffrage de l'Offre Financière (Calcul BPU/DQE)",
+      "base_legale": "Les prix unitaires doivent être inscrits en chiffres et en lettres, et le montant total est calculé dans le Détail Quantitatif et Estimatif (DQE) [15, 16].",
+      "risque_juridique": "Critique",
+      "mitigation": "L'absence d'un prix unitaire quantifié dans l'offre financière est un motif d'élimination direct [1, 11, 17]. L'application doit bloquer la génération du Volume 3 tant qu'une seule cellule du BPU ou du DQE est vide, en forçant l'utilisateur à inscrire '0' ou 'Inclus'.",
+      "references_legales": [
+        "Article 15.1 du RPAO (Critères éliminatoires relatifs à l'offre financière)",
+        "Volume 3 des DTAO"
+      ]
+    },
+    {
+      "id": "conf_006",
+      "activite_app": "Hébergement des stratégies de prix et brouillons d'offres",
+      "base_legale": "Le principe fondamental du secret des offres impose que les plis scellés portent la mention obligatoire : 'A n'ouvrir qu'en séance de dépouillement' [2].",
+      "risque_juridique": "Très Élevé",
+      "mitigation": "Toute fuite de données financières avant l'ouverture des plis constitue une grave rupture d'équité. L'architecture de la base de données doit garantir un cloisonnement hermétique (chiffrement de bout en bout) des brouillons d'offres financières des PME sur nos serveurs.",
+      "references_legales": [
+        "Modèle d'Avis d'Appel d'Offres (Mentions obligatoires sur l'enveloppe extérieure)",
+        "Article 27 du RGAO (Caractère confidentiel de la procédure)"
+      ]
+    },
+    {
+      "id": "conf_007",
+      "activite_app": "Assistance à la soumission dématérialisée via l'App",
+      "base_legale": "La soumission en ligne s'effectue via la plateforme gouvernementale COLEPS. Le format des fichiers doit être scrupuleusement respecté [18-20].",
+      "risque_juridique": "Moyen",
+      "mitigation": "Le 'non-respect du format de fichiers des offres soumises en ligne' et 'l'absence de la copie de sauvegarde en cas de dysfonctionnement de la plateforme COLEPS' sont éliminatoires [21, 22]. L'App doit formater les PDF correctement et alerter l'utilisateur de l'obligation de déposer physiquement une clé USB de sauvegarde avant l'heure limite [2].",
+      "references_legales": [
+        "Pièce 14 ou 15 du DAO (Procédure de soumission en ligne)",
+        "Article 15.1 du RPAO"
+      ]
+    }
+  ]
+}

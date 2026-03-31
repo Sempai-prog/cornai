@@ -1,0 +1,149 @@
+//Cette matrice croisée cartographie l'exigibilité des 15 pièces fondamentales d'un dossier de soumission selon la typologie du marché public visé. Elle a été construite en analysant les critères éliminatoires (Article 15.1) et les grilles d'évaluation des Dossiers Types d'Appel d'Offres (DTAO) fournis L'algorithme de notre application utilisera cette matrice pour générer dynamiquement la "Checklist de Conformité" de la PME.
+
+
+{
+  "matrice_documents_types_marches": {
+    "regende_probabilite": {
+      "✅": "Requis dans 80%+ des DAO (Généralement obligatoire)",
+      "⚠️": "Requis dans 30-80% des DAO (Conditionnel ou spécifique)",
+      "❌": "Requis dans <30% des DAO (Rarement ou jamais demandé)"
+    },
+    "documents": [
+      {
+        "nom_document": "RCCM (Registre du Commerce)",
+        "travaux": "✅",
+        "fournitures": "✅",
+        "services_quantifiables": "✅",
+        "prestations_intellectuelles": "✅",
+        "assurances": "✅",
+        "justification_source": "Fait partie intégrante du dossier administratif de base exigé pour établir la qualification légale. (Source : RPAO Article 13.1 / 15.1 applicable à tous les DTAO)"
+      },
+      {
+        "nom_document": "NIU (Numéro d'Identifiant Unique)",
+        "travaux": "✅",
+        "fournitures": "✅",
+        "services_quantifiables": "✅",
+        "prestations_intellectuelles": "✅",
+        "assurances": "✅",
+        "justification_source": "Pièce fiscale fondamentale du dossier administratif. (Source : RPAO Article 13.1, applicable à tous les DTAO)"
+      },
+      {
+        "nom_document": "Patente",
+        "travaux": "✅",
+        "fournitures": "✅",
+        "services_quantifiables": "✅",
+        "prestations_intellectuelles": "✅",
+        "assurances": "✅",
+        "justification_source": "Pièce fiscale démontrant l'exercice régulier de l'activité. (Source : RPAO Article 13.1, applicable à tous les DTAO)"
+      },
+      {
+        "nom_document": "Attestation de non-redevance",
+        "travaux": "✅",
+        "fournitures": "✅",
+        "services_quantifiables": "✅",
+        "prestations_intellectuelles": "✅",
+        "assurances": "✅",
+        "justification_source": "Preuve de la mise à jour fiscale, condition de base d'accès à la commande publique. (Source : RPAO Article 15.1, délai de rattrapage de 48h applicable)"
+      },
+      {
+        "nom_document": "Attestation CNPS",
+        "travaux": "✅",
+        "fournitures": "✅",
+        "services_quantifiables": "✅",
+        "prestations_intellectuelles": "✅",
+        "assurances": "✅",
+        "justification_source": "Preuve de la mise à jour sociale, exigée dans le dossier administratif. (Source : RPAO Article 15.1)"
+      },
+      {
+        "nom_document": "Attestation de non-faillite",
+        "travaux": "✅",
+        "fournitures": "✅",
+        "services_quantifiables": "✅",
+        "prestations_intellectuelles": "✅",
+        "assurances": "✅",
+        "justification_source": "Prouve que l'entreprise n'est pas en liquidation judiciaire. (Source : CCAP Article 42 sur la résiliation en cas de faillite et condition de soumission)"
+      },
+      {
+        "nom_document": "Caution de soumission",
+        "travaux": "✅",
+        "fournitures": "✅",
+        "services_quantifiables": "✅",
+        "prestations_intellectuelles": "✅",
+        "assurances": "✅",
+        "justification_source": "Critère éliminatoire universel en cas d'absence à l'ouverture des plis. (Source : Article 15.1 RPAO de tous les DTAO et Article 19.7 du RGAO)"
+      },
+      {
+        "nom_document": "Plan de localisation",
+        "travaux": "✅",
+        "fournitures": "✅",
+        "services_quantifiables": "✅",
+        "prestations_intellectuelles": "✅",
+        "assurances": "✅",
+        "justification_source": "Exigé dans le dossier administratif pour certifier l'adresse physique de la PME. (Source : Pratique standard encadrée par l'Art 13 du RPAO)"
+      },
+      {
+        "nom_document": "Références similaires (Contrats + PV)",
+        "travaux": "✅",
+        "fournitures": "✅",
+        "services_quantifiables": "✅",
+        "prestations_intellectuelles": "✅",
+        "assurances": "✅",
+        "justification_source": "Critère essentiel de la grille d'évaluation. Exige la 1ère et dernière page du contrat + PV de réception. (Source : Grilles d'évaluation DTAO Travaux, Fournitures, SPI et Assurances)"
+      },
+      {
+        "nom_document": "CV du personnel clé",
+        "travaux": "✅",
+        "fournitures": "❌",
+        "services_quantifiables": "⚠️",
+        "prestations_intellectuelles": "✅",
+        "assurances": "❌",
+        "justification_source": "Obligatoire pour les Travaux (Conducteur) et SPI (Chefs de mission). Rarement évalué pour les fournitures simples ou les assurances. (Source : Grille d'évaluation DTAO GENIS / DTAO SPI Pièce 6.F)"
+      },
+      {
+        "nom_document": "Agrément ou autorisation",
+        "travaux": "❌",
+        "fournitures": "✅",
+        "services_quantifiables": "❌",
+        "prestations_intellectuelles": "⚠️",
+        "assurances": "✅",
+        "justification_source": "Éliminatoire si absent pour les fournitures (Autorisation fabricant) et assurances (Agrément MINFI/CIMA). Catégorisation pour les SPI. (Source : DTAO Fournitures Art 15.1 / DTAO Assurances Art 15.1)"
+      },
+      {
+        "nom_document": "Méthodologie (Note / Descriptif)",
+        "travaux": "✅",
+        "fournitures": "⚠️",
+        "services_quantifiables": "⚠️",
+        "prestations_intellectuelles": "✅",
+        "assurances": "✅",
+        "justification_source": "Obligatoire pour Travaux et SPI (Tableau 6.D). En Assurance, il s'agit de la description de la mise en jeu des garanties. Conditionnelle pour les fournitures avec installation. (Source : DTAO Travaux / DTAO SPI / DTAO Assurances Grille d'évaluation)"
+      },
+      {
+        "nom_document": "Planning / Calendrier",
+        "travaux": "✅",
+        "fournitures": "✅",
+        "services_quantifiables": "✅",
+        "prestations_intellectuelles": "✅",
+        "assurances": "❌",
+        "justification_source": "Sous-critère essentiel d'évaluation. Planning d'exécution (Travaux), calendrier de livraison (Fournitures), calendrier d'intervention (SPI). (Source : DTAO Travaux Annexe 7 / DTAO SPI Tableau 6.G et 6.H)"
+      },
+      {
+        "nom_document": "Liste du matériel",
+        "travaux": "✅",
+        "fournitures": "❌",
+        "services_quantifiables": "⚠️",
+        "prestations_intellectuelles": "❌",
+        "assurances": "❌",
+        "justification_source": "Critère majeur pour les travaux (preuve de propriété ou contrat de location). Inutile pour la fourniture simple ou l'assurance. (Source : Grille d'évaluation DTAO Travaux / GENIS)"
+      },
+      {
+        "nom_document": "Bilan ou Capacité financière",
+        "travaux": "✅",
+        "fournitures": "✅",
+        "services_quantifiables": "✅",
+        "prestations_intellectuelles": "⚠️",
+        "assurances": "✅",
+        "justification_source": "Attestation de capacité financière requise (Travaux/Fournitures). Pour les assurances, l'évaluation repose sur les États CIMA (Capital social, marge de solvabilité). (Source : DTAO Travaux Grille évaluation / DTAO Assurance Grille évaluation VI)"
+      }
+    ]
+  }
+}

@@ -1,0 +1,281 @@
+{
+  "version": "1.0",
+  "date_mise_a_jour": "2026-03-30",
+  "sources": [
+    "DTAO Travaux",
+    "DTAO Fournitures",
+    "DTAO Services Quantifiables",
+    "DTAO Prestations Intellectuelles (SPI)",
+    "DTAO Assurances"
+  ],
+  "regle_dor": "Un critère ne peut être à la fois éliminatoire et essentiel",
+  "categories": [
+    {
+      "id": "elim_admin",
+      "nom": "Défauts Administratifs",
+      "criteres": [
+        {
+          "id": "elim_admin_001",
+          "critere_canonique": "Absence du cautionnement de soumission à l'ouverture",
+          "formulations_sources": [
+            "Absence de la caution de soumission",
+            "absence ou non-conformité du cautionnement de soumission à l’ouverture des plis"
+          ],
+          "regex": "(?i)(absence|défaut|manque|non[- ]?(présentation|production|fourniture|conformité)).{0,40}(caution|cautionnement|garantie).{0,30}(soumission)",
+          "types_marches_concernes": ["travaux", "fournitures", "services_quantifiables", "prestations_intellectuelles", "assurances"],
+          "consequence": "Rejet immédiat et systématique sans rattrapage",
+          "rattrapable": false,
+          "piece_liee": "piece_001",
+          "action_app": {
+            "checklist": true,
+            "alerte_priorite": "critique",
+            "message_template": "whatsapp_caution_001"
+          },
+          "references_legales": ["Article 15.1 du RPAO", "Article 19.7 du RGAO"]
+        },
+        {
+          "id": "elim_admin_002",
+          "critere_canonique": "Non-production d'une pièce administrative au-delà de 48h",
+          "formulations_sources": [
+            "Non production au-delà du délai de 48h après l’ouverture des plis, d’une pièce du dossier administratif jugée non conforme ou absente"
+          ],
+          "regex": "(?i)(non[- ]?production|absence|défaut).{0,60}(48[- ]?h|quarante[- ]?huit heures|48 heures).{0,50}(pièce|dossier[- ]?administratif|non[- ]?conforme)",
+          "types_marches_concernes": ["travaux", "fournitures", "services_quantifiables", "prestations_intellectuelles", "assurances"],
+          "consequence": "Rejet du dossier administratif après expiration du sursis",
+          "rattrapable": true,
+          "piece_liee": "pieces_administratives_standard",
+          "action_app": {
+            "checklist": true,
+            "alerte_priorite": "elevee",
+            "message_template": "whatsapp_sursis_48h"
+          },
+          "references_legales": ["Article 15.1 du RPAO"]
+        }
+      ]
+    },
+    {
+      "id": "elim_ethique",
+      "nom": "Ordre Général, Éthique et Fraude",
+      "criteres": [
+        {
+          "id": "elim_ethique_001",
+          "critere_canonique": "Fausses déclarations ou pièces falsifiées",
+          "formulations_sources": [
+            "Fausses déclarations, manœuvres frauduleuses ou falsification des pièces"
+          ],
+          "regex": "(?i)(fausse[s]?[- ]?déclaration[s]?|manœuvre[s]?[- ]?frauduleuse[s]?|pièce[s]?[- ]?falsifiée[s]?|falsification|substitution)",
+          "types_marches_concernes": ["travaux", "fournitures", "services_quantifiables", "prestations_intellectuelles", "assurances"],
+          "consequence": "Élimination de l'offre, risque de suspension de la commande publique par l'ARMP",
+          "rattrapable": false,
+          "piece_liee": null,
+          "action_app": {
+            "checklist": false,
+            "alerte_priorite": "critique",
+            "message_template": "whatsapp_alerte_fraude"
+          },
+          "references_legales": ["Article 15.1 du RPAO"]
+        },
+        {
+          "id": "elim_ethique_002",
+          "critere_canonique": "Absence de déclaration de non-abandon",
+          "formulations_sources": [
+            "Absence d’une déclaration sur l’honneur de n’avoir pas abandonné de chantier durant les trois dernières années",
+            "absence de l’attestation de non abandon de marchés au cours des trois dernières années"
+          ],
+          "regex": "(?i)(absence|défaut|manque).{0,40}(déclaration|attestation).{0,40}(non[- ]?abandon|abandonné).{0,30}(chantier|marché|prestation|travaux).{0,40}(trois|3)",
+          "types_marches_concernes": ["travaux", "fournitures", "services_quantifiables", "prestations_intellectuelles", "assurances"],
+          "consequence": "Élimination immédiate",
+          "rattrapable": false,
+          "piece_liee": "piece_002",
+          "action_app": {
+            "checklist": true,
+            "alerte_priorite": "elevee",
+            "message_template": "whatsapp_gen_non_abandon"
+          },
+          "references_legales": ["Article 15.1 du RPAO"]
+        },
+        {
+          "id": "elim_ethique_003",
+          "critere_canonique": "Absence de la charte d'intégrité signée",
+          "formulations_sources": [
+            "absence de la charte d’intégrité datée et signée"
+          ],
+          "regex": "(?i)(absence|défaut|manque).{0,40}(charte[- ]?d'intégrité)",
+          "types_marches_concernes": ["travaux", "fournitures", "services_quantifiables", "prestations_intellectuelles", "assurances"],
+          "consequence": "Élimination",
+          "rattrapable": false,
+          "piece_liee": "piece_003",
+          "action_app": {
+            "checklist": true,
+            "alerte_priorite": "moyenne",
+            "message_template": "whatsapp_signer_charte"
+          },
+          "references_legales": ["Article 15.1 du RPAO"]
+        }
+      ]
+    },
+    {
+      "id": "elim_financier",
+      "nom": "Offre Financière",
+      "criteres": [
+        {
+          "id": "elim_financier_001",
+          "critere_canonique": "Absence d'un prix unitaire quantifié",
+          "formulations_sources": [
+            "Absence d’un prix unitaire quantifié dans l’offre financière"
+          ],
+          "regex": "(?i)(absence|omission|défaut|manque).{0,40}(prix[- ]?unitaire[- ]?quantifié)",
+          "types_marches_concernes": ["travaux", "fournitures", "services_quantifiables", "prestations_intellectuelles", "assurances"],
+          "consequence": "Élimination directe de l'offre globale",
+          "rattrapable": false,
+          "piece_liee": null,
+          "action_app": {
+            "checklist": false,
+            "alerte_priorite": "critique",
+            "message_template": "whatsapp_erreur_bpu_vide"
+          },
+          "references_legales": ["Article 15.1 du RPAO"]
+        },
+        {
+          "id": "elim_financier_002",
+          "critere_canonique": "Présence d'informations financières dans l'offre technique",
+          "formulations_sources": [
+            "Présence d’informations financières dans l’offre technique"
+          ],
+          "regex": "(?i)(présence|insertion|inclusion).{0,40}(informations[- ]?financières|prix|montant).{0,40}(offre[- ]?technique|dossier[- ]?technique)",
+          "types_marches_concernes": ["prestations_intellectuelles", "assurances"],
+          "consequence": "Rejet immédiat pour violation du secret de l'offre technique",
+          "rattrapable": false,
+          "piece_liee": null,
+          "action_app": {
+            "checklist": false,
+            "alerte_priorite": "critique",
+            "message_template": "whatsapp_alerte_devis_dans_technique"
+          },
+          "references_legales": ["Article 15.1 du RPAO"]
+        },
+        {
+          "id": "elim_financier_003",
+          "critere_canonique": "Absence de l'offre financière témoin",
+          "formulations_sources": [
+            "Absence de l'offre financière témoin"
+          ],
+          "regex": "(?i)(absence|défaut|manque).{0,40}(offre[- ]?financière[- ]?témoin|pli[- ]?témoin)",
+          "types_marches_concernes": ["prestations_intellectuelles", "assurances", "travaux (si AONR)"],
+          "consequence": "Irrecevabilité de l'offre",
+          "rattrapable": false,
+          "piece_liee": null,
+          "action_app": {
+            "checklist": true,
+            "alerte_priorite": "elevee",
+            "message_template": "whatsapp_colisage_temoin"
+          },
+          "references_legales": ["Article 15.1 du RPAO"]
+        }
+      ]
+    },
+    {
+      "id": "elim_technique",
+      "nom": "Offre Technique",
+      "criteres": [
+        {
+          "id": "elim_tech_001",
+          "critere_canonique": "Note technique inférieure au seuil éliminatoire",
+          "formulations_sources": [
+            "Note technique inférieure à X points sur 100",
+            "Non-respect d’au moins X critères essentiels sur Y"
+          ],
+          "regex": "(?i)(non[- ]?respect).{0,40}(critères[- ]?essentiels)|(note[- ]?technique[- ]?inférieure)|(n'avoir[- ]?pas[- ]?obtenu).{0,30}(critères)",
+          "types_marches_concernes": ["travaux", "fournitures", "services_quantifiables", "prestations_intellectuelles", "assurances"],
+          "consequence": "Non-ouverture de l'offre financière",
+          "rattrapable": false,
+          "piece_liee": null,
+          "action_app": {
+            "checklist": false,
+            "alerte_priorite": "elevee",
+            "message_template": "whatsapp_score_tech_faible"
+          },
+          "references_legales": ["Article 15.1 du RPAO", "Grille d'évaluation"]
+        },
+        {
+          "id": "elim_tech_002",
+          "critere_canonique": "Absence de prospectus en couleur / Catalogue",
+          "formulations_sources": [
+            "absence de prospectus de couleur dans l’original et toutes les copies accompagné de catalogue, dessin ou fiche technique"
+          ],
+          "regex": "(?i)(absence|défaut|manque).{0,50}(prospectus|catalogue|fiche[- ]?technique|dessin)",
+          "types_marches_concernes": ["fournitures"],
+          "consequence": "Élimination de la proposition technique",
+          "rattrapable": false,
+          "piece_liee": null,
+          "action_app": {
+            "checklist": true,
+            "alerte_priorite": "elevee",
+            "message_template": "whatsapp_upload_prospectus"
+          },
+          "references_legales": ["Article 15.1 du RPAO"]
+        },
+        {
+          "id": "elim_tech_003",
+          "critere_canonique": "Absence d'agrément ou d'autorisation du fabricant",
+          "formulations_sources": [
+            "absence de l’agrément ou de l’autorisation du fournisseur délivré par le fabricant"
+          ],
+          "regex": "(?i)(absence|défaut|manque).{0,50}(agrément|autorisation[- ]?du[- ]?fabricant|distributeur[- ]?agréé)",
+          "types_marches_concernes": ["fournitures"],
+          "consequence": "Élimination",
+          "rattrapable": false,
+          "piece_liee": "piece_009",
+          "action_app": {
+            "checklist": true,
+            "alerte_priorite": "critique",
+            "message_template": "whatsapp_autorisation_fabricant"
+          },
+          "references_legales": ["Article 15.1 du RPAO"]
+        },
+        {
+          "id": "elim_tech_004",
+          "critere_canonique": "Agent public non libéré de l'Administration",
+          "formulations_sources": [
+            "Tout agent public listé parmi le personnel et qui n’a pas présenté tous les documents susceptibles de justifier sa libération de l’Administration sera considéré comme non valable"
+          ],
+          "regex": "(?i)(agent[- ]?public|fonctionnaire).{0,60}(libération|disponibilité|mise[- ]?en[- ]?disponibilité)",
+          "types_marches_concernes": ["prestations_intellectuelles", "travaux"],
+          "consequence": "Expert évalué à 0 point (peut entraîner une chute sous le seuil éliminatoire global)",
+          "rattrapable": false,
+          "piece_liee": null,
+          "action_app": {
+            "checklist": true,
+            "alerte_priorite": "elevee",
+            "message_template": "whatsapp_cv_fonctionnaire"
+          },
+          "references_legales": ["Note de bas de page de la Grille d'évaluation des experts"]
+        }
+      ]
+    },
+    {
+      "id": "elim_forme",
+      "nom": "Vices de Forme et Dématérialisation",
+      "criteres": [
+        {
+          "id": "elim_forme_001",
+          "critere_canonique": "Non-respect du format de fichiers COLEPS",
+          "formulations_sources": [
+            "Non-respect du format de fichiers des offres soumises en ligne"
+          ],
+          "regex": "(?i)(non[- ]?respect|mauvais).{0,30}(format[- ]?de[- ]?fichier[s]?|format[- ]?numérique).{0,40}(en[- ]?ligne|électronique|coleps)?",
+          "types_marches_concernes": ["travaux", "fournitures", "services_quantifiables", "prestations_intellectuelles", "assurances"],
+          "consequence": "Impossibilité de télécharger l'offre par la commission, élimination de fait",
+          "rattrapable": false,
+          "piece_liee": null,
+          "action_app": {
+            "checklist": true,
+            "alerte_priorite": "moyenne",
+            "message_template": "whatsapp_format_coleps"
+          },
+          "references_legales": ["Article 15.1 du RPAO"]
+        }
+      ]
+    }
+  ]
+}
