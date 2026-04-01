@@ -1,0 +1,133 @@
+
+> cornai@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+- Environments: .env
+✓ Ready in 545ms
+
+⨯ Error: Failed query: select "id", "numero_marche", "numero_avis", "institution", "direction", "mo_telephone", "mo_email", "titre_complet", "resume", "type_marche", "sous_type", "secteur", "est_alloti", "lots", "budget_estime", "source_financement", "caution_soumission_montant", "monnaie", "date_publication", "date_limite_soumission", "date_ouverture_plis", "delai_execution", "visite_obligatoire", "visite_date", "visite_lieu", "lieu_execution", "region_execution", "ville_execution", "lieu_depot", "mode_evaluation", "seuil_technique_eliminatoire", "criteres_evaluation", "pieces_requises", "criteres_eliminatoires", "mode_passation", "finance_par_bailleur", "bailleur", "source_scraping", "url_source", "date_scraping", "fiabilite_extraction", "donnees_brutes", "dao_pdf_url", "statut", "attributaire_nom", "attributaire_montant", "created_at", "updated_at" from "appels_offres" "appelsOffres" order by "appelsOffres"."created_at" desc limit $1
+params: 10
+    at async getDerniersAO (src/database/queries/ao.ts:31:10)
+    at async LandingPage (src/app/page.tsx:9:17)
+  29 |  */
+  30 | export async function getDerniersAO(limit: number = 10) {
+> 31 |   return await db.query.appelsOffres.findMany({
+     |          ^
+  32 |     orderBy: [desc(appelsOffres.createdAt)],
+  33 |     limit: limit,
+  34 |   }) {
+  query: 'select "id", "numero_marche", "numero_avis", "institution", "direction", "mo_telephone", "mo_email", "titre_complet", "resume", "type_marche", "sous_type", "secteur", "est_alloti", "lots", "budget_estime", "source_financement", "caution_soumission_montant", "monnaie", "date_publication", "date_limite_soumission", "date_ouverture_plis", "delai_execution", "visite_obligatoire", "visite_date", "visite_lieu", "lieu_execution", "region_execution", "ville_execution", "lieu_depot", "mode_evaluation", "seuil_technique_eliminatoire", "criteres_evaluation", "pieces_requises", "criteres_eliminatoires", "mode_passation", "finance_par_bailleur", "bailleur", "source_scraping", "url_source", "date_scraping", "fiabilite_extraction", "donnees_brutes", "dao_pdf_url", "statut", "attributaire_nom", "attributaire_montant", "created_at", "updated_at" from "appels_offres" "appelsOffres" order by "appelsOffres"."created_at" desc limit $1',
+  params: [ 10 ],
+  digest: '2021677252',
+  [cause]: Error [NeonDbError]: Error connecting to database: TypeError: fetch failed
+      at async getDerniersAO (src/database/queries/ao.ts:31:10)
+      at async LandingPage (src/app/page.tsx:9:17)
+    29 |  */
+    30 | export async function getDerniersAO(limit: number = 10) {
+  > 31 |   return await db.query.appelsOffres.findMany({
+       |          ^
+    32 |     orderBy: [desc(appelsOffres.createdAt)],
+    33 |     limit: limit,
+    34 |   }) {
+    severity: undefined,
+    code: undefined,
+    detail: undefined,
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: undefined,
+    line: undefined,
+    routine: undefined,
+    sourceError: TypeError: fetch failed
+        at async getDerniersAO (src/database/queries/ao.ts:31:10)
+        at async LandingPage (src/app/page.tsx:9:17)
+      29 |  */
+      30 | export async function getDerniersAO(limit: number = 10) {
+    > 31 |   return await db.query.appelsOffres.findMany({
+         |          ^
+      32 |     orderBy: [desc(appelsOffres.createdAt)],
+      33 |     limit: limit,
+      34 |   }) {
+      [cause]: [Error]
+    }
+  }
+}
+ GET / 500 in 1350ms (next.js: 395ms, application-code: 955ms)
+[browser] Encountered a script tag while rendering React component. Scripts inside React components are never executed when rendering on the client. Consider using template tag instead (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template).
+[browser] Uncaught Error: Failed query: select "id", "numero_marche", "numero_avis", "institution", "direction", "mo_telephone", "mo_email", "titre_complet", "resume", "type_marche", "sous_type", "secteur", "est_alloti", "lots", "budget_estime", "source_financement", "caution_soumission_montant", "monnaie", "date_publication", "date_limite_soumission", "date_ouverture_plis", "delai_execution", "visite_obligatoire", "visite_date", "visite_lieu", "lieu_execution", "region_execution", "ville_execution", "lieu_depot", "mode_evaluation", "seuil_technique_eliminatoire", "criteres_evaluation", "pieces_requises", "criteres_eliminatoires", "mode_passation", "finance_par_bailleur", "bailleur", "source_scraping", "url_source", "date_scraping", "fiabilite_extraction", "donnees_brutes", "dao_pdf_url", "statut", "attributaire_nom", "attributaire_montant", "created_at", "updated_at" from "appels_offres" "appelsOffres" order by "appelsOffres"."created_at" desc limit $1
+params: 10
+    at  getDerniersAO (src/database/queries/ao.ts:31:10)
+    at  LandingPage (src/app/page.tsx:9:17)
+  29 |  */
+  30 | export async function getDerniersAO(limit: number = 10) {
+> 31 |   return await db.query.appelsOffres.findMany({
+     |          ^
+  32 |     orderBy: [desc(appelsOffres.createdAt)],
+  33 |     limit: limit,
+  34 |   })
+✓ Compiled in 699ms
+Failed to get AOs, using fallback Error: Failed query: select "id", "numero_marche", "numero_avis", "institution", "direction", "mo_telephone", "mo_email", "titre_complet", "resume", "type_marche", "sous_type", "secteur", "est_alloti", "lots", "budget_estime", "source_financement", "caution_soumission_montant", "monnaie", "date_publication", "date_limite_soumission", "date_ouverture_plis", "delai_execution", "visite_obligatoire", "visite_date", "visite_lieu", "lieu_execution", "region_execution", "ville_execution", "lieu_depot", "mode_evaluation", "seuil_technique_eliminatoire", "criteres_evaluation", "pieces_requises", "criteres_eliminatoires", "mode_passation", "finance_par_bailleur", "bailleur", "source_scraping", "url_source", "date_scraping", "fiabilite_extraction", "donnees_brutes", "dao_pdf_url", "statut", "attributaire_nom", "attributaire_montant", "created_at", "updated_at" from "appels_offres" "appelsOffres" order by "appelsOffres"."created_at" desc limit $1
+params: 10
+    at async getDerniersAO (src/database/queries/ao.ts:31:10)
+    at async LandingPage (src/app/page.tsx:10:14)
+  29 |  */
+  30 | export async function getDerniersAO(limit: number = 10) {
+> 31 |   return await db.query.appelsOffres.findMany({
+     |          ^
+  32 |     orderBy: [desc(appelsOffres.createdAt)],
+  33 |     limit: limit,
+  34 |   }) {
+  query: 'select "id", "numero_marche", "numero_avis", "institution", "direction", "mo_telephone", "mo_email", "titre_complet", "resume", "type_marche", "sous_type", "secteur", "est_alloti", "lots", "budget_estime", "source_financement", "caution_soumission_montant", "monnaie", "date_publication", "date_limite_soumission", "date_ouverture_plis", "delai_execution", "visite_obligatoire", "visite_date", "visite_lieu", "lieu_execution", "region_execution", "ville_execution", "lieu_depot", "mode_evaluation", "seuil_technique_eliminatoire", "criteres_evaluation", "pieces_requises", "criteres_eliminatoires", "mode_passation", "finance_par_bailleur", "bailleur", "source_scraping", "url_source", "date_scraping", "fiabilite_extraction", "donnees_brutes", "dao_pdf_url", "statut", "attributaire_nom", "attributaire_montant", "created_at", "updated_at" from "appels_offres" "appelsOffres" order by "appelsOffres"."created_at" desc limit $1',
+  params: [ 10 ],
+  [cause]: Error [NeonDbError]: Error connecting to database: TypeError: fetch failed
+      at async getDerniersAO (src/database/queries/ao.ts:31:10)
+      at async LandingPage (src/app/page.tsx:10:14)
+    29 |  */
+    30 | export async function getDerniersAO(limit: number = 10) {
+  > 31 |   return await db.query.appelsOffres.findMany({
+       |          ^
+    32 |     orderBy: [desc(appelsOffres.createdAt)],
+    33 |     limit: limit,
+    34 |   }) {
+    severity: undefined,
+    code: undefined,
+    detail: undefined,
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: undefined,
+    line: undefined,
+    routine: undefined,
+    sourceError: TypeError: fetch failed
+        at async getDerniersAO (src/database/queries/ao.ts:31:10)
+        at async LandingPage (src/app/page.tsx:10:14)
+      29 |  */
+      30 | export async function getDerniersAO(limit: number = 10) {
+    > 31 |   return await db.query.appelsOffres.findMany({
+         |          ^
+      32 |     orderBy: [desc(appelsOffres.createdAt)],
+      33 |     limit: limit,
+      34 |   }) {
+      [cause]: [Error]
+    }
+  }
+}
+ GET / 200 in 543ms (next.js: 8ms, application-code: 535ms)
+[browser] Please ensure that the container has a non-static position, like 'relative', 'fixed', or 'absolute' to ensure scroll offset is calculated correctly. (<anonymous>)

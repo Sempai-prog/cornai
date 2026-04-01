@@ -1,29 +1,12 @@
-"use client"
+import re
 
-import * as React from "react"
-import { 
-  Filter, 
-  Search, 
-  MapPin,
-  CheckCircle2,
-  Layers,
-  Activity,
-  Zap
-} from "lucide-react"
+with open('src/components/search/search-sidebar.tsx', 'r') as f:
+    content = f.read()
 
-import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Separator } from "@/components/ui/separator"
-import { cn } from "@/lib/utils"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+# Replace the ScrollArea content logic to handle both collapsed and open state cleanly with tooltips and centered icons.
+# We will just rewrite the `SearchSidebar` component body completely to ensure it's clean and matches specs.
 
-interface SidebarProps {
-  isCollapsed: boolean
-  filters: Record<string, string[]>
-  onFilterChange: (key: string, value: string[]) => void
-}
-
-export function SearchSidebar({ isCollapsed, filters, onFilterChange }: SidebarProps) {
+new_component = '''export function SearchSidebar({ isCollapsed, filters, onFilterChange }: SidebarProps) {
   const toggleFilter = (key: string, value: string) => {
     const currentValues = filters[key] || []
     if (currentValues.includes(value)) {
@@ -154,7 +137,7 @@ export function SearchSidebar({ isCollapsed, filters, onFilterChange }: SidebarP
             {/* Reset Logic */}
             {!isCollapsed && (
               <div className="px-3 pt-4">
-                <Button 
+                <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => {
@@ -174,54 +157,11 @@ export function SearchSidebar({ isCollapsed, filters, onFilterChange }: SidebarP
       </ScrollArea>
     </div>
   )
-}
+}'''
 
-function FilterListItem({ label, isActive, onClick, isCollapsed, icon: Icon }: { label: string, isActive: boolean, onClick: () => void, isCollapsed?: boolean, icon?: React.ElementType }) {
-  const content = (
-    <button
-      onClick={onClick}
-      className={cn(
-        "flex w-full items-center group rounded-[4px] transition-all text-left",
-        isCollapsed ? "justify-center p-2" : "justify-between px-2.5 py-1.5",
-        isActive ? "bg-secondary text-foreground" : "text-foreground/40 hover:bg-secondary/50 hover:text-foreground/60"
-      )}
-    >
-      {!isCollapsed && (
-        <span className={cn("text-[10px] tracking-tight truncate mr-2", isActive ? "font-medium" : "font-normal")}>{label}</span>
-      )}
+# Extract the part between `export function SearchSidebar` and `function FilterListItem`
+old_pattern = re.compile(r'export function SearchSidebar.*?return \(.*?</ScrollArea>\s*</div>\s*\)\s*}', re.DOTALL)
+content = old_pattern.sub(new_component, content)
 
-      {isCollapsed && Icon && (
-        <Icon className={cn("h-4 w-4 shrink-0 transition-colors", isActive ? "text-primary" : "text-foreground/40 group-hover:text-foreground/60")} />
-      )}
-
-      {!isCollapsed && (
-        <div className={cn(
-          "h-3.5 w-3.5 rounded-[2px] border transition-all flex items-center justify-center shrink-0",
-          isActive ? "border-primary bg-primary text-white" : "border-border/60 bg-background group-hover:border-foreground/30"
-        )}>
-          {isActive && <CheckCircle2 className="h-2.5 w-2.5" />}
-        </div>
-      )}
-      {isCollapsed && isActive && !Icon && (
-         <div className="absolute top-0 right-0 h-1.5 w-1.5 rounded-full bg-primary" />
-      )}
-    </button>
-  )
-
-  if (isCollapsed) {
-    return (
-      <TooltipProvider delayDuration={0}>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <div className="relative w-full">{content}</div>
-          </TooltipTrigger>
-          <TooltipContent side="right" className="text-[10px] font-medium z-[150]">
-            {label}
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    )
-  }
-
-  return content
-}
+with open('src/components/search/search-sidebar.tsx', 'w') as f:
+    f.write(content)
