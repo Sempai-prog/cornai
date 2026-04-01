@@ -1,140 +1,211 @@
 // ══════════════════════════════════════════
-// CORNAi — Profil Entreprise (Dashboard High-End — Quiet Design)
+// CORNAi — Pilotage de Capacité Métier (Profil Expert)
 // ══════════════════════════════════════════
 
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+"use client"
+
+import { motion } from "framer-motion"
 import { 
-  User, 
-  Plus, 
-  Trash, 
-  Smartphone,
-  ShieldCheck,
-  FileText
+  ShieldCheck, 
+  Building2, 
+  TrendingUp, 
+  HardHat, 
+  Truck, 
+  SyncIcon, // Note: using RefreshCcw if not available
+  RefreshCcw,
+  Plus,
+  ArrowRight
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 
-export default function ProfilEntreprisePage() {
+export default function ProfilCapacitePage() {
   return (
-    <div className="max-w-4xl mx-auto space-y-12 animate-in fade-in duration-500 pb-20 bg-background text-foreground selection:bg-primary/20 antialiased">
+    <div className="max-w-[1400px] mx-auto space-y-8 animate-in fade-in duration-700 pb-20 bg-background text-foreground antialiased selection:bg-primary/20">
       
-      {/* 1. Header with Avatar - Quiet Elegance */}
-      <div className="flex flex-col items-center text-center space-y-6">
-        <div className="h-24 w-24 rounded bg-primary text-black text-3xl font-semibold flex items-center justify-center border-4 border-background shadow-2xl shadow-primary/10">
-          AB
-        </div>
-        <div className="space-y-2.5">
-          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-foreground leading-none">Antigravity BTP Sarl</h1>
-          <div className="flex items-center gap-3 justify-center text-[10px] font-semibold uppercase tracking-[0.15em] text-foreground/40">
-             <span className="flex items-center gap-1.5"><Smartphone className="h-4 w-4 opacity-40" /> 237 699 001 122</span>
-             <span className="opacity-20">•</span>
-             <Badge className="bg-primary/10 text-primary border-none font-semibold px-3 py-0.5 rounded shadow-none uppercase tracking-wider text-[10px]">Compte Expert</Badge>
-          </div>
-        </div>
+      {/* 1. INDICATEUR DE COMPLÉTUDE IA (Top Bar) */}
+      <div className="w-full bg-[#0a0a0a] border border-white/5 rounded-[4px] p-4 flex flex-col md:flex-row items-center justify-between gap-6 overflow-hidden relative group">
+         <div className="absolute top-0 left-0 h-full w-[85%] bg-primary/5 transition-all duration-1000 ease-out" />
+         <div className="relative flex items-center gap-4">
+            <div className="h-10 w-10 rounded-[4px] bg-primary/10 flex items-center justify-center border border-primary/20">
+               <ShieldCheck className="h-5 w-5 text-primary" />
+            </div>
+            <div className="space-y-0.5">
+               <h3 className="text-[11px] font-bold uppercase tracking-[0.15em] text-foreground/80">Complétude du Profil IA</h3>
+               <p className="text-[10px] text-foreground/40 font-medium tracking-tight">Analyse DAO activée à <span className="text-primary">85%</span> — Données RCCM/NIU valides.</p>
+            </div>
+         </div>
+         <div className="relative flex-1 max-w-md w-full">
+            <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+               <motion.div 
+                  initial={{ width: 0 }}
+                  animate={{ width: "85%" }}
+                  transition={{ duration: 1.5, ease: "easeOut" }}
+                  className="h-full bg-primary shadow-[0_0_10px_rgba(37,211,102,0.4)]" 
+               />
+            </div>
+         </div>
+         <div className="relative">
+            <Button variant="ghost" className="h-8 text-[10px] font-bold uppercase tracking-widest text-primary hover:bg-primary/5 gap-2">
+               Améliorer le score <ArrowRight size={12} />
+            </Button>
+         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-         {/* 2. Informations de base - Card Style Quiet */}
-         <Card className="border border-white/5 bg-card/40 backdrop-blur-xl rounded p-2">
-            <CardHeader className="pb-4">
-               <CardTitle className="text-[11px] font-semibold uppercase tracking-[0.2em] flex items-center gap-2.5 text-foreground/80">
-                  <User className="h-4 w-4 text-primary/60" /> Identité & Capacité
-               </CardTitle>
-               <CardDescription className="text-[10px] font-semibold text-foreground/30 uppercase tracking-wider">Paramètres de matching IA</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-               <div className="space-y-2">
-                  <label className="text-[10px] font-semibold uppercase tracking-[0.15em] text-foreground/20 ml-1">Secteur Principal</label>
-                  <div className="p-4 bg-white/[0.02] border border-white/5 rounded flex items-center justify-between group">
-                     <span className="text-[14px] font-semibold text-foreground/80">Travaux & Construction BTP</span>
-                     <Button variant="ghost" className="h-7 text-[10px] font-semibold uppercase tracking-widest text-primary hover:bg-primary/10">Modifier</Button>
-                  </div>
-               </div>
-               <div className="space-y-2">
-                  <label className="text-[10px] font-semibold uppercase tracking-[0.15em] text-foreground/20 ml-1">Capacité financière</label>
-                  <div className="p-4 bg-white/[0.02] border border-white/5 rounded flex items-center justify-between group">
-                     <span className="text-[14px] font-semibold text-foreground/80">50.000.000 FCFA</span>
-                     <Button variant="ghost" className="h-7 text-[10px] font-semibold uppercase tracking-widest text-primary hover:bg-primary/10">Modifier</Button>
-                  </div>
-               </div>
-               <div className="space-y-2">
-                  <label className="text-[10px] font-semibold uppercase tracking-[0.15em] text-foreground/20 ml-1">Zone de déploiement</label>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                     <Badge className="bg-primary/10 text-primary/80 border-none font-semibold h-7 px-4 rounded uppercase tracking-wider text-[10px]">Centre</Badge>
-                     <Badge className="bg-white/[0.03] text-foreground/40 border border-white/5 font-semibold h-7 px-4 rounded uppercase tracking-wider text-[10px]">Littoral</Badge>
-                     <Button variant="outline" className="h-7 w-7 p-0 rounded border border-white/10 text-foreground/20 hover:text-primary transition-all"><Plus size={14} /></Button>
-                  </div>
-               </div>
-            </CardContent>
-         </Card>
+      {/* 2. HEADER & ACTIONS PRINCIPALES */}
+      <div className="flex flex-col md:flex-row items-end justify-between gap-6 border-b border-white/5 pb-8">
+         <div className="space-y-2">
+            <h1 className="text-4xl font-light tracking-tighter text-foreground">Capacité Métier <span className="text-foreground/20">/</span> <span className="font-semibold">BTP</span></h1>
+            <p className="text-[11px] font-semibold text-foreground/30 uppercase tracking-[0.2em]">Pilotage des éligibilités aux marchés publics (ARMP / MINMAP)</p>
+         </div>
+         <div className="flex items-center gap-3">
+            <Button variant="outline" className="h-11 px-6 rounded-[4px] border-white/10 bg-transparent text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-white/[0.03] hover:border-white/20 transition-all gap-2">
+               <RefreshCcw size={14} className="text-slate-500" /> Synchroniser Coffre-fort
+            </Button>
+            <Button className="h-11 px-8 rounded-[4px] bg-[#25D366] text-black text-[10px] font-black uppercase tracking-[0.25em] hover:opacity-90 transition-all shadow-[0_0_20px_rgba(37,211,102,0.2)]">
+               Mettre à jour les Capacités
+            </Button>
+         </div>
+      </div>
 
-         {/* 3. Statut Administratif - Aligné sur le Style Primary de la Landing */}
-         <Card className="border border-primary/10 bg-primary/[0.03] backdrop-blur-xl rounded overflow-hidden relative p-2 shadow-2xl shadow-primary/5">
-            <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
-               <ShieldCheck size={120} className="text-primary rotate-12" />
-            </div>
-            <CardHeader className="relative">
-               <CardTitle className="text-[11px] font-semibold uppercase tracking-[0.2em] flex items-center gap-2.5 text-primary/60">
-                  <ShieldCheck className="h-4 w-4" /> Conformité PME
-               </CardTitle>
-            </CardHeader>
-            <CardContent className="relative space-y-8 h-full">
-               <div className="flex flex-col items-center py-4">
-                  <div className="text-6xl font-semibold tracking-tighter text-foreground">92<span className="text-2xl text-primary opacity-60">%</span></div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-primary/80 mt-1">Status Global</p>
+      {/* 3. BENTO GRID (Architecture Floating 1/3) */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+         
+         {/* CARTE 1 : IDENTITÉ LÉGALE */}
+         <motion.div 
+            whileHover={{ y: -4 }}
+            className="group bg-white/[0.02] border border-white/5 rounded-[4px] p-6 space-y-8 backdrop-blur-sm transition-all hover:bg-white/[0.04] hover:border-white/10"
+         >
+            <div className="flex items-center justify-between">
+               <div className="h-10 w-10 bg-white/5 rounded-[4px] flex items-center justify-center border border-white/10">
+                  <Building2 className="h-5 w-5 text-slate-400 group-hover:text-primary transition-colors" />
                </div>
+               <span className="text-[9px] font-bold text-primary/50 uppercase tracking-widest border border-primary/20 px-2 py-0.5 rounded">Vérifié</span>
+            </div>
+            
+            <div className="space-y-6">
+               <div className="space-y-1">
+                  <h4 className="text-[11px] font-bold text-foreground/30 uppercase tracking-[0.15em]">Raison Sociale</h4>
+                  <p className="text-lg font-semibold tracking-tight text-foreground/90">Antigravity BTP Sarl</p>
+               </div>
+
+               <div className="grid grid-cols-1 gap-4 pt-4 border-t border-white/5">
+                  {[
+                     { label: "NIU", value: "M051812739430" },
+                     { label: "RCCM", value: "RC/YAE/2018/B/452" },
+                     { label: "Siège Social", value: "Yaoundé, Bastos" },
+                     { label: "Catégorie BIP", value: "Catégorie B (Moyen)" }
+                  ].map((item, i) => (
+                     <div key={i} className="flex flex-col space-y-1 group/row cursor-default transition-all hover:translate-x-1">
+                        <span className="text-[9px] font-bold text-foreground/20 uppercase tracking-[0.2em]">{item.label}</span>
+                        <span className="text-[13px] font-medium text-foreground/60 group-hover/row:text-foreground transition-colors">{item.value}</span>
+                     </div>
+                  ))}
+               </div>
+            </div>
+         </motion.div>
+
+         {/* CARTE 2 : SURFACE FINANCIÈRE */}
+         <motion.div 
+            whileHover={{ y: -4 }}
+            className="group bg-white/[0.02] border border-white/5 rounded-[4px] p-6 space-y-8 backdrop-blur-sm transition-all hover:bg-white/[0.04] hover:border-white/10"
+         >
+            <div className="flex items-center justify-between">
+               <div className="h-10 w-10 bg-white/5 rounded-[4px] flex items-center justify-center border border-white/10">
+                  <TrendingUp className="h-5 w-5 text-slate-400 group-hover:text-primary transition-colors" />
+               </div>
+               <div className="flex gap-1.5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                  <span className="text-[9px] font-bold text-foreground/40 uppercase tracking-widest">Solvabilité AA</span>
+               </div>
+            </div>
+
+            <div className="space-y-6">
+               <h3 className="text-[11px] font-bold text-foreground/30 uppercase tracking-[0.15em]">Chiffre d&apos;Affaires (Matching IA)</h3>
                
-               <div className="space-y-4 pt-6 border-t border-white/5">
-                  <p className="text-[12px] font-light leading-relaxed text-foreground/60 tracking-tight">
-                     Votre dossier est quasi-complet. Une action immédiate est requise pour maintenir votre éligibilité aux marchés de type AONO.
-                  </p>
-                  <Button className="w-full bg-primary text-black h-11 rounded font-semibold text-[10px] uppercase tracking-[0.2em] shadow-lg shadow-primary/10 hover:bg-primary/90 transition-all active:scale-95">
-                     Coffre-fort numérique
-                  </Button>
+               <div className="space-y-4">
+                  {[
+                     { year: "2024 (N)", value: "542 300 000", growth: "+12%" },
+                     { year: "2023 (N-1)", value: "480 500 000", growth: "+8%" },
+                     { year: "2022 (N-2)", value: "445 000 000", growth: "+5%" }
+                  ].map((row, i) => (
+                     <div key={i} className="flex items-center justify-between p-3 bg-white/[0.03] border border-white/5 rounded-[4px] group/row transition-all hover:translate-x-1 hover:bg-white/[0.05]">
+                        <div className="space-y-0.5">
+                           <span className="text-[10px] font-bold text-foreground/40 uppercase tracking-wider">{row.year}</span>
+                           <p className="text-[15px] font-black text-foreground/80 group-hover/row:text-primary transition-colors">{row.value} <span className="text-[10px] font-medium text-foreground/30">FCFA</span></p>
+                        </div>
+                        <span className="text-[10px] font-bold text-primary/80">{row.growth}</span>
+                     </div>
+                  ))}
                </div>
-            </CardContent>
-         </Card>
+
+               <div className="pt-4 border-t border-white/5">
+                  <div className="flex items-center justify-between text-[11px]">
+                     <span className="font-bold text-foreground/30 uppercase tracking-widest">Capacité d&apos;Autofinancement</span>
+                     <span className="font-semibold text-foreground/60">85 400 000 FCFA</span>
+                  </div>
+               </div>
+            </div>
+         </motion.div>
+
+         {/* CARTE 3 : RESSOURCES & EXPERTISE */}
+         <motion.div 
+            whileHover={{ y: -4 }}
+            className="group bg-white/[0.02] border border-white/5 rounded-[4px] p-6 space-y-8 backdrop-blur-sm transition-all hover:bg-white/[0.04] hover:border-white/10"
+         >
+            <div className="flex items-center justify-between">
+               <div className="h-10 w-10 bg-white/5 rounded-[4px] flex items-center justify-center border border-white/10">
+                  <HardHat className="h-5 w-5 text-slate-400 group-hover:text-primary transition-colors" />
+               </div>
+               <Button size="icon" variant="ghost" className="h-8 w-8 text-foreground/20 hover:text-white">
+                  <Plus size={16} />
+               </Button>
+            </div>
+
+            <div className="space-y-6">
+               <div className="space-y-4">
+                  <h3 className="text-[11px] font-bold text-foreground/30 uppercase tracking-[0.15em]">Ressources Humaines</h3>
+                  <div className="grid grid-cols-2 gap-3">
+                     <div className="p-3 bg-white/[0.03] border border-white/5 rounded-[4px]">
+                        <p className="text-xl font-light text-foreground/80">08</p>
+                        <span className="text-[9px] font-bold text-foreground/20 uppercase tracking-widest">Ingénieurs</span>
+                     </div>
+                     <div className="p-3 bg-white/[0.03] border border-white/5 rounded-[4px]">
+                        <p className="text-xl font-light text-foreground/80">14</p>
+                        <span className="text-[9px] font-bold text-foreground/20 uppercase tracking-widest">Techniciens</span>
+                     </div>
+                  </div>
+               </div>
+
+               <div className="space-y-4 pt-4 border-t border-white/5">
+                  <h3 className="text-[11px] font-bold text-foreground/30 uppercase tracking-[0.15em]">Logistique Lourde (DQE/BPU)</h3>
+                  <div className="space-y-2">
+                     {[
+                        { icon: Truck, label: "Porte-Engins 40T", qty: "02" },
+                        { icon: Truck, label: "Bennes 15-20m3", qty: "05" },
+                        { icon: Truck, label: "Niveleuses (Grader)", qty: "03" }
+                     ].map((item, i) => (
+                        <div key={i} className="flex items-center justify-between p-2 hover:translate-x-1 transition-all group/item">
+                           <div className="flex items-center gap-3">
+                              <item.icon size={14} className="text-slate-600 group-hover/item:text-primary transition-colors" />
+                              <span className="text-[12px] font-medium text-foreground/50 group-hover/item:text-foreground/80 transition-colors">{item.label}</span>
+                           </div>
+                           <span className="text-[12px] font-black font-mono text-foreground/30">{item.qty}</span>
+                        </div>
+                     ))}
+                  </div>
+               </div>
+            </div>
+         </motion.div>
+
       </div>
 
-      {/* 4. Documents Vault - Aligné Table Style */}
-      <Card className="border border-white/5 bg-white/[0.02] backdrop-blur-xl rounded overflow-hidden shadow-2xl shadow-black/5">
-         <CardHeader className="flex flex-col sm:flex-row items-center justify-between p-8 border-b border-white/5 gap-6">
-            <div className="text-center sm:text-left">
-               <CardTitle className="text-2xl font-semibold tracking-tight mb-1 text-foreground">Coffre-fort Documents</CardTitle>
-               <CardDescription className="text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground/30">Pièces d&apos;identité et agréments techniques</CardDescription>
-            </div>
-            <Button className="bg-foreground text-background hover:bg-primary hover:text-black h-11 px-8 rounded font-semibold text-[10px] uppercase tracking-[0.25em] transition-all"><Plus className="mr-2 h-4 w-4" /> NOUVELLE PIÈCE</Button>
-         </CardHeader>
-         <CardContent className="p-0">
-            <div className="divide-y divide-white/5">
-               {[
-                 { nom: "Attestation Non Redevance (ANR)", date: "04 Juin 2025", status: "VALID" },
-                 { nom: "Attestation CNPS", date: "04 Avril 2025", status: "EXPIRES_SOON" },
-                 { nom: "Statuts de l'Entreprise", date: "Illimitée", status: "VALID" }
-               ].map((d, i) => (
-                 <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between p-6 hover:bg-white/[0.02] transition-all gap-4 group">
-                    <div className="flex items-center gap-6">
-                       <div className="h-14 w-14 bg-background border border-white/5 rounded flex items-center justify-center font-semibold text-[10px] text-foreground/20 group-hover:text-primary group-hover:border-primary/50 transition-all shadow-sm">
-                          JSON
-                       </div>
-                       <div className="space-y-1">
-                          <h4 className="font-semibold text-[15px] text-foreground group-hover:text-primary transition-colors tracking-tight">{d.nom}</h4>
-                          <p className="text-[10px] font-light text-foreground/30 uppercase tracking-[0.05em]">Expire le <span className="text-foreground/60">{d.date}</span></p>
-                       </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                       <div className="text-right mr-4 hidden sm:block">
-                          {d.status === "VALID" ? <Badge className="bg-primary/10 text-primary/80 border-none font-semibold text-[10px] uppercase tracking-wider p-1 px-3">VALIDE</Badge> : <Badge className="bg-red-500/10 text-red-500/80 border-none font-semibold text-[10px] uppercase tracking-wider p-1 px-3">URGENT</Badge>}
-                       </div>
-                       <Button variant="outline" className="h-10 w-10 p-0 rounded border border-white/10 text-foreground/30 hover:text-primary hover:border-primary/50 transition-all"><FileText size={16} /></Button>
-                       <Button variant="outline" className="h-10 w-10 p-0 rounded border border-white/5 text-foreground/10 hover:text-red-500 hover:border-red-500/50 transition-all"><Trash size={16} /></Button>
-                    </div>
-                 </div>
-               ))}
-            </div>
-         </CardContent>
-      </Card>
+      {/* 4. FOOTER NOTE - LEVIER DE PUISSANCE */}
+      <div className="flex items-center justify-center py-6">
+         <p className="text-[10px] font-medium text-foreground/10 uppercase tracking-[0.4em] text-center max-w-2xl leading-relaxed">
+            Ces données structurent votre éligibilité algorithmique aux Marchés Publics du Cameroun. CORNAi synchronise ces capacités avec le <span className="text-foreground/30">CCTP</span> et le <span className="text-foreground/30">RPAO</span> pour maximiser vos chances de succès.
+         </p>
+      </div>
 
     </div>
   )

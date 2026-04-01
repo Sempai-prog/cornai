@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Station de Travail 2.0 (Lock-Design — Quiet Surface)
+// CORNAi — Station de Travail 2.8 (Moteur de Recherche — Tableau de Fréquences)
 // ══════════════════════════════════════════
 
 "use client"
@@ -9,15 +9,17 @@ import {
   Search, 
   ChevronDown,
   History,
-  Kanban as KanbanIcon,
-  ArrowRight,
+  Table as TableIcon,
   FilterX,
   Target as TargetIcon,
   File as FileIcon,
   List as ListIcon,
   Clock,
   ShieldCheck,
-  Zap
+  Zap,
+  MoreHorizontal,
+  ChevronRight,
+  Plus
 } from "lucide-react"
 
 import { Input } from "@/components/ui/input"
@@ -43,9 +45,10 @@ interface SearchDashboardClientProps {
 }
 
 export function SearchDashboardClient({ initialResults }: SearchDashboardClientProps) {
+  const [isSidebarOpen, setIsSidebarOpen] = React.useState(true)
   const [query, setQuery] = React.useState("")
-  const [viewMode, setViewMode] = React.useState<"list" | "kanban">("list")
-  const [isLoading, setIsLoading] = React.useState(true) // Simule chargement initial
+  const [viewMode, setViewMode] = React.useState<"list" | "table">("list")
+  const [isLoading, setIsLoading] = React.useState(true)
   const [openAccordions, setOpenAccordions] = React.useState<Record<string, boolean>>({ secteurs: true })
   const [filters, setFilters] = React.useState({
     secteurs: [] as string[],
@@ -53,7 +56,6 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
     procedures: [] as string[],
   })
 
-  // Effet de chargement simulé (Quiet Design)
   React.useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 800)
     return () => clearTimeout(timer)
@@ -85,97 +87,134 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
   }, [query, filters, initialResults])
 
   return (
-    /* ───────────────────────────────────────────────────────────
-       1. CONTENEUR MAÎTRE (FLUIDE & MODULAIRE — BENTO STYLE)
-       ─────────────────────────────────────────────────────────── */
-    <div className="w-full max-w-[1600px] mx-auto flex flex-col md:flex-row gap-6 relative min-h-[calc(100vh-210px)]">
+    <div className="w-full max-w-[1600px] mx-auto flex flex-col md:flex-row gap-6 relative min-h-[calc(100vh-210px)] animate-in fade-in duration-700">
       
       {/* ───────────────────────────────────────────────────────────
-          2. LES FILTRES "EN VIE" (SIDEBAR MODULAIRE)
+          1. FILTRES "QUIET" (SIDEBAR RÉTRACTABLE)
           ─────────────────────────────────────────────────────────── */}
-      <aside className="w-72 flex-shrink-0 flex flex-col gap-4 select-none">
+      <aside className={cn(
+        "flex-shrink-0 flex flex-col gap-4 select-none transition-all duration-500 ease-in-out overflow-hidden",
+        isSidebarOpen ? "w-72 opacity-100" : "w-0 opacity-0 pointer-events-none"
+      )}>
          {isLoading ? (
             <SidebarSkeleton />
          ) : (
-            FILTER_CATEGORIES.map((cat) => (
-              <div 
-                key={cat.id} 
-                className="bg-[#0c0c0c]/80 backdrop-blur-sm border border-white/5 rounded-[4px] p-4 hover:border-white/10 hover:bg-[#0c0c0c] transition-all shadow-sm group"
-              >
-                 <button 
-                  onClick={() => toggleAccordion(cat.id)}
-                  className="flex items-center justify-between w-full py-1 group/btn"
+            <>
+               {FILTER_CATEGORIES.map((cat) => (
+                 <div 
+                   key={cat.id} 
+                   className="bg-[#0c0c0c]/80 backdrop-blur-sm border border-white/5 rounded-[4px] p-4 hover:border-white/10 hover:bg-[#0c0c0c] transition-all shadow-sm group whitespace-nowrap"
                  >
-                    <span className="text-[10px] font-black text-foreground/40 group-hover/btn:text-primary uppercase tracking-[0.15em]">
-                      {cat.title}
-                    </span>
-                    <ChevronDown className={cn(
-                      "h-3 w-3 text-foreground/20 transition-transform duration-500",
-                      openAccordions[cat.id] && "rotate-180"
-                    )} />
-                 </button>
-                 
-                 {openAccordions[cat.id] && (
-                   <div className="mt-4 space-y-3 animate-in fade-in slide-in-from-top-1 duration-500">
-                      {cat.items.map((item) => (
-                        <label key={item} className="flex items-center gap-3 cursor-pointer group/label">
-                           <input 
-                              type="checkbox" 
-                              className="h-3 w-3 rounded-[2px] border border-white/10 bg-white/[0.03] checked:bg-primary checked:border-primary appearance-none cursor-pointer transition-all"
-                              checked={(filters as any)[cat.id].includes(item)}
-                              onChange={() => toggleFilter(cat.id as any, item)}
-                           />
-                           <span className={cn(
-                              "text-[12px] font-medium transition-colors truncate tracking-tight",
-                              (filters as any)[cat.id].includes(item) ? "text-primary" : "text-foreground/30 group-hover/label:text-foreground/60"
-                           )}>{item}</span>
-                        </label>
-                      ))}
-                   </div>
-                 )}
-              </div>
-            ))
-         )}
+                    <button 
+                     onClick={() => toggleAccordion(cat.id)}
+                     className="flex items-center justify-between w-full py-1 group/btn"
+                    >
+                       <span className="text-[10px] font-black text-foreground/40 group-hover/btn:text-primary uppercase tracking-[0.15em]">
+                         {cat.title}
+                       </span>
+                       <ChevronDown className={cn(
+                         "h-3 w-3 text-foreground/20 transition-transform duration-500",
+                         openAccordions[cat.id] && "rotate-180"
+                       )} />
+                    </button>
+                    
+                    {openAccordions[cat.id] && (
+                      <div className="mt-4 space-y-3 animate-in fade-in slide-in-from-top-1 duration-300">
+                         {cat.items.map((item) => (
+                           <label key={item} className="flex items-center gap-3 cursor-pointer group/label">
+                              <input 
+                                 type="checkbox" 
+                                 className="h-3 w-3 rounded-[2px] border border-white/10 bg-white/[0.03] checked:bg-primary checked:border-primary appearance-none cursor-pointer transition-all"
+                                 checked={(filters as any)[cat.id].includes(item)}
+                                 onChange={() => toggleFilter(cat.id as any, item)}
+                              />
+                              <span className={cn(
+                                 "text-[12px] font-medium transition-colors truncate tracking-tight",
+                                 (filters as any)[cat.id].includes(item) ? "text-primary" : "text-foreground/30 group-hover/label:text-foreground/60"
+                              )}>{item}</span>
+                           </label>
+                         ))}
+                      </div>
+                    )}
+                 </div>
+               ))}
 
-         {/* Ribbon Side Info (Independent Card) */}
-         <div className="p-4 bg-[#0c0c0c]/40 border border-white/5 rounded-[4px] flex items-center gap-3 opacity-30">
-             <ShieldCheck className="h-4 w-4" />
-             <span className="text-[9px] font-bold uppercase tracking-widest leading-none">Security: ARMP-V4</span>
-         </div>
+               {/* Ribbon Side Info (Independent Card) */}
+               <div className="p-4 bg-[#0c0c0c]/40 border border-white/5 rounded-[4px] flex items-center gap-3 opacity-30 mt-auto whitespace-nowrap">
+                   <ShieldCheck className="h-4 w-4" />
+                   <span className="text-[9px] font-bold uppercase tracking-widest leading-none">Security: ARMP-V4</span>
+               </div>
+            </>
+         )}
       </aside>
 
       {/* ───────────────────────────────────────────────────────────
-          3. LA ZONE DES RÉSULTATS (FLUIDITÉ & LARGEUR)
+          2. STATION DE TRI DYNAMIQUE (CONTENU PRINCIPAL)
           ─────────────────────────────────────────────────────────── */}
       <div className="flex-1 flex flex-col gap-6 min-w-0">
          
-         {/* BARRE DE RECHERCHE (CARTE FLOTTANTE INDÉPENDANTE) */}
-         <header className="flex flex-col md:flex-row items-center justify-between gap-4 p-4 bg-[#0c0c0c]/80 backdrop-blur-sm border border-white/5 rounded-[4px] shadow-sm">
-            <div className="flex-1 flex items-center gap-4 bg-white/[0.03] border border-white/5 px-4 h-10 rounded-[4px] w-full max-w-2xl group transition-all focus-within:border-primary/30">
-               <Search className="h-4 w-4 text-foreground/10 group-focus-within:text-primary transition-colors" />
-               <Input 
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="ID ARMP, Autorité ou Objet du marché..." 
-                  className="h-full w-full bg-transparent border-none p-0 text-[14px] font-normal focus-visible:ring-0 placeholder:text-foreground/5 text-foreground/80 outline-none"
-               />
+         <header className="flex flex-col md:flex-row items-center justify-between gap-4 p-4 bg-white/[0.01] border border-white/5 rounded-[4px] relative">
+            
+            {/* TOGGLE SIDEBAR BUTTON (Positionné entre Sidebar et Header) */}
+            <button 
+               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+               className={cn(
+                 "absolute -left-3 top-1/2 -translate-y-1/2 z-50 h-6 w-6 rounded-full bg-[#0c0c0c] border border-white/10 flex items-center justify-center text-foreground/40 hover:text-primary hover:border-primary/40 transition-all shadow-xl group",
+                 "md:flex hidden"
+               )}
+            >
+               <ChevronRight className={cn("h-3 w-3 transition-transform duration-500", isSidebarOpen ? "rotate-180" : "rotate-0")} />
+               
+               {/* Tooltip Indication */}
+               <div className="absolute left-8 px-2 py-1 bg-black text-[9px] font-bold uppercase tracking-widest rounded border border-white/10 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap">
+                  {isSidebarOpen ? "Fermer Filtres" : "Ouvrir Filtres"}
+               </div>
+            </button>
+            <div className="flex-1 w-full max-w-2xl">
+               <div className="relative flex items-center w-full group/input">
+                  <div className="absolute left-3.5 z-10">
+                     <Search className="h-4 w-4 text-slate-500 group-focus-within/input:text-primary transition-colors" />
+                  </div>
+                  <Input 
+                     value={query}
+                     onChange={(e) => setQuery(e.target.value)}
+                     placeholder="Rechercher par ID, Autorité contractante, Mots-clés..." 
+                     className={cn(
+                       "h-10 w-full pl-10 pr-4 bg-[#0a0a0a] border-white/10 rounded-[4px] text-[12px] font-medium tracking-tight",
+                       "placeholder:text-slate-700 text-foreground/80 outline-none",
+                       "focus:border-white/20 focus:ring-0"
+                     )}
+                  />
+               </div>
             </div>
             
-            <div className="flex items-center gap-3 shrink-0">
-               <div className="flex items-center bg-white/[0.03] rounded-[4px] p-0.5 border border-white/5">
-                  <button onClick={() => setViewMode("list")} className={cn("h-8 px-4 flex items-center gap-2 rounded-[3px] transition-all", viewMode === "list" ? "bg-card text-primary shadow-sm" : "text-foreground/20 hover:text-foreground/40")}>
-                    <ListIcon className="h-4 w-4" />
-                    <span className="text-[10px] font-black uppercase tracking-widest hidden lg:block">Liste</span>
+            <div className="flex items-center gap-2">
+               <div className="flex items-center bg-[#0a0a0a] rounded-[4px] p-0.5 border border-white/10">
+                  <button 
+                    onClick={() => setViewMode("list")} 
+                    className={cn(
+                      "h-8 px-4 flex items-center gap-2 rounded-[3px] transition-all",
+                      viewMode === "list" ? "bg-white/5 text-primary border border-white/10" : "text-foreground/20 hover:text-foreground/40"
+                    )}
+                  >
+                    <ListIcon className="h-3.5 w-3.5" />
+                    <span className="text-[10px] font-bold uppercase tracking-wider">Liste</span>
                   </button>
-                  <button onClick={() => setViewMode("kanban")} className={cn("h-8 px-4 flex items-center gap-2 rounded-[3px] transition-all", viewMode === "kanban" ? "bg-card text-primary shadow-sm" : "text-foreground/20 hover:text-foreground/40")}>
-                    <KanbanIcon className="h-4 w-4" />
-                    <span className="text-[10px] font-black uppercase tracking-widest hidden lg:block">Workflow</span>
+                  <button 
+                    onClick={() => setViewMode("table")} 
+                    className={cn(
+                      "h-8 px-4 flex items-center gap-2 rounded-[3px] transition-all",
+                      viewMode === "table" ? "bg-white/5 text-primary border border-white/10" : "text-foreground/20 hover:text-foreground/40"
+                    )}
+                  >
+                    <TableIcon className="h-3.5 w-3.5" />
+                    <span className="text-[10px] font-bold uppercase tracking-wider">Analyse</span>
                   </button>
                </div>
             </div>
          </header>
 
-         {/* LISTE DES RÉSULTATS (ZONE FLUIDE) */}
+         {/* ZONE DES RÉSULTATS */}
          <div className="flex-1 min-h-0">
             {viewMode === "list" ? (
                <div className="flex flex-col gap-3 pb-20">
@@ -184,37 +223,103 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
                   ))}
                </div>
             ) : (
-               <ScrollArea className="h-[calc(100vh-320px)] scrollbar-hide">
-                  <KanbanView2 results={filteredResults} />
-               </ScrollArea>
+               <TableView results={filteredResults} />
             )}
             
             {!isLoading && filteredResults.length === 0 && (
-               <div className="flex flex-col items-center justify-center py-40 opacity-15">
-                  <History className="h-10 w-10 mb-4" />
-                  <h3 className="text-sm font-bold uppercase tracking-widest">Aucun Dossier Trouvé</h3>
+               <div className="flex flex-col items-center justify-center py-40 opacity-10">
+                  <Search size={40} className="mb-4" />
+                  <h3 className="text-sm font-bold uppercase tracking-[0.3em]">Néant</h3>
                </div>
             )}
          </div>
-
       </div>
-
     </div>
   )
 }
 
 // ───────────────────────────────────────────────────────────
-// SKELETONS (SIDEBAR FILTERS)
+// TABLEAU DE FRÉQUENCES (HIGH-DENSITY DATA TERMINAL)
 // ───────────────────────────────────────────────────────────
+
+function TableView({ results }: { results: SearchResult[] }) {
+  return (
+    <div className="bg-[#0c0c0c]/40 border border-white/5 rounded-[4px] overflow-hidden">
+       {/* TABLE HEADER */}
+       <div className="flex items-center gap-4 px-4 py-3 bg-white/[0.02] border-b border-white/5 select-none">
+          <div className="w-2.5 shrink-0" />
+          <div className="w-[120px] shrink-0 text-[10px] font-black text-foreground/20 uppercase tracking-[0.2em]">Référence / AC</div>
+          <div className="flex-1 text-[10px] font-black text-foreground/20 uppercase tracking-[0.2em]">Objet du Marché</div>
+          <div className="w-[120px] shrink-0 text-[10px] font-black text-foreground/20 uppercase tracking-[0.2em] text-right">Caution</div>
+          <div className="w-[100px] shrink-0 text-[10px] font-black text-foreground/20 uppercase tracking-[0.2em] text-center">Score Match</div>
+          <div className="w-10 shrink-0" />
+       </div>
+
+       {/* TABLE ROWS */}
+       <div className="max-h-[calc(100vh-320px)] overflow-y-auto no-scrollbar pb-2">
+          {results.map((item) => (
+             <div 
+               key={item.id} 
+               className="group flex items-center gap-4 px-4 h-12 border-b border-white/[0.03] hover:bg-white/[0.04] transition-all cursor-pointer relative"
+             >
+                {/* 1. URGENCY INDICATOR (2px Pulse) */}
+                <div className={cn(
+                  "absolute left-0 top-1/4 bottom-1/4 w-[2px] rounded-r-full",
+                  parseInt(item.deadline) < 5 ? "bg-red-500" : parseInt(item.deadline) < 15 ? "bg-amber-500" : "bg-primary/50"
+                )} />
+                
+                <div className="w-2.5 shrink-0" />
+
+                {/* 2. IDENTITY (AC + Type) */}
+                <div className="w-[120px] shrink-0 flex flex-col gap-0.5 overflow-hidden">
+                   <span className="text-[10px] font-black text-foreground/40 uppercase tracking-tighter truncate">{item.id.split('-')[0]}</span>
+                   <span className="text-[9px] font-bold text-slate-600 uppercase tracking-widest">{item.authority.split(' ')[0]}</span>
+                </div>
+
+                {/* 3. OBJECT (Title) */}
+                <div className="flex-1 overflow-hidden">
+                   <h4 className="text-[12px] font-medium text-slate-300 truncate lowercase first-letter:uppercase group-hover:text-primary transition-colors tracking-tight">
+                      {item.title}
+                   </h4>
+                </div>
+
+                {/* 4. CAUTION (Budget/Metric) */}
+                <div className="w-[120px] shrink-0 text-right">
+                   <span className="text-[11px] font-mono font-medium text-slate-500 tracking-tighter uppercase whitespace-nowrap">
+                      {item.budget || "NC"}
+                   </span>
+                </div>
+
+                {/* 5. IA SCORE */}
+                <div className="w-[100px] shrink-0 flex items-center justify-center gap-2">
+                   <div className="h-1 w-12 bg-white/5 rounded-full overflow-hidden hidden sm:block">
+                      <div 
+                         className="h-full bg-primary" 
+                         style={{ width: `${item.matchScore}%` }} 
+                      />
+                   </div>
+                   <span className="text-[10px] font-black text-primary/80">{item.matchScore}%</span>
+                </div>
+
+                {/* 6. ACTION (Quick Eye/Plus) */}
+                <div className="w-10 shrink-0 flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+                   <div className="h-7 w-7 rounded bg-white/5 border border-white/10 flex items-center justify-center text-primary hover:bg-primary/10 transition-colors">
+                      <Plus size={14} />
+                   </div>
+                </div>
+             </div>
+          ))}
+       </div>
+    </div>
+  )
+}
 
 function SidebarSkeleton() {
   return (
     <div className="space-y-8">
       {[1, 2, 3].map(i => (
         <div key={i} className="space-y-4">
-           {/* Section Title */}
            <div className="h-4 w-24 bg-white/5 animate-pulse rounded" />
-           {/* Checkbox Rows */}
            <div className="space-y-3">
               {[1, 2, 3, 4].map(j => (
                 <div key={j} className="flex gap-3 items-center">
@@ -223,78 +328,6 @@ function SidebarSkeleton() {
                 </div>
               ))}
            </div>
-        </div>
-      ))}
-    </div>
-  )
-}
-
-// ───────────────────────────────────────────────────────────
-// KANBAN 2.0 (LINEAR-STYLE / QUIET DESIGN)
-// ───────────────────────────────────────────────────────────
-
-function KanbanView2({ results }: { results: SearchResult[] }) {
-  const columns = [
-    { id: "opportunite", title: "À Analyser", icon: TargetIcon, dot: "bg-slate-500" },
-    { id: "eval", title: "Décision", icon: ArrowRight, dot: "bg-amber-500" },
-    { id: "montage", title: "Montage", icon: FileIcon, dot: "bg-blue-500" },
-    { id: "soumis", title: "Soumis", icon: ShieldCheck, dot: "bg-primary" },
-  ]
-
-  return (
-    <div className="flex gap-4 h-full overflow-x-auto scrollbar-hide pb-10">
-      {columns.map((col) => (
-        <div key={col.id} className="w-80 flex-shrink-0 flex flex-col gap-3">
-          
-          {/* COLUMN HEADER (QUIET) */}
-          <div className="flex items-center justify-between px-2 mb-2">
-             <div className="flex items-center gap-2.5 opacity-40 group hover:opacity-100 transition-opacity">
-                <div className={cn("h-1.5 w-1.5 rounded-full", col.dot)} />
-                <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-slate-400">{col.title}</span>
-             </div>
-             <span className="text-[10px] font-bold bg-white/5 px-2 py-0.5 rounded-full text-foreground/30">{results.filter(r => (r.workflowState || 'opportunite') === col.id).length}</span>
-          </div>
-
-          {/* COLUMN BODY */}
-          <div className="flex flex-col gap-2.5">
-             {results.filter(r => (r.workflowState || 'opportunite') === col.id).map(item => (
-                <div key={item.id} className="bg-[#0c0c0c] border border-white/5 rounded-[4px] p-4 hover:border-white/10 transition-all cursor-grab active:cursor-grabbing group shadow-sm">
-                   
-                   {/* CARD TOP */}
-                   <div className="flex items-center justify-between mb-3">
-                      <span className="text-[10px] font-black uppercase tracking-tighter text-foreground/20 group-hover:text-foreground/40 transition-colors">
-                        {item.authority.split(' ').slice(0, 2).join(' ')}
-                      </span>
-                      <div className="flex items-center gap-1.5 px-2 py-0.5 bg-white/5 rounded-[2px]">
-                         <Clock className="h-2.5 w-2.5 opacity-30" />
-                         <span className={cn(
-                            "text-[10px] font-bold uppercase",
-                            parseInt(item.deadline) < 5 ? "text-red-500" : "text-primary/60"
-                         )}>J-{item.deadline.split(' ')[0]}</span>
-                      </div>
-                   </div>
-
-                   {/* CARD BODY */}
-                   <h4 className="text-[13px] font-medium leading-snug text-foreground/80 group-hover:text-primary transition-colors line-clamp-2 mb-4 tracking-tight">
-                      {item.title}
-                   </h4>
-
-                   {/* CARD FOOTER */}
-                   <div className="flex items-center justify-between pt-3 border-t border-white/[0.03]">
-                      <div className="flex items-center gap-2">
-                         <span className="text-[10px] font-bold text-foreground/15 uppercase tracking-tighter">Budget Est.</span>
-                         <span className="text-[10px] font-medium text-foreground/40">{item.budget || "N/A"}</span>
-                      </div>
-                      <Badge variant="outline" className="h-4.5 rounded-[2px] border-primary/20 bg-primary/5 px-2 text-[9px] font-black text-primary uppercase">
-                        {item.matchScore}%
-                      </Badge>
-                   </div>
-                </div>
-             ))}
-
-             {/* Placeholder Drop Zone (Visual) */}
-             <div className="h-20 border border-dashed border-white/5 rounded-[4px] opacity-10" />
-          </div>
         </div>
       ))}
     </div>

@@ -72,5 +72,22 @@ Le vert CORNAi (**`#25D366`**) doit être une ressource rare :
 
 ---
 
+## 6. Composants Spécifiques (UI Utilities)
+
+### Panel-Toggle (Contrôleur de Rétractation) 
+Indispensable pour basculer entre le mode "Triage" et le mode "Focus Analyse".
+
+*   **Design & Morphologie** : 
+    - Micro-bouton circulaire (**`h-6 w-6`**), fond **`#0c0c0c`**, bordure **`1px border-white/10`**.
+    - Positionnement stratégique : **`absolute -left-3 top-1/2 -translate-y-1/2`**, à cheval sur la ligne de séparation.
+*   **Cinématique & Transitions** :
+    - Transition fluide de **500ms** (**`duration-500`**) avec un easing **`ease-in-out`**.
+    - Rotation d'icône dynamique (**`rotate-180`**) pour signifier le sens d'action du workflow.
+*   **Accessibilité & Feedback** :
+    - Tooltip textuel (**`text-[9px] font-bold`**) apparaissant au survol pour expliciter l'action (Ouvrir/Fermer).
+    - Masquage intelligent sur mobile (**`md:flex hidden`**) pour prioriser la surface de lecture.
+
+---
+
 > [!IMPORTANT]
-> Cette révision "Quiet Design" (V1.4) est la nouvelle référence. L'interface doit paraître technique, apaisée et résolument premium.
+> Cette révision "Quiet Design" (V1.5) est la nouvelle référence. L'interface doit paraître technique, apaisée et résolument premium. Le **Panel-Toggle** est l'exemple parfait de l'élégance fonctionnelle recherchée.

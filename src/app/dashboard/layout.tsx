@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Dashboard Layout (Corrected Context)
+// CORNAi — Dashboard Layout (Flexible Full-Height)
 // ══════════════════════════════════════════
 
 "use client"
@@ -41,13 +41,14 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
     { label: "Fiche Entreprise", icon: User, href: "/dashboard/profil" },
   ]
 
+  // Détecter si on est sur le Kanban (Opportunités) pour désactiver le scroll global
+  const isKanban = pathname === "/dashboard/opportunites"
+
   return (
     <div className="flex h-screen w-full bg-background text-foreground overflow-hidden font-sans selection:bg-primary/20 antialiased">
         
-      {/* SIDEBAR : Restauration du design "Sleek" précédent */}
+      {/* SIDEBAR */}
       <aside className="w-64 flex-shrink-0 flex flex-col border-r border-border bg-card/40 backdrop-blur-xl z-20">
-        
-        {/* Header Sidebar (Logo CORNAi) */}
         <div className="h-14 flex items-center px-6 border-b border-border">
           <Link href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
              <div className="w-6 h-6 bg-primary flex items-center justify-center rounded">
@@ -57,7 +58,6 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
           </Link>
         </div>
 
-        {/* Navigation Items */}
         <div className="flex-1 py-6 space-y-8">
           <div className="space-y-1">
             <h3 className="text-[10px] font-semibold text-foreground/40 uppercase tracking-[0.2em] mb-4 px-6">Exploitation</h3>
@@ -118,7 +118,6 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
 
       {/* MAIN AREA */}
       <div className="flex-1 flex flex-col min-w-0 relative">
-        
         <header className="h-14 flex items-center justify-between px-6 lg:px-8 border-b border-border bg-background/60 backdrop-blur-md z-10 shrink-0">
            <div className="flex items-center gap-6">
               <motion.button 
@@ -130,8 +129,6 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
                  <PanelLeft size={16} />
               </motion.button>
               <div className="h-4 w-px bg-border mx-1 hidden md:block" />
-              
-              {/* GLOBAL SEARCH OMNIBOX */}
               <GlobalSearch />
            </div>
 
@@ -147,8 +144,15 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
            </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto bg-background">
-           <div className="max-w-[1400px] mx-auto w-full px-6 lg:px-8 py-8 md:py-10">
+        {/* CONTAINER DINAMIQUE */}
+        <main className={cn(
+          "flex-1 flex flex-col min-h-0",
+          !isKanban && "overflow-y-auto"
+        )}>
+           <div className={cn(
+             "w-full flex-1 flex flex-col",
+             isKanban ? "px-6 lg:px-8 py-6" : "max-w-[1400px] mx-auto px-6 lg:px-8 py-8 md:py-10"
+           )}>
               {children}
            </div>
         </main>
