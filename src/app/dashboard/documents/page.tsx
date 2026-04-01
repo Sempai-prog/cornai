@@ -2,8 +2,8 @@
 // CORNAi — Coffre-fort Documents (Phase D1.6 — Marchés Publics Domain Knowledge)
 // ══════════════════════════════════════════
 
-import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import { 
   FileText, 
   Plus, 
@@ -17,100 +17,134 @@ import { cn } from "@/lib/utils"
 
 export default function DocumentsPage() {
   return (
-    <div className="space-y-10 animate-in fade-in duration-500 pb-20 bg-background text-foreground antialiased">
+    <div className="flex flex-col md:flex-row gap-8 animate-in fade-in duration-700 bg-transparent max-w-[1600px] mx-auto antialiased">
       
       {/* ───────────────────────────────────────────────────────────
-          PLAN 1 — HEADER (SOPHISTICATION PREMIUM)
+          COLONNE GAUCHE — LE BILAN IA (FIXED/FLOATING)
           ─────────────────────────────────────────────────────────── */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-white/5 mt-0 lg:mt-[-4px]">
-        <div className="space-y-2.5">
-           <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground leading-none">
-              Dossier Administratif PME
-           </h1>
-           <div className="flex flex-wrap items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-foreground/30">
-              <span className="flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5 text-primary/60" /> CONFORMITÉ ARMP / MINMAP</span>
-              <span className="opacity-10">/</span>
-              <span className="">8 PIÈCES ACTIVES</span>
+      <aside className="w-full md:w-[380px] shrink-0 space-y-6">
+        <div className="bg-[#0c0c0c]/80 backdrop-blur-md border border-white/5 rounded-[4px] p-8 shadow-sm group">
+           <div className="flex flex-col items-center text-center">
+              {/* JAUGE CIRCULAIRE SIMPLIFIÉE */}
+              <div className="relative h-40 w-40 flex items-center justify-center mb-6">
+                 <svg className="h-full w-full -rotate-90">
+                    <circle cx="80" cy="80" r="70" fill="transparent" stroke="currentColor" strokeWidth="8" className="text-white/5" />
+                    <circle cx="80" cy="80" r="70" fill="transparent" stroke="currentColor" strokeWidth="8" strokeDasharray="440" strokeDashoffset="66" className="text-primary transition-all duration-1000" />
+                 </svg>
+                 <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <span className="text-4xl font-black tracking-tighter text-white">85%</span>
+                    <span className="text-[10px] font-bold text-foreground/40 uppercase tracking-widest mt-1">Score Global</span>
+                 </div>
+              </div>
+
+              <h2 className="text-[16px] font-semibold text-white mb-2 tracking-tight">Conformité Administrative</h2>
+              <p className="text-[12px] text-foreground/50 leading-relaxed max-w-[240px] mb-8">
+                 Votre dossier est éligible pour la majorité des appels d'offres MINMAP / ARMP.
+              </p>
+
+              <div className="w-full space-y-3 pt-6 border-t border-white/5">
+                 <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold text-foreground/30 uppercase tracking-widest">Statut CIPM</span>
+                    <Badge className="bg-primary/10 text-primary border-none text-[8px] font-black uppercase rounded-[2px] tracking-widest">PRÊT</Badge>
+                 </div>
+                 <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold text-foreground/30 uppercase tracking-widest">Pièces actives</span>
+                    <span className="text-[10px] font-bold text-white tracking-widest">08 / 10</span>
+                 </div>
+              </div>
            </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <Button variant="outline" className="h-9 text-[10px] font-semibold uppercase tracking-widest text-foreground/40 hover:text-foreground border-white/10 bg-white/5 rounded transition-all">
-             Vérification CIPM
-          </Button>
-          <Button className="bg-primary hover:bg-primary/90 text-black font-semibold text-[10px] uppercase tracking-[0.2em] h-9 px-8 rounded shadow-xl shadow-primary/10 border-none transition-all active:scale-95">
-             <Plus className="mr-2 h-4 w-4" /> UPLOADER PIÈCE
-          </Button>
+        <div className="bg-[#0c0c0c]/80 backdrop-blur-md border border-white/5 rounded-[4px] p-6 shadow-sm">
+           <div className="flex items-center gap-3 mb-6">
+              <Clock className="h-4 w-4 text-primary/40" />
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/40">Renouvellements</span>
+           </div>
+           <div className="space-y-4">
+              <div className="p-4 rounded border border-red-500/10 bg-red-500/[0.02]">
+                 <p className="text-[11px] font-bold text-red-500 uppercase tracking-widest mb-1">ANR — Urgent</p>
+                 <p className="text-[12px] text-foreground/60 font-medium">Expiration le 04 Juin 2025</p>
+              </div>
+           </div>
         </div>
-      </div>
+      </aside>
 
       {/* ───────────────────────────────────────────────────────────
-          PLAN 2 — CATEGORIES (SANS BRUIT VISUEL)
+          ZONE DROITE — LE COFFRE-FORT (GRID MODULAIRE)
           ─────────────────────────────────────────────────────────── */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-         {[
-           { label: "Dossier Administratif (DTAO)", count: 5, icon: FileText, color: "text-primary/60" },
-           { label: "Capacité Technique (BTP/SRV)", count: 2, icon: ShieldCheck, color: "text-primary/40" },
-           { label: "Capacité Financière", count: 1, icon: Clock, color: "text-foreground/20" }
-         ].map((cat, i) => (
-           <Card key={i} className="border border-white/5 bg-card/40 backdrop-blur-md rounded p-6 hover:border-primary/20 transition-all group cursor-pointer">
-              <div className="flex items-center justify-between mb-4 leading-none">
-                 <cat.icon className={cn("h-5 w-5 opacity-50 group-hover:opacity-100 group-hover:text-primary transition-all", cat.color)} />
-                 <span className="text-[10px] font-semibold text-foreground/10 group-hover:text-primary/20 transition-colors uppercase tracking-[0.2em]">0{i+1}</span>
-              </div>
-              <h3 className="text-[14px] font-semibold tracking-tight text-foreground mb-1 group-hover:text-primary transition-colors">{cat.label}</h3>
-              <p className="text-[10px] font-semibold text-foreground/20 uppercase tracking-widest">{cat.count} Documents</p>
-           </Card>
-         ))}
-      </div>
+      <main className="flex-1 space-y-6">
+         {/* HEADER ACTIONS */}
+         <header className="flex flex-col md:flex-row items-center justify-between gap-4 p-5 bg-[#0c0c0c]/80 backdrop-blur-sm border border-white/5 rounded-[4px] shadow-sm">
+            <div className="flex items-center gap-4">
+               <div className="h-10 w-10 rounded bg-primary/5 flex items-center justify-center border border-primary/10">
+                  <ShieldCheck className="h-5 w-5 text-primary" />
+               </div>
+               <div>
+                  <h3 className="text-[14px] font-bold text-white tracking-tight uppercase">Dossier de Candidature</h3>
+                  <p className="text-[10px] text-foreground/30 font-bold uppercase tracking-[0.1em]">Documents de référence PME</p>
+               </div>
+            </div>
+            <Button className="bg-primary hover:bg-primary/90 text-black font-black text-[10px] uppercase tracking-[0.2em] h-10 px-8 rounded shadow-xl shadow-primary/5 border-none transition-all">
+               <Plus className="mr-2 h-4 w-4 stroke-[3]" /> NEW DOCUMENT
+            </Button>
+         </header>
 
-      {/* ───────────────────────────────────────────────────────────
-          PLAN 3 — DOCUMENTS LIST (PIÈCES RÉGLEMENTAIRES CAMEROUN)
-          ─────────────────────────────────────────────────────────── */}
-      <div className="bg-card/20 backdrop-blur-xl overflow-hidden rounded min-h-[400px] shadow-2xl shadow-black/5">
-         <div className="flex items-center gap-4 px-6 py-4 border-b border-white/5 bg-white/[0.02] text-[10px] font-semibold uppercase tracking-[0.15em] text-foreground/30">
-            <div className="w-10 shrink-0">CODE</div>
-            <div className="flex-1">PIÈCE ADMINISTRATIVE (RÉGLEMENTAIRE)</div>
-            <div className="w-[120px] shrink-0 text-center">VALIDITÉ</div>
-            <div className="w-[130px] shrink-0 text-right pr-4">ACTIONS</div>
-         </div>
-
-         <div className="divide-y divide-white/5">
+         {/* LISTE DES PIÈCES (STYLE ROW) */}
+         <div className="space-y-3">
             {[
-              { id: "A1", nom: "Attestation de Non Redevance (ANR)", org: "Direction Générale des Impôts", type: "ADM", date: "04 Juin 2025", status: "VALID" },
-              { id: "A2", nom: "Quitus CNPS", org: "Caisse Nationale de Prévoyance Sociale", type: "ADM", date: "31 Déc 2025", status: "VALID" },
-              { id: "A3", nom: "Attestation de Domiciliation Bancaire", org: "Banque (Agrément MINFI)", type: "FIN", date: "Permanent", status: "VALID" },
-              { id: "A4", nom: "Registre de Commerce (RCCM / GFF)", org: "Greffe du Tribunal de Commerce", type: "ADM", date: "Permanent", status: "VALID" },
-              { id: "A5", nom: "Plan de Localisation visé", org: "Services Fiscaux", type: "ADM", date: "Permanent", status: "VALID" },
-              { id: "T1", nom: "Références Techniques BTP (3 ans)", org: "Certificats de Fin de Travaux (PV)", type: "TEC", date: "Permanent", status: "VALID" }
-            ].map((doc, i) => (
-              <div key={i} className="flex items-center gap-4 px-6 h-20 py-4 hover:bg-white/[0.03] transition-all group">
-                <div className="w-10 shrink-0">
-                   <div className="h-8 w-8 rounded bg-background border border-white/5 flex items-center justify-center font-semibold text-[10px] text-foreground/30 group-hover:bg-primary group-hover:text-black transition-all">
-                      {doc.id}
-                   </div>
-                </div>
-                <div className="flex-1 min-w-0 pr-4">
-                   <h4 className="text-[14px] font-semibold text-foreground group-hover:text-primary transition-colors truncate tracking-tight">{doc.nom}</h4>
-                   <p className="text-[10px] text-foreground/20 font-light truncate uppercase tracking-[0.05em] mt-0.5">{doc.org}</p>
-                </div>
-                <div className="w-[120px] shrink-0 text-center">
-                   <span className="text-[10px] font-semibold uppercase tracking-tight text-foreground/40">{doc.date}</span>
-                </div>
-                <div className="w-[130px] shrink-0 flex items-center justify-end gap-2 pr-1">
-                   <Button variant="outline" title="Générer certification" className="h-9 w-9 p-0 rounded border border-white/10 text-foreground/30 hover:text-primary hover:border-primary/50 transition-all"><ExternalLink size={14} /></Button>
-                   <Button variant="outline" className="h-9 w-9 p-0 rounded border border-white/10 text-foreground/30 hover:text-primary hover:border-primary/50 transition-all"><Download size={14} /></Button>
-                   <Button variant="outline" className="h-9 w-9 p-0 rounded border border-white/5 text-foreground/10 hover:text-red-500 hover:border-red-500/50 transition-all"><Trash size={14} /></Button>
-                </div>
-              </div>
+               { code: "ANR", name: "Attestation de Non Redevance (ANR)", org: "DGI Cameroun", date: "04 Juin 2025", status: "urgent" },
+               { code: "CNPS", name: "Quitus CNPS", org: "CNPS Centrale", date: "31 Déc 2025", status: "valid" },
+               { code: "RCCM", name: "Registre de Commerce (RCCM)", org: "Greffe du Tribunal", date: "Permanent", status: "valid" },
+               { code: "NUI", name: "Carte de Contribuable (NUI)", org: "DGI", date: "Permanent", status: "valid" },
+               { code: "CFT", name: "Certificats de Fin de Travaux (CFT)", org: "Maîtres d'ouvrage divers", date: "Multiple", status: "valid" },
+               { code: "ART", name: "Agrément ART (Télécoms)", org: "ART Cameroun", date: "22 Oct 2025", status: "valid" },
+            ].map((doc) => (
+               <div 
+                  key={doc.code}
+                  className="group relative flex flex-col md:flex-row items-center justify-between p-4 md:p-5 bg-[#0c0c0c]/40 border border-white/5 rounded-[4px] transition-all duration-300 hover:bg-white/[0.02] hover:border-white/10 hover:translate-x-1"
+               >
+                  <div className="flex items-center gap-5 flex-1 min-w-0">
+                     <div className={cn(
+                        "h-10 w-10 rounded-[2px] flex items-center justify-center font-mono text-[10px] font-black border transition-all",
+                        doc.status === 'urgent' ? "bg-red-500/5 border-red-500/10 text-red-500" : "bg-white/5 border-white/5 text-foreground/40 group-hover:bg-primary/5 group-hover:border-primary/10 group-hover:text-primary"
+                     )}>
+                        {doc.code}
+                     </div>
+                     <div className="flex-1 min-w-0">
+                        <h4 className="text-[14px] font-semibold text-white group-hover:text-primary transition-colors truncate tracking-tight">{doc.name}</h4>
+                        <div className="flex items-center gap-3 mt-1 opacity-40">
+                           <span className="text-[9px] font-bold uppercase tracking-widest">{doc.org}</span>
+                           <span className="h-1 w-1 bg-white/20 rounded-full" />
+                           <span className={cn(
+                              "text-[9px] font-bold uppercase tracking-widest",
+                              doc.status === 'urgent' ? "text-red-500" : ""
+                           )}>{doc.date}</span>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div className="flex items-center gap-6 mt-4 md:mt-0 lg:opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-4 group-hover:translate-x-0">
+                     <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 text-[9px] font-black uppercase tracking-widest text-foreground/40">
+                        <Download className="h-3 w-3" /> PDF
+                     </div>
+                     <Button variant="outline" className="h-10 px-6 rounded-[2px] border-primary/20 bg-primary/5 text-primary text-[10px] font-bold uppercase tracking-widest hover:bg-primary hover:text-black hover:border-primary transition-all">
+                        Update
+                     </Button>
+                  </div>
+
+                  {/* INDICATEUR DE STATUT */}
+                  <div className={cn(
+                     "absolute left-0 top-1/2 -translate-y-1/2 w-1 h-3 rounded-r-full group-hover:h-8 transition-all",
+                     doc.status === 'urgent' ? "bg-red-500" : "bg-primary/40 group-hover:bg-primary"
+                  )} />
+               </div>
             ))}
          </div>
          
-         <div className="p-12 text-center opacity-10">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.4em]">Fin de chargement du dossier PME</p>
+         <div className="pt-10 flex flex-col items-center opacity-10">
+            <p className="text-[10px] font-black uppercase tracking-[0.6em]">Coffre-fort Sécurisé CORNAi</p>
          </div>
-      </div>
-
+      </main>
     </div>
   )
 }

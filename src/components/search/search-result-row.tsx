@@ -15,7 +15,8 @@ import {
   MapPin,
   ExternalLink,
   ChevronDown,
-  Clock
+  Clock,
+  X
 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -160,18 +161,45 @@ export function SearchResultRow({ item }: SearchResultRowProps) {
       {/* ───────────────────────────────────────────────────────────
           PHASE 3 : DEEP DIVE (INSPECTEUR LATÉRAL)
           ─────────────────────────────────────────────────────────── */}
-      <Sheet open={isInspectorOpen} onOpenChange={setIsInspectorOpen}>
-        <SheetContent side="right" className="p-0 border-none w-[500px] max-w-[90vw]">
-          <SheetHeader className="sr-only">
-             <SheetTitle>Audit Expert : {item.title}</SheetTitle>
-             <SheetDescription>Analyse détaillée des critères d'éligibilité et des enveloppes techniques.</SheetDescription>
-          </SheetHeader>
-          <TenderInspectorPanel 
-            item={item} 
-            onStartWorkflow={handleStartWorkflow} 
-          />
-        </SheetContent>
-      </Sheet>
+      {/* ───────────────────────────────────────────────────────────
+          PHASE 3 : DEEP DIVE (INSPECTEUR LATÉRAL — CUSTOM MOTION)
+          ─────────────────────────────────────────────────────────── */}
+      <AnimatePresence>
+        {isInspectorOpen && (
+          <div className="fixed inset-0 z-[100] flex justify-end">
+            {/* OVERLAY CLICQUABLE */}
+            <motion.div 
+               initial={{ opacity: 0 }}
+               animate={{ opacity: 1 }}
+               exit={{ opacity: 0 }}
+               onClick={() => setIsInspectorOpen(false)}
+               className="absolute inset-0 bg-black/60 backdrop-blur-[2px] cursor-pointer"
+            />
+            
+            {/* PANNEAU D'INSPECTION (SLIDE FROM RIGHT) */}
+            <motion.div 
+               initial={{ x: "100%" }}
+               animate={{ x: 0 }}
+               exit={{ x: "100%" }}
+               transition={{ type: "spring", stiffness: 300, damping: 30 }}
+               className="relative h-full w-[500px] max-w-[90vw] bg-[#0c0c0c] shadow-2xl border-l border-white/5 overflow-hidden flex flex-col"
+            >
+               {/* BOUTON FERMER À L'INTÉRIEUR DU PANNEAU */}
+               <button 
+                  onClick={() => setIsInspectorOpen(false)}
+                  className="absolute top-8 right-8 z-[110] h-10 w-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 hover:border-white/20 transition-all group"
+               >
+                  <X className="h-5 w-5 text-foreground/40 group-hover:text-white transition-colors" />
+               </button>
+
+               <TenderInspectorPanel 
+                  item={item} 
+                  onStartWorkflow={handleStartWorkflow} 
+               />
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
     </div>
   )
