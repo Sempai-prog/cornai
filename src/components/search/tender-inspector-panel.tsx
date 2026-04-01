@@ -31,7 +31,7 @@ interface TenderInspectorPanelProps {
 
 export function TenderInspectorPanel({ item, onStartWorkflow }: TenderInspectorPanelProps) {
   return (
-    <div className="flex flex-col h-full bg-[#0c0c0c] border-l border-white/5 select-none relative">
+    <div className="flex flex-col h-full bg-transparent select-none relative">
       
       {/* HEADER : RÉFÉRENCIEL & CONTEXTE */}
       <header className="p-8 border-b border-white/5 bg-white/[0.01]">

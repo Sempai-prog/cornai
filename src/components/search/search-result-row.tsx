@@ -176,13 +176,13 @@ export function SearchResultRow({ item }: SearchResultRowProps) {
                className="absolute inset-0 bg-black/60 backdrop-blur-[2px] cursor-pointer"
             />
             
-            {/* PANNEAU D'INSPECTION (SLIDE FROM RIGHT) */}
+            {/* PANNEAU D'INSPECTION (STYLE APPLE — SLIDE FROM RIGHT) */}
             <motion.div 
                initial={{ x: "100%" }}
                animate={{ x: 0 }}
                exit={{ x: "100%" }}
                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-               className="relative h-full w-[500px] max-w-[90vw] bg-[#0c0c0c] shadow-2xl border-l border-white/5 overflow-hidden flex flex-col"
+               className="fixed inset-y-0 right-0 h-screen w-full sm:w-[500px] z-[101] bg-[#0c0c0c] border-l border-white/10 rounded-l-[4px] shadow-2xl overflow-hidden flex flex-col"
             >
                {/* BOUTON FERMER À L'INTÉRIEUR DU PANNEAU */}
                <button 

@@ -71,7 +71,7 @@ export default async function DashboardHome() {
         ].map((kpi, i) => (
           <div 
             key={i} 
-            className="flex flex-col justify-center p-6 bg-[#0c0c0c]/80 backdrop-blur-sm border border-white/5 rounded-[4px] hover:bg-white/[0.02] hover:border-white/10 transition-all shadow-sm group"
+            className="flex flex-col justify-center p-4 bg-[#0c0c0c]/80 backdrop-blur-sm border border-white/5 rounded-[4px] hover:bg-white/[0.02] hover:border-white/10 transition-all shadow-sm group"
           >
             <div className="flex items-center gap-2.5 mb-4 opacity-30 group-hover:opacity-100 transition-opacity">
               <kpi.icon className={cn("h-4 w-4", kpi.trendType === 'alert' ? "text-red-500" : "text-primary")} />
@@ -101,18 +101,15 @@ export default async function DashboardHome() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
          
          {/* FLUX D'OPPORTUNITÉS (8/12) */}
-         <div className="lg:col-span-8 flex flex-col">
-            <div className="flex items-center justify-between mb-4 px-1">
-               <div className="flex items-center gap-3">
-                  <Activity className="h-4 w-4 text-primary/60" />
-                  <h3 className="text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground/50">Flux d&apos;opportunités (DTAO)</h3>
-               </div>
-               <Link href="/dashboard/appels-offres" className="text-[10px] font-semibold uppercase tracking-[0.1em] text-primary hover:opacity-70 transition-all flex items-center gap-2 bg-primary/5 px-3 py-1.5 rounded border border-primary/10">
-                  Accéder au JDM <ChevronRight className="h-3 w-3" />
+          <div className="lg:col-span-8 flex flex-col">
+            <div className="flex items-center justify-between mb-4">
+               <h2 className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Opportunités Récentes (Matches IA)</h2>
+               <Link href="/dashboard/appels-offres" className="text-[10px] font-semibold uppercase tracking-[0.1em] text-primary hover:opacity-70 transition-all flex items-center gap-2">
+                  Tout voir <ChevronRight className="h-3 w-3" />
                </Link>
             </div>
-            
-            <div className="space-y-4">
+
+            <div className="flex flex-col gap-2">
                {/* 
                   Utilisation du SearchResultRow pour garantir l'uniformité visuelle.
                   On passe des données "dummies" formatées selon l'interface SearchResult.
