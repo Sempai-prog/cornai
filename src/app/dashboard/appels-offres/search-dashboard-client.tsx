@@ -87,19 +87,91 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
   }, [query, filters, initialResults])
 
   return (
-
-  return (
-    <div className="w-full flex-col lg:grid lg:grid-cols-12 gap-8 relative animate-in fade-in duration-700">
+    <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row gap-6 relative min-h-[calc(100vh-210px)] animate-in fade-in duration-700 px-4 sm:px-6 lg:px-0">
       
       {/* ───────────────────────────────────────────────────────────
-          1. STATION DE TRI (FLUX PRINCIPAL - 8/12)
+          1. FILTRES "QUIET" (SIDEBAR RÉTRACTABLE)
           ─────────────────────────────────────────────────────────── */}
-      <div className={cn(
-        "flex flex-col gap-6 transition-all duration-500 ease-in-out min-w-0",
-        isSidebarOpen ? "lg:col-span-8" : "lg:col-span-12"
+      <aside className={cn(
+        "flex-shrink-0 flex flex-col gap-4 select-none transition-all duration-500 ease-in-out overflow-hidden mt-0.5",
+        isSidebarOpen ? "w-full lg:w-72 opacity-100" : "w-0 opacity-0 pointer-events-none hidden lg:flex"
       )}>
+         {isLoading ? (
+            <SidebarSkeleton />
+         ) : (
+            <>
+               {FILTER_CATEGORIES.map((cat) => (
+                 <div 
+                   key={cat.id} 
+                   className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-4 hover:border-border/60 hover:bg-card transition-all shadow-sm group whitespace-nowrap"
+                 >
+                    <button 
+                     onClick={() => toggleAccordion(cat.id)}
+                     className="flex items-center justify-between w-full py-1 group/btn"
+                    >
+                       <span className="text-[10px] font-semibold text-foreground/40 group-hover/btn:text-primary uppercase tracking-[0.15em]">
+                         {cat.title}
+                       </span>
+                       <ChevronDown className={cn(
+                         "h-3 w-3 text-foreground/20 transition-transform duration-500",
+                         openAccordions[cat.id] && "rotate-180"
+                       )} />
+                    </button>
+                    
+                    {openAccordions[cat.id] && (
+                      <div className="mt-4 space-y-3 animate-in fade-in slide-in-from-top-1 duration-300">
+                         {cat.items.map((item) => (
+                           <label key={item} className="flex items-center gap-3 cursor-pointer group/label">
+                              <input 
+                                 type="checkbox" 
+                                 className="h-3 w-3 rounded-[2px] border border-border/40 bg-background/40 checked:bg-primary checked:border-primary appearance-none cursor-pointer transition-all"
+                                 checked={(filters as any)[cat.id].includes(item)}
+                                 onChange={() => toggleFilter(cat.id as any, item)}
+                              />
+                              <span className={cn(
+                                 "text-[12px] font-bold transition-colors truncate tracking-tight uppercase",
+                                 (filters as any)[cat.id].includes(item) ? "text-primary" : "text-foreground/30 group-hover/label:text-foreground/60"
+                              )}>{item}</span>
+                           </label>
+                         ))}
+                      </div>
+                    )}
+                 </div>
+               ))}
+
+               {/* Ribbon Side Info (Independent Card) */}
+               <div className="p-4 bg-card/20 border border-border/20 rounded-[4px] flex items-center gap-3 opacity-30 mt-auto whitespace-nowrap">
+                   <ShieldCheck className="h-4 w-4" />
+                   <span className="text-[10px] font-bold uppercase tracking-widest leading-none">Protection: ARMP-V4</span>
+               </div>
+            </>
+         )}
+      </aside>
+
+      {/* ───────────────────────────────────────────────────────────
+          2. STATION DE TRI DYNAMIQUE (CONTENU PRINCIPAL)
+          ─────────────────────────────────────────────────────────── */}
+      <div className="flex-1 flex flex-col gap-6 min-w-0 w-full">
          
          <header className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] relative">
+            
+            {/* TOGGLE SIDEBAR BUTTON (Positionné entre Sidebar et Header) */}
+            <button 
+               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+               className={cn(
+                 "absolute -left-3 top-1/2 -translate-y-1/2 z-50 h-6 w-6 rounded-full bg-card border border-border/40 flex items-center justify-center text-foreground/40 hover:text-primary hover:border-primary/40 transition-all shadow-xl group",
+                 "md:flex hidden"
+               )}
+               title={isSidebarOpen ? "Fermer les filtres" : "Ouvrir les filtres"}
+            >
+               <ChevronRight className={cn("h-3 w-3 transition-transform duration-500", isSidebarOpen ? "rotate-180" : "rotate-0")} />
+               
+               {/* Tooltip Indication */}
+               <div className="absolute left-8 px-2 py-1 bg-black dark:bg-zinc-900 text-white text-[10px] font-bold uppercase tracking-widest rounded-[4px] border border-white/10 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap shadow-xl">
+                  {isSidebarOpen ? "FERMER FILTRES" : "OUVRIR FILTRES"}
+               </div>
+            </button>
+
             <div className="flex-1 w-full max-w-2xl relative">
                <div className="relative flex items-center w-full group/input">
                   <div className="absolute left-4.5 z-10">
@@ -150,22 +222,6 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
                   </button>
                </div>
             </div>
-
-            {/* TOGGLE FILTERS BUTTON (Floating on the edge) */}
-            <button 
-               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-               className={cn(
-                 "absolute -right-3 top-1/2 -translate-y-1/2 z-[60] h-6 w-6 rounded-full bg-background border border-border/40 flex items-center justify-center text-foreground/40 hover:text-primary hover:border-primary/40 transition-all shadow-xl group ring-4 ring-background",
-                 "md:flex hidden"
-               )}
-            >
-               <ChevronRight className={cn("h-3 w-3 transition-transform duration-500", isSidebarOpen ? "rotate-0" : "rotate-180")} />
-               
-               {/* Tooltip Indication */}
-               <div className="absolute right-8 px-2 py-1 bg-black text-white text-[9px] font-bold uppercase tracking-widest rounded-[4px] border border-white/10 opacity-0 group-hover:opacity-100 pointer-events-none transition-all whitespace-nowrap shadow-xl translate-x-2 group-hover:translate-x-0">
-                  {isSidebarOpen ? "Masquer Filtres" : "Afficher Filtres"}
-               </div>
-            </button>
          </header>
 
          {/* ZONE DES RÉSULTATS */}
@@ -188,80 +244,7 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
             )}
          </div>
       </div>
-
-      {/* ───────────────────────────────────────────────────────────
-          2. FILTRES "QUIET" (INSPECTEUR - 4/12)
-          ─────────────────────────────────────────────────────────── */}
-      <aside className={cn(
-        "lg:col-span-4 flex flex-col gap-4 select-none transition-all duration-500 ease-in-out sticky top-6 self-start",
-        isSidebarOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4 pointer-events-none hidden lg:flex"
-      )}>
-         {isLoading ? (
-            <SidebarSkeleton />
-         ) : (
-            <div className="space-y-4">
-               {/* TITLE BAR FOR INSPECTOR */}
-               <div className="flex items-center gap-3 pb-4 border-b border-border/10 mb-2 h-6 px-1">
-                  <Zap className="h-4 w-4 text-primary/60 outline-none" />
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/30">
-                    Filtres de Triage
-                  </span>
-               </div>
-
-               {FILTER_CATEGORIES.map((cat) => (
-                 <div 
-                   key={cat.id} 
-                   className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-4 hover:border-border/60 hover:bg-card transition-all shadow-sm group"
-                 >
-                    <button 
-                     onClick={() => toggleAccordion(cat.id)}
-                     className="flex items-center justify-between w-full py-1 group/btn"
-                    >
-                       <span className="text-[10px] font-semibold text-foreground/40 group-hover/btn:text-primary uppercase tracking-[0.15em]">
-                         {cat.title}
-                       </span>
-                       <ChevronDown className={cn(
-                         "h-3 w-3 text-foreground/20 transition-transform duration-500",
-                         openAccordions[cat.id] && "rotate-180"
-                       )} />
-                    </button>
-                    
-                    {openAccordions[cat.id] && (
-                      <div className="mt-4 space-y-3 animate-in fade-in slide-in-from-top-1 duration-300">
-                         {cat.items.map((item) => (
-                           <label key={item} className="flex items-center gap-3 cursor-pointer group/label">
-                              <input 
-                                 type="checkbox" 
-                                 className="h-3 w-3 rounded-[2px] border border-border/40 bg-background/40 checked:bg-primary checked:border-primary appearance-none cursor-pointer transition-all"
-                                 checked={(filters as any)[cat.id].includes(item)}
-                                 onChange={() => toggleFilter(cat.id as any, item)}
-                              />
-                              <span className={cn(
-                                 "text-[12px] font-bold transition-colors truncate tracking-tight uppercase",
-                                 (filters as any)[cat.id].includes(item) ? "text-primary" : "text-foreground/30 group-hover/label:text-foreground/60"
-                              )}>{item}</span>
-                           </label>
-                         ))}
-                      </div>
-                    )}
-                 </div>
-               ))}
-
-               {/* Ribbon Side Info (Independent Card) */}
-               <div className="p-4 bg-card/20 border border-border/20 rounded-[4px] flex items-center justify-between opacity-30 mt-4 group hover:opacity-60 transition-all">
-                   <div className="flex items-center gap-3">
-                      <ShieldCheck className="h-4 w-4" />
-                      <span className="text-[10px] font-bold uppercase tracking-widest leading-none">Security ARMP-V4</span>
-                   </div>
-                   <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-               </div>
-            </div>
-         )}
-      </aside>
     </div>
-  )
-}
-
   )
 }
 

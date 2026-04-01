@@ -33,7 +33,7 @@ export function TenderInspectorPanel({ item, onStartWorkflow, isInceptionMode }:
 
   return (
     <div className={cn(
-        "flex flex-col h-full bg-transparent select-none relative",
+        "flex flex-col h-auto bg-transparent select-none relative",
         isInceptionMode && "bg-muted/10 border-none"
     )}>
       
@@ -70,8 +70,8 @@ export function TenderInspectorPanel({ item, onStartWorkflow, isInceptionMode }:
       {/* BODY : LES 3 ENVELOPPES (DEEP DIVE) */}
       <Container {...containerProps}>
          <div className={cn(
-            "flex flex-col pb-32",
-            isInceptionMode ? "p-6 space-y-12" : "gap-8"
+            "flex flex-col pb-12",
+            isInceptionMode ? "p-6 space-y-6" : "gap-4"
          )}>
             
             {/* GRID DES ENVELOPPES - 3 COLONNES EN MODE INCEPTION */}
@@ -111,7 +111,7 @@ export function TenderInspectorPanel({ item, onStartWorkflow, isInceptionMode }:
                         {!isInceptionMode && <div className="flex-1 h-px bg-border/20" />}
                     </div>
 
-                    <div className="p-5 rounded-[4px] border border-primary/20 bg-primary/5 relative overflow-hidden h-full">
+                    <div className="p-5 rounded-[4px] border border-primary/20 bg-primary/5 relative overflow-visible h-auto">
                         <div className="flex items-center gap-3 mb-4">
                             <HardHat className="h-4 w-4 text-primary opacity-60" />
                             <span className="text-[10px] font-bold uppercase tracking-widest text-primary/60">Exigences CCTP</span>
