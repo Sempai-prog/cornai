@@ -52,17 +52,17 @@ export function GlobalSearch() {
           }
         }}
       >
-        <Search className="absolute left-3 h-3.5 w-3.5 text-slate-500 group-hover:text-primary/70 transition-colors" />
+        <Search className="absolute left-3.5 h-4 w-4 text-slate-500 group-hover:text-primary transition-colors z-10" />
         
         <div className={cn(
-          "h-9 w-full flex items-center pl-10 pr-4 rounded-[4px] border border-white/5 bg-white/[0.02] transition-all duration-300",
-          "group-hover:border-white/10 group-hover:bg-white/[0.04]",
+          "h-10 w-full flex items-center pl-10 pr-4 rounded-[4px] border border-white/10 bg-[#0a0a0a] transition-all duration-300",
+          "group-hover:border-white/20 group-hover:shadow-[0_0_20px_rgba(0,0,0,0.4)]",
           "text-[12px] text-slate-500 font-medium"
         )}>
           Rechercher un DAO (ex: AONO, MINTP), un document...
           
-          <div className="ml-auto pointer-events-none hidden sm:flex items-center gap-1.5 px-2 py-0.5 rounded border border-white/5 bg-white/5 text-[9px] font-mono text-slate-500">
-             <span className="text-[10px] opacity-50">⌘</span>K
+          <div className="ml-auto pointer-events-none hidden sm:flex items-center gap-1.5 px-2 py-0.5 rounded border border-white/10 bg-[#1a1a1a] shadow-sm text-[10px] font-medium text-slate-400">
+             <span className="text-[11px] opacity-40">⌘</span>K
           </div>
         </div>
       </div>
