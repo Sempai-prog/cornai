@@ -13,9 +13,7 @@ import {
   History,
   CalendarDays,
   Target,
-  ArrowDownWideNarrow,
-  PanelLeftClose,
-  PanelLeftOpen
+  ArrowDownWideNarrow
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -71,15 +69,7 @@ export function SearchToolbar({
       {/* Summary Strip & Clean Quick Filters */}
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[9px] font-medium tracking-[0.1em] text-foreground/30">
-           <Button 
-              variant="ghost" 
-              size="icon" 
-              className="h-5 w-5 hover:bg-secondary rounded-[4px] -ml-1 text-primary"
-              onClick={onToggleSidebar}
-           >
-              {isSidebarOpen ? <PanelLeftClose className="h-3 w-3" /> : <PanelLeftOpen className="h-3 w-3" />}
-           </Button>
-           <span className="hidden sm:inline-block h-1 w-1 rounded-full bg-border" />
+
            
            <span className="text-foreground/50">{resultsCount} Marchés trouvés</span>
            <span className="h-1 w-1 rounded-full bg-border" />
