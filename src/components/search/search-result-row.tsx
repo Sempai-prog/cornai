@@ -50,10 +50,19 @@ export function SearchResultRow({ item }: SearchResultRowProps) {
       {/* ───────────────────────────────────────────────────────────
           DENSE ROW (MODULAIRE & GRAPHIQUE)
           ─────────────────────────────────────────────────────────── */}
-      <div 
+            <div
+        role="button"
+        tabIndex={0}
+        aria-expanded={isExpanded}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            handleToggleExpand();
+          }
+        }}
         className={cn(
           "flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 sm:p-5 cursor-pointer gap-4 lg:gap-0 select-none transition-all duration-300 ease-out group/row",
-          "hover:translate-x-1"
+          "hover:translate-x-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-[4px]"
         )}
         onClick={handleToggleExpand}
       >
