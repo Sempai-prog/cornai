@@ -34,7 +34,7 @@ export default async function AppelsOffresPage() {
         <div className="flex items-center gap-2 hidden md:flex">
            <div className="flex items-center gap-2 px-3 py-1.5 rounded-[4px] bg-primary/5 border border-primary/10 transition-all hover:bg-primary/10">
               <Zap className="h-3 w-3 text-primary opacity-60" />
-              <span className="text-[9px] font-bold text-primary/60 uppercase tracking-widest">Matching Actif</span>
+              <span className="text-[10px] font-bold text-primary/60 uppercase tracking-widest">Matching Actif</span>
            </div>
         </div>
       </div>

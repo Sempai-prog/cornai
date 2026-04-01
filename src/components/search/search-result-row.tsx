@@ -49,8 +49,8 @@ export function SearchResultRow({ item }: SearchResultRowProps) {
   return (
     <div 
       className={cn(
-        "group/card relative flex flex-col overflow-hidden rounded-[4px] border border-white/5 bg-[#0c0c0c]/40 transition-all duration-300",
-        isExpanded ? "mb-4 border-white/10 bg-white/[0.02] shadow-xl" : "hover:bg-white/[0.02] hover:border-white/10"
+        "group/card relative flex flex-col overflow-hidden rounded-[4px] border border-border/40 bg-card/80 backdrop-blur-md transition-all duration-300",
+        isExpanded ? "mb-4 border-border/60 bg-card shadow-xl" : "hover:bg-card hover:border-border/60"
       )}
     >
       {/* ───────────────────────────────────────────────────────────
@@ -67,15 +67,15 @@ export function SearchResultRow({ item }: SearchResultRowProps) {
         <div className="flex-1 flex flex-col min-w-0 pr-8">
            {/* TAG TECHNIQUE RÉFÉRENCE */}
            <div className="flex items-center gap-3 mb-2">
-              <span className="text-[10px] font-mono font-bold text-slate-500 bg-white/5 px-2 py-0.5 rounded tracking-tight">
+              <span className="text-[10px] font-mono font-bold text-muted-foreground/40 bg-muted/20 px-2 py-0.5 rounded-[4px] tracking-tight">
                  {item.id}
               </span>
-              <Badge variant="outline" className="h-4.5 rounded-[2px] border-none bg-primary/10 px-2 text-[8px] font-black text-primary uppercase tracking-[0.1em]">
+              <Badge variant="outline" className="h-4.5 rounded-[4px] border-none bg-primary/10 px-2 text-[10px] font-black text-primary uppercase tracking-[0.1em]">
                  {formatMarketType(item.type)}
               </Badge>
            </div>
            
-           <h3 className="text-[15px] font-medium text-white mb-2 leading-snug group-hover/row:text-primary transition-colors tracking-tight line-clamp-2">
+           <h3 className="text-[15px] font-semibold text-foreground mb-2 leading-snug group-hover/row:text-primary transition-colors tracking-tight line-clamp-2">
              {item.title}
            </h3>
 
@@ -95,9 +95,9 @@ export function SearchResultRow({ item }: SearchResultRowProps) {
         <div className="flex items-center gap-8 shrink-0 mt-4 md:mt-0">
            
            {/* IA SCORES */}
-           <div className="hidden lg:flex flex-col items-end border-l border-white/5 pl-8">
+           <div className="hidden lg:flex flex-col items-end border-l border-border/10 pl-8">
               <div className="flex items-center gap-2">
-                 <span className="text-[14px] font-black text-white/90 tracking-tighter">
+                 <span className="text-[14px] font-black text-foreground/90 tracking-tighter">
                     {item.matchScore}%
                  </span>
                  <div className={cn(
@@ -105,21 +105,21 @@ export function SearchResultRow({ item }: SearchResultRowProps) {
                     item.matchLevel === 'excellent' ? "bg-primary shadow-primary/20" : "bg-foreground/10"
                  )} />
               </div>
-              <span className="text-[8px] text-foreground/20 font-bold uppercase tracking-widest mt-1">Compatibilité</span>
+              <span className="text-[10px] text-foreground/20 font-bold uppercase tracking-widest mt-1">Compatibilité</span>
            </div>
 
            {/* BUDGET / COÛT EXIGÉ */}
-           <div className="flex flex-col items-end border-l border-white/5 pl-8 min-w-[140px]">
-              <span className="text-[15px] font-semibold text-slate-200 tracking-tight leading-none">
+           <div className="flex flex-col items-end border-l border-border/10 pl-8 min-w-[140px]">
+              <span className="text-[15px] font-semibold text-foreground/80 tracking-tight leading-none">
                  {item.budget || "NC"}
               </span>
-              <span className="text-[8px] text-foreground/20 font-black uppercase tracking-[0.15em] mt-2">
+              <span className="text-[10px] text-foreground/20 font-black uppercase tracking-[0.15em] mt-2">
                  {item.type === "Travaux" ? "BUDGET ESTIMÉ" : "CAUTION EXIGÉE"}
               </span>
            </div>
 
            {/* DÉLAI RÉCHIDUÉ */}
-           <div className="flex flex-col items-end border-l border-white/5 pl-8 pr-2">
+           <div className="flex flex-col items-end border-l border-border/10 pl-8 pr-2">
               <div className="flex items-center gap-2">
                  <Clock className="h-3 w-3 text-foreground/20" />
                  <span className={cn(
@@ -127,7 +127,7 @@ export function SearchResultRow({ item }: SearchResultRowProps) {
                     parseInt(item.deadline) < 7 ? "text-red-500" : "text-primary/70"
                  )}>J-{item.deadline.split(' ')[0]}</span>
               </div>
-              <span className="text-[8px] text-foreground/20 font-black uppercase tracking-widest mt-1">Clôture</span>
+              <span className="text-[10px] text-foreground/20 font-black uppercase tracking-widest mt-1">Clôture</span>
            </div>
 
            <div className="flex items-center ml-4">
@@ -148,7 +148,7 @@ export function SearchResultRow({ item }: SearchResultRowProps) {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="overflow-hidden border-t border-white/5"
+            className="overflow-hidden border-t border-border/10"
           >
              <SearchRowDetail 
                 item={item} 
@@ -182,14 +182,14 @@ export function SearchResultRow({ item }: SearchResultRowProps) {
                animate={{ x: 0 }}
                exit={{ x: "100%" }}
                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-               className="fixed inset-y-0 right-0 h-screen w-full sm:w-[500px] z-[101] bg-[#0c0c0c] border-l border-white/10 rounded-l-[4px] shadow-2xl overflow-hidden flex flex-col"
+               className="fixed inset-y-0 right-0 h-screen w-full sm:w-[500px] z-[101] bg-background border-l border-border/40 rounded-l-[4px] shadow-2xl overflow-hidden flex flex-col"
             >
                {/* BOUTON FERMER À L'INTÉRIEUR DU PANNEAU */}
                <button 
                   onClick={() => setIsInspectorOpen(false)}
-                  className="absolute top-8 right-8 z-[110] h-10 w-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 hover:border-white/20 transition-all group"
+                  className="absolute top-8 right-8 z-[110] h-10 w-10 rounded-full bg-muted/20 border border-border/40 flex items-center justify-center hover:bg-muted/40 hover:border-border transition-all group"
                >
-                  <X className="h-5 w-5 text-foreground/40 group-hover:text-white transition-colors" />
+                  <X className="h-5 w-5 text-muted-foreground/40 group-hover:text-foreground transition-colors" />
                </button>
 
                <TenderInspectorPanel 

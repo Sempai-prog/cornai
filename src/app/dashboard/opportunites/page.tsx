@@ -117,14 +117,14 @@ export default function OpportunitesPage() {
       {/* HEADER: Fixe en haut */}
       <div className="flex items-end justify-between shrink-0">
          <div className="space-y-1">
-            <h1 className="text-3xl font-light tracking-tighter text-foreground">Pipeline <span className="font-semibold">Opportunités</span></h1>
-            <p className="text-[10px] font-bold text-foreground/20 uppercase tracking-[0.3em]">Management de Workflow Industriel</p>
+            <h1 className="text-3xl font-semibold tracking-tighter text-foreground">Pipeline <span className="text-muted-foreground/40 font-light">/</span> <span className="font-semibold text-primary/80">Opportunités</span></h1>
+            <p className="text-[10px] font-semibold text-muted-foreground/40 uppercase tracking-[0.3em] transition-colors">Management de Workflow Industriel</p>
          </div>
          <div className="flex items-center gap-3">
             <div className="flex -space-x-2">
-               {[1,2,3].map(i => <div key={i} className="h-6 w-6 rounded-full border border-background bg-slate-800" />)}
+               {[1,2,3].map(i => <div key={i} className="h-6 w-6 rounded-full border border-background bg-muted/60 transition-colors" />)}
             </div>
-            <p className="text-[10px] font-bold text-foreground/40 uppercase tracking-widest">+12 Experts actifs</p>
+            <p className="text-[10px] font-bold text-foreground/40 uppercase tracking-widest transition-colors">+12 Experts actifs</p>
          </div>
       </div>
 
@@ -144,17 +144,17 @@ export default function OpportunitesPage() {
 
 function KanbanColumn({ column, items }: { column: typeof COLUMNS[0], items: Opportunity[] }) {
   return (
-    <div className="w-[320px] shrink-0 flex flex-col h-full bg-white/[0.015] border border-white/5 rounded-[4px] p-2">
+    <div className="w-[320px] shrink-0 flex flex-col h-full bg-muted/5 border border-border/10 rounded-[4px] p-2 transition-colors">
        {/* Column Head */}
        <div className="flex items-center justify-between px-3 py-3 mb-2 shrink-0">
           <div className="space-y-0.5">
-             <h3 className="text-[11px] font-bold text-foreground/70 uppercase tracking-[0.2em] flex items-center gap-2">
+             <h3 className="text-[11px] font-bold text-foreground/50 uppercase tracking-[0.2em] flex items-center gap-2 transition-colors">
                 {column.label}
-                <span className="text-[9px] text-foreground/30 font-black">{items.length}</span>
+                <span className="text-[10px] text-muted-foreground/30 font-bold">{items.length}</span>
              </h3>
-             <p className="text-[9px] text-foreground/20 font-medium uppercase tracking-wider">{column.description}</p>
+             <p className="text-[10px] text-muted-foreground/30 font-medium uppercase tracking-wider transition-colors">{column.description}</p>
           </div>
-          <MoreHorizontal className="h-4 w-4 text-foreground/10 hover:text-foreground/40 cursor-pointer" />
+          <MoreHorizontal className="h-4 w-4 text-foreground/10 hover:text-foreground/40 cursor-pointer transition-colors" />
        </div>
 
        {/* Column Body: Seul cet élément scrolle verticalement */}
@@ -166,8 +166,8 @@ function KanbanColumn({ column, items }: { column: typeof COLUMNS[0], items: Opp
           </AnimatePresence>
           
           {/* Nouveau: Bouton rapide d'ajout si utile */}
-          <button className="w-full py-4 border border-dashed border-white/5 rounded-[4px] text-[10px] font-bold uppercase tracking-widest text-foreground/10 hover:text-primary/40 hover:border-primary/20 transition-all">
-             + Ajouter une veuille
+          <button className="w-full py-4 border border-dashed border-border/40 rounded-[4px] text-[10px] font-bold uppercase tracking-widest text-muted-foreground/20 hover:text-primary hover:border-primary/20 transition-all">
+             + Ajouter une veille
           </button>
        </div>
     </div>
@@ -178,54 +178,54 @@ function OpportunityCard({ item }: { item: Opportunity }) {
   return (
     <motion.div 
       layout
-      whileHover={{ y: -2, borderColor: "rgba(255,255,255,0.12)" }}
+      whileHover={{ y: -2, borderColor: "var(--border)" }}
       className={cn(
-        "bg-[#0c0c0c]/90 border border-white/5 rounded-[4px] p-4 cursor-grab transition-all hover:bg-white/[0.04]",
-        "active:cursor-grabbing active:scale-[0.98] active:shadow-2xl active:z-50 duration-200"
+        "bg-card backdrop-blur-md border border-border/40 rounded-[4px] p-4 cursor-grab transition-all hover:bg-card hover:border-border/60 shadow-sm",
+        "active:cursor-grabbing active:scale-[0.98] active:shadow-lg active:z-50 duration-200"
       )}
     >
        {/* Card Header (Sigle MO | Badge & Grip) */}
        <div className="flex justify-between items-start mb-2.5">
-          <span className="text-[11px] font-black uppercase tracking-[0.15em] text-slate-500">{item.ac} <span className="opacity-20 font-light lowercase">/ {item.type}</span></span>
+          <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-muted-foreground/50 transition-colors uppercase">{item.ac} <span className="opacity-40 font-light lowercase">/ {item.type}</span></span>
           <div className="flex items-center gap-2">
               <Badge className={cn(
-                "text-[9px] font-bold px-1.5 py-0.5 rounded-[2px] border-none shadow-none uppercase tracking-wider",
+                "text-[10px] font-bold px-1.5 py-0.5 rounded-[4px] border-none shadow-none uppercase tracking-wider",
                 item.isUrgent ? "bg-red-500/10 text-red-500" : "bg-primary/10 text-primary"
               )}>
                 {item.deadline}
               </Badge>
-              <GripVertical size={14} className="text-slate-700 hover:text-white transition-colors" />
+              <GripVertical size={14} className="text-muted-foreground/20 hover:text-foreground transition-colors" />
           </div>
        </div>
 
        {/* Card Body (Titre) */}
-       <h4 className="text-[13px] font-medium text-slate-200 line-clamp-2 leading-relaxed mb-4 tracking-tight">
+       <h4 className="text-[13px] font-semibold text-foreground/90 line-clamp-2 leading-relaxed mb-4 tracking-tight transition-colors">
           {item.title}
        </h4>
 
        {/* Envelopes Checklist (Inline Dots) */}
        <div className="flex items-center gap-4 mb-4">
           <div className="flex gap-1.5">
-             <div className={cn("w-1.5 h-1.5 rounded-full", item.envelopes.a ? "bg-[#25D366]" : "bg-white/10")} />
-             <div className={cn("w-1.5 h-1.5 rounded-full", item.envelopes.b ? "bg-[#25D366]" : "bg-white/10")} />
-             <div className={cn("w-1.5 h-1.5 rounded-full", item.envelopes.c ? "bg-[#25D366]" : "bg-white/10")} />
+             <div className={cn("w-1.5 h-1.5 rounded-full", item.envelopes.a ? "bg-primary" : "bg-muted/30")} />
+             <div className={cn("w-1.5 h-1.5 rounded-full", item.envelopes.b ? "bg-primary" : "bg-muted/30")} />
+             <div className={cn("w-1.5 h-1.5 rounded-full", item.envelopes.c ? "bg-primary" : "bg-muted/30")} />
           </div>
-          <span className="text-[9px] font-bold text-foreground/15 uppercase tracking-[0.2em]">Envelopes A • B • C</span>
+          <span className="text-[10px] font-bold text-foreground/15 uppercase tracking-[0.2em] transition-colors">Envelopes A • B • C</span>
        </div>
 
        {/* Card Footer (Caution | Score Match) */}
-       <div className="flex justify-between items-end pt-3 border-t border-white/5">
+       <div className="flex justify-between items-end pt-3 border-t border-border/10">
           <div className="flex flex-col gap-0.5">
-             <span className="text-[9px] font-bold text-foreground/20 uppercase tracking-widest">Caution</span>
-             <span className="text-[11px] text-slate-400 font-mono tracking-tighter flex items-center gap-1.5">
-                <ShieldAlert size={10} className={item.caution !== "Inactif" ? "text-amber-500/40" : "text-white/5"} />
+             <span className="text-[10px] font-bold text-muted-foreground/30 uppercase tracking-widest transition-colors">Caution</span>
+             <span className="text-[10px] text-muted-foreground/60 font-mono tracking-tighter flex items-center gap-1.5 transition-colors">
+                <ShieldAlert size={10} className={item.caution !== "Inactif" ? "text-amber-500/40" : "text-muted-foreground/10"} />
                 {item.caution}
              </span>
           </div>
           
           <div className="flex flex-col items-end gap-0.5">
-             <span className="text-[9px] font-bold text-foreground/20 uppercase tracking-widest">Match IA</span>
-             <Badge className="bg-primary/5 text-primary border border-primary/20 hover:bg-primary/10 transition-colors text-[9px] font-black px-1.5 py-0.5 rounded-[2px] shadow-none">
+             <span className="text-[10px] font-bold text-foreground/20 uppercase tracking-widest transition-colors">Match IA</span>
+             <Badge className="bg-primary/5 text-primary border border-primary/20 hover:bg-primary/10 transition-colors text-[10px] font-bold px-1.5 py-0.5 rounded-[4px] shadow-none">
                 {item.score}% Match
              </Badge>
           </div>
@@ -233,3 +233,4 @@ function OpportunityCard({ item }: { item: Opportunity }) {
     </motion.div>
   )
 }
+

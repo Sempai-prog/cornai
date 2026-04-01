@@ -43,7 +43,7 @@ export function GlobalSearch() {
     <>
       <div 
         onClick={() => setOpen(true)}
-        className="relative w-64 md:w-[480px] flex items-center group cursor-text focus-within:ring-0 outline-none"
+        className="relative w-64 md:w-[480px] flex items-center group cursor-text outline-none"
         tabIndex={0}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") {
@@ -52,16 +52,16 @@ export function GlobalSearch() {
           }
         }}
       >
-        <Search className="absolute left-3.5 h-4 w-4 text-slate-500 group-hover:text-primary transition-colors z-10" />
+        <Search className="absolute left-3.5 h-4 w-4 text-muted-foreground/50 group-hover:text-primary transition-colors z-10" />
         
         <div className={cn(
-          "h-10 w-full flex items-center pl-10 pr-4 rounded-[4px] border border-white/10 bg-[#0a0a0a] transition-all duration-300",
-          "group-hover:border-white/20 group-hover:shadow-[0_0_20px_rgba(0,0,0,0.4)]",
-          "text-[12px] text-slate-500 font-medium"
+          "h-9 w-full flex items-center pl-10 pr-4 rounded-[4px] border border-border/40 bg-card/40 backdrop-blur-md transition-all duration-300",
+          "group-hover:border-border/60 group-hover:bg-card/60 group-focus:border-primary/40 group-focus:ring-1 group-focus:ring-primary/20",
+          "text-[12px] text-muted-foreground font-medium"
         )}>
-          Rechercher un DAO (ex: AONO, MINTP), un document...
+          Rechercher un dossier, un document ARMP...
           
-          <div className="ml-auto pointer-events-none hidden sm:flex items-center gap-1.5 px-2 py-0.5 rounded border border-white/10 bg-[#1a1a1a] shadow-sm text-[10px] font-medium text-slate-400">
+          <div className="ml-auto pointer-events-none hidden sm:flex items-center gap-1.5 px-1.5 py-0.5 rounded-[3px] border border-border/40 bg-muted/30 text-[10px] font-semibold text-muted-foreground/60 shadow-sm">
              <span className="text-[11px] opacity-40">⌘</span>K
           </div>
         </div>

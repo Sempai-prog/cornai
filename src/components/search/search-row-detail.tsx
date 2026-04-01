@@ -27,10 +27,10 @@ interface SearchRowDetailProps {
 
 export function SearchRowDetail({ item, onOpenInspector }: SearchRowDetailProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 bg-white/[0.02] border-y border-white/5 animate-in fade-in slide-in-from-top-2 duration-300">
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 bg-muted/5 border-y border-border/10 animate-in fade-in slide-in-from-top-2 duration-300">
       
       {/* BLOC 1 : FINANCIER (Caution & Frais) */}
-      <div className="flex flex-col gap-3 p-3.5 rounded-[4px] border border-white/5 bg-[#0a0a0b]/40 h-full">
+      <div className="flex flex-col gap-3 p-3.5 rounded-[4px] border border-border/40 bg-muted/30 h-full">
          <div className="flex items-center gap-2 opacity-30">
             <Scale className="h-3 w-3" />
             <span className="text-[9px] font-bold uppercase tracking-widest">Exigences Financières</span>
@@ -62,7 +62,7 @@ export function SearchRowDetail({ item, onOpenInspector }: SearchRowDetailProps)
       </div>
 
       {/* BLOC 3 : LOGISTIQUE (Dépôt & Visite) */}
-      <div className="flex flex-col gap-3 p-3.5 rounded-[4px] border border-white/5 bg-[#0a0a0b]/40 h-full">
+      <div className="flex flex-col gap-3 p-3.5 rounded-[4px] border border-border/40 bg-muted/30 h-full">
          <div className="flex items-center gap-2 opacity-30">
             <MapPin className="h-3 w-3" />
             <span className="text-[9px] font-bold uppercase tracking-widest">Logistique & Dépôt</span>
@@ -87,7 +87,7 @@ export function SearchRowDetail({ item, onOpenInspector }: SearchRowDetailProps)
       </div>
 
       {/* BLOC 4 : ACTION FINALE (SCORE & BTN) — Harmonisé */}
-      <div className="flex flex-col gap-3 p-3.5 rounded-[4px] border border-white/5 bg-[#0a0a0b]/10 group/action h-full">
+      <div className="flex flex-col gap-3 p-3.5 rounded-[4px] border border-border/10 bg-muted/10 group/action h-full">
          <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 opacity-30">
                <Compass className="h-3 w-3" />

@@ -54,7 +54,7 @@ function CommandDialog({
       </DialogHeader>
       <DialogContent
         className={cn(
-          "top-[20%] translate-y-0 overflow-hidden rounded-[4px]! p-0 border-white/10 bg-[#0c0c0c]/95 backdrop-blur-xl shadow-[0_0_80px_rgba(0,0,0,0.8)] sm:max-w-xl border",
+          "top-[20%] translate-y-0 overflow-hidden rounded-[8px] p-0 border-border/40 bg-background/95 backdrop-blur-xl shadow-2xl sm:max-w-xl border",
           className
         )}
         showCloseButton={showCloseButton}
@@ -84,12 +84,12 @@ function CommandInput({
   ...props
 }: React.ComponentProps<typeof CommandPrimitive.Input>) {
   return (
-    <div data-slot="command-input-wrapper" className="flex items-center gap-3">
-      <SearchIcon className="size-5 shrink-0 text-slate-500" />
+    <div data-slot="command-input-wrapper" className="flex items-center gap-3 px-4 border-b border-border/10">
+      <SearchIcon className="size-4 shrink-0 text-muted-foreground/50" />
       <CommandPrimitive.Input
         data-slot="command-input"
         className={cn(
-          "w-full bg-transparent text-xl font-light outline-none placeholder:text-slate-600 caret-[#25D366] py-4",
+          "w-full bg-transparent text-sm font-medium outline-none placeholder:text-muted-foreground/30 caret-primary py-3",
           className
         )}
         {...props}
@@ -135,7 +135,7 @@ function CommandGroup({
     <CommandPrimitive.Group
       data-slot="command-group"
       className={cn(
-        "overflow-hidden p-2 text-foreground **:[[cmdk-group-heading]]:px-3 **:[[cmdk-group-heading]]:py-2 **:[[cmdk-group-heading]]:text-[10px] **:[[cmdk-group-heading]]:font-bold **:[[cmdk-group-heading]]:uppercase **:[[cmdk-group-heading]]:tracking-[0.2em] **:[[cmdk-group-heading]]:text-slate-500",
+        "overflow-hidden p-2 text-foreground **:[[cmdk-group-heading]]:px-3 **:[[cmdk-group-heading]]:py-2 **:[[cmdk-group-heading]]:text-[10px] **:[[cmdk-group-heading]]:font-bold **:[[cmdk-group-heading]]:uppercase **:[[cmdk-group-heading]]:tracking-[0.15em] **:[[cmdk-group-heading]]:text-muted-foreground/40",
         className
       )}
       {...props}
@@ -150,7 +150,7 @@ function CommandSeparator({
   return (
     <CommandPrimitive.Separator
       data-slot="command-separator"
-      className={cn("-mx-2 h-px bg-white/5 my-2", className)}
+      className={cn("-mx-2 h-px bg-border/5 my-2", className)}
       {...props}
     />
   )
@@ -165,8 +165,8 @@ function CommandItem({
     <CommandPrimitive.Item
       data-slot="command-item"
       className={cn(
-        "group/command-item relative flex cursor-pointer items-center gap-3 rounded-[4px] px-3 py-3 text-sm outline-none select-none transition-all",
-        "aria-selected:bg-white/[0.04] aria-selected:text-white aria-selected:border-l-2 aria-selected:border-[#25D366] aria-selected:pl-[10px]",
+        "group/command-item relative flex cursor-pointer items-center gap-3 rounded-[4px] px-3 py-2.5 text-[13px] outline-none select-none transition-all",
+        "aria-selected:bg-primary/5 aria-selected:text-foreground aria-selected:border-l-2 aria-selected:border-primary aria-selected:pl-[10px]",
         "data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50",
         className
       )}
@@ -174,7 +174,7 @@ function CommandItem({
     >
       {children}
       <div className="ml-auto opacity-0 group-aria-selected/command-item:opacity-100 transition-opacity">
-        <CheckIcon className="size-3.5 text-primary" />
+        <CheckIcon className="size-3 h-3 text-primary" />
       </div>
     </CommandPrimitive.Item>
   )

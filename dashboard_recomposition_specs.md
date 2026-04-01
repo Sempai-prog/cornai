@@ -13,6 +13,7 @@ Ce document définit les règles de recomposition structurelle du dashboard CORN
 | **Gaps** | **`gap-4` (16px)** ou `gap-px` — Densité opérationnelle. |
 | **Bordures** | **`border-white/5`** — Ultra-finesse. Si le fond est déjà distinct (ex: `bg-card/40`), supprimer la bordure extérieure. |
 | **Séparation** | Privilégier **`divide-white/5`** aux boîtes individuelles pour éviter l'effet "boîte dans la boîte". |
+| **Background** | **Universal Grid (`#080808`)** — Grille large (80px), **aucune lueur radiale statique > 3%**. Reveal dynamique x3. |
 
 ---
 
@@ -79,12 +80,15 @@ Indispensable pour basculer entre le mode "Triage" et le mode "Focus Analyse".
 
 *   **Design & Morphologie** : 
     - Micro-bouton circulaire (**`h-6 w-6`**), fond **`#0c0c0c`**, bordure **`1px border-white/10`**.
-    - Positionnement stratégique : **`absolute -left-3 top-1/2 -translate-y-1/2`**, à cheval sur la ligne de séparation.
+    - Positionnement stratégique : **`absolute -left-3 top-1/2 -translate-y-1/2`**, à cheval sur la ligne de séparation du header de recherche.
+    - Style premium : **`shadow-xl`** pour détacher le bouton du plan et **`group`** pour les interactions d'enveloppe.
 *   **Cinématique & Transitions** :
     - Transition fluide de **500ms** (**`duration-500`**) avec un easing **`ease-in-out`**.
     - Rotation d'icône dynamique (**`rotate-180`**) pour signifier le sens d'action du workflow.
-*   **Accessibilité & Feedback** :
-    - Tooltip textuel (**`text-[9px] font-bold`**) apparaissant au survol pour expliciter l'action (Ouvrir/Fermer).
+    - Feedback au survol : Changement de couleur vers la **`primary`** (vert) pour le texte et la bordure (**`border-primary/40`**).
+*   **Intelligence & Tooltips** :
+    - Tooltip flottant (**`text-[9px] font-bold`**) apparaissant à **`left-8`** au survol.
+    - Texte contextuel : "Fermer Filtres" ou "Ouvrir Filtres" selon l'état `isSidebarOpen`.
     - Masquage intelligent sur mobile (**`md:flex hidden`**) pour prioriser la surface de lecture.
 
 ---

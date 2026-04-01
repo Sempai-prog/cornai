@@ -93,7 +93,7 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
           1. FILTRES "QUIET" (SIDEBAR RÉTRACTABLE)
           ─────────────────────────────────────────────────────────── */}
       <aside className={cn(
-        "flex-shrink-0 flex flex-col gap-4 select-none transition-all duration-500 ease-in-out overflow-hidden",
+        "flex-shrink-0 flex flex-col gap-4 select-none transition-all duration-500 ease-in-out overflow-hidden mt-0.5",
         isSidebarOpen ? "w-72 opacity-100" : "w-0 opacity-0 pointer-events-none"
       )}>
          {isLoading ? (
@@ -103,13 +103,13 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
                {FILTER_CATEGORIES.map((cat) => (
                  <div 
                    key={cat.id} 
-                   className="bg-[#0c0c0c]/80 backdrop-blur-sm border border-white/5 rounded-[4px] p-4 hover:border-white/10 hover:bg-[#0c0c0c] transition-all shadow-sm group whitespace-nowrap"
+                   className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-4 hover:border-border/60 hover:bg-card transition-all shadow-sm group whitespace-nowrap"
                  >
                     <button 
                      onClick={() => toggleAccordion(cat.id)}
                      className="flex items-center justify-between w-full py-1 group/btn"
                     >
-                       <span className="text-[10px] font-black text-foreground/40 group-hover/btn:text-primary uppercase tracking-[0.15em]">
+                       <span className="text-[10px] font-semibold text-foreground/40 group-hover/btn:text-primary uppercase tracking-[0.15em]">
                          {cat.title}
                        </span>
                        <ChevronDown className={cn(
@@ -124,7 +124,7 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
                            <label key={item} className="flex items-center gap-3 cursor-pointer group/label">
                               <input 
                                  type="checkbox" 
-                                 className="h-3 w-3 rounded-[2px] border border-white/10 bg-white/[0.03] checked:bg-primary checked:border-primary appearance-none cursor-pointer transition-all"
+                                 className="h-3 w-3 rounded-[2px] border border-border/40 bg-background/40 checked:bg-primary checked:border-primary appearance-none cursor-pointer transition-all"
                                  checked={(filters as any)[cat.id].includes(item)}
                                  onChange={() => toggleFilter(cat.id as any, item)}
                               />
@@ -140,9 +140,9 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
                ))}
 
                {/* Ribbon Side Info (Independent Card) */}
-               <div className="p-4 bg-[#0c0c0c]/40 border border-white/5 rounded-[4px] flex items-center gap-3 opacity-30 mt-auto whitespace-nowrap">
+               <div className="p-4 bg-card/20 border border-border/20 rounded-[4px] flex items-center gap-3 opacity-30 mt-auto whitespace-nowrap">
                    <ShieldCheck className="h-4 w-4" />
-                   <span className="text-[9px] font-bold uppercase tracking-widest leading-none">Security: ARMP-V4</span>
+                   <span className="text-[10px] font-bold uppercase tracking-widest leading-none">Protection: ARMP-V4</span>
                </div>
             </>
          )}
@@ -153,48 +153,58 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
           ─────────────────────────────────────────────────────────── */}
       <div className="flex-1 flex flex-col gap-6 min-w-0">
          
-         <header className="flex flex-col md:flex-row items-center justify-between gap-4 p-4 bg-white/[0.01] border border-white/5 rounded-[4px] relative">
+         <header className="flex flex-col md:flex-row items-center justify-between gap-4 p-4 bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] relative">
             
             {/* TOGGLE SIDEBAR BUTTON (Positionné entre Sidebar et Header) */}
             <button 
                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                className={cn(
-                 "absolute -left-3 top-1/2 -translate-y-1/2 z-50 h-6 w-6 rounded-full bg-[#0c0c0c] border border-white/10 flex items-center justify-center text-foreground/40 hover:text-primary hover:border-primary/40 transition-all shadow-xl group",
+                 "absolute -left-3 top-1/2 -translate-y-1/2 z-50 h-6 w-6 rounded-full bg-card border border-border/40 flex items-center justify-center text-foreground/40 hover:text-primary hover:border-primary/40 transition-all shadow-xl group",
                  "md:flex hidden"
                )}
+               title={isSidebarOpen ? "Fermer les filtres" : "Ouvrir les filtres"}
             >
                <ChevronRight className={cn("h-3 w-3 transition-transform duration-500", isSidebarOpen ? "rotate-180" : "rotate-0")} />
                
                {/* Tooltip Indication */}
-               <div className="absolute left-8 px-2 py-1 bg-black text-[9px] font-bold uppercase tracking-widest rounded border border-white/10 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap">
-                  {isSidebarOpen ? "Fermer Filtres" : "Ouvrir Filtres"}
+               <div className="absolute left-8 px-2 py-1 bg-black dark:bg-zinc-900 text-white text-[10px] font-bold uppercase tracking-widest rounded-[4px] border border-white/10 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap shadow-xl">
+                  {isSidebarOpen ? "FERMER FILTRES" : "OUVRIR FILTRES"}
                </div>
             </button>
-            <div className="flex-1 w-full max-w-2xl">
+
+            <div className="flex-1 w-full max-w-2xl relative">
                <div className="relative flex items-center w-full group/input">
-                  <div className="absolute left-3.5 z-10">
-                     <Search className="h-4 w-4 text-slate-500 group-focus-within/input:text-primary transition-colors" />
+                  <div className="absolute left-4.5 z-10">
+                     <Search className="h-4 w-4 text-foreground/30 group-focus-within/input:text-primary transition-colors" />
                   </div>
                   <Input 
                      value={query}
                      onChange={(e) => setQuery(e.target.value)}
                      placeholder="Rechercher par ID, Autorité contractante, Mots-clés..." 
                      className={cn(
-                       "h-10 w-full pl-10 pr-4 bg-[#0a0a0a] border-white/10 rounded-[4px] text-[12px] font-medium tracking-tight",
-                       "placeholder:text-slate-700 text-foreground/80 outline-none",
-                       "focus:border-white/20 focus:ring-0"
+                       "h-11 w-full pl-12 pr-4 bg-background/40 border-border/40 rounded-[4px] text-[13px] font-medium tracking-tight",
+                       "placeholder:text-foreground/20 text-foreground outline-none",
+                       "focus:border-primary/40 focus:ring-0 transition-all shadow-inner"
                      )}
                   />
+                  {query && (
+                    <button 
+                      onClick={() => setQuery("")}
+                      className="absolute right-3 p-1 rounded-full hover:bg-foreground/5 text-foreground/20 hover:text-foreground/60 transition-colors"
+                    >
+                      <FilterX className="h-3 w-3" />
+                    </button>
+                  )}
                </div>
             </div>
             
             <div className="flex items-center gap-2">
-               <div className="flex items-center bg-[#0a0a0a] rounded-[4px] p-0.5 border border-white/10">
+               <div className="flex items-center bg-background/40 rounded-[4px] p-0.5 border border-border/40">
                   <button 
                     onClick={() => setViewMode("list")} 
                     className={cn(
-                      "h-8 px-4 flex items-center gap-2 rounded-[3px] transition-all",
-                      viewMode === "list" ? "bg-white/5 text-primary border border-white/10" : "text-foreground/20 hover:text-foreground/40"
+                      "h-8 px-4 flex items-center gap-2 rounded-[4px] transition-all",
+                      viewMode === "list" ? "bg-card text-primary border border-border/40 shadow-sm" : "text-foreground/20 hover:text-foreground/40"
                     )}
                   >
                     <ListIcon className="h-3.5 w-3.5" />
@@ -203,8 +213,8 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
                   <button 
                     onClick={() => setViewMode("table")} 
                     className={cn(
-                      "h-8 px-4 flex items-center gap-2 rounded-[3px] transition-all",
-                      viewMode === "table" ? "bg-white/5 text-primary border border-white/10" : "text-foreground/20 hover:text-foreground/40"
+                      "h-8 px-4 flex items-center gap-2 rounded-[4px] transition-all",
+                      viewMode === "table" ? "bg-card text-primary border border-border/40 shadow-sm" : "text-foreground/20 hover:text-foreground/40"
                     )}
                   >
                     <TableIcon className="h-3.5 w-3.5" />
@@ -229,7 +239,7 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
             {!isLoading && filteredResults.length === 0 && (
                <div className="flex flex-col items-center justify-center py-40 opacity-10">
                   <Search size={40} className="mb-4" />
-                  <h3 className="text-sm font-bold uppercase tracking-[0.3em]">Néant</h3>
+                  <h3 className="text-sm font-semibold uppercase tracking-[0.3em]">Néant</h3>
                </div>
             )}
          </div>
@@ -244,23 +254,23 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
 
 function TableView({ results }: { results: SearchResult[] }) {
   return (
-    <div className="bg-[#0c0c0c]/40 border border-white/5 rounded-[4px] overflow-hidden">
+    <div className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] overflow-hidden">
        {/* TABLE HEADER */}
-       <div className="flex items-center gap-4 px-4 py-3 bg-white/[0.02] border-b border-white/5 select-none">
+       <div className="flex items-center gap-4 px-4 py-3 bg-muted/30 border-b border-border/40 select-none">
           <div className="w-2.5 shrink-0" />
-          <div className="w-[120px] shrink-0 text-[10px] font-black text-foreground/20 uppercase tracking-[0.2em]">Référence / AC</div>
-          <div className="flex-1 text-[10px] font-black text-foreground/20 uppercase tracking-[0.2em]">Objet du Marché</div>
-          <div className="w-[120px] shrink-0 text-[10px] font-black text-foreground/20 uppercase tracking-[0.2em] text-right">Caution</div>
-          <div className="w-[100px] shrink-0 text-[10px] font-black text-foreground/20 uppercase tracking-[0.2em] text-center">Score Match</div>
+          <div className="w-[120px] shrink-0 text-[10px] font-semibold text-foreground/20 uppercase tracking-[0.2em]">Référence / AC</div>
+          <div className="flex-1 text-[10px] font-semibold text-foreground/20 uppercase tracking-[0.2em]">Objet du Marché</div>
+          <div className="w-[120px] shrink-0 text-[10px] font-semibold text-foreground/20 uppercase tracking-[0.2em] text-right">Caution</div>
+          <div className="w-[100px] shrink-0 text-[10px] font-semibold text-foreground/20 uppercase tracking-[0.2em] text-center">Score Match</div>
           <div className="w-10 shrink-0" />
        </div>
 
        {/* TABLE ROWS */}
-       <div className="max-h-[calc(100vh-320px)] overflow-y-auto no-scrollbar pb-2">
+       <div className="max-h-[calc(100vh-320px)] overflow-y-auto custom-scrollbar pb-2">
           {results.map((item) => (
              <div 
                key={item.id} 
-               className="group flex items-center gap-4 px-4 h-12 border-b border-white/[0.03] hover:bg-white/[0.04] transition-all cursor-pointer relative"
+               className="group flex items-center gap-4 px-4 h-12 border-b border-border/10 hover:bg-muted/30 transition-all cursor-pointer relative"
              >
                 {/* 1. URGENCY INDICATOR (2px Pulse) */}
                 <div className={cn(
@@ -272,38 +282,38 @@ function TableView({ results }: { results: SearchResult[] }) {
 
                 {/* 2. IDENTITY (AC + Type) */}
                 <div className="w-[120px] shrink-0 flex flex-col gap-0.5 overflow-hidden">
-                   <span className="text-[10px] font-black text-foreground/40 uppercase tracking-tighter truncate">{item.id.split('-')[0]}</span>
-                   <span className="text-[9px] font-bold text-slate-600 uppercase tracking-widest">{item.authority.split(' ')[0]}</span>
+                   <span className="text-[10px] font-semibold text-foreground/40 uppercase tracking-tighter truncate">{item.id.split('-')[0]}</span>
+                   <span className="text-[10px] font-bold text-foreground/20 uppercase tracking-widest leading-none mt-0.5">{item.authority.split(' ')[0]}</span>
                 </div>
 
                 {/* 3. OBJECT (Title) */}
                 <div className="flex-1 overflow-hidden">
-                   <h4 className="text-[12px] font-medium text-slate-300 truncate lowercase first-letter:uppercase group-hover:text-primary transition-colors tracking-tight">
+                   <h4 className="text-[12px] font-medium text-foreground/80 truncate lowercase first-letter:uppercase group-hover:text-primary transition-colors tracking-tight">
                       {item.title}
                    </h4>
                 </div>
 
                 {/* 4. CAUTION (Budget/Metric) */}
                 <div className="w-[120px] shrink-0 text-right">
-                   <span className="text-[11px] font-mono font-medium text-slate-500 tracking-tighter uppercase whitespace-nowrap">
+                   <span className="text-[11px] font-mono font-medium text-foreground/40 tracking-tighter uppercase whitespace-nowrap">
                       {item.budget || "NC"}
                    </span>
                 </div>
 
                 {/* 5. IA SCORE */}
                 <div className="w-[100px] shrink-0 flex items-center justify-center gap-2">
-                   <div className="h-1 w-12 bg-white/5 rounded-full overflow-hidden hidden sm:block">
+                   <div className="h-1 w-12 bg-black/5 dark:bg-white/5 rounded-full overflow-hidden hidden sm:block">
                       <div 
-                         className="h-full bg-primary" 
+                         className="h-full bg-primary shadow-[0_0_8px_rgba(37,211,102,0.4)]" 
                          style={{ width: `${item.matchScore}%` }} 
                       />
                    </div>
-                   <span className="text-[10px] font-black text-primary/80">{item.matchScore}%</span>
+                   <span className="text-[10px] font-semibold text-primary/80">{item.matchScore}%</span>
                 </div>
 
                 {/* 6. ACTION (Quick Eye/Plus) */}
                 <div className="w-10 shrink-0 flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
-                   <div className="h-7 w-7 rounded bg-white/5 border border-white/10 flex items-center justify-center text-primary hover:bg-primary/10 transition-colors">
+                   <div className="h-7 w-7 rounded bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center text-primary hover:bg-primary hover:text-black transition-colors">
                       <Plus size={14} />
                    </div>
                 </div>
@@ -319,12 +329,12 @@ function SidebarSkeleton() {
     <div className="space-y-8">
       {[1, 2, 3].map(i => (
         <div key={i} className="space-y-4">
-           <div className="h-4 w-24 bg-white/5 animate-pulse rounded" />
+           <div className="h-4 w-24 bg-black/5 dark:bg-white/5 animate-pulse rounded" />
            <div className="space-y-3">
               {[1, 2, 3, 4].map(j => (
                 <div key={j} className="flex gap-3 items-center">
-                   <div className="h-3.5 w-3.5 bg-white/5 rounded animate-pulse" />
-                   <div className="h-2.5 w-32 bg-white/5 rounded animate-pulse" />
+                   <div className="h-3.5 w-3.5 bg-black/5 dark:bg-white/5 rounded animate-pulse" />
+                   <div className="h-2.5 w-32 bg-black/5 dark:bg-white/5 rounded animate-pulse" />
                 </div>
               ))}
            </div>

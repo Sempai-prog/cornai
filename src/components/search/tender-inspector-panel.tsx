@@ -34,7 +34,7 @@ export function TenderInspectorPanel({ item, onStartWorkflow }: TenderInspectorP
     <div className="flex flex-col h-full bg-transparent select-none relative">
       
       {/* HEADER : RÉFÉRENCIEL & CONTEXTE */}
-      <header className="p-8 border-b border-white/5 bg-white/[0.01]">
+      <header className="p-8 border-b border-border/40 bg-card/10">
          <div className="flex flex-col gap-1.5 mb-6">
             <span className="text-[10px] font-bold text-primary/40 uppercase tracking-[0.2em]">Dossier d'Appel d'Offres (DAO)</span>
             <h2 className="text-[16px] font-semibold text-foreground/90 leading-snug tracking-tight">
@@ -67,14 +67,14 @@ export function TenderInspectorPanel({ item, onStartWorkflow }: TenderInspectorP
             {/* SECTION A : PIÈCES ADMINISTRATIVES */}
             <div className="space-y-6">
                <div className="flex items-center gap-3">
-                  <Badge className="h-5 rounded-[2px] bg-white/5 px-2 text-[9px] font-black text-foreground/40 uppercase tracking-widest">Enveloppe A</Badge>
+                  <Badge className="h-5 rounded-[2px] bg-muted px-2 text-[9px] font-black text-foreground/40 uppercase tracking-widest">Enveloppe A</Badge>
                   <h3 className="text-[11px] font-bold uppercase tracking-widest text-foreground/30">Dossier Administratif</h3>
-                  <div className="flex-1 h-px bg-white/5" />
+                  <div className="flex-1 h-px bg-border/20" />
                </div>
 
                <div className="grid grid-cols-1 gap-2.5">
                   {item.conformitePME.enveloppeA.pieces.map((piece, idx) => (
-                    <div key={idx} className="flex items-center justify-between p-3.5 rounded-[4px] border border-white/5 bg-white/[0.01] hover:border-white/10 transition-all group">
+                    <div key={idx} className="flex items-center justify-between p-3.5 rounded-[4px] border border-border/40 bg-card/40 hover:border-border/60 transition-all group">
                        <div className="flex items-center gap-3">
                           {piece.status === 'valid' ? (
                             <CheckCircle2 className="h-3.5 w-3.5 text-primary opacity-60" />
@@ -94,9 +94,9 @@ export function TenderInspectorPanel({ item, onStartWorkflow }: TenderInspectorP
             {/* SECTION B : OFFRE TECHNIQUE */}
             <div className="space-y-6">
                <div className="flex items-center gap-3">
-                  <Badge className="h-5 rounded-[2px] bg-white/5 px-2 text-[9px] font-black text-foreground/40 uppercase tracking-widest">Enveloppe B</Badge>
+                  <Badge className="h-5 rounded-[2px] bg-muted px-2 text-[9px] font-black text-foreground/40 uppercase tracking-widest">Enveloppe B</Badge>
                   <h3 className="text-[11px] font-bold uppercase tracking-widest text-foreground/30">Conformité Technique</h3>
-                  <div className="flex-1 h-px bg-white/5" />
+                  <div className="flex-1 h-px bg-border/20" />
                </div>
 
                <div className="p-5 rounded-[4px] border border-primary/20 bg-primary/5 relative overflow-hidden">
@@ -118,20 +118,20 @@ export function TenderInspectorPanel({ item, onStartWorkflow }: TenderInspectorP
             {/* SECTION C : OFFRE FINANCIÈRE */}
             <div className="space-y-6">
                <div className="flex items-center gap-3">
-                  <Badge className="h-5 rounded-[2px] bg-white/5 px-2 text-[9px] font-black text-foreground/40 uppercase tracking-widest">Enveloppe C</Badge>
+                  <Badge className="h-5 rounded-[2px] bg-muted px-2 text-[9px] font-black text-foreground/40 uppercase tracking-widest">Enveloppe C</Badge>
                   <h3 className="text-[11px] font-bold uppercase tracking-widest text-foreground/30">Dossier Financier</h3>
-                  <div className="flex-1 h-px bg-white/5" />
+                  <div className="flex-1 h-px bg-border/20" />
                </div>
 
                <div className="grid grid-cols-2 gap-4">
-                  <div className="p-4 bg-white/[0.02] border border-white/5 rounded-[4px] group">
+                  <div className="p-4 bg-muted/20 border border-border/40 rounded-[4px] group">
                      <span className="text-[9px] font-bold text-foreground/20 uppercase tracking-[0.2em] block mb-2">BPU — Statut</span>
                      <div className="flex items-center gap-2">
                         <Zap className="h-3 w-3 text-primary" />
                         <span className="text-[11px] font-black text-primary uppercase">{item.conformitePME.enveloppeC.bpuStatus}</span>
                      </div>
                   </div>
-                  <div className="p-4 bg-white/[0.02] border border-white/5 rounded-[4px] group">
+                  <div className="p-4 bg-muted/20 border border-border/40 rounded-[4px] group">
                      <span className="text-[9px] font-bold text-foreground/20 uppercase tracking-[0.2em] block mb-2">DQE — Calcul</span>
                      <div className="flex items-center gap-2">
                         <CheckCircle2 className="h-3.5 w-3.5 text-primary/40" />
@@ -145,7 +145,7 @@ export function TenderInspectorPanel({ item, onStartWorkflow }: TenderInspectorP
       </ScrollArea>
 
       {/* STICKY FOOTER : ACTION PRIMAIRE */}
-      <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-[#0c0c0c] via-[#0c0c0c] to-transparent">
+      <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-background via-background to-transparent">
          <Button 
             onClick={onStartWorkflow}
             className="w-full h-12 rounded-[4px] bg-primary text-black text-[12px] font-bold border-none hover:bg-primary/90 shadow-2xl shadow-primary/10 transition-all flex items-center justify-between px-6 group"

@@ -29,16 +29,16 @@ export default async function DashboardHome() {
   const recommendedAOs = await getDerniersAO(3);
 
   return (
-    <div className="space-y-10 animate-in fade-in duration-500 antialiased bg-background">
+    <div className="space-y-10 animate-in fade-in duration-500 antialiased bg-transparent">
       {/* ───────────────────────────────────────────────────────────
           PLAN 1 — HEADER (SOPHISTIQUÉ & APAISÉ)
           ─────────────────────────────────────────────────────────── */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-white/5 mt-0 lg:mt-[-4px]">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-border/10 mt-0 lg:mt-[-4px]">
         <div className="space-y-1.5">
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text">
+          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
             Antigravity BTP Sarl
           </h1>
-          <p className="text-[11px] text-slate-500 font-regular tracking-wider opacity-90">
+          <p className="text-[11px] text-muted-foreground font-medium tracking-wider opacity-80">
             Poste de pilotage intelligent pour le JDM (Journal des Marchés)
           </p>
         </div>
@@ -46,11 +46,11 @@ export default async function DashboardHome() {
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
-            className="h-9 text-[10px] font-semibold uppercase tracking-widest text-foreground/40 hover:text-foreground border-white/10 bg-white/5 rounded transition-all"
+            className="h-9 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground hover:text-foreground border-border/40 bg-muted/20 rounded-[4px] transition-all"
           >
             Profil IA
           </Button>
-          <Button className="bg-primary hover:bg-primary/90 text-black font-semibold text-[10px] uppercase tracking-[0.2em] h-10 px-8 rounded shadow-xl shadow-primary/10 border-none transition-all active:scale-95">
+          <Button className="bg-primary hover:bg-primary/90 text-black font-semibold text-[10px] uppercase tracking-[0.2em] h-9 px-8 rounded-[4px] shadow-lg shadow-primary/10 border-none transition-all active:scale-95">
             Générer BPU / DQE
           </Button>
         </div>
@@ -94,7 +94,7 @@ export default async function DashboardHome() {
         ].map((kpi, i) => (
           <div
             key={i}
-            className="flex flex-col justify-center p-4 bg-[#0c0c0c]/80 backdrop-blur-sm border border-white/5 rounded-[4px] hover:bg-white/[0.02] hover:border-white/10 transition-all shadow-sm group"
+            className="flex flex-col justify-center p-4 bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] hover:bg-muted/10 hover:border-border/60 transition-all shadow-sm group"
           >
             <div className="flex items-center gap-2.5 mb-4 opacity-30 group-hover:opacity-100 transition-opacity">
               <kpi.icon
@@ -109,7 +109,7 @@ export default async function DashboardHome() {
             </div>
 
             <div className="flex items-baseline gap-3 leading-none">
-              <span className="text-3xl font-semibold tracking-tighter text-white">
+              <span className="text-3xl font-semibold tracking-tighter text-foreground">
                 {kpi.value}
                 {kpi.suffix && (
                   <span className="text-sm opacity-20 align-top">
@@ -224,10 +224,10 @@ export default async function DashboardHome() {
         {/* INSPECTEUR DE CONFORMITÉ (4/12) — FIXED ON SCROLL */}
         <div className="lg:col-span-4 flex flex-col gap-4 sticky top-6 self-start">
           {/* CARTE 1 : ALERTES DE CONFORMITÉ */}
-          <div className="bg-[#0c0c0c]/80 backdrop-blur-md border border-white/5 rounded-[4px] p-6 shadow-sm">
-            <div className="flex items-center gap-3 pb-4 border-b border-white/5 mb-6">
+          <div className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-6 shadow-sm">
+            <div className="flex items-center gap-3 pb-4 border-b border-border/10 mb-6">
               <ShieldCheck className="h-5 w-5 text-red-500/60" />
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/50">
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/30">
                 Alertes Conformité
               </span>
             </div>
@@ -239,7 +239,7 @@ export default async function DashboardHome() {
                 </p>
                 <AlertTriangle className="h-4 w-4 text-red-500 opacity-50 group-hover/alert:opacity-100 transition-all" />
               </div>
-              <p className="text-[13px] font-semibold text-white tracking-tight leading-snug">
+              <p className="text-[13px] font-semibold text-foreground tracking-tight leading-snug">
                 Attestation périmée dans 4 jours
               </p>
               <p className="text-[9px] text-red-500/60 font-bold uppercase tracking-wider mt-2.5">
@@ -247,16 +247,16 @@ export default async function DashboardHome() {
               </p>
             </div>
 
-            <Button className="w-full mt-6 bg-white/5 border border-white/5 text-foreground/40 font-bold text-[10px] uppercase tracking-[0.2em] h-11 rounded hover:bg-white/10 transition-all">
+            <Button className="w-full mt-6 bg-muted/20 border border-border/40 text-foreground/50 font-bold text-[10px] uppercase tracking-[0.2em] h-11 rounded hover:bg-muted/40 transition-all">
               Mettre à jour le dossier
             </Button>
           </div>
 
           {/* CARTE 2 : RECOMMANDATIONS IA */}
-          <div className="bg-[#0c0c0c]/80 backdrop-blur-md border border-white/5 rounded-[4px] p-6 shadow-sm">
-            <div className="flex items-center gap-3 pb-4 border-b border-white/5 mb-6">
+          <div className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-6 shadow-sm">
+            <div className="flex items-center gap-3 pb-4 border-b border-border/10 mb-6">
               <Compass className="h-5 w-5 text-primary/60" />
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/50">
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/30">
                 Diagnostic ARMP
               </span>
             </div>
