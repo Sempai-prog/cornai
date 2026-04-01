@@ -12,7 +12,8 @@ import {
   Wallet,
   MapPin,
   AlertOctagon,
-  Clock
+  Clock,
+  Compass
 } from "lucide-react"
 import { SearchResult } from "./search-types"
 import { Button } from "@/components/ui/button"
@@ -29,7 +30,7 @@ export function SearchRowDetail({ item, onOpenInspector }: SearchRowDetailProps)
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 bg-white/[0.02] border-y border-white/5 animate-in fade-in slide-in-from-top-2 duration-300">
       
       {/* BLOC 1 : FINANCIER (Caution & Frais) */}
-      <div className="flex flex-col gap-3 p-3.5 rounded-[4px] border border-white/5 bg-[#0a0a0b]/40">
+      <div className="flex flex-col gap-3 p-3.5 rounded-[4px] border border-white/5 bg-[#0a0a0b]/40 h-full">
          <div className="flex items-center gap-2 opacity-30">
             <Scale className="h-3 w-3" />
             <span className="text-[9px] font-bold uppercase tracking-widest">Exigences Financières</span>
@@ -47,7 +48,7 @@ export function SearchRowDetail({ item, onOpenInspector }: SearchRowDetailProps)
       </div>
 
       {/* BLOC 2 : FILTRE IA (Alerte Risque) */}
-      <div className="flex flex-col gap-3 p-3.5 rounded-[4px] border border-red-500/10 bg-red-500/5 relative overflow-hidden group">
+      <div className="flex flex-col gap-3 p-3.5 rounded-[4px] border border-red-500/10 bg-red-500/5 relative overflow-hidden group h-full">
          <div className="flex items-center gap-2 text-red-500/40">
             <AlertOctagon className="h-3 w-3" />
             <span className="text-[9px] font-bold uppercase tracking-widest">Sécabilité / Risque IA</span>
@@ -61,7 +62,7 @@ export function SearchRowDetail({ item, onOpenInspector }: SearchRowDetailProps)
       </div>
 
       {/* BLOC 3 : LOGISTIQUE (Dépôt & Visite) */}
-      <div className="flex flex-col gap-3 p-3.5 rounded-[4px] border border-white/5 bg-[#0a0a0b]/40">
+      <div className="flex flex-col gap-3 p-3.5 rounded-[4px] border border-white/5 bg-[#0a0a0b]/40 h-full">
          <div className="flex items-center gap-2 opacity-30">
             <MapPin className="h-3 w-3" />
             <span className="text-[9px] font-bold uppercase tracking-widest">Logistique & Dépôt</span>
@@ -85,23 +86,29 @@ export function SearchRowDetail({ item, onOpenInspector }: SearchRowDetailProps)
          </div>
       </div>
 
-      {/* BLOC 4 : ACTION FINALE */}
-      <div className="flex flex-col items-end justify-center gap-3 pr-2">
-         <div className="text-right">
-            <span className="text-[8px] font-bold text-foreground/20 uppercase tracking-widest block">Confiance IA</span>
+      {/* BLOC 4 : ACTION FINALE (SCORE & BTN) — Harmonisé */}
+      <div className="flex flex-col gap-3 p-3.5 rounded-[4px] border border-white/5 bg-[#0a0a0b]/10 group/action h-full">
+         <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 opacity-30">
+               <Compass className="h-3 w-3" />
+               <span className="text-[9px] font-bold uppercase tracking-widest">Score Matching</span>
+            </div>
             <span className="text-[14px] font-black text-primary leading-none uppercase">{item.matchScore}%</span>
          </div>
-         <Button 
-            onClick={(e) => {
-               e.stopPropagation();
-               onOpenInspector();
-            }}
-            variant="ghost" 
-            className="h-8 rounded-[4px] text-[10px] font-bold text-primary hover:text-primary hover:bg-primary/5 px-3 group"
-         >
-            ANALYSER LE DAO COMPLET
-            <ChevronRight className="h-3.5 w-3.5 ml-2 group-hover:translate-x-1 transition-transform" />
-         </Button>
+         
+         <div className="flex-1 flex items-end">
+            <Button 
+               onClick={(e) => {
+                  e.stopPropagation();
+                  onOpenInspector();
+               }}
+               variant="ghost" 
+               className="w-full h-10 rounded-[4px] text-[10px] font-bold text-primary group-hover/action:bg-primary/5 border border-primary/10 transition-all px-3 group"
+            >
+               DAO COMPLET
+               <ChevronRight className="h-3.5 w-3.5 ml-auto group-hover:translate-x-1 transition-transform" />
+            </Button>
+         </div>
       </div>
 
     </div>

@@ -21,6 +21,7 @@ import {
   PanelLeft
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { GlobalSearch } from "@/components/layout/global-search"
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -116,16 +117,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="flex-1 flex flex-col min-w-0 relative">
           
           <header className="h-14 flex items-center justify-between px-6 lg:px-8 border-b border-border bg-background/60 backdrop-blur-md z-10 shrink-0">
-             <div className="flex items-center gap-4">
-                <button className="w-8 h-8 flex items-center justify-center border border-border rounded text-foreground/40 hover:text-foreground hover:bg-muted transition-colors">
+             <div className="flex items-center gap-6">
+                <button className="w-8 h-8 flex items-center justify-center border border-border rounded-[4px] text-foreground/40 hover:text-foreground hover:bg-muted transition-all">
                    <PanelLeft size={16} />
                 </button>
-                <div className="h-4 w-px bg-border mx-1" />
-                <nav className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-foreground/40">
-                   <Link href="/dashboard" className="hover:text-primary transition-colors">Workspace</Link>
-                   <span className="opacity-20">/</span>
-                   <span className="text-foreground/60">Pilotage IA</span>
-                </nav>
+                <div className="h-4 w-px bg-border mx-1 hidden md:block" />
+                
+                {/* GLOBAL SEARCH OMNIBOX */}
+                <GlobalSearch />
              </div>
 
              <div className="flex items-center gap-4">

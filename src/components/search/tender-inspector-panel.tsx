@@ -62,7 +62,7 @@ export function TenderInspectorPanel({ item, onStartWorkflow }: TenderInspectorP
 
       {/* BODY : LES 3 ENVELOPPES (DEEP DIVE) */}
       <ScrollArea className="flex-1 px-8 py-6">
-         <div className="space-y-12 pb-32">
+         <div className="flex flex-col gap-8 pb-32">
             
             {/* SECTION A : PIÈCES ADMINISTRATIVES */}
             <div className="space-y-6">
@@ -106,9 +106,9 @@ export function TenderInspectorPanel({ item, onStartWorkflow }: TenderInspectorP
                   </div>
                   <ul className="space-y-3">
                      {item.conformitePME.enveloppeB.exigences.map((req, idx) => (
-                       <li key={idx} className="flex items-start gap-3">
-                          <div className="h-1 w-1 rounded-full bg-primary mt-1.5 shrink-0" />
-                          <p className="text-[11px] font-medium text-foreground/70 leading-snug">{req}</p>
+                       <li key={idx} className="flex items-center gap-3">
+                          <div className="h-1 w-1 rounded-full bg-primary shrink-0" />
+                          <p className="text-[11px] font-medium text-foreground/70 leading-none">{req}</p>
                        </li>
                      ))}
                   </ul>
@@ -134,7 +134,7 @@ export function TenderInspectorPanel({ item, onStartWorkflow }: TenderInspectorP
                   <div className="p-4 bg-white/[0.02] border border-white/5 rounded-[4px] group">
                      <span className="text-[9px] font-bold text-foreground/20 uppercase tracking-[0.2em] block mb-2">DQE — Calcul</span>
                      <div className="flex items-center gap-2">
-                        <CheckCircle2 className="h-3 w-3 text-primary/40" />
+                        <CheckCircle2 className="h-3.5 w-3.5 text-primary/40" />
                         <span className="text-[11px] font-black text-foreground/30 uppercase">Prêt</span>
                      </div>
                   </div>
@@ -145,10 +145,10 @@ export function TenderInspectorPanel({ item, onStartWorkflow }: TenderInspectorP
       </ScrollArea>
 
       {/* STICKY FOOTER : ACTION PRIMAIRE */}
-      <div className="absolute bottom-0 left-0 right-0 p-8 pt-0 bg-gradient-to-t from-[#0c0c0c] via-[#0c0c0c] to-transparent">
+      <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-[#0c0c0c] via-[#0c0c0c] to-transparent">
          <Button 
             onClick={onStartWorkflow}
-            className="w-full h-14 rounded-[4px] bg-primary text-black text-[12px] font-bold border-none hover:bg-primary/90 shadow-2xl shadow-primary/10 transition-all flex items-center justify-between px-6 group"
+            className="w-full h-12 rounded-[4px] bg-primary text-black text-[12px] font-bold border-none hover:bg-primary/90 shadow-2xl shadow-primary/10 transition-all flex items-center justify-between px-6 group"
          >
             <div className="flex items-center gap-3">
                <FileSearch className="h-5 w-5" />

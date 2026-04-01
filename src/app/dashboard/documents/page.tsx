@@ -30,21 +30,21 @@ export default function DocumentsPage() {
       {/* ───────────────────────────────────────────────────────────
           PLAN 1 — CONTENU PRINCIPAL (SPLIT-SCREEN)
           ─────────────────────────────────────────────────────────── */}
-      <div className="flex flex-col lg:flex-row gap-8">
+      <div className="flex flex-col lg:flex-row items-start gap-8">
         
         {/* COLONNE GAUCHE — LE BILAN IA */}
         <aside className="w-full lg:w-[380px] shrink-0 space-y-6">
           <div className="bg-[#0c0c0c]/80 backdrop-blur-md border border-white/5 rounded-[4px] p-8 shadow-sm group">
             <div className="flex flex-col items-center text-center">
-                {/* JAUGE CIRCULAIRE SIMPLIFIÉE */}
-                <div className="relative h-40 w-40 flex items-center justify-center mb-6">
-                  <svg className="h-full w-full -rotate-90">
-                      <circle cx="80" cy="80" r="70" fill="transparent" stroke="currentColor" strokeWidth="8" className="text-white/5" />
-                      <circle cx="80" cy="80" r="70" fill="transparent" stroke="currentColor" strokeWidth="8" strokeDasharray="440" strokeDashoffset="66" className="text-primary transition-all duration-1000" />
+                {/* JAUGE CIRCULAIRE RAFFINÉE */}
+                <div className="relative h-32 w-32 flex items-center justify-center mb-6">
+                  <svg className="h-full w-full -rotate-90" viewBox="0 0 160 160">
+                      <circle cx="80" cy="80" r="65" fill="transparent" stroke="currentColor" strokeWidth="12" className="text-white/5" />
+                      <circle cx="80" cy="80" r="65" fill="transparent" stroke="currentColor" strokeWidth="12" strokeDasharray="408" strokeDashoffset="61" className="text-primary transition-all duration-1000" />
                   </svg>
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
-                      <span className="text-4xl font-black tracking-tighter text-white">85%</span>
-                      <span className="text-[10px] font-bold text-foreground/40 uppercase tracking-widest mt-1">Score Global</span>
+                      <span className="text-3xl font-black tracking-tighter text-white">85%</span>
+                      <span className="text-[9px] font-bold text-foreground/40 uppercase tracking-widest mt-1">Score IA</span>
                   </div>
                 </div>
 
