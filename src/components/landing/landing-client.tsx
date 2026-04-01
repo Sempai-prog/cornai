@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { 
   Check, 
   ChevronRight, 
@@ -107,12 +108,12 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
         >
           <div className="flex items-center gap-2">
             <div className="w-7 h-7 rounded bg-primary flex items-center justify-center">
-              <span className="text-white font-black text-sm leading-none">C</span>
+              <span className="text-white font-medium text-sm leading-none">C</span>
             </div>
-            <span className="font-black text-base tracking-tighter hidden sm:block">CORNAi</span>
+            <span className="font-medium text-base tracking-tighter hidden sm:block">CORNAi</span>
           </div>
 
-          <nav className="hidden md:flex items-center gap-6 text-[11px] font-black uppercase tracking-widest text-foreground/50">
+          <nav className="hidden md:flex items-center gap-6 text-[11px] font-medium uppercase tracking-widest text-foreground/50">
             <a href="#solutions" className="hover:text-primary transition-colors">Solutions</a>
             <a href="#fonctionnalites" className="hover:text-primary transition-colors">Fonctionnalités</a>
             <a href="#tarifs" className="hover:text-primary transition-colors">Tarifs</a>
@@ -126,10 +127,10 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
               {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
             <div className="hidden sm:flex items-center gap-3">
-              <button className="text-xs font-black hover:text-primary transition-colors text-foreground/70 uppercase tracking-widest">Connexion</button>
-              <button className="bg-primary hover:bg-primary/90 text-white px-4 py-1.5 rounded text-xs font-black shadow-none transition-all active:scale-95">
-                Démarrer
-              </button>
+              <Link href="/login" className="text-xs font-medium hover:text-primary transition-colors text-foreground/70 uppercase tracking-widest">Connexion</Link>
+              <Button asChild className="bg-primary hover:bg-primary/90 text-white px-4 py-1.5 h-auto rounded text-xs font-medium shadow-none transition-all active:scale-95">
+                <Link href="/register">Démarrer</Link>
+              </Button>
             </div>
             <button className="md:hidden p-1 text-foreground/50">
               <Menu className="w-5 h-5" />
@@ -144,7 +145,7 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded border border-border bg-secondary/50 backdrop-blur-sm text-[10px] font-black uppercase tracking-widest mb-8"
+            className="inline-flex items-center gap-2 px-3 py-1 rounded border border-border bg-secondary/50 backdrop-blur-sm text-[10px] font-medium uppercase tracking-widest mb-8"
           >
             <span className="text-accent">NOUVEAU</span>
             <span className="w-px h-3 bg-border"></span>
@@ -159,26 +160,26 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
             Gagnez plus de Marchés <br className="hidden md:block"/> Publics au Cameroun
           </motion.h1>
 
-          <p className="text-sm md:text-lg text-foreground/50 mb-8 max-w-[600px] mx-auto font-bold leading-relaxed">
+          <p className="text-sm md:text-lg text-foreground/50 mb-8 max-w-[600px] mx-auto font-normal leading-relaxed">
             Laissez l'IA faire le reste. Détection, analyse des DAO et chiffrage optimisés pour les PME de la zone CEMAC.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12">
             <div className="flex flex-col sm:flex-row items-center border border-border bg-card/50 backdrop-blur-xl rounded p-1 w-full sm:w-auto shadow-xl">
-              <select className="bg-transparent text-xs p-3 outline-none cursor-pointer w-full sm:w-auto text-foreground font-black uppercase tracking-widest rounded transition-colors hover:bg-secondary/30">
+              <select className="bg-transparent text-xs p-3 outline-none cursor-pointer w-full sm:w-auto text-foreground font-medium uppercase tracking-widest rounded transition-colors hover:bg-secondary/30">
                 <option value="travaux">Secteur: Travaux</option>
                 <option value="fournitures">Secteur: Fournitures</option>
                 <option value="services">Secteur: Services</option>
               </select>
               <div className="hidden sm:block w-px h-6 bg-border mx-2"></div>
-              <select className="bg-transparent text-xs p-3 outline-none cursor-pointer w-full sm:w-auto border-t border-border sm:border-none text-foreground font-black uppercase tracking-widest rounded transition-colors hover:bg-secondary/30">
+              <select className="bg-transparent text-xs p-3 outline-none cursor-pointer w-full sm:w-auto border-t border-border sm:border-none text-foreground font-medium uppercase tracking-widest rounded transition-colors hover:bg-secondary/30">
                 <option value="centre">Région: Centre</option>
                 <option value="littoral">Région: Littoral</option>
                 <option value="ouest">Région: Ouest</option>
               </select>
             </div>
             
-            <button className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white px-8 py-3.5 rounded text-sm font-black flex items-center justify-center shadow-none transition-all active:scale-95 group">
+            <button className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white px-8 py-3.5 rounded text-sm font-medium flex items-center justify-center shadow-none transition-all active:scale-95 group">
               <MessageCircle className="w-4 h-4 mr-2" />
               Continuer sur WhatsApp
               <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
@@ -269,9 +270,9 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
                 <Zap className="w-6 h-6 animate-pulse" />
               </div>
               <div className="flex-1">
-                <Badge className="mb-4 bg-primary/20 text-primary hover:bg-primary/30 border-none px-3 py-1 text-[8px] font-black tracking-widest uppercase">Propulsé par CORNAi v2</Badge>
+                <Badge className="mb-4 bg-primary/20 text-primary hover:bg-primary/30 border-none px-3 py-1 text-[8px] font-medium tracking-widest uppercase">Propulsé par CORNAi v2</Badge>
                 <h4 className="text-3xl font-black mb-4 text-foreground tracking-tight leading-[1.05]">Extraction des <br/>Critères Bloquants</h4>
-                <p className="text-base font-bold text-foreground/45 leading-relaxed max-w-sm">
+                <p className="text-base font-normal text-foreground/45 leading-relaxed max-w-sm">
                   Notre IA scanne instantanément les RPAO de 200+ pages pour isoler ce qui vous empêche de soumissionner. Ne perdez plus 2 jours sur un dossier perdu d'avance.
                 </p>
               </div>
@@ -297,7 +298,7 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
                    <h4 className="text-xl font-black text-foreground group-hover:text-primary transition-colors">Conformité ARMP</h4>
                    <Badge className="bg-emerald-500/10 text-emerald-500 border-none text-[8px] uppercase">100% Légal</Badge>
                 </div>
-                <p className="text-sm font-bold text-foreground/45 leading-relaxed">Processus 100% alignés sur la réglementation camerounaise en vigueur.</p>
+                <p className="text-sm font-normal text-foreground/45 leading-relaxed">Processus 100% alignés sur la réglementation camerounaise en vigueur.</p>
               </div>
             </motion.div>
 
@@ -308,8 +309,8 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
               <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-4 ring-1 ring-primary/20">
                 <Calculator className="w-5 h-5" />
               </div>
-              <h4 className="text-[12px] font-black mb-1 text-foreground">Génération BPU</h4>
-              <p className="text-[9px] font-bold text-foreground/40 leading-tight">Élimine les reports erronés.</p>
+              <h4 className="text-[12px] font-medium mb-1 text-foreground">Génération BPU</h4>
+              <p className="text-[9px] font-normal text-foreground/40 leading-tight">Élimine les reports erronés.</p>
             </motion.div>
 
             <motion.div 
@@ -319,8 +320,8 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
               <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-4 ring-1 ring-primary/20">
                 <BellRing className="w-5 h-5" />
               </div>
-              <h4 className="text-[12px] font-black mb-1 text-foreground">Alerte WhatsApp</h4>
-              <p className="text-[9px] font-bold text-foreground/40">Push direct aux gérants.</p>
+              <h4 className="text-[12px] font-medium mb-1 text-foreground">Alerte WhatsApp</h4>
+              <p className="text-[9px] font-normal text-foreground/40">Push direct aux gérants.</p>
             </motion.div>
 
             <motion.div 
@@ -330,8 +331,8 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
               <div className="w-10 h-10 rounded-lg bg-foreground/5 text-foreground/40 flex items-center justify-center mb-4 border border-border">
                 <BarChart3 className="w-5 h-5" />
               </div>
-              <h4 className="text-[12px] font-black mb-1 text-foreground tracking-tight">Dashboard Veille</h4>
-              <p className="text-[9px] font-bold text-foreground/30">Suivi CEMAC 24/7.</p>
+              <h4 className="text-[12px] font-medium mb-1 text-foreground tracking-tight">Dashboard Veille</h4>
+              <p className="text-[9px] font-normal text-foreground/30">Suivi CEMAC 24/7.</p>
               <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-primary/5 rounded-full group-hover:bg-primary/20" />
             </motion.div>
           </div>
@@ -348,15 +349,15 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
             </h3>
             
             <div className="flex items-center justify-center gap-4 mt-12 bg-secondary/30 w-fit mx-auto p-1 rounded-full border border-border">
-              <button 
+               <button 
                 onClick={() => setAnnualBilling(false)}
-                className={cn("px-6 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all", !annualBilling ? "bg-background text-foreground shadow-sm" : "text-foreground/30 hover:text-foreground/50")}
+                className={cn("px-6 py-1.5 rounded-full text-[10px] font-medium uppercase tracking-widest transition-all", !annualBilling ? "bg-background text-foreground shadow-sm" : "text-foreground/30 hover:text-foreground/50")}
               >
                  Mensuel
               </button>
               <button 
                 onClick={() => setAnnualBilling(true)}
-                className={cn("px-6 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-2", annualBilling ? "bg-background text-foreground shadow-sm" : "text-foreground/30 hover:text-foreground/50")}
+                className={cn("px-6 py-1.5 rounded-full text-[10px] font-medium uppercase tracking-widest transition-all flex items-center gap-2", annualBilling ? "bg-background text-foreground shadow-sm" : "text-foreground/30 hover:text-foreground/50")}
               >
                  Annuel <span className="text-primary">-20%</span>
               </button>
@@ -368,46 +369,46 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
             <div className="p-8 rounded border border-border bg-card/30 backdrop-blur-xl">
               <h4 className="text-lg font-black mb-2 text-foreground">Starter</h4>
               <div className="flex items-baseline gap-1 mb-8">
-                <span className="text-3xl font-black text-foreground">{annualBilling ? '19 900' : '24 900'}</span>
-                <span className="text-foreground/30 text-[10px] font-black">F/MOIS</span>
+                <span className="text-3xl font-medium text-foreground">{annualBilling ? '19 900' : '24 900'}</span>
+                <span className="text-foreground/30 text-[10px] font-medium">F/MOIS</span>
               </div>
               <ul className="space-y-4 mb-8 text-xs font-bold text-foreground/70">
                 <li className="flex gap-3 items-center"><Check className="h-3 w-3 text-primary" /> 3 Analyses IA / mois</li>
                 <li className="flex gap-3 items-center"><Check className="h-3 w-3 text-primary" /> Veille Départementale</li>
                 <li className="flex gap-3 items-center text-foreground/20"><X className="h-3 w-3" /> Génération BPU/DQE</li>
               </ul>
-              <button className="w-full py-2.5 rounded border border-border hover:bg-secondary font-black text-[10px] uppercase tracking-widest transition-all">Démarrer</button>
+              <button className="w-full py-2.5 rounded border border-border hover:bg-secondary font-medium text-[10px] uppercase tracking-widest transition-all">Démarrer</button>
             </div>
 
             {/* Business - Populaire */}
             <div className="p-10 rounded border-[2px] border-primary bg-background shadow-none relative">
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-white px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-[0.2em] shadow-none">Populaire</div>
-              <h4 className="text-lg font-black mb-2 text-foreground text-primary">Business IA</h4>
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-white px-4 py-1.5 rounded-full text-[9px] font-medium uppercase tracking-[0.2em] shadow-none">Populaire</div>
+              <h4 className="text-lg font-medium mb-2 text-foreground text-primary">Business IA</h4>
               <div className="flex items-baseline gap-1 mb-8">
                 <span className="text-4xl font-black text-foreground">{annualBilling ? '49 900' : '59 900'}</span>
                 <span className="text-foreground/30 text-[10px] font-black">F/MOIS</span>
               </div>
-              <ul className="space-y-4 mb-10 text-xs font-bold text-foreground">
+              <ul className="space-y-4 mb-10 text-xs font-normal text-foreground">
                 <li className="flex gap-3 items-center"><Check className="h-4 w-4 text-primary" /> Analyses illimitées</li>
                 <li className="flex gap-3 items-center"><Check className="h-4 w-4 text-primary" /> Génération BPU complète</li>
                 <li className="flex gap-3 items-center"><Check className="h-4 w-4 text-primary" /> Checklist Conformité</li>
                 <li className="flex gap-3 items-center"><Check className="h-4 w-4 text-primary" /> Veille Nationale WhatsApp</li>
               </ul>
-              <button className="w-full py-3 rounded bg-primary hover:bg-primary/90 text-white font-black text-[10px] uppercase tracking-widest shadow-none transition-all active:scale-95">Prendre l'avantage</button>
+              <button className="w-full py-3 rounded bg-primary hover:bg-primary/90 text-white font-medium text-[10px] uppercase tracking-widest shadow-none transition-all active:scale-95">Prendre l'avantage</button>
             </div>
 
             {/* Enterprise */}
             <div className="p-8 rounded border border-border bg-card/30 backdrop-blur-xl">
-              <h4 className="text-lg font-black mb-2 text-foreground">Entreprise</h4>
+              <h4 className="text-lg font-medium mb-2 text-foreground">Entreprise</h4>
               <div className="flex items-baseline gap-1 mb-8">
-                <span className="text-3xl font-black text-foreground">De Luxe</span>
+                <span className="text-3xl font-medium text-foreground">De Luxe</span>
               </div>
-              <ul className="space-y-4 mb-8 text-xs font-bold text-foreground/70">
+              <ul className="space-y-4 mb-8 text-xs font-normal text-foreground/70">
                 <li className="flex gap-3 items-center"><Check className="h-3 w-3 text-primary" /> Accès API Direct</li>
                 <li className="flex gap-3 items-center"><Check className="h-3 w-3 text-primary" /> Expert Conformité Dédié</li>
                 <li className="flex gap-3 items-center"><Check className="h-3 w-3 text-primary" /> Veille Zone CEMAC</li>
               </ul>
-              <button className="w-full py-2.5 rounded border border-border hover:bg-secondary font-black text-[10px] uppercase tracking-widest transition-all">Contact Expert</button>
+              <button className="w-full py-2.5 rounded border border-border hover:bg-secondary font-medium text-[10px] uppercase tracking-widest transition-all">Contact Expert</button>
             </div>
           </div>
         </div>
@@ -423,7 +424,7 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
             <p className="text-lg text-foreground/40 mb-12 max-w-2xl mx-auto font-bold leading-relaxed">
               Rejoignez les leaders de la nouvelle économie camerounaise. L'IA n'est plus une option, c'est votre bouclier contre les rejets.
             </p>
-            <button className="bg-primary hover:bg-primary/90 text-white px-10 py-4 rounded text-xs font-black uppercase tracking-widest inline-flex items-center shadow-none transition-all active:scale-95">
+            <button className="bg-primary hover:bg-primary/90 text-white px-10 py-4 rounded text-xs font-medium uppercase tracking-widest inline-flex items-center shadow-none transition-all active:scale-95">
               <MessageCircle className="w-5 h-5 mr-3" />
               Parler à CORNAi sur WhatsApp
             </button>

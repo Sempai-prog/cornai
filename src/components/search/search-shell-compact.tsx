@@ -1,18 +1,18 @@
 "use client"
 
 import * as React from "react"
-import { BellRing, ExternalLink, ShieldAlert, Sparkles, Loader2, SearchX, MousePointer2, Lock, PanelLeftClose, PanelLeftOpen, Menu } from "lucide-react"
+import { BellRing, ExternalLink, ShieldAlert, Sparkles, Loader2, SearchX, MousePointer2, Lock, PanelLeftClose, PanelLeftOpen, Menu, Calendar, MapPin, Target, Zap, FileText, Info, Building2 } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription, SheetHeader } from "@/components/ui/sheet"
 
 import { SearchSidebar } from "./search-sidebar"
 import { SearchToolbar, ViewMode } from "./search-toolbar"
 import { SearchResultRow } from "./search-result-row"
-import { searchResultsMock } from "./search-mocks"
+import { MOCK_SEARCH_RESULTS } from "./search-mocks"
 import { SearchResultsKanban } from "./search-results-kanban"
 import { SearchState, SearchResult } from "./search-types"
 import { generateWhatsAppLink } from "./search-utils"
@@ -28,19 +28,84 @@ export function SearchShellCompact({ initialResults, isLoading: externalLoading 
   const [viewMode, setViewMode] = React.useState<ViewMode>("list")
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(true)
   const [state, setState] = React.useState<SearchState>(externalLoading ? "loading" : (initialResults?.length ? "results" : "initial"))
+  
+  // Advanced Filter State
+  const [filters, setFilters] = React.useState({
+    matchLevels: ["excellent"],
+    urgents: false,
+    budgetsBip: false,
+    procedures: [] as string[],
+    secteurs: ["Fournitures"], // Default matches mock state
+    regions: ["Centre"], // Default matches mock state
+  })
+  const [sort, setSort] = React.useState("recent")
+  const [activeQuickFilter, setActiveQuickFilter] = React.useState<string | null>(null)
 
-  // Client-side filtering for the initial set of results
+  const handleFilterChange = (key: string, value: any) => {
+    setFilters(prev => ({ ...prev, [key]: value }))
+    setState("loading")
+    setTimeout(() => setState("results"), 300)
+  }
+
   const getResults = () => {
-    const baseResults = initialResults || searchResultsMock
-    if (state === "loading") return []
-    if (!query) return baseResults
+    let baseResults = initialResults || MOCK_SEARCH_RESULTS
     
-    const filtered = baseResults.filter(r => 
-      r.title.toLowerCase().includes(query.toLowerCase()) || 
-      r.authority.toLowerCase().includes(query.toLowerCase())
-    )
+    if (state === "loading") return []
+    
+    // 1. Text Search (title, authority, region)
+    if (query) {
+      const q = query.toLowerCase()
+      baseResults = baseResults.filter(r => 
+        (r.title?.toLowerCase().includes(q) || false) || 
+        (r.authority?.toLowerCase().includes(q) || false) ||
+        (r.region?.toLowerCase().includes(q) || false)
+      )
+    }
 
-    return filtered
+    // 2. IA Match Levels
+    if (filters.matchLevels.length > 0) {
+      baseResults = baseResults.filter(r => r.matchLevel && filters.matchLevels.includes(r.matchLevel))
+    }
+
+    // 3. Quick Filters (Recommended/Risky/Urgent)
+    if (activeQuickFilter === 'RECOMMANDÉS') {
+      baseResults = baseResults.filter(r => r.matchLevel === 'excellent' || r.matchLevel === 'recommended')
+    } else if (activeQuickFilter === 'RISQUÉS') {
+      baseResults = baseResults.filter(r => r.matchLevel === 'risky')
+    } else if (activeQuickFilter === 'URGENTS') {
+      baseResults = baseResults.filter(r => parseInt(r.deadline) <= 15)
+    }
+
+    // 4. Procedures
+    if (filters.procedures.length > 0) {
+      baseResults = baseResults.filter(r => filters.procedures.includes(r.type))
+    }
+
+    // 5. Sectors
+    if (filters.secteurs.length > 0) {
+      baseResults = baseResults.filter(r => filters.secteurs.includes(r.sector))
+    }
+
+    // 6. Regions
+    if (filters.regions.length > 0) {
+      baseResults = baseResults.filter(r => filters.regions.includes(r.region))
+    }
+
+    // 7. Urgents J-15
+    if (filters.urgents) {
+      baseResults = baseResults.filter(r => parseInt(r.deadline) <= 15)
+    }
+
+    // 8. Sorting
+    baseResults = [...baseResults].sort((a, b) => {
+       if (sort === "recent") return 0 // Mock doesn't have dates yet
+       if (sort === "urgent") return parseInt(a.deadline) - parseInt(b.deadline)
+        if (sort === "score") return (b.matchScore || 0) - (a.matchScore || 0)
+       if (sort === "budget_desc") return b.budget.length - a.budget.length // Mock budget is string, using length as proxy
+       return 0
+    })
+
+    return baseResults
   }
 
   const results = getResults()
@@ -57,29 +122,37 @@ export function SearchShellCompact({ initialResults, isLoading: externalLoading 
     <div className="relative flex h-full w-full flex-col overflow-hidden rounded border border-border bg-card text-card-foreground shadow-none">
       <div className="flex h-full min-h-0 overflow-hidden">
         
-        {/* Desktop Sidebar (Retractable) */}
+        {/* Desktop Sidebar */}
         <motion.div 
             layout
             animate={{ width: isSidebarOpen ? 208 : 64 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }} 
             className="hidden h-full shrink-0 border-r border-border bg-card md:flex md:flex-col overflow-hidden"
         >
-          <SearchSidebar isCollapsed={!isSidebarOpen} />
+          <SearchSidebar 
+             isCollapsed={!isSidebarOpen} 
+             filters={filters}
+             onFilterChange={handleFilterChange}
+          />
         </motion.div>
 
-        {/* Mobile Sidebar (Sheet) */}
+        {/* Mobile Sidebar */}
         <Sheet>
           <SheetTrigger asChild>
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="absolute left-2 top-2 z-50 h-8 w-8 rounded md:hidden"
-            >
+            <Button variant="ghost" size="icon" className="absolute left-2 top-2 z-50 h-8 w-8 rounded md:hidden">
               <Menu className="h-4 w-4" />
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="p-0 border-r w-64 bg-card">
-            <SearchSidebar isCollapsed={false} />
+            <SheetHeader className="sr-only">
+               <SheetTitle>Menu de Navigation Latérale</SheetTitle>
+               <SheetDescription>Filtres avancés pour la veille stratégique sur les marchés publics.</SheetDescription>
+            </SheetHeader>
+            <SearchSidebar 
+               isCollapsed={false} 
+               filters={filters}
+               onFilterChange={handleFilterChange}
+            />
           </SheetContent>
         </Sheet>
 
@@ -88,113 +161,72 @@ export function SearchShellCompact({ initialResults, isLoading: externalLoading 
           <div className="sticky top-0 z-10 bg-background/90 backdrop-blur border-b">
             <SearchToolbar
               query={query}
-              onQueryChange={(q) => {
-                setQuery(q)
-                if (q.length > 0 && state === "initial") setState("loading")
-                if (q.length === 0) setState("initial")
-              }}
+              onQueryChange={setQuery}
               viewMode={viewMode}
               onViewModeChange={setViewMode}
               isSidebarOpen={isSidebarOpen}
               onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+              sort={sort}
+              onSortChange={setSort}
+              activeQuickFilter={activeQuickFilter}
+              onQuickFilterChange={setActiveQuickFilter}
+              resultsCount={results.length}
             />
           </div>
 
-          {/* Results Area */}
           <div className="min-h-0 flex-1 overflow-hidden">
-            {state === "loading" ? (
-              <ScrollArea className="h-full">
-                <div className="space-y-4 p-4 text-center">
-                  <p className="text-[10px] font-black tracking-widest text-foreground/40 animate-pulse">
-                     ⏳ INTERROGATION DE COLEPS ET DU JDM EN COURS...
-                  </p>
-                  <div className="space-y-1.5">
-                    {[1, 2, 3, 4, 5, 6].map((i) => (
-                      <div key={i} className="flex h-[50px] items-center gap-3 rounded border border-border/40 px-3">
-                        <Skeleton className="h-5 w-8 rounded opacity-50" />
-                        <div className="flex flex-1 flex-col gap-1.5">
-                           <Skeleton className="h-3 w-3/4 rounded opacity-40" />
-                           <Skeleton className="h-2 w-1/2 rounded opacity-20" />
-                        </div>
-                        <Skeleton className="h-8 w-20 rounded opacity-10" />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </ScrollArea>
-            ) : state === "initial" ? (
-              <div className="flex h-full flex-col items-center justify-center p-8 text-center">
-                <MousePointer2 className="h-8 w-8 text-foreground/10 mb-4" />
-                <h3 className="text-sm font-black text-foreground/60 mb-1">Prêt pour la veille</h3>
-                <p className="max-w-[200px] text-[11px] font-bold text-foreground/30">
-                  Tapez un secteur ou une région (ex: BTP Douala, Fournitures MINSANTE).
-                </p>
-              </div>
-            ) : state === "no_results" ? (
-               <div className="flex h-full flex-col items-center justify-center p-8 text-center">
-                <SearchX className="h-8 w-8 text-foreground/10 mb-4" />
-                <h3 className="text-sm font-black text-foreground/60 mb-2">Aucun marché publié</h3>
-                <p className="max-w-[240px] text-[11px] font-bold text-foreground/30 mb-6 leading-relaxed">
-                  Aucun marché pour ces critères aujourd'hui. Activez l'alerte pour être notifié de la prochaine publication de l'ARMP.
-                </p>
-                <Button 
-                  asChild
-                  className="h-8 rounded-[4px] bg-primary text-[10px] font-black text-white hover:bg-primary/90"
+            {state === "loading" && (
+               <div className="flex h-full flex-col items-center justify-center p-8 text-muted-foreground/30">
+                  <Loader2 className="h-6 w-6 animate-spin opacity-40 mb-3" />
+                  <p className="text-[10px] font-medium tracking-widest leading-none">Analyse des critères IA...</p>
+               </div>
+            )}
+
+            <AnimatePresence mode="wait">
+              {state === "results" && (
+                <motion.div 
+                   key="results"
+                   initial={{ opacity: 0 }}
+                   animate={{ opacity: 1 }}
+                   exit={{ opacity: 0 }}
+                   className="h-full"
                 >
-                  <a href={generateWhatsAppLink({} as any, "alert", query)} target="_blank" rel="noopener noreferrer">
-                     <BellRing className="mr-2 h-3.5 w-3.5" />
-                     ACTIVER L'ALERTE WHATSAPP
-                  </a>
-                </Button>
-              </div>
-            ) : (
-              <div className="h-full">
-                {viewMode === "list" ? (
                   <ScrollArea className="h-full">
-                    <div className="space-y-2 p-3 pb-8">
-                      {results.map((item) => (
-                        <SearchResultRow 
-                          key={item.id} 
-                          item={item} 
-                          isFakeBlocked={state === "blocked"}
-                        />
-                      ))}
+                    <div className={cn("p-4 pb-24", viewMode === "list" ? "space-y-1.5" : "")}>
+                      {results.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center py-20 text-muted-foreground/30">
+                           <SearchX className="h-8 w-8 opacity-20 mb-4" />
+                           <p className="text-[10px] font-medium tracking-widest">Aucun résultat trouvé</p>
+                        </div>
+                      ) : (
+                        viewMode === "list" ? (
+                           results.map((item) => (
+                              <SearchResultRow key={item.id} item={item} />
+                           ))
+                        ) : (
+                           <SearchResultsKanban results={results} />
+                        )
+                      )}
                     </div>
                   </ScrollArea>
-                ) : (
-                  <ScrollArea className="h-full">
-                     <SearchResultsKanban results={results} isFakeBlocked={state === "blocked"} />
-                  </ScrollArea>
-                )}
-              </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {(state === "initial" || (state === "results" && results.length === 0 && !query)) && (
+               <div className="flex h-full flex-col items-center justify-center p-8 text-muted-foreground/30">
+                  <MousePointer2 className="h-10 w-10 opacity-20 mb-4" />
+                  <h3 className="text-sm font-medium text-foreground/60 mb-1 tracking-tight">Utilisez les filtres à gauche</h3>
+                  <p className="text-[10px] font-normal opacity-40 tracking-tighter">Pour affiner la veille stratégique selon vos secteurs.</p>
+               </div>
             )}
           </div>
 
-          {/* Fixed Footer */}
-          <div className="sticky bottom-0 z-10 shrink-0 border-t border-border bg-card/90 backdrop-blur px-3 py-2.5">
-            <div className="flex items-center justify-between gap-3 overflow-hidden">
-              <div className="flex items-center gap-3 min-w-0">
-                <p className="hidden xs:block text-[10px] font-bold text-foreground/40 uppercase tracking-widest truncate">
-                  Sources : COLEPS, JDM, CTD
-                </p>
-                <button className="flex items-center gap-1.5 text-[11px] font-black text-primary hover:underline transition-all whitespace-nowrap">
-                  <span>Voir plus d'opportunités</span>
-                  <ExternalLink className="h-3 w-3" />
-                </button>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  asChild
-                  className="h-7 rounded border-primary/20 px-3 text-[10px] font-black text-primary hover:bg-primary/5"
-                >
-                  <a href={generateWhatsAppLink({} as any, "alert", query)} target="_blank" rel="noopener noreferrer">
-                    <BellRing className="mr-1.5 h-3 w-3" />
-                    Alerte WhatsApp
-                  </a>
-                </Button>
-              </div>
+          <div className="sticky bottom-0 z-10 shrink-0 border-t bg-card/90 backdrop-blur px-4 py-2">
+            <div className="flex items-center justify-end">
+               <Button variant="outline" asChild className="h-7 border-primary/20 px-3 text-[9px] font-medium text-primary hover:bg-primary/5 rounded-[4px]">
+                  <a href={generateWhatsAppLink({}, "alerte-sectorielle", query)} target="_blank">Alerte WhatsApp</a>
+               </Button>
             </div>
           </div>
         </div>

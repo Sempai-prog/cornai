@@ -1,217 +1,183 @@
 "use client"
 
 import * as React from "react"
-import { BriefcaseBusiness, ShieldCheck, Sparkles, Filter, Settings, Search, Globe, Building2 } from "lucide-react"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Checkbox } from "@/components/ui/checkbox"
+import { 
+  Filter, 
+  Search, 
+  MapPin,
+  CheckCircle2,
+  ChevronDown,
+  Layers,
+  Activity,
+  Zap
+} from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
-import { motion, AnimatePresence } from "framer-motion"
 
-interface SearchSidebarProps {
-  isCollapsed?: boolean
+interface SidebarProps {
+  isCollapsed: boolean
+  filters: any
+  onFilterChange: (key: string, value: any) => void
 }
 
-function FilterCheck({
-  label,
-  defaultChecked,
-  isCollapsed
-}: {
-  label: string
-  defaultChecked?: boolean
-  isCollapsed?: boolean
-}) {
-  if (isCollapsed) return null
+export function SearchSidebar({ isCollapsed, filters, onFilterChange }: SidebarProps) {
+  const toggleFilter = (key: string, value: string) => {
+    const currentValues = filters[key] || []
+    if (currentValues.includes(value)) {
+      onFilterChange(key, currentValues.filter((v: string) => v !== value))
+    } else {
+      onFilterChange(key, [...currentValues, value])
+    }
+  }
+
   return (
-    <motion.label 
-      initial={{ opacity: 0, x: -5 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -5 }}
-      className="flex cursor-pointer items-center gap-2 py-1 text-[11px] font-bold text-foreground/50 transition-colors hover:text-foreground"
-    >
-      <Checkbox defaultChecked={defaultChecked} className="h-3.5 w-3.5 rounded-[4px] border-border" />
-      <span className="truncate">{label}</span>
-    </motion.label>
+    <div className="flex h-full flex-col bg-card">
+      {/* Search Navigation Context (Always Visible) */}
+      <div className={cn(
+        "flex h-14 items-center gap-3 px-6 border-b border-border/50",
+        isCollapsed && "justify-center px-0"
+      )}>
+        <div className="flex h-8 w-8 items-center justify-center rounded-[4px] bg-primary group-hover:scale-105 transition-transform shadow-sm">
+           <Zap className="h-5 w-5 text-white fill-white" />
+        </div>
+        {!isCollapsed && (
+          <div className="flex flex-col">
+            <span className="text-[12px] font-medium tracking-tight text-foreground">Veille Stratégique</span>
+            <span className="text-[8px] font-medium tracking-[0.1em] text-primary -mt-0.5 uppercase">Filtres Actifs</span>
+          </div>
+        )}
+      </div>
+
+      <ScrollArea className="flex-1">
+        <div className="px-3 py-4">
+          {!isCollapsed ? (
+            <div className="space-y-6">
+              {/* Secteurs */}
+              <div className="space-y-3 px-3">
+                 <div className="flex items-center justify-between">
+                    <h4 className="text-[10px] font-medium tracking-widest text-foreground/30 uppercase">Secteurs</h4>
+                    <Layers className="h-3 w-3 text-foreground/20" />
+                 </div>
+                  <div className="space-y-1">
+                    {[
+                      { val: "Travaux", label: "BTP / Génie Civil" },
+                      { val: "Fournitures", label: "Fournitures" },
+                      { val: "Services", label: "Intellectuelles" }
+                    ].map((s) => (
+                       <FilterListItem 
+                          key={s.val} 
+                          label={s.label}
+                          isActive={filters.secteurs.includes(s.val)}
+                          onClick={() => toggleFilter("secteurs", s.val)}
+                       />
+                    ))}
+                  </div>
+              </div>
+
+              <Separator className="mx-3 opacity-30" />
+
+              {/* Procédures */}
+              <div className="space-y-3 px-3">
+                 <div className="flex items-center justify-between">
+                    <h4 className="text-[10px] font-medium tracking-widest text-foreground/30 uppercase">Procédures</h4>
+                    <Activity className="h-3 w-3 text-foreground/20" />
+                 </div>
+                 <div className="space-y-1">
+                    {["AONO", "AONR", "DC", "AAMI"].map((p) => (
+                       <FilterListItem 
+                          key={p} 
+                          label={p}
+                          isActive={filters.procedures.includes(p)}
+                          onClick={() => toggleFilter("procedures", p)}
+                       />
+                    ))}
+                 </div>
+              </div>
+
+              <Separator className="mx-3 opacity-30" />
+
+              {/* Régions */}
+              <div className="space-y-3 px-3">
+                 <div className="flex items-center justify-between">
+                    <h4 className="text-[10px] font-medium tracking-widest text-foreground/30 uppercase">Régions</h4>
+                    <MapPin className="h-3 w-3 text-foreground/20" />
+                 </div>
+                 <div className="grid grid-cols-2 gap-1.5">
+                    {["Centre", "Littoral", "Ouest", "Nord", "Est", "Sud"].map((r) => (
+                       <button
+                          key={r}
+                          onClick={() => toggleFilter("regions", r)}
+                          className={cn(
+                             "flex items-center justify-center rounded-[4px] border py-1.5 text-[9px] font-medium transition-all",
+                             filters.regions.includes(r)
+                                ? "border-primary bg-primary/5 text-primary"
+                                : "border-border text-foreground/30 hover:border-foreground/20"
+                          )}
+                       >
+                          {r}
+                       </button>
+                    ))}
+                 </div>
+              </div>
+
+              {/* Reset Logic */}
+              <div className="px-3">
+                <Button 
+                   variant="ghost" 
+                   size="sm" 
+                   onClick={() => {
+                      onFilterChange("secteurs", [])
+                      onFilterChange("procedures", [])
+                      onFilterChange("regions", [])
+                      onFilterChange("matchLevels", [])
+                   }}
+                   className="h-8 w-full justify-center text-[10px] font-normal text-foreground/30 hover:text-foreground/60 p-0 hover:bg-transparent"
+                >
+                   Réinitialiser les filtres
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center gap-6 py-4">
+               <div className="relative">
+                  <Layers className="h-4 w-4 text-foreground/20" />
+                  {filters.secteurs.length > 0 && <div className="absolute -top-1 -right-1 h-1.5 w-1.5 rounded-full bg-primary" />}
+               </div>
+               <div className="relative">
+                  <Activity className="h-4 w-4 text-foreground/20" />
+                  {filters.procedures.length > 0 && <div className="absolute -top-1 -right-1 h-1.5 w-1.5 rounded-full bg-primary" />}
+               </div>
+               <div className="relative">
+                  <MapPin className="h-4 w-4 text-foreground/20" />
+                  {filters.regions.length > 0 && <div className="absolute -top-1 -right-1 h-1.5 w-1.5 rounded-full bg-primary" />}
+               </div>
+            </div>
+          )}
+        </div>
+      </ScrollArea>
+    </div>
   )
 }
 
-function SidebarPill({ label, active, isCollapsed }: { label: string; active?: boolean; isCollapsed?: boolean }) {
-  if (isCollapsed) return null
+function FilterListItem({ label, isActive, onClick }: { label: string, isActive: boolean, onClick: () => void }) {
   return (
-    <motion.button
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
+    <button
+      onClick={onClick}
       className={cn(
-        "inline-flex h-6 items-center rounded-[4px] border px-2 text-[10px] font-black transition-all",
-        active
-          ? "border-primary/20 bg-primary/10 text-primary"
-          : "border-border bg-background text-foreground/50 hover:border-primary/30 hover:text-foreground"
+        "flex w-full items-center justify-between group rounded-[4px] px-2.5 py-1.5 transition-all text-left",
+        isActive ? "bg-secondary text-foreground" : "text-foreground/40 hover:bg-secondary/50 hover:text-foreground/60"
       )}
     >
-      {label}
-    </motion.button>
-  )
-}
-
-export function SearchSidebar({ isCollapsed }: SearchSidebarProps) {
-  return (
-    <div className="flex h-full flex-col bg-card/30 backdrop-blur-md">
-      {/* Header Section */}
-      <div className="shrink-0 px-4 py-4">
-        <motion.div 
-           layout
-           className={cn(
-             "flex items-center gap-2 text-[10px] font-black tracking-[0.1em]",
-             isCollapsed ? "justify-center" : "text-foreground/40"
-           )}
-        >
-          <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-primary">
-            <Sparkles className="h-3 w-3" />
-          </div>
-          <AnimatePresence>
-            {!isCollapsed && (
-              <motion.span 
-                 initial={{ opacity: 0, width: 0 }}
-                 animate={{ opacity: 1, width: "auto" }}
-                 exit={{ opacity: 0, width: 0 }}
-                 className="overflow-hidden whitespace-nowrap"
-              >
-                 Moteur de veille CORNAi
-              </motion.span>
-            )}
-          </AnimatePresence>
-        </motion.div>
-      </div>
-
-      <div className="min-h-0 flex-1 px-4 overflow-y-auto no-scrollbar pb-6">
-        <AnimatePresence mode="wait">
-          {!isCollapsed ? (
-            <motion.div
-              key="full"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <Accordion type="single" collapsible defaultValue="ia" className="w-full space-y-1">
-                <AccordionItem value="ia" className="border-none">
-                  <AccordionTrigger className="py-2 text-[10px] font-black tracking-wider text-foreground/40 hover:text-foreground hover:no-underline [&[data-state=open]]:text-primary transition-colors">
-                    IA & Recommandations
-                  </AccordionTrigger>
-                  <AccordionContent className="space-y-1 pb-3 pt-1">
-                    <FilterCheck label="Match excellent" defaultChecked isCollapsed={isCollapsed} />
-                    <FilterCheck label="Urgents (J-15)" isCollapsed={isCollapsed} />
-                    <FilterCheck label="Budgets BIP" isCollapsed={isCollapsed} />
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="procedure" className="border-none">
-                  <AccordionTrigger className="py-2 text-[10px] font-black tracking-wider text-foreground/40 hover:text-foreground hover:no-underline [&[data-state=open]]:text-primary transition-colors">
-                    Procédures
-                  </AccordionTrigger>
-                  <AccordionContent className="flex flex-wrap gap-1.5 pb-3 pt-1">
-                    <SidebarPill label="DC" active isCollapsed={isCollapsed} />
-                    <SidebarPill label="AONO" isCollapsed={isCollapsed} />
-                    <SidebarPill label="AONR" isCollapsed={isCollapsed} />
-                    <SidebarPill label="AAMI" isCollapsed={isCollapsed} />
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="secteur" className="border-none">
-                  <AccordionTrigger className="py-2 text-[10px] font-black tracking-wider text-foreground/40 hover:text-foreground hover:no-underline [&[data-state=open]]:text-primary transition-colors">
-                    Secteurs clés
-                  </AccordionTrigger>
-                  <AccordionContent className="space-y-1 pb-3 pt-1">
-                    <FilterCheck label="Travaux" isCollapsed={isCollapsed} />
-                    <FilterCheck label="Fournitures" defaultChecked isCollapsed={isCollapsed} />
-                    <FilterCheck label="Services" isCollapsed={isCollapsed} />
-                    <FilterCheck label="Études" isCollapsed={isCollapsed} />
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="acheteurs" className="border-none">
-                  <AccordionTrigger className="py-2 text-[10px] font-black tracking-wider text-foreground/40 hover:text-foreground hover:no-underline [&[data-state=open]]:text-primary transition-colors">
-                    Maitres d'ouvrage
-                  </AccordionTrigger>
-                  <AccordionContent className="space-y-1 pb-3 pt-1">
-                    <FilterCheck label="Ministères" defaultChecked isCollapsed={isCollapsed} />
-                    <FilterCheck label="Mairies / Communes" isCollapsed={isCollapsed} />
-                    <FilterCheck label="Parapublic" isCollapsed={isCollapsed} />
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="regions" className="border-none">
-                  <AccordionTrigger className="py-2 text-[10px] font-black tracking-wider text-foreground/40 hover:text-foreground hover:no-underline [&[data-state=open]]:text-primary transition-colors">
-                    Régions
-                  </AccordionTrigger>
-                  <AccordionContent className="space-y-1 pb-3 pt-1">
-                    <FilterCheck label="Centre" defaultChecked isCollapsed={isCollapsed} />
-                    <FilterCheck label="Littoral" isCollapsed={isCollapsed} />
-                    <FilterCheck label="Ouest" isCollapsed={isCollapsed} />
-                    <FilterCheck label="Adamaoua" isCollapsed={isCollapsed} />
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </motion.div>
-          ) : (
-            <motion.div 
-               key="collapsed"
-               initial={{ opacity: 0, y: 10 }}
-               animate={{ opacity: 1, y: 0 }}
-               exit={{ opacity: 0, y: 10 }}
-               className="flex flex-col items-center gap-6 pt-4"
-            >
-               <button title="Filtres IA" className="flex h-8 w-8 items-center justify-center rounded-lg bg-secondary/50 text-primary transition-all hover:bg-primary/10">
-                  <Filter className="h-4 w-4" />
-               </button>
-               <button title="Secteurs" className="flex h-8 w-8 items-center justify-center rounded-lg bg-secondary/50 text-foreground/40 transition-all hover:bg-secondary hover:text-foreground">
-                  <Settings className="h-4 w-4" />
-               </button>
-               <button title="Cartographie" className="flex h-8 w-8 items-center justify-center rounded-lg bg-secondary/50 text-foreground/40 transition-all hover:bg-secondary hover:text-foreground">
-                  <Globe className="h-4 w-4" />
-               </button>
-               <button title="Acheteurs" className="flex h-8 w-8 items-center justify-center rounded-lg bg-secondary/50 text-foreground/40 transition-all hover:bg-secondary hover:text-foreground">
-                  <Building2 className="h-4 w-4" />
-               </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-
-      {/* Profile Section */}
+      <span className={cn("text-[10px] tracking-tight", isActive ? "font-medium" : "font-normal")}>{label}</span>
       <div className={cn(
-        "shrink-0 border-t border-border/50 bg-card/80 p-4",
-        isCollapsed ? "flex justify-center" : ""
+        "h-3.5 w-3.5 rounded-[2px] border transition-all flex items-center justify-center shrink-0",
+        isActive ? "border-primary bg-primary text-white" : "border-border/60 bg-background group-hover:border-foreground/30"
       )}>
-        <motion.div 
-           layout
-           className={cn(
-             "group relative flex items-center gap-3 overflow-hidden rounded-[4px] border border-border bg-background/50 transition-all hover:border-primary/30",
-             isCollapsed ? "p-1.5" : "p-2"
-           )}
-        >
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[4px] bg-primary/10 text-primary transition-transform group-hover:scale-105">
-            <BriefcaseBusiness className="h-4 w-4" />
-          </div>
-          <AnimatePresence>
-            {!isCollapsed && (
-              <motion.div
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -10 }}
-                className="min-w-0"
-              >
-                <div className="flex items-center gap-1.5">
-                  <span className="truncate text-[11px] font-black tracking-tight">Ets. CORNAi</span>
-                  <ShieldCheck className="h-3 w-3 text-primary" />
-                </div>
-                <div className="text-[10px] font-bold text-foreground/40 whitespace-nowrap">
-                  Profil d'alerte actif
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
+        {isActive && <CheckCircle2 className="h-2.5 w-2.5" />}
       </div>
-    </div>
+    </button>
   )
 }

@@ -41,7 +41,7 @@ const BenefitCard = ({ i, Icon, title, description, progress, range, color }: Be
         className="relative w-full max-w-[420px] p-7 rounded bg-white dark:bg-[#0A0A0A] border border-border transition-all duration-300 group overflow-hidden origin-top"
       >
         {/* Watermark Number */}
-        <div className="absolute top-6 right-7 text-2xl font-black text-gray-100 dark:text-white/5 select-none tracking-tighter">
+        <div className="absolute top-6 right-7 text-2xl font-medium text-gray-100 dark:text-white/5 select-none tracking-tighter">
           0{i + 1}
         </div>
 
@@ -53,14 +53,14 @@ const BenefitCard = ({ i, Icon, title, description, progress, range, color }: Be
           <Icon className="w-5.5 h-5.5" />
         </div>
 
-        <h3 className="text-lg font-bold tracking-tight text-foreground mb-2">
+        <h3 className="text-lg font-medium tracking-tight text-foreground mb-2">
           {title}
         </h3>
-        <p className="text-[13px] font-medium text-muted-foreground leading-relaxed">
+        <p className="text-[13px] font-normal text-muted-foreground leading-relaxed">
           {description}
         </p>
 
-        <div className="mt-7 pt-4 border-t border-slate-50 dark:border-white/5 flex items-center gap-2 text-[9px] font-bold uppercase tracking-widest text-[#C28E64]">
+        <div className="mt-7 pt-4 border-t border-slate-50 dark:border-white/5 flex items-center gap-2 text-[9px] font-medium uppercase tracking-widest text-[#C28E64]">
           <div className="h-1 w-1 rounded-full bg-[#C28E64] opacity-50" />
           <span>Expertise Locale</span>
         </div>
@@ -116,13 +116,13 @@ export function StackingBenefits() {
           {/* Left Column - Fixed Text */}
           <div className="lg:sticky lg:top-[35vh] lg:self-start space-y-6 lg:h-fit py-12">
             <div className="space-y-6">
-              <span className="text-[10px] font-black tracking-[0.3em] text-[#C28E64] uppercase transition-colors">
+              <span className="text-[10px] font-medium tracking-[0.3em] text-[#C28E64] uppercase transition-colors">
                 BENEFITS
               </span>
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tight leading-tight text-foreground">
                 Pourquoi choisir <br/> la solution CORNAi ?
               </h2>
-              <p className="text-lg font-medium text-muted-foreground leading-relaxed max-w-md">
+              <p className="text-lg font-normal text-muted-foreground leading-relaxed max-w-md">
                  Une IA locale pour transformer votre PME en leader incontesté des marchés publics au Cameroun.
               </p>
             </div>

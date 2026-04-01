@@ -1,145 +1,151 @@
 // ══════════════════════════════════════════
-// CORNAi — Dashboard Layout
+// CORNAi — Dashboard Layout (Restauration Design Précédent)
 // ══════════════════════════════════════════
 
+"use client"
+
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
+import { usePathname } from "next/navigation"
 import { 
-  Sidebar, 
-  SidebarContent, 
-  SidebarHeader, 
-  SidebarMenu, 
-  SidebarMenuItem, 
-  SidebarMenuButton, 
   SidebarProvider, 
-  SidebarTrigger,
-  SidebarInset,
-  SidebarGroup,
-  SidebarGroupLabel,
-  SidebarGroupContent,
-  SidebarFooter
 } from "@/components/ui/sidebar"
 import { 
   LayoutDashboard, 
-  FileText, 
   Target, 
   Files, 
   User, 
-  Settings, 
   Bell, 
-  HelpCircle,
   LogOut,
   Search,
-  Menu
+  ShieldCheck,
+  PanelLeft
 } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname()
+
+  const navItems = [
+    { label: "Poste de pilotage", icon: LayoutDashboard, href: "/dashboard" },
+    { label: "Moteur de recherche", icon: Search, href: "/dashboard/appels-offres" },
+    { label: "Veille stratégique", icon: Target, href: "/dashboard/opportunites" },
+  ]
+
+  const workspaceItems = [
+    { label: "Dossier PME", icon: Files, href: "/dashboard/documents" },
+    { label: "Fiche Entreprise", icon: User, href: "/dashboard/profil" },
+  ]
+
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen bg-muted/20">
-        <Sidebar className="border-r border-border bg-white" variant="inset" collapsible="icon">
-          <SidebarHeader className="h-16 flex items-center px-6">
-            <Link href="/" className="flex items-center gap-2 font-bold text-xl">
-               <span className="text-2xl">🌽</span>
-               <span className="group-data-[collapsible=icon]:hidden">CORNAi</span>
+      <div className="flex h-screen w-full bg-background text-foreground overflow-hidden font-sans selection:bg-primary/20 antialiased">
+        
+        {/* SIDEBAR : Restauration du design "Sleek" précédent */}
+        <aside className="w-64 flex-shrink-0 flex flex-col border-r border-border bg-card/40 backdrop-blur-xl z-20">
+          
+          {/* Header Sidebar (Logo CORNAi) */}
+          <div className="h-14 flex items-center px-6 border-b border-border">
+            <Link href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
+               <div className="w-6 h-6 bg-primary flex items-center justify-center rounded">
+                  <ShieldCheck className="w-4 h-4 text-white" />
+               </div>
+               <span className="font-black tracking-tighter text-base text-foreground uppercase">CORNAi</span>
             </Link>
-          </SidebarHeader>
+          </div>
 
-          <SidebarContent>
-            <SidebarGroup>
-              <SidebarGroupLabel className="group-data-[collapsible=icon]:hidden text-[10px] font-bold tracking-widest text-muted-foreground/60 mb-2">Principal</SidebarGroupLabel>
-              <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild tooltip="Tableau de bord">
-                    <Link href="/dashboard" className="flex items-center gap-3">
-                      <LayoutDashboard className="h-5 w-5" />
-                      <span>Tableau de bord</span>
+          {/* Navigation Items */}
+          <div className="flex-1 py-6 space-y-8">
+            <div className="space-y-1">
+              <h3 className="text-[10px] font-semibold text-foreground/40 uppercase tracking-[0.2em] mb-4 px-6">Exploitation</h3>
+              <div className="px-3 space-y-1">
+                {navItems.map((item) => {
+                  const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname?.startsWith(item.href))
+                  return (
+                    <Link 
+                      key={item.href} 
+                      href={item.href}
+                      className={cn(
+                        "flex items-center gap-3 py-2 text-[13px] font-semibold transition-all group pr-4",
+                        isActive 
+                          ? "bg-white/5 text-white border-l-2 border-primary pl-5" 
+                          : "text-foreground/40 hover:text-foreground hover:bg-white/5 pl-5"
+                      )}
+                    >
+                      <item.icon className={cn("h-4 w-4", isActive ? "text-primary" : "text-foreground/20 group-hover:text-foreground/50")} />
+                      <span>{item.label}</span>
                     </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild tooltip="Appels d'offres">
-                    <Link href="/dashboard/appels-offres" className="flex items-center gap-3">
-                      <Search className="h-5 w-5" />
-                      <span>Appels d'offres</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild tooltip="Mes opportunités">
-                    <Link href="/dashboard/opportunites" className="flex items-center gap-3">
-                      <Target className="h-5 w-5" />
-                      <span>Mes opportunités</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              </SidebarMenu>
-            </SidebarGroup>
+                  )
+                })}
+              </div>
+            </div>
 
-            <SidebarGroup>
-              <SidebarGroupLabel className="group-data-[collapsible=icon]:hidden text-[10px] font-bold tracking-widest text-muted-foreground/60 mb-2 mt-4">Gestion</SidebarGroupLabel>
-              <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild tooltip="Mes documents">
-                    <Link href="/dashboard/documents" className="flex items-center gap-3">
-                      <Files className="h-5 w-5" />
-                      <span>Mes documents</span>
+            <div className="space-y-1">
+              <h3 className="text-[10px] font-semibold text-foreground/40 uppercase tracking-[0.2em] mb-4 px-6">Workspace</h3>
+              <div className="px-3 space-y-1">
+                {workspaceItems.map((item) => {
+                  const isActive = pathname === item.href
+                  return (
+                    <Link 
+                      key={item.href} 
+                      href={item.href}
+                      className={cn(
+                        "flex items-center gap-3 py-2 text-[13px] font-semibold transition-all group pr-4",
+                        isActive 
+                          ? "bg-white/5 text-white border-l-2 border-primary pl-5" 
+                          : "text-foreground/40 hover:text-foreground hover:bg-white/5 pl-5"
+                      )}
+                    >
+                      <item.icon className={cn("h-4 w-4", isActive ? "text-primary" : "text-foreground/20 group-hover:text-foreground/50")} />
+                      <span>{item.label}</span>
                     </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild tooltip="Profil Entreprise">
-                    <Link href="/dashboard/profil" className="flex items-center gap-3">
-                      <User className="h-5 w-5" />
-                      <span>Profil Entreprise</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              </SidebarMenu>
-            </SidebarGroup>
-          </SidebarContent>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
 
-          <SidebarFooter className="border-t border-border/50 p-4">
-             <SidebarMenu>
-                <SidebarMenuItem>
-                   <SidebarMenuButton className="text-muted-foreground hover:text-destructive">
-                      <LogOut className="h-5 w-5" />
-                      <span className="group-data-[collapsible=icon]:hidden">Déconnexion</span>
-                   </SidebarMenuButton>
-                </SidebarMenuItem>
-             </SidebarMenu>
-          </SidebarFooter>
-        </Sidebar>
+          <div className="mt-auto p-4 border-t border-border">
+             <button className="flex w-full items-center gap-3 px-4 py-2 rounded text-[13px] font-medium text-foreground/20 hover:text-foreground hover:bg-muted/80 transition-colors">
+                <LogOut className="h-4 w-4" />
+                <span>Déconnexion</span>
+             </button>
+          </div>
+        </aside>
 
-        <SidebarInset className="flex flex-col flex-1">
-          <header className="h-16 flex items-center justify-between px-6 border-b bg-white/50 backdrop-blur-sm sticky top-0 z-40">
+        {/* MAIN AREA */}
+        <div className="flex-1 flex flex-col min-w-0 relative">
+          
+          <header className="h-14 flex items-center justify-between px-6 lg:px-8 border-b border-border bg-background/60 backdrop-blur-md z-10 shrink-0">
              <div className="flex items-center gap-4">
-                <SidebarTrigger className="h-9 w-9" />
-                <div className="h-4 w-px bg-border hidden md:block" />
-                <h2 className="font-semibold hidden md:block">Tableau de Bord</h2>
+                <button className="w-8 h-8 flex items-center justify-center border border-border rounded text-foreground/40 hover:text-foreground hover:bg-muted transition-colors">
+                   <PanelLeft size={16} />
+                </button>
+                <div className="h-4 w-px bg-border mx-1" />
+                <nav className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-foreground/40">
+                   <Link href="/dashboard" className="hover:text-primary transition-colors">Workspace</Link>
+                   <span className="opacity-20">/</span>
+                   <span className="text-foreground/60">Pilotage IA</span>
+                </nav>
              </div>
 
              <div className="flex items-center gap-4">
-                <Button variant="ghost" size="icon" className="relative h-9 w-9">
-                   <Bell className="h-5 w-5" />
-                   <span className="absolute top-2 right-2 h-2 w-2 bg-cornai rounded-full ring-2 ring-white" />
-                </Button>
-                <div className="flex items-center gap-3 pl-2 border-l">
-                   <div className="text-right hidden sm:block">
-                      <p className="text-sm font-bold leading-none">Antigravity BTP</p>
-                      <p className="text-[10px] text-muted-foreground tracking-tight">Secteur Travaux</p>
-                   </div>
-                   <div className="h-9 w-9 rounded-full bg-cornai text-white font-bold flex items-center justify-center border-2 border-white shadow-sm">
-                      AB
-                   </div>
+                <div className="flex items-center gap-2 px-3 py-1 rounded border border-white/5 bg-white/[0.02] grayscale hover:grayscale-0 transition-all">
+                   <div className="w-1 h-1 rounded-full bg-primary animate-pulse" />
+                   <span className="text-[10px] font-semibold text-foreground/40 uppercase tracking-widest opacity-60">ACTIF</span>
                 </div>
+                <button className="h-8 w-8 flex items-center justify-center rounded text-foreground/40 hover:text-foreground hover:bg-muted transition-colors relative">
+                   <Bell className="h-4 w-4" />
+                   <span className="absolute top-2.5 right-2.5 w-1 h-1 bg-primary rounded-full" />
+                </button>
              </div>
           </header>
 
-          <main className="flex-1 p-6 lg:p-8">
-            {children}
+          <main className="flex-1 overflow-y-auto bg-background">
+             <div className="max-w-[1400px] mx-auto w-full px-6 lg:px-8 py-8 md:py-10">
+                {children}
+             </div>
           </main>
-        </SidebarInset>
+        </div>
       </div>
     </SidebarProvider>
   )
