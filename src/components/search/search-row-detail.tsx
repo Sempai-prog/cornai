@@ -27,7 +27,7 @@ interface SearchRowDetailProps {
 
 export function SearchRowDetail({ item, onOpenInspector }: SearchRowDetailProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 bg-muted/5 border-y border-border/10 animate-in fade-in slide-in-from-top-2 duration-300">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 bg-muted/5 border-y border-border/10 animate-in fade-in slide-in-from-top-2 duration-300">
       
       {/* BLOC 1 : FINANCIER (Caution & Frais) */}
       <div className="flex flex-col gap-3 p-3.5 rounded-[4px] border border-border/40 bg-muted/30 h-full">
@@ -35,16 +35,16 @@ export function SearchRowDetail({ item, onOpenInspector }: SearchRowDetailProps)
             <Scale className="h-3 w-3" />
             <span className="text-[9px] font-bold uppercase tracking-widest">Exigences Financières</span>
          </div>
-         <div className="space-y-1">
+          <div className="space-y-1">
             <div className="flex justify-between items-center">
-               <span className="text-[10px] text-foreground/40 italic">Caution</span>
+               <span className="text-[10px] text-foreground/40 font-bold uppercase tracking-widest">Caution</span>
                <span className="text-[11px] font-bold text-foreground/80">{item.cautionSoumission || "N/A"}</span>
             </div>
             <div className="flex justify-between items-center">
-               <span className="text-[10px] text-foreground/40 italic">Achat DAO</span>
+               <span className="text-[10px] text-foreground/40 font-bold uppercase tracking-widest">Achat DAO</span>
                <span className="text-[11px] font-bold text-foreground/80">{item.fraisDossier || "N/A"}</span>
             </div>
-         </div>
+          </div>
       </div>
 
       {/* BLOC 2 : FILTRE IA (Alerte Risque) */}

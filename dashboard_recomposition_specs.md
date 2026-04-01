@@ -1,34 +1,37 @@
-# Spécifications de Construction — Dashboard CORNAi (Phase D1.5 - Quiet Design)
+# Spécifications de Construction — Dashboard CORNAi (Phase D1.7 - Elite Cockpit)
 
-Ce document définit les règles de recomposition structurelle du dashboard CORNAi. L'objectif est d'adopter une esthétique "Quiet Design" : dense mais apaisée, ultra-lisible et sophistiquée.
+Ce document définit les règles de recomposition structurelle. L'objectif est d'adopter une esthétique "Elite Cockpit" : alignement chirurgical, éradication du bruit visuel et hiérarchie industrielle.
 
 ---
 
 ## 1. Structure Globale (The Shell)
 
-| Élément | Adaptation CORNAi (Quiet Design) |
+| Élément | Adaptation CORNAi (Quiet Design V1.6) |
 | :--- | :--- |
-| **Radius** | **`rounded-[4px]` (4px)** — Rigueur technique. |
-| **Surfaces** | **Deep Night (`#0a0a0b`)** — Suppression du blanc massif. |
+| **Mode** | **Bi-Adaptive** : Clinical Light (Surgical Grey) & Deep Night. |
+| **Radius** | **`rounded-[4px]` (4px)** — Rigueur technique absolue. |
+| **Surfaces** | **`bg-background`** / **`bg-card`** — Suppression de l'hexadécimal hardcodé. |
 | **Gaps** | **`gap-4` (16px)** ou `gap-px` — Densité opérationnelle. |
-| **Bordures** | **`border-white/5`** — Ultra-finesse. Si le fond est déjà distinct (ex: `bg-card/40`), supprimer la bordure extérieure. |
-| **Séparation** | Privilégier **`divide-white/5`** aux boîtes individuelles pour éviter l'effet "boîte dans la boîte". |
-| **Background** | **Universal Grid (`#080808`)** — Grille large (80px), **aucune lueur radiale statique > 3%**. Reveal dynamique x3. |
+| **Bordures** | **`border-border/40`** — Finesse adaptative. En mode clair, l'opacité est augmentée pour le contraste. |
+| **Séparation** | Privilégier **`divide-border/40`** aux boîtes individuelles. |
+| **Background** | **GlobalGridBackground** — Thème-aware, grille (80px), lueur centrale atténuée (< 20% opacity). |
 
 ---
 
 ## 2. Architecture & Typographie (Quiet Design Logic)
 
-### Hiérarchie Typographique (Override Premium)
+### Hiérarchie Typographique (Elite Precision)
 *   **Titres de Page (H1/H2)** : **`font-semibold`** ou `font-medium` avec `tracking-tight`. Bannir le `font-black` et `font-extrabold`.
-*   **Titres de Cartes / Headers** : **`font-semibold`** (text-sm/base).
-*   **Labels Techniques** : **`text-[10px]`** ou `text-[11px]` en **`font-semibold`** (au lieu de Black). Garder le `uppercase` et `tracking-wider`.
+*   **Titres de Cartes / Headers** : **`font-semibold`** (text-sm/base). Pas d'italique.
+*   **Labels Techniques** : **`text-[10px]`** ou `text-[11px]` en **`font-semibold`**. Garder le `uppercase` et `tracking-[0.2em]`.
+*   **Interdiction de l'Italique** : L'italique est **proscrit** pour tous les textes techniques, diagnostics IA et labels. Utiliser l'opacité (`text-foreground/60`) ou le changement de graisse pour signifier la nuance.
 *   **Corps de texte** : **`font-light`** (300) ou `font-normal`.
 
 ### Sidebar & Navigation
-*   **État Actif** : Aucun fond vert. Utiliser **`bg-white/5`** ou `bg-white/10` avec un texte blanc.
-*   **Marqueur Actif** : Une simple ligne verticale gauche **`border-l-2 border-[#25D366]`**.
+*   **État Actif** : Aucun fond vert. Utiliser **`bg-muted/10`** (ou `bg-white/5` en mode nuit) avec texte contrasté.
+*   **Marqueur Actif** : Une simple ligne verticale gauche **`border-l-2 border-primary`**.
 *   **Labels** : `text-[10px]` ou `text-[11px]` font-semibold.
+*   **Scrollbars** : Mode-aware (sombres en mode clair, claires en mode nuit via `rgba`).
 
 ### Topbar & Contextuel
 *   **Breadcrumbs** : Fil d'ariane en **`text-[10px]`** font-semibold tracking-wider.
@@ -53,23 +56,24 @@ Le vert CORNAi (**`#25D366`**) doit être une ressource rare :
 - Métadonnées en `text-[10px] font-semibold text-foreground/40`.
 
 ### Plan 2 : Résumé Opérationnel (KPIs)
-- **Metric Ribbon (Fusion Absolue)** : Bloc unique `grid grid-cols-1 md:grid-cols-4` avec `divide-x divide-white/5`.
+- **Metric Ribbon (Fusion Absolue)** : Bloc unique `grid grid-cols-1 md:grid-cols-4` avec `divide-x divide-border/40`.
 - Interdiction des cartes séparées ou avec `gap`.
-- Bordure extérieure unique `border border-white/5`.
+- Bordure extérieure unique `border border-border/40`.
 - Valeurs en `font-semibold` ou `font-medium`.
 
-### Plan 3 : Workspace (Split 8/4)
-- **Flux (8/12)** : Lignes séparées par `border-b border-white/5`. Pas de bordures de cartes.
-- **Inspector (4/12)** : Fond `bg-[#0c0c0c]`. Pas de bordure si le fond contraste déjà. Diagnostic IA en `font-light`.
+### Plan 3 : Workspace Canonical (Split 8/4)
+Toutes les pages internes doivent respecter ce ratio pour l'homogénéité du poste de pilotage.
+- **Le Flux (8/12 - Gauche)** : Zone d'action principale (Tableaux, Kanban, Liste). Pas de bordure de carte globale, utiliser des séparateurs horizontaux `border-b border-border/40`.
+- **L'Inspecteur (4/12 - Droite)** : `sticky top-6`. Cartes de diagnostic ou filtres. Fond `bg-card/80`.
+- **Alignement Chirurgical** : Les titres du Flux et les titres de l'Inspecteur doivent être **parfaitement alignés sur la même ligne horizontale** (baseline) pour éviter tout saut visuel.
 
 ---
 
-## 5. Ce qui est supprimé (Bruit Visuel)
+## 5. Ce qui est supprimé (Éradication du Bruit)
+- ❌ **Italique** : Supprimé car il affaiblit la rigueur technique.
 - ❌ `font-black` et `font-extrabold`.
-- ❌ Tailles `text-[8px]` et `text-[9px]`.
-- ❌ Fonds verts dans la sidebar active.
-- ❌ Bordures de cartes quand un fond distinct existe.
-- ❌ Whitespace excessif entre éléments d'un même ruban.
+- ❌ Tailles `text-[8px]` et `text-[9px]` (sauf cas exceptionnel de métadonnées).
+- ❌ Décalages de baseline entre les colonnes du workspace.
 
 ---
 
@@ -79,8 +83,8 @@ Le vert CORNAi (**`#25D366`**) doit être une ressource rare :
 Indispensable pour basculer entre le mode "Triage" et le mode "Focus Analyse".
 
 *   **Design & Morphologie** : 
-    - Micro-bouton circulaire (**`h-6 w-6`**), fond **`#0c0c0c`**, bordure **`1px border-white/10`**.
-    - Positionnement stratégique : **`absolute -left-3 top-1/2 -translate-y-1/2`**, à cheval sur la ligne de séparation du header de recherche.
+    - Micro-bouton circulaire (**`h-6 w-6`**), fond **`bg-background`**, bordure **`1px border-border/40`**.
+    - Positionnement stratégique : **`absolute -left-3 top-1/2 -translate-y-1/2`**, à cheval sur la ligne de séparation.
     - Style premium : **`shadow-xl`** pour détacher le bouton du plan et **`group`** pour les interactions d'enveloppe.
 *   **Cinématique & Transitions** :
     - Transition fluide de **500ms** (**`duration-500`**) avec un easing **`ease-in-out`**.
@@ -94,4 +98,4 @@ Indispensable pour basculer entre le mode "Triage" et le mode "Focus Analyse".
 ---
 
 > [!IMPORTANT]
-> Cette révision "Quiet Design" (V1.5) est la nouvelle référence. L'interface doit paraître technique, apaisée et résolument premium. Le **Panel-Toggle** est l'exemple parfait de l'élégance fonctionnelle recherchée.
+> Cette révision **Quiet Design (V1.6)** est la nouvelle référence absolue. L'interface abandonne tout code couleur hexadécimal au profit des **tokens sémantiques** Tailwind. Le mode **Clinical Light** (Gris Chirurgical) est désormais le standard de jour pour garantir une lisibilité maximale dans les préfectures et administrations.

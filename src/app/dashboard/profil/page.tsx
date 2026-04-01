@@ -11,7 +11,6 @@ import {
   TrendingUp, 
   HardHat, 
   Truck, 
-  SyncIcon, // Note: using RefreshCcw if not available
   RefreshCcw,
   Plus,
   ArrowRight
@@ -21,55 +20,45 @@ import { Button } from "@/components/ui/button"
 
 export default function ProfilCapacitePage() {
   return (
-    <div className="max-w-[1400px] mx-auto space-y-8 animate-in fade-in duration-700 pb-20 text-foreground antialiased selection:bg-primary/20">
+    <div className="flex flex-col gap-8 animate-in fade-in duration-500 antialiased bg-transparent">
       
-      {/* 1. INDICATEUR DE COMPLÉTUDE IA (Top Bar) */}
-      <div className="w-full bg-card/60 dark:bg-card/20 border border-black/5 dark:border-white/5 rounded-[4px] p-4 flex flex-col md:flex-row items-center justify-between gap-6 overflow-hidden relative group backdrop-blur-sm">
-         <div className="absolute top-0 left-0 h-full w-[85%] bg-primary/[0.03] dark:bg-primary/5 transition-all duration-1000 ease-out z-0" />
-         <div className="relative flex items-center gap-4 z-10">
-            <div className="h-10 w-10 rounded-[4px] bg-primary/10 flex items-center justify-center border border-primary/20 transition-colors">
-               <ShieldCheck className="h-5 w-5 text-primary" />
-            </div>
-            <div className="space-y-0.5">
-               <h3 className="text-[11px] font-bold uppercase tracking-[0.15em] text-foreground/80 transition-colors">Complétude du Profil IA</h3>
-               <p className="text-[10px] text-foreground/50 dark:text-foreground/40 font-medium tracking-tight">Analyse DAO activée à <span className="text-primary">85%</span> — Données RCCM/NIU valides.</p>
-            </div>
-         </div>
-         <div className="relative flex-1 max-w-md w-full z-10">
-            <div className="h-1.5 w-full bg-black/5 dark:bg-white/5 rounded-full overflow-hidden">
-               <motion.div 
-                  initial={{ width: 0 }}
-                  animate={{ width: "85%" }}
-                  transition={{ duration: 1.5, ease: "easeOut" }}
-                  className="h-full bg-primary shadow-[0_0_10px_rgba(37,211,102,0.3)]" 
-               />
-            </div>
-         </div>
-         <div className="relative z-10">
-            <Button variant="ghost" className="h-8 text-[10px] font-bold uppercase tracking-widest text-primary hover:bg-primary/5 gap-2 rounded-[4px]">
-               Améliorer le score <ArrowRight size={12} />
-            </Button>
-         </div>
+      {/* ───────────────────────────────────────────────────────────
+          PLAN 1 — HEADER (Elite Precision)
+          ─────────────────────────────────────────────────────────── */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-border/10 mt-0 lg:mt-[-4px]">
+        <div className="space-y-1.5">
+          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
+            Capacité Métier <span className="text-muted-foreground/30 font-light">/</span> <span className="text-primary/70">BTP</span>
+          </h1>
+          <p className="text-[11px] text-muted-foreground font-bold tracking-[0.2em] opacity-80 uppercase">
+            Pilotage des éligibilités aux marchés publics (ARMP / MINMAP)
+          </p>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <Button variant="outline" className="h-9 px-4 rounded-[4px] border-border/40 bg-muted/20 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-muted/30 transition-all gap-2">
+            <RefreshCcw size={14} className="text-slate-500" /> Synchroniser
+          </Button>
+          <Button className="h-9 px-8 rounded-[4px] bg-primary text-black text-[10px] font-bold uppercase tracking-[0.25em] hover:opacity-90 transition-all shadow-lg shadow-primary/10 border-none">
+            Mettre à jour
+          </Button>
+        </div>
       </div>
 
-      {/* 2. HEADER & ACTIONS PRINCIPALES */}
-      <div className="flex flex-col md:flex-row items-end justify-between gap-6 border-b border-black/5 dark:border-white/5 pb-8">
-         <div className="space-y-2">
-            <h1 className="text-4xl font-light tracking-tighter text-foreground">Capacité Métier <span className="text-foreground/20">/</span> <span className="font-semibold">BTP</span></h1>
-            <p className="text-[11px] font-semibold text-foreground/40 dark:text-foreground/30 uppercase tracking-[0.2em] transition-colors">Pilotage des éligibilités aux marchés publics (ARMP / MINMAP)</p>
-         </div>
-         <div className="flex items-center gap-3">
-            <Button variant="outline" className="h-11 px-6 rounded-[4px] border-black/10 dark:border-white/10 bg-transparent text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-black/[0.03] dark:hover:bg-white/[0.03] hover:border-black/20 dark:hover:border-white/20 transition-all gap-2">
-               <RefreshCcw size={14} className="text-slate-500" /> Synchroniser Coffre-fort
-            </Button>
-            <Button className="h-11 px-8 rounded-[4px] bg-[#25D366] text-black text-[10px] font-bold uppercase tracking-[0.25em] hover:opacity-90 transition-all shadow-[0_4px_20px_rgba(37,211,102,0.15)] border-none">
-               Mettre à jour les Capacités
-            </Button>
-         </div>
-      </div>
+      {/* ───────────────────────────────────────────────────────────
+          PLAN 2 — WORKSPACE CANONICAL (8/4 Split)
+          ─────────────────────────────────────────────────────────── */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        {/* LE FLUX (8/12) — CAPACITIES BENTO */}
+        <div className="lg:col-span-8 flex flex-col min-w-0">
+          <div className="flex items-center justify-between mb-6 h-6">
+            <h2 className="text-[11px] font-bold text-foreground/40 uppercase tracking-[0.2em]">
+              Surface Opérationnelle & Financière
+            </h2>
+          </div>
 
-      {/* 3. BENTO GRID (Architecture Floating 1/3) */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
          
          {/* CARTE 1 : IDENTITÉ LÉGALE */}
          <motion.div 
@@ -121,7 +110,7 @@ export default function ProfilCapacitePage() {
             </div>
 
             <div className="space-y-6">
-               <h3 className="text-[11px] font-bold text-foreground/30 uppercase tracking-[0.15em] transition-colors">Chiffre d&apos;Affaires (Matching IA)</h3>
+               <h3 className="text-[11px] font-bold text-foreground/30 uppercase tracking-[0.15em] transition-colors">Chiffre d'Affaires (Matching IA)</h3>
                
                <div className="space-y-4">
                   {[
@@ -141,7 +130,7 @@ export default function ProfilCapacitePage() {
 
                <div className="pt-4 border-t border-black/5 dark:border-white/5">
                   <div className="flex items-center justify-between text-[11px]">
-                     <span className="font-bold text-foreground/30 uppercase tracking-widest transition-colors">Capacité d&apos;Autofinancement</span>
+                     <span className="font-bold text-foreground/30 uppercase tracking-widest transition-colors">Capacité d'Autofinancement</span>
                      <span className="font-semibold text-foreground/70 dark:text-foreground/60 transition-colors">85 400 000 FCFA</span>
                   </div>
                </div>
@@ -198,15 +187,59 @@ export default function ProfilCapacitePage() {
             </div>
          </motion.div>
 
-      </div>
+       </div>
+        </div>
 
-      {/* 4. FOOTER NOTE - LEVIER DE PUISSANCE */}
-      <div className="flex items-center justify-center py-6">
-         <p className="text-[10px] font-medium text-foreground/20 dark:text-foreground/10 uppercase tracking-[0.4em] text-center max-w-2xl leading-relaxed transition-colors">
-            Ces données structurent votre éligibilité algorithmique aux Marchés Publics du Cameroun. CORNAi synchronise ces capacités avec le <span className="text-foreground/40">CCTP</span> et le <span className="text-foreground/40">RPAO</span> pour maximiser vos chances de succès.
-         </p>
-      </div>
+        {/* L'INSPECTEUR (4/12) — SCORE & ALIGNEMENT IA */}
+        <div className="lg:col-span-4 flex flex-col gap-4 sticky top-6 self-start">
+          <div className="flex items-center mb-6 h-6">
+            <h2 className="text-[11px] font-bold text-foreground/40 uppercase tracking-[0.2em]">
+              Analyse de Puissance
+            </h2>
+          </div>
 
+          <div className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-6 shadow-sm">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="h-10 w-10 rounded-[4px] bg-primary/10 flex items-center justify-center border border-primary/20">
+                <ShieldCheck className="h-5 w-5 text-primary" />
+              </div>
+              <div className="space-y-0.5">
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/30">Complétude Profil</p>
+                <p className="text-2xl font-semibold tracking-tighter text-foreground">85%</p>
+              </div>
+            </div>
+
+            <div className="h-1.5 w-full bg-muted/30 rounded-full overflow-hidden mb-6">
+               <motion.div 
+                  initial={{ width: 0 }}
+                  animate={{ width: "85%" }}
+                  transition={{ duration: 1, ease: "easeOut" }}
+                  className="h-full bg-primary" 
+               />
+            </div>
+
+            <p className="text-[11px] text-foreground/50 font-medium leading-relaxed tracking-tight mb-4">
+              Analyse DAO activée : Vos données RCCM/NIU sont valides. Complétez vos références techniques pour atteindre 95%.
+            </p>
+
+            <Button variant="ghost" className="w-full h-9 text-[10px] font-bold uppercase tracking-widest text-primary hover:bg-primary/5 gap-2 rounded-[4px] border border-primary/10">
+               Améliorer le score <ArrowRight size={12} />
+            </Button>
+          </div>
+
+          <div className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-6 shadow-sm">
+             <div className="flex items-center gap-3 pb-4 border-b border-border/10 mb-6">
+               <Building2 className="h-5 w-5 text-primary/60" />
+               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/30">
+                 Levier Stratégique
+               </span>
+             </div>
+             <p className="text-[11px] text-foreground/60 font-medium leading-relaxed tracking-tight">
+               Ces données structurent votre éligibilité algorithmique aux Marchés Publics. CORNAi synchronise ces capacités avec le CCTP et le RPAO pour maximiser vos chances de succès.
+             </p>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

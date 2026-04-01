@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Dashboard Home (Phase D1.6 — Marchés Publics Domain Knowledge)
+// CORNAi — Dashboard Home (Phase D1.7 — Elite Cockpit)
 // ══════════════════════════════════════════
 
 import { Badge } from "@/components/ui/badge";
@@ -29,7 +29,7 @@ export default async function DashboardHome() {
   const recommendedAOs = await getDerniersAO(3);
 
   return (
-    <div className="space-y-10 animate-in fade-in duration-500 antialiased bg-transparent">
+    <div className="space-y-8 animate-in fade-in duration-500 antialiased bg-transparent">
       {/* ───────────────────────────────────────────────────────────
           PLAN 1 — HEADER (SOPHISTIQUÉ & APAISÉ)
           ─────────────────────────────────────────────────────────── */}
@@ -38,7 +38,7 @@ export default async function DashboardHome() {
           <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
             Antigravity BTP Sarl
           </h1>
-          <p className="text-[11px] text-muted-foreground font-medium tracking-wider opacity-80">
+          <p className="text-[11px] text-muted-foreground font-bold tracking-[0.2em] opacity-80 uppercase">
             Poste de pilotage intelligent pour le JDM (Journal des Marchés)
           </p>
         </div>
@@ -57,9 +57,9 @@ export default async function DashboardHome() {
       </div>
 
       {/* ───────────────────────────────────────────────────────────
-          PLAN 2 — KPI GRID (BOUTONS DE PILOTAGE FLOATING)
+          PLAN 2 — METRIC RIBBON (FUSION ABSOLUE - divide-x)
           ─────────────────────────────────────────────────────────── */}
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="w-full grid grid-cols-1 md:grid-cols-4 border border-border/40 divide-y md:divide-y-0 md:divide-x divide-border/40 rounded-[4px] bg-card/40 backdrop-blur-md shadow-sm overflow-hidden">
         {[
           {
             label: "MArchés JDM & COLEPS scannés",
@@ -94,9 +94,9 @@ export default async function DashboardHome() {
         ].map((kpi, i) => (
           <div
             key={i}
-            className="flex flex-col justify-center p-4 bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] hover:bg-muted/10 hover:border-border/60 transition-all shadow-sm group"
+            className="flex flex-col justify-center p-5 hover:bg-muted/10 transition-all group"
           >
-            <div className="flex items-center gap-2.5 mb-4 opacity-30 group-hover:opacity-100 transition-opacity">
+            <div className="flex items-center gap-2.5 mb-4 opacity-40 group-hover:opacity-100 transition-opacity">
               <kpi.icon
                 className={cn(
                   "h-4 w-4",
@@ -125,7 +125,7 @@ export default async function DashboardHome() {
                     ? "text-primary/80"
                     : kpi.trendType === "alert"
                       ? "text-red-500/80"
-                      : "text-foreground/20",
+                      : "text-foreground/30",
                 )}
               >
                 {kpi.trend}
@@ -136,28 +136,24 @@ export default async function DashboardHome() {
       </div>
 
       {/* ───────────────────────────────────────────────────────────
-          PLAN 3 — WORKSPACE (CONTENT CLEANUP & DOMAIN KNOWLEDGE)
+          PLAN 3 — WORKSPACE (CANONICAL 8/4 SPLIT)
           ─────────────────────────────────────────────────────────── */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-4">
         {/* FLUX D'OPPORTUNITÉS (8/12) */}
         <div className="lg:col-span-8 flex flex-col">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+          <div className="flex items-center justify-between mb-6 h-6">
+            <h2 className="text-[11px] font-bold text-foreground/40 uppercase tracking-[0.2em]">
               Opportunités Récentes (Matches IA)
             </h2>
             <Link
               href="/dashboard/appels-offres"
-              className="text-[10px] font-semibold uppercase tracking-[0.1em] text-primary hover:opacity-70 transition-all flex items-center gap-2"
+              className="text-[10px] font-bold uppercase tracking-[0.1em] text-primary hover:opacity-70 transition-all flex items-center gap-2"
             >
               Tout voir <ChevronRight className="h-3 w-3" />
             </Link>
           </div>
 
           <div className="flex flex-col gap-2">
-            {/* 
-                  Utilisation du SearchResultRow pour garantir l'uniformité visuelle.
-                  On passe des données "dummies" formatées selon l'interface SearchResult.
-               */}
             {[
               {
                 id: "AO-2024-MINTP",
@@ -225,7 +221,7 @@ export default async function DashboardHome() {
         <div className="lg:col-span-4 flex flex-col gap-4 sticky top-6 self-start">
           {/* CARTE 1 : ALERTES DE CONFORMITÉ */}
           <div className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-6 shadow-sm">
-            <div className="flex items-center gap-3 pb-4 border-b border-border/10 mb-6">
+            <div className="flex items-center gap-3 pb-4 border-b border-border/10 mb-6 h-6">
               <ShieldCheck className="h-5 w-5 text-red-500/60" />
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/30">
                 Alertes Conformité
@@ -254,7 +250,7 @@ export default async function DashboardHome() {
 
           {/* CARTE 2 : RECOMMANDATIONS IA */}
           <div className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-6 shadow-sm">
-            <div className="flex items-center gap-3 pb-4 border-b border-border/10 mb-6">
+            <div className="flex items-center gap-3 pb-4 border-b border-border/10 mb-6 h-6">
               <Compass className="h-5 w-5 text-primary/60" />
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/30">
                 Diagnostic ARMP
@@ -262,7 +258,7 @@ export default async function DashboardHome() {
             </div>
 
             <div className="rounded border-l-2 border-primary/20 pl-4 py-1">
-              <p className="text-[12px] text-foreground/60 font-medium leading-relaxed tracking-tight italic">
+              <p className="text-[12px] text-foreground/70 font-medium leading-relaxed tracking-tight">
                 &quot;Attention, selon les directives de l&apos;ARMP, votre ANR
                 date de plus de 3 mois, elle sera rejetée par la CIPM.&quot;
               </p>

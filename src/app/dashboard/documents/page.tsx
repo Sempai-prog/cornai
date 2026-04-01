@@ -20,79 +20,56 @@ import { cn } from "@/lib/utils"
 
 export default function DocumentsPage() {
   return (
-    <div className="flex flex-col gap-6 animate-in fade-in duration-700 bg-transparent max-w-[1600px] mx-auto antialiased">
+    <div className="flex flex-col gap-8 animate-in fade-in duration-500 antialiased bg-transparent">
       
-      {/* HEADER DE PAGE */}
-      <div className="space-y-1 mb-2">
-         <h1 className="text-2xl font-semibold tracking-tight text-foreground font-sans">Centre de Conformité Administrative</h1>
-         <p className="text-[12px] text-foreground/40 font-semibold tracking-wide uppercase">Vérification anticipée de votre Enveloppe A (ARMP / Cameroun)</p>
+      {/* ───────────────────────────────────────────────────────────
+          PLAN 1 — HEADER (Elite Precision)
+          ─────────────────────────────────────────────────────────── */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-border/10 mt-0 lg:mt-[-4px]">
+        <div className="space-y-1.5">
+          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
+            Coffre-fort Numérique <span className="text-muted-foreground/30 font-light">/</span> <span className="text-primary/70">ARMP</span>
+          </h1>
+          <p className="text-[11px] text-muted-foreground font-medium tracking-wider opacity-80 uppercase tracking-[0.2em]">
+            Vérification anticipée de votre Enveloppe A (Cameroun)
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <Button variant="outline" className="h-9 text-[10px] font-bold uppercase tracking-widest text-muted-foreground border-border/40 bg-muted/20 rounded-[4px]">
+            <Download className="mr-2 h-3.5 w-3.5" /> Dossier Type
+          </Button>
+          <Button className="bg-primary hover:bg-primary/90 text-black font-semibold text-[10px] uppercase tracking-[0.2em] h-9 px-8 rounded-[4px]">
+            Mettre à jour le dossier
+          </Button>
+        </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row items-start gap-6">
+      {/* ───────────────────────────────────────────────────────────
+          PLAN 2 — WORKSPACE CANONICAL (8/4 Split)
+          ─────────────────────────────────────────────────────────── */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        {/* COLONNE GAUCHE — LE BILAN ANALYTIQUE IA */}
-        <aside className="w-full lg:w-[360px] shrink-0 space-y-6">
-          <div className="bg-card/40 backdrop-blur-md border border-black/5 dark:border-white/5 rounded-[4px] p-8 shadow-sm group relative overflow-hidden">
-            {/* Décoration subtile en fond */}
-            <div className="absolute -right-4 -top-4 w-24 h-24 bg-primary/5 rounded-full blur-2xl" />
-            
-            <div className="flex flex-col items-center text-center relative z-10">
-                {/* JAUGE CIRCULAIRE ANALYTIQUE */}
-                <div className="relative h-44 w-44 flex items-center justify-center mb-8">
-                  <svg className="h-full w-full -rotate-90 drop-shadow-[0_0_15px_rgba(37,211,102,0.1)]" viewBox="0 0 160 160">
-                      <circle cx="80" cy="80" r="70" fill="transparent" stroke="currentColor" strokeWidth="6" className="text-foreground/5" />
-                      <circle cx="80" cy="80" r="70" fill="transparent" stroke="currentColor" strokeWidth="6" strokeDasharray="440" strokeDashoffset="66" strokeLinecap="round" className="text-primary transition-all duration-1000 ease-out" />
-                  </svg>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center">
-                      <span className="text-4xl font-semibold tracking-tighter text-foreground">85%</span>
-                      <span className="text-[10px] font-bold text-foreground/30 uppercase tracking-[0.2em] mt-1">Conformité</span>
-                  </div>
-                </div>
-
-                <h2 className="text-[14px] font-semibold text-foreground mb-6 tracking-tight uppercase">Analyse CIPM (Anticipée)</h2>
-                
-                {/* INDICATEURS DE DIAGNOSTIC */}
-                <div className="w-full space-y-2.5 mb-8 text-left">
-                  <div className="flex items-start gap-3 p-3 rounded-[4px] bg-red-500/5 border border-red-500/10">
-                    <AlertCircle className="h-3.5 w-3.5 text-red-500 shrink-0 mt-0.5" />
-                    <p className="text-[11px] font-semibold text-red-500/90 leading-tight">Alerte : ANR expirée. Rejet systématique en commission.</p>
-                  </div>
-                  <div className="flex items-start gap-3 p-3 rounded-[4px] bg-green-500/5 border border-green-500/10">
-                    <CheckCircle2 className="h-3.5 w-3.5 text-green-500 shrink-0 mt-0.5" />
-                    <p className="text-[11px] font-semibold text-green-500/90 leading-tight">RCCM & NIU valides pour l'exercice en cours.</p>
-                  </div>
-                  <div className="flex items-start gap-3 p-3 rounded-[4px] bg-yellow-500/5 border border-yellow-500/10">
-                    <AlertTriangle className="h-3.5 w-3.5 text-yellow-500 shrink-0 mt-0.5" />
-                    <p className="text-[11px] font-semibold text-yellow-500/90 leading-tight">Quitus CNPS expire dans 15 jours. Renouvellement requis.</p>
-                  </div>
-                </div>
-
-                <div className="w-full space-y-3">
-                  <Button className="w-full bg-primary hover:bg-primary/90 text-black font-semibold text-[11px] uppercase tracking-[0.15em] h-11 rounded-[4px] border-none transition-all shadow-lg shadow-primary/10">
-                    Mettre à jour le dossier
-                  </Button>
-                  <Button variant="outline" className="w-full border-black/10 dark:border-white/10 bg-transparent text-foreground/60 font-semibold text-[11px] uppercase tracking-[0.15em] h-11 rounded-[4px] hover:bg-foreground/5 hover:text-foreground transition-all">
-                    <Download className="mr-2 h-3.5 w-3.5" /> Dossier Type (Enveloppe A)
-                  </Button>
-                </div>
-            </div>
+        {/* LE FLUX (8/12) — DOC RECORDS */}
+        <div className="lg:col-span-8 flex flex-col min-w-0">
+          <div className="flex items-center justify-between mb-6 h-6">
+            <h2 className="text-[11px] font-bold text-foreground/40 uppercase tracking-[0.2em]">
+              Documents de Qualification (Enveloppe A)
+            </h2>
           </div>
-        </aside>
 
         {/* ZONE DROITE — COFFRE-FORT & DOCS */}
-        <main className="flex-1 space-y-6">
-          
-          {/* DRAG & DROP ZONE (QUIET) */}
-          <div className="border border-dashed border-black/20 dark:border-white/10 bg-card/20 rounded-[4px] p-10 text-center hover:border-primary/50 transition-all cursor-pointer group mb-6 relative overflow-hidden hover:bg-card/40">
+          {/* DRAG & DROP ZONE (Elite Cockpit) */}
+          <div className="border border-dashed border-border/40 bg-card/20 rounded-[4px] p-8 text-center hover:bg-card/40 hover:border-primary/50 transition-all cursor-pointer group mb-6 relative overflow-hidden">
             <div className="flex flex-col items-center gap-3 relative z-10">
-              <div className="h-10 w-10 rounded-full bg-foreground/5 flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+              <div className="h-10 w-10 rounded-full bg-muted/60 flex items-center justify-center group-hover:bg-primary/10 transition-colors">
                 <FileUp className="h-5 w-5 text-foreground/30 group-hover:text-primary transition-colors" />
               </div>
               <p className="text-[13px] font-semibold text-foreground/60 group-hover:text-foreground transition-colors">
-                Glissez vos nouveaux documents ici ou <span className="text-primary italic">parcourez</span>.
+                Déposez vos documents ou <span className="text-primary font-bold">parcourez le système</span>
               </p>
               <p className="text-[10px] font-semibold text-foreground/20 uppercase tracking-widest leading-relaxed">
-                L'IA CORNAi mettra à jour les dates d'expiration automatiquement
+                Traitement IA automatisé (Validité & Exigences RPAO)
               </p>
             </div>
           </div>
@@ -126,15 +103,15 @@ export default function DocumentsPage() {
                           <FileText className="h-4 w-4" />
                       </div>
                       <div className="flex flex-col">
-                        <span className="text-[13px] font-semibold text-foreground/90 truncate tracking-tight">{doc.name}</span>
-                        <span className="text-[9px] font-bold text-foreground/20 uppercase tracking-[0.1em] md:hidden">{doc.date}</span>
+                        <span className="text-[13px] font-semibold text-foreground/90 truncate tracking-tight uppercase">{doc.name}</span>
+                        <span className="text-[9px] font-bold text-foreground/20 uppercase tracking-[0.2em] md:hidden">{doc.date}</span>
                       </div>
                     </div>
 
                     {/* CENTRE : DATE D'EXPIRATION */}
                     <div className="hidden md:flex flex-1 justify-center">
                        <span className={cn(
-                           "text-[11px] font-semibold tracking-wide uppercase",
+                           "text-[11px] font-bold tracking-[0.2em] uppercase",
                            doc.urgent ? "text-red-500" : "text-foreground/40"
                        )}>
                          {doc.date}
@@ -168,10 +145,60 @@ export default function DocumentsPage() {
               ))}
           </div>
 
-          <div className="pt-12 flex flex-col items-center opacity-10">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.6em]">Coffre-fort Sécurisé CORNAi — Standard ARMP / COLEPS v2.0</p>
+        </div>
+
+        {/* L'INSPECTEUR (4/12) — ANALYTIQUE IA */}
+        <div className="lg:col-span-4 flex flex-col gap-4 sticky top-6 self-start">
+          <div className="flex items-center mb-6 h-6">
+            <h2 className="text-[11px] font-bold text-foreground/40 uppercase tracking-[0.2em]">
+              Bilan Analytique CIPM
+            </h2>
           </div>
-        </main>
+
+          <div className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-8 shadow-sm group relative overflow-hidden">
+            <div className="absolute -right-4 -top-4 w-24 h-24 bg-primary/5 rounded-full blur-2xl" />
+            
+            <div className="flex flex-col items-center text-center relative z-10">
+                <div className="relative h-44 w-44 flex items-center justify-center mb-8">
+                  <svg className="h-full w-full -rotate-90 drop-shadow-[0_0_15px_rgba(37,211,102,0.1)]" viewBox="0 0 160 160">
+                      <circle cx="80" cy="80" r="70" fill="transparent" stroke="currentColor" strokeWidth="6" className="text-foreground/5" />
+                      <circle cx="80" cy="80" r="70" fill="transparent" stroke="currentColor" strokeWidth="6" strokeDasharray="440" strokeDashoffset="66" strokeLinecap="round" className="text-primary transition-all duration-1000 ease-out" />
+                  </svg>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                      <span className="text-4xl font-semibold tracking-tighter text-foreground">85%</span>
+                      <span className="text-[10px] font-bold text-foreground/30 uppercase tracking-[0.2em] mt-1">Conformité</span>
+                  </div>
+                </div>
+
+                <div className="w-full space-y-4 text-left">
+                  <div className="p-3 rounded-[4px] bg-red-500/5 border border-red-500/10 flex items-start gap-3">
+                    <AlertCircle className="h-3.5 w-3.5 text-red-500 mt-0.5" />
+                    <p className="text-[11px] font-semibold text-red-500/90 leading-tight">ANR expirée : Risque de rejet systématique en commission (CIPM).</p>
+                  </div>
+                  <div className="p-3 rounded-[4px] bg-green-500/5 border border-green-500/10 flex items-start gap-3">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5" />
+                    <p className="text-[11px] font-semibold text-green-500/90 leading-tight">RCCM & NIU valides pour l'exercice fiscal en cours.</p>
+                  </div>
+                  <div className="p-3 rounded-[4px] bg-amber-500/5 border border-amber-500/10 flex items-start gap-3">
+                    <AlertTriangle className="h-3.5 w-3.5 text-amber-500 mt-0.5" />
+                    <p className="text-[11px] font-semibold text-amber-500/90 leading-tight">Quitus CNPS expire dans 15 jours. Renouvellement requis.</p>
+                  </div>
+                </div>
+            </div>
+          </div>
+
+          <div className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-6 shadow-sm">
+             <div className="flex items-center gap-3 pb-4 border-b border-border/10 mb-6">
+               <ShieldCheck className="h-5 w-5 text-primary/60" />
+               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/30">
+                 Status Archivage
+               </span>
+             </div>
+             <p className="text-[11px] text-foreground/60 font-medium leading-relaxed tracking-tight">
+               Tous les documents uploadés sont chiffrés et conformes au standard de conservation COLEPS pour les marchés publics dématérialisés.
+             </p>
+          </div>
+        </div>
       </div>
     </div>
   )

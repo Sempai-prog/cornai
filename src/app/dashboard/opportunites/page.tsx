@@ -10,7 +10,8 @@ import {
   GripVertical, 
   ChevronRight,
   ShieldAlert,
-  MoreHorizontal
+  MoreHorizontal,
+  Activity
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -112,31 +113,94 @@ const COLUMNS: { id: OpportunityStatus; label: string; description: string }[] =
 
 export default function OpportunitesPage() {
   return (
-    <div className="flex-1 flex flex-col min-h-0 space-y-6">
+    <div className="flex flex-col gap-8 animate-in fade-in duration-500 antialiased bg-transparent">
       
-      {/* HEADER: Fixe en haut */}
-      <div className="flex items-end justify-between shrink-0">
-         <div className="space-y-1">
-            <h1 className="text-3xl font-semibold tracking-tighter text-foreground">Pipeline <span className="text-muted-foreground/40 font-light">/</span> <span className="font-semibold text-primary/80">Opportunités</span></h1>
-            <p className="text-[10px] font-semibold text-muted-foreground/40 uppercase tracking-[0.3em] transition-colors">Management de Workflow Industriel</p>
-         </div>
-         <div className="flex items-center gap-3">
-            <div className="flex -space-x-2">
-               {[1,2,3].map(i => <div key={i} className="h-6 w-6 rounded-full border border-background bg-muted/60 transition-colors" />)}
-            </div>
-            <p className="text-[10px] font-bold text-foreground/40 uppercase tracking-widest transition-colors">+12 Experts actifs</p>
-         </div>
+      {/* ───────────────────────────────────────────────────────────
+          PLAN 1 — HEADER (Elite Precision)
+          ─────────────────────────────────────────────────────────── */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-border/10 mt-0 lg:mt-[-4px]">
+        <div className="space-y-1.5">
+          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
+            Pipeline Opportunités <span className="text-muted-foreground/30 font-light">/</span> <span className="text-primary/70">JDM</span>
+          </h1>
+          <p className="text-[11px] text-muted-foreground font-bold tracking-[0.2em] opacity-80 uppercase">
+            Management de Workflow Industriel ARMP
+          </p>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <div className="flex -space-x-2">
+            {[1, 2, 3].map(i => (
+              <div key={i} className="h-7 w-7 rounded-full border-2 border-background bg-muted/60" />
+            ))}
+          </div>
+          <p className="text-[10px] font-semibold text-foreground/40 uppercase tracking-widest">+12 Experts actifs</p>
+        </div>
       </div>
 
-      {/* KANBAN BOARD: Défilement horizontal unique */}
-      <div className="flex-1 flex gap-5 overflow-x-auto min-h-0 pb-4">
-         {COLUMNS.map((column) => (
-           <KanbanColumn 
-             key={column.id} 
-             column={column} 
-             items={MOCK_OPPORTUNITIES.filter(opt => opt.status === column.id)} 
-           />
-         ))}
+      {/* ───────────────────────────────────────────────────────────
+          PLAN 2 — WORKSPACE CANONICAL (8/4 Split)
+          ─────────────────────────────────────────────────────────── */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        {/* LE FLUX (8/12) — KANBAN BOARD */}
+        <div className="lg:col-span-8 flex flex-col min-w-0">
+          <div className="flex items-center justify-between mb-6 h-6">
+            <h2 className="text-[11px] font-bold text-foreground/40 uppercase tracking-[0.2em]">
+              Cycle de Vie des Soumissions
+            </h2>
+          </div>
+
+          <div className="flex gap-5 overflow-x-auto min-h-0 pb-6 custom-scrollbar scroll-smooth">
+             {COLUMNS.map((column) => (
+               <KanbanColumn 
+                 key={column.id} 
+                 column={column} 
+                 items={MOCK_OPPORTUNITIES.filter(opt => opt.status === column.id)} 
+               />
+             ))}
+          </div>
+        </div>
+
+        {/* L'INSPECTEUR (4/12) — INFO & ANALYTICS */}
+        <div className="lg:col-span-4 flex flex-col gap-4 sticky top-6 self-start">
+           <div className="flex items-center mb-6 h-6">
+             <h2 className="text-[11px] font-bold text-foreground/40 uppercase tracking-[0.2em]">
+               Diagnostic Pipeline
+             </h2>
+           </div>
+
+           <div className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-6 shadow-sm">
+             <div className="flex items-center gap-3 pb-4 border-b border-border/10 mb-6">
+               <Activity className="h-5 w-5 text-primary/60" />
+               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/30">
+                 Performance Matching
+               </span>
+             </div>
+             
+             <div className="space-y-4">
+               <div className="p-4 rounded bg-primary/[0.03] border border-primary/10">
+                 <p className="text-[10px] font-bold text-primary uppercase tracking-[0.2em] mb-1">Score Global</p>
+                 <p className="text-2xl font-semibold tracking-tighter text-foreground">92.4%</p>
+                 <p className="text-[11px] text-foreground/50 font-medium leading-relaxed mt-2 tracking-tight">
+                   Votre profil est actuellement optimisé pour les marchés de Travaux (BTP) dans la région du Littoral.
+                 </p>
+               </div>
+             </div>
+           </div>
+
+           <div className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-6 shadow-sm">
+             <div className="flex items-center gap-3 pb-4 border-b border-border/10 mb-6">
+               <ShieldAlert className="h-5 w-5 text-amber-500/60" />
+               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/30">
+                 Capacité Financière
+               </span>
+             </div>
+             <p className="text-[11px] text-foreground/60 font-medium leading-relaxed tracking-tight">
+               Attention : Le cumul des cautions de soumission pour les 3 marchés en &quot;Montage&quot; s&apos;élève à 22M FCFA. Vérifiez vos lignes de crédit disponibles auprès de vos banques partenaires.
+             </p>
+           </div>
+        </div>
       </div>
     </div>
   )
@@ -152,7 +216,7 @@ function KanbanColumn({ column, items }: { column: typeof COLUMNS[0], items: Opp
                 {column.label}
                 <span className="text-[10px] text-muted-foreground/30 font-bold">{items.length}</span>
              </h3>
-             <p className="text-[10px] text-muted-foreground/30 font-medium uppercase tracking-wider transition-colors">{column.description}</p>
+             <p className="text-[10px] text-muted-foreground/30 font-bold uppercase tracking-[0.2em] transition-colors">{column.description}</p>
           </div>
           <MoreHorizontal className="h-4 w-4 text-foreground/10 hover:text-foreground/40 cursor-pointer transition-colors" />
        </div>
@@ -186,7 +250,7 @@ function OpportunityCard({ item }: { item: Opportunity }) {
     >
        {/* Card Header (Sigle MO | Badge & Grip) */}
        <div className="flex justify-between items-start mb-2.5">
-          <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-muted-foreground/50 transition-colors uppercase">{item.ac} <span className="opacity-40 font-light lowercase">/ {item.type}</span></span>
+          <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-muted-foreground/50 transition-colors uppercase">{item.ac} <span className="opacity-40 font-bold lowercase">/ {item.type}</span></span>
           <div className="flex items-center gap-2">
               <Badge className={cn(
                 "text-[10px] font-bold px-1.5 py-0.5 rounded-[4px] border-none shadow-none uppercase tracking-wider",
@@ -210,7 +274,7 @@ function OpportunityCard({ item }: { item: Opportunity }) {
              <div className={cn("w-1.5 h-1.5 rounded-full", item.envelopes.b ? "bg-primary" : "bg-muted/30")} />
              <div className={cn("w-1.5 h-1.5 rounded-full", item.envelopes.c ? "bg-primary" : "bg-muted/30")} />
           </div>
-          <span className="text-[10px] font-bold text-foreground/15 uppercase tracking-[0.2em] transition-colors">Envelopes A • B • C</span>
+          <span className="text-[10px] font-bold text-foreground/15 uppercase tracking-[0.25em] transition-colors">Enveloppes A • B • C</span>
        </div>
 
        {/* Card Footer (Caution | Score Match) */}
