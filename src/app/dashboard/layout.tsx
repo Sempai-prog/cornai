@@ -30,19 +30,11 @@ import {
   Search, 
   ShieldCheck, 
   LayoutDashboard, 
-  FileText, 
-  Target, 
   Map, 
   FolderLock, 
-  Zap,
-  Menu,
   ChevronLeft,
-  Settings,
-  HelpCircle,
   LogOut,
-  Building2,
   Wallet,
-  TrendingDown,
   Bell
 } from "lucide-react"
 import { SABI_COPY } from "@/lib/SabiCopy";
@@ -97,20 +89,21 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
 
   // Détecter si on est sur le Kanban (Opportunités) pour désactiver le scroll global
   const isKanban = pathname === "/dashboard/opportunites";
+  const isTerrain = pathname === "/dashboard/terrain";
 
   return (
-    <div className="flex h-screen w-full bg-background/5 text-foreground overflow-hidden font-sans selection:bg-primary/20 antialiased transition-colors duration-500 relative">
+    <div className="flex h-screen w-full bg-background text-foreground overflow-hidden font-sans selection:bg-primary/20 antialiased transition-colors duration-500 relative">
       {/* SIDEBAR V1.7 - Elite Cockpit */}
       <Sidebar
         collapsible="icon"
-        className="border-r border-border/40 bg-card/80 backdrop-blur-xl z-10 transition-all duration-500 ease-in-out"
+        className="border-r border-border/10 bg-card z-10 transition-all duration-500 ease-in-out"
       >
-        <SidebarHeader className="h-14 flex flex-row items-center justify-center px-4 border-b border-border/40 overflow-hidden shrink-0">
+        <SidebarHeader className="h-14 flex flex-row items-center justify-center px-4 border-b border-border/10 overflow-hidden shrink-0">
           <Link
             href="/"
             className="flex items-center gap-2.5 hover:opacity-80 transition-opacity shrink-0"
           >
-            <div className="w-6 h-6 bg-primary flex items-center justify-center rounded-[4px] shadow-[0_0_15px_rgba(37,211,102,0.2)]">
+            <div className="w-6 h-6 bg-primary flex items-center justify-center rounded-[4px] border border-primary/20">
               <ShieldCheck className="w-4 h-4 text-white" strokeWidth={2.5} />
             </div>
             {!isCollapsed && (
@@ -119,8 +112,8 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -10 }}
                 className={cn(
-                  "ml-3 font-semibold text-lg tracking-tight bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent",
-                  isCollapsed ? "opacity-0 " : "opacity-100"
+                  "ml-3 font-semibold text-lg tracking-tight text-primary",
+                  isCollapsed ? "opacity-0" : "opacity-100"
                 )}
               >
                 {SABI_COPY.BRAND.NAME}
@@ -235,7 +228,7 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
           </SidebarMenu>
         </SidebarContent>
 
-        <SidebarFooter className="p-2 border-t border-border/40">
+        <SidebarFooter className="p-2 border-t border-border/10">
           <button
             className={cn(
               "flex items-center gap-3 py-2 rounded-[4px] text-[13px] font-semibold text-foreground/30 hover:text-foreground hover:bg-foreground/5 transition-colors overflow-hidden w-full",
@@ -251,69 +244,49 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
 
       {/* MAIN AREA */}
       <div className="flex-1 flex flex-col min-w-0 relative z-20 transition-all duration-500 ease-in-out">
-        <header className="relative h-14 flex items-center justify-between px-6 lg:px-6 border-b border-border/40 bg-card/70 backdrop-blur-md z-30 shrink-0">
-          <div className="flex items-center gap-6">
-            {/* Panel-Toggle Controller v1.8 — Absolute Intersection & Perfect Circular Geometry */}
-            {!isMobile && (
-              <button
-                onClick={() => toggleSidebar()}
-                className="absolute -left-3 top-4 z-[100] flex h-6 w-6 items-center justify-center rounded-full border border-border/10 bg-card text-foreground/40 hover:text-primary hover:bg-primary/5 transition-all shadow-md cursor-pointer"
-              >
-                <ChevronLeft
-                  size={14}
-                  className={cn(
-                    "transition-transform duration-300",
-                    isCollapsed && "rotate-180",
-                  )}
-                />
-              </button>
-            )}
-
-            {/* Mobile Trigger */}
-            <div className="md:hidden">
-              <SidebarTrigger />
-            </div>
-
-            <div className="flex items-center gap-4 pl-6">
-              <div className="h-4 w-px bg-border/40 mx-1 hidden md:block" />
+        {/* BARRE DE NAVIGATION — Centralisation Globale Alignée */}
+        <header className="relative h-16 flex items-center shrink-0 z-30 bg-transparent border-none">
+          <div className="w-full max-w-[1400px] mx-auto px-6 lg:px-8 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              {!isMobile && (
+                <button
+                  onClick={() => toggleSidebar()}
+                  className="h-8 w-8 flex items-center justify-center rounded-[4px] border border-border/10 bg-card text-foreground/40 hover:text-foreground hover:border-primary/20 hover:bg-primary/5 transition-all duration-300"
+                >
+                  <ChevronLeft className={cn("h-4 w-4 transition-transform duration-300", isCollapsed && "rotate-180")} />
+                </button>
+              )}
               <GlobalSearch />
             </div>
-          </div>
+            
+            <div className="flex items-center gap-3">
+              <button className="h-10 w-10 flex items-center justify-center rounded-[4px] border border-border/10 bg-card hover:bg-muted/50 transition-colors relative group">
+                <Bell className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                <span className="absolute top-2.5 right-2.5 h-1.5 w-1.5 rounded-full bg-primary border-2 border-background" />
+              </button>
 
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 px-3 py-1 rounded-[4px] border border-border/40 bg-muted/30 transition-all">
-              <div className="w-1 h-1 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(37,211,102,0.4)]" />
-              <span className="text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest opacity-80">
-                Profil Actif
-              </span>
+              <ThemeToggle />
+              
+              <div className="h-8 w-px bg-border/20 mx-1" />
+              
+              <button className="flex items-center gap-3 pl-1 pr-1 py-1 rounded-[4px] border border-border/10 bg-card hover:bg-muted/50 transition-colors group">
+                <div className="h-8 w-8 rounded-[4px] bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:bg-primary/20 transition-colors">
+                  <span className="text-[11px] font-bold text-primary">JD</span>
+                </div>
+                <div className="flex flex-col items-start pr-3 hidden sm:flex">
+                  <span className="text-[11px] font-bold leading-tight group-hover:text-primary transition-colors">Joker Design</span>
+                  <span className="text-[9px] text-muted-foreground/40 uppercase tracking-widest font-black leading-none mt-1">Elite Member</span>
+                </div>
+              </button>
             </div>
-
-            <div className="w-px h-4 bg-border/40 mx-1" />
-
-            <ThemeToggle />
-
-            <button className="h-6 w-6 flex items-center justify-center rounded-full border border-border/40 bg-foreground/[0.02] text-foreground/40 hover:text-foreground hover:bg-foreground/5 transition-colors relative shadow-sm">
-              <Bell className="h-3 w-3" />
-              <span className="absolute top-1.5 right-1.5 w-1 h-1 bg-primary rounded-full shadow-[0_0_4px_rgba(37,211,102,0.4)]" />
-            </button>
           </div>
         </header>
 
-        {/* CONTAINER DYNAMIQUE */}
-        <main
-          className={cn(
-            "flex-1 flex flex-col min-h-0",
-            !isKanban && "overflow-y-auto custom-scrollbar",
-          )}
-        >
-          <div
-            className={cn(
-              "w-full flex-1 flex flex-col",
-              isKanban
-                ? "px-6 lg:px-8 py-6"
-                : "max-w-[1400px] mx-auto px-6 lg:px-8 py-8 md:py-10",
-            )}
-          >
+        {/* CONTENEUR PRINCIPAL — Centralisation & Alignement Strict */}
+        {/* 🚀 MAIN CONTENT AREA (Scrollable) */}
+        <main className="flex-1 overflow-y-auto bg-background scroll-p-4 lg:scroll-p-6">
+          {/* 🎯 CONTENT CONTAINER (Centered 1400px) */}
+          <div className="w-full max-w-[1400px] mx-auto px-6 lg:px-8 pt-3 pb-8 lg:pt-3 lg:pb-8">
             {children}
           </div>
         </main>

@@ -2,6 +2,7 @@
 // SABI — Dashboard Home (Phase D1.7 — Elite Cockpit)
 // ══════════════════════════════════════════
 
+import { StandardPageHeader } from "@/components/layout/standard-page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { 
@@ -46,34 +47,35 @@ export default async function DashboardHome() {
       {/* ───────────────────────────────────────────────────────────
           PLAN 1 — HEADER (SOPHISTIQUÉ & APAISÉ)
           ─────────────────────────────────────────────────────────── */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-border/10 mt-0 lg:mt-[-4px]">
-        <div className="flex flex-col gap-1">
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">
-            {SABI_COPY.DASHBOARD.WELCOME}
-          </h1>
-          <p className="text-muted-foreground font-medium flex items-center gap-2">
+      <StandardPageHeader
+        title={SABI_COPY.DASHBOARD.WELCOME}
+        metadata="Poste de Pilotage — Surveillance Centrale"
+        description={
+          <p className="flex items-center gap-2">
             <Building2 className="size-4" />
-            Secteur : BTP / Infrastructures — Standard ARMP
+            Standard ARMP — Secteur : BTP / Infrastructures
           </p>
-        </div>
+        }
+        cardA={{
+          label: "CONFORMITÉ",
+          value: "85",
+          subtext: "+5% mensuel",
+          progress: 85,
+          color: "primary",
+        }}
+        cardB={{
+          label: "RADAR MATCH",
+          value: "12",
+          subtext: "Opportunités Libres",
+          color: "amber",
+        }}
+      />
 
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            className="h-9 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground hover:text-foreground border-border/40 bg-muted/20 rounded-[4px] transition-all"
-          >
-            Profil IA
-          </Button>
-          <Button className="bg-primary hover:bg-primary/90 text-black font-semibold text-[10px] uppercase tracking-[0.2em] h-9 px-8 rounded-[4px] shadow-lg shadow-primary/10 border-none transition-all active:scale-95">
-            Générer BPU / DQE
-          </Button>
-        </div>
-      </div>
 
       {/* ───────────────────────────────────────────────────────────
           PLAN 2 — METRIC RIBBON (FUSION ABSOLUE - divide-x)
           ─────────────────────────────────────────────────────────── */}
-      <div className="w-full grid grid-cols-1 md:grid-cols-4 border border-border/40 divide-y md:divide-y-0 md:divide-x divide-border/40 rounded-[4px] bg-card/40 backdrop-blur-md shadow-sm overflow-hidden">
+      <div className="w-full grid grid-cols-1 md:grid-cols-4 border border-border/10 divide-y md:divide-y-0 md:divide-x divide-border/10 rounded-[4px] bg-card shadow-none overflow-hidden">
         {[
           {
             label: SABI_COPY.DASHBOARD.STATS.COMPLIANCE,
@@ -106,7 +108,7 @@ export default async function DashboardHome() {
         ].map((kpi, i) => (
           <div
             key={i}
-            className="flex flex-col justify-center p-5 hover:bg-muted/10 transition-all group"
+            className="flex flex-col justify-center p-5 hover:bg-muted transition-all group"
           >
             <div className="flex items-center gap-2.5 mb-4 opacity-40 group-hover:opacity-100 transition-opacity">
               <kpi.icon
@@ -227,7 +229,7 @@ export default async function DashboardHome() {
         {/* INSPECTEUR DE CONFORMITÉ (4/12) — FIXED ON SCROLL */}
         <div className="lg:col-span-4 flex flex-col gap-4 sticky top-6 self-start">
           {/* CARTE 1 : ALERTES DE CONFORMITÉ */}
-          <div className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-6 shadow-sm">
+          <div className="bg-card border border-border/10 rounded-[4px] p-6 shadow-none">
             <div className="flex items-center gap-3 pb-4 border-b border-border/10 mb-6 h-6">
               <ShieldCheck className="h-5 w-5 text-red-500/60" />
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/30">
@@ -235,7 +237,7 @@ export default async function DashboardHome() {
               </span>
             </div>
 
-            <div className="p-4 rounded bg-red-500/[0.03] border border-red-500/10 hover:border-red-500/20 transition-all cursor-pointer group/alert">
+            <div className="p-4 rounded-[4px] bg-red-500/5 border border-red-500/10 hover:border-red-500/20 transition-all cursor-pointer group/alert">
               <div className="flex items-center justify-between mb-2">
                 <p className="text-[10px] font-bold text-red-500 uppercase tracking-widest leading-none">
                   ANR (Impôts)
@@ -250,21 +252,21 @@ export default async function DashboardHome() {
               </p>
             </div>
 
-            <Button className="w-full mt-6 bg-muted/20 border border-border/40 text-foreground/50 font-bold text-[10px] uppercase tracking-[0.2em] h-11 rounded hover:bg-muted/40 transition-all">
+            <Button className="w-full mt-6 bg-muted border border-border/10 text-foreground/50 font-bold text-[10px] uppercase tracking-[0.2em] h-11 rounded-[4px] hover:bg-muted/80 transition-all">
               Mettre à jour le dossier
             </Button>
           </div>
 
           {/* CARTE 2 : RECOMMANDATIONS IA */}
-          <div className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-6 shadow-sm">
+          <div className="bg-card border border-border/10 rounded-[4px] p-6 shadow-none">
             <div className="flex items-center gap-3 pb-4 border-b border-border/10 mb-6 h-6">
               <Compass className="h-5 w-5 text-primary/60" />
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/30">
                 Diagnostic ARMP
               </span>
             </div>
-
-            <div className="rounded border-l-2 border-primary/20 pl-4 py-1">
+          
+            <div className="rounded-[4px] border-l border-primary/20 pl-4 py-1">
               <p className="text-[12px] text-foreground/70 font-medium leading-relaxed tracking-tight">
                 &quot;Attention, selon les directives de l&apos;ARMP, votre ANR
                 date de plus de 3 mois, elle sera rejetée par la CIPM.&quot;

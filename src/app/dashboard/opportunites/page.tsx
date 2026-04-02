@@ -151,7 +151,7 @@ export default function OpportunitesPage() {
             </h2>
           </div>
 
-          <div className="flex gap-5 overflow-x-auto min-h-0 pb-6 custom-scrollbar scroll-smooth">
+          <div className="flex gap-8 overflow-x-auto min-h-0 pb-6 custom-scrollbar scroll-smooth">
              {COLUMNS.map((column) => (
                <KanbanColumn 
                  key={column.id} 
@@ -170,7 +170,7 @@ export default function OpportunitesPage() {
              </h2>
            </div>
 
-           <div className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-6 shadow-sm">
+           <div className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-6 shadow-none">
              <div className="flex items-center gap-3 pb-4 border-b border-border/10 mb-6">
                <Activity className="h-5 w-5 text-primary/60" />
                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/30">
@@ -189,7 +189,7 @@ export default function OpportunitesPage() {
              </div>
            </div>
 
-           <div className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-6 shadow-sm">
+           <div className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-6 shadow-none">
              <div className="flex items-center gap-3 pb-4 border-b border-border/10 mb-6">
                <ShieldAlert className="h-5 w-5 text-amber-500/60" />
                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/30">
@@ -244,8 +244,8 @@ function OpportunityCard({ item }: { item: Opportunity }) {
       layout
       whileHover={{ y: -2, borderColor: "var(--border)" }}
       className={cn(
-        "bg-card backdrop-blur-md border border-border/40 rounded-[4px] p-4 cursor-grab transition-all hover:bg-card hover:border-border/60 shadow-sm",
-        "active:cursor-grabbing active:scale-[0.98] active:shadow-lg active:z-50 duration-200"
+        "bg-card backdrop-blur-md border border-border/40 rounded-[4px] p-4 cursor-grab transition-all hover:bg-card hover:border-border/60 shadow-none",
+        "active:cursor-grabbing active:scale-[0.98] active:z-50 duration-200"
       )}
     >
        {/* Card Header (Sigle MO | Badge & Grip) */}

@@ -13,9 +13,11 @@ import {
   Plus
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 import { SABI_COPY } from "@/lib/SabiCopy"
 import { SoumissionCard } from "@/components/dashboard/soumission-card"
 import { SubmissionInspector } from "@/components/dashboard/submission-inspector"
+import { StandardPageHeader } from "@/components/layout/standard-page-header"
 
 // --- TYPES MÉTIER (SABI v2.0) ---
 type SubmissionStatus = 'MONTAGE' | 'BLINDAGE' | 'CHIFFRAGE' | 'SIGNATURE' | 'DEPOT'
@@ -110,35 +112,30 @@ export default function SoumissionsPage() {
   return (
     <div className="flex flex-col gap-8 animate-in fade-in duration-700 antialiased bg-transparent p-0 lg:p-1 overflow-hidden h-full">
       
-      {/* HEADER SECTION */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-border/10">
-        <div className="space-y-1.5">
-          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground flex items-center gap-3">
-             <Briefcase className="h-7 w-7 text-primary/40 hidden sm:block" />
-             {SABI_COPY.NAVIGATION.SOUMISSIONS}
-             <span className="text-muted-foreground/30 font-light hidden sm:inline">/</span>
-             <span className="text-primary/70 text-lg sm:text-xl font-medium tracking-tight">Poste de Dépôt</span>
-          </h1>
-          <div className="flex items-center gap-2">
-             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-             <p className="text-[11px] text-muted-foreground font-bold tracking-[0.2em] opacity-80 uppercase">
-                Management de Workflow Industriel ARMP
-             </p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-4">
-           {/* Boutique Nkap Tooltip integration */}
-           <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-primary/5 border border-primary/10 rounded-[4px] cursor-help group transition-all hover:bg-primary/10">
-              <Zap className="h-3.5 w-3.5 text-primary" />
-              <span className="text-[10px] font-bold text-primary uppercase tracking-[0.25em]">Chiffrage Connecté</span>
-           </div>
-           <button className="flex items-center gap-2 px-6 py-2.5 bg-foreground text-background rounded-[4px] text-[10px] font-bold uppercase tracking-[0.25em] hover:opacity-90 transition-all shadow-xl shadow-foreground/5 active:scale-95">
-              <Plus className="h-3.5 w-3.5" />
-              Nouveau Dossier
-           </button>
-        </div>
-      </div>
+      <StandardPageHeader
+        title="Historique & Soumissions"
+        metadata="Poste de Pilotage — Gestion des Offres"
+        description={
+          <p>
+            Suivi en temps réel des dossiers d'appels d'offres en cours de montage. 
+            <span className="block mt-1 italic opacity-60">
+              Synchronisation automatique avec le Radar des Marchés.
+            </span>
+          </p>
+        }
+        cardA={{
+          label: "SOUMISSIONS ACTIVES",
+          value: "04",
+          subtext: "Dossiers en Montage",
+          color: "blue",
+        }}
+        cardB={{
+          label: "EN ATTENTE",
+          value: "01",
+          subtext: "Signature Nécessaire",
+          color: "amber",
+        }}
+      />
 
       {/* WORKSPACE - FULL WIDTH COCKPIT */}
       <div className="flex flex-col gap-6 flex-1 min-h-0 overflow-hidden">
@@ -159,13 +156,13 @@ export default function SoumissionsPage() {
 
           <div className="flex gap-5 overflow-x-auto pb-6 custom-scrollbar scroll-smooth flex-1 items-start min-h-0">
              {COLUMNS.map((column) => (
-                <div key={column.id} className="w-[320px] shrink-0 flex flex-col h-full bg-muted/[0.03] border border-border/10 rounded-[4px] p-2 hover:bg-muted/[0.05] transition-colors group">
+                 <div key={column.id} className="w-[320px] shrink-0 flex flex-col h-full bg-muted border border-border/10 rounded-[4px] p-2 hover:bg-muted/80 transition-colors group">
                    {/* Column Head */}
-                   <div className="flex items-center justify-between px-3 py-3 mb-2 shrink-0 border-b border-border/5">
+                    <div className="flex items-center justify-between px-3 py-3 mb-2 shrink-0 border-b border-border/10">
                       <div className="space-y-1">
                          <h3 className="text-[11px] font-bold text-foreground/40 group-hover:text-foreground/70 transition-colors uppercase tracking-[0.2em] flex items-center gap-2">
                             {column.label}
-                            <div className="px-1.5 py-0.5 rounded-[2px] bg-muted/20 text-[9px] text-muted-foreground/50 group-hover:text-primary transition-colors">
+                             <div className="px-1.5 py-0.5 rounded-[4px] bg-muted/20 text-[9px] text-muted-foreground/50 group-hover:text-primary transition-colors">
                               {MOCK_SUBMISSIONS.filter(s => s.status === column.id).length}
                             </div>
                          </h3>
@@ -182,7 +179,7 @@ export default function SoumissionsPage() {
                          ))}
                       </AnimatePresence>
                       
-                      <button className="w-full py-4 border border-dashed border-border/20 rounded-[4px] text-[9px] font-bold uppercase tracking-[0.3em] text-muted-foreground/20 hover:text-primary/40 hover:border-primary/20 hover:bg-primary/[0.02] transition-all flex items-center justify-center gap-2 mt-2">
+                      <button className="w-full py-4 border border-dashed border-border/10 rounded-[4px] text-[9px] font-bold uppercase tracking-[0.3em] text-muted-foreground/20 hover:text-primary/40 hover:border-primary/20 hover:bg-primary/[0.02] transition-all flex items-center justify-center gap-2 mt-2">
                          <Plus className="h-3 w-3" />
                          Injecter AO
                       </button>

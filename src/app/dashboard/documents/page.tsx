@@ -4,6 +4,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { StandardPageHeader } from "@/components/layout/standard-page-header"
 import { 
   FileText, 
   Upload, 
@@ -25,25 +26,32 @@ export default function DocumentsPage() {
       {/* ───────────────────────────────────────────────────────────
           PLAN 1 — HEADER (Elite Precision)
           ─────────────────────────────────────────────────────────── */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-border/10 mt-0 lg:mt-[-4px]">
-        <div className="space-y-1.5">
-          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
-            Coffre-fort Numérique <span className="text-muted-foreground/30 font-light">/</span> <span className="text-primary/70">ARMP</span>
-          </h1>
-          <p className="text-[11px] text-muted-foreground font-medium tracking-wider opacity-80 uppercase tracking-[0.2em]">
-            Vérification anticipée de votre Enveloppe A (Cameroun)
+      <StandardPageHeader
+        title="Blindage Administratif"
+        metadata="Poste de Pilotage — Centre de Conformité"
+        description={
+          <p>
+            Vérification anticipée de votre Enveloppe A (Cameroun). 
+            <span className="block mt-1">
+              Analyse automatisée des <span className="text-foreground/40 font-black uppercase">Dossiers Administratifs</span> — Standards ARMP & MINMAP.
+            </span>
           </p>
-        </div>
+        }
+        cardA={{
+          label: "CONFORMITÉ",
+          value: "72",
+          subtext: "Index Administratif",
+          progress: 72,
+          color: "amber",
+        }}
+        cardB={{
+          label: "PIÈCES EXPIRES",
+          value: "01",
+          subtext: "Action Requise",
+          color: "red",
+        }}
+      />
 
-        <div className="flex items-center gap-2">
-          <Button variant="outline" className="h-9 text-[10px] font-bold uppercase tracking-widest text-muted-foreground border-border/40 bg-muted/20 rounded-[4px]">
-            <Download className="mr-2 h-3.5 w-3.5" /> Dossier Type
-          </Button>
-          <Button className="bg-primary hover:bg-primary/90 text-black font-semibold text-[10px] uppercase tracking-[0.2em] h-9 px-8 rounded-[4px]">
-            Mettre à jour le dossier
-          </Button>
-        </div>
-      </div>
 
       {/* ───────────────────────────────────────────────────────────
           PLAN 2 — WORKSPACE CANONICAL (8/4 Split)
@@ -92,10 +100,9 @@ export default function DocumentsPage() {
                       doc.urgent && "border-red-500/20"
                     )}
                 >
-                    {/* GAUCHE : ICONE + NOM */}
-                    <div className="flex items-center gap-4 flex-1 min-w-0">
+                    <div className="flex items-center gap-4">
                       <div className={cn(
-                          "h-9 w-9 rounded-[4px] flex items-center justify-center border transition-all shadow-sm",
+                          "h-9 w-9 rounded-[4px] flex items-center justify-center border transition-all shadow-none",
                           doc.urgent 
                             ? "bg-red-500/5 border-red-500/10 text-red-500" 
                             : "bg-muted/10 border-border/20 text-foreground/40 group-hover:border-primary/20 group-hover:text-primary"
@@ -126,7 +133,7 @@ export default function DocumentsPage() {
                            ? "bg-red-500/10 text-red-500 border-red-500/20" 
                            : doc.status === 'OPTIONNEL'
                            ? "bg-muted/5 text-foreground/40 border-border/20"
-                           : "bg-green-500/10 text-green-500 border-green-500/20 shadow-[0_0_8px_rgba(37,211,102,0.1)]"
+                           : "bg-green-500/10 text-green-500 border-green-500/20 shadow-none"
                       )}>
                         {doc.status}
                       </div>
@@ -155,12 +162,12 @@ export default function DocumentsPage() {
             </h2>
           </div>
 
-          <div className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-8 shadow-sm group relative overflow-hidden">
+          <div className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-8 shadow-none group relative overflow-hidden">
             <div className="absolute -right-4 -top-4 w-24 h-24 bg-primary/5 rounded-full blur-2xl" />
             
             <div className="flex flex-col items-center text-center relative z-10">
                 <div className="relative h-44 w-44 flex items-center justify-center mb-8">
-                  <svg className="h-full w-full -rotate-90 drop-shadow-[0_0_15px_rgba(37,211,102,0.1)]" viewBox="0 0 160 160">
+                  <svg className="h-full w-full -rotate-90" viewBox="0 0 160 160">
                       <circle cx="80" cy="80" r="70" fill="transparent" stroke="currentColor" strokeWidth="6" className="text-foreground/5" />
                       <circle cx="80" cy="80" r="70" fill="transparent" stroke="currentColor" strokeWidth="6" strokeDasharray="440" strokeDashoffset="66" strokeLinecap="round" className="text-primary transition-all duration-1000 ease-out" />
                   </svg>
@@ -187,7 +194,7 @@ export default function DocumentsPage() {
             </div>
           </div>
 
-          <div className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-6 shadow-sm">
+          <div className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-6 shadow-none">
              <div className="flex items-center gap-3 pb-4 border-b border-border/10 mb-6">
                <ShieldCheck className="h-5 w-5 text-primary/60" />
                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/30">

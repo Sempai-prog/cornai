@@ -35,7 +35,7 @@ export function ModuleGarage() {
   return (
     <div className="space-y-6 h-full pb-8">
       {/* 📊 RPAO STATUS BAR : TRACKING EXIGENCES MINIMALES */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {MOCK_RPAO_EQUIPMENT.map((req) => {
           const matched = MOCK_GARAGE.filter(g => g.matchedRequirement === req.id);
           const count = matched.length;
@@ -70,11 +70,11 @@ export function ModuleGarage() {
                     </span>
                   </div>
                   {isComplete ? (
-                    <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+                    <div className="w-6 h-6 rounded-[4px] bg-primary/10 flex items-center justify-center">
                       <CheckCircle2 className="w-3.5 h-3.5 text-primary" />
                     </div>
                   ) : (
-                    <div className="w-6 h-6 rounded-full bg-amber-500/10 flex items-center justify-center">
+                    <div className="w-6 h-6 rounded-[4px] bg-amber-500/10 flex items-center justify-center">
                       <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
                     </div>
                   )}
@@ -86,7 +86,7 @@ export function ModuleGarage() {
       </div>
 
       {/* 🛠️ MAIN INVENTORY TABLE */}
-      <div className="bg-card border border-border rounded-[4px] overflow-hidden flex flex-col h-full shadow-none">
+      <div className="bg-card border border-border rounded-[4px] overflow-hidden flex flex-col h-full">
         {/* Table Header / Action Bar */}
         <div className="p-5 border-b border-border bg-muted/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
@@ -135,7 +135,7 @@ export function ModuleGarage() {
                     </div>
                   </td>
                   <td className="px-6 py-4">
-                    <span className="text-[10px] px-2 py-1 bg-muted border border-border text-foreground font-bold rounded-[2px] uppercase tracking-tighter">
+                    <span className="text-[10px] px-2 py-1 bg-muted border border-border text-foreground font-bold rounded-[4px]-sm uppercase tracking-tighter">
                       {MOCK_RPAO_EQUIPMENT.find(r => r.id === item.matchedRequirement)?.label || "Aucun"}
                     </span>
                   </td>
@@ -145,7 +145,7 @@ export function ModuleGarage() {
                         <div key={doc.id} className="relative group/doc cursor-help">
                           <CheckCircle2 className={cn("w-4 h-4", getDocStatusColor(doc.status))} />
                           {/* Tooltip Simulation */}
-                          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/doc:block bg-popover border border-border px-3 py-1.5 rounded-[2px] whitespace-nowrap z-30 shadow-2xl">
+                          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/doc:block bg-popover border border-border px-3 py-1.5 rounded-[4px]-sm whitespace-nowrap z-30 shadow-2xl">
                             <div className="flex flex-col gap-0.5">
                               <span className="text-[10px] text-foreground font-bold uppercase tracking-tight">{doc.label}</span>
                               <span className={cn("text-[8px] font-bold uppercase", getDocStatusColor(doc.status))}>{doc.status}</span>
@@ -153,7 +153,7 @@ export function ModuleGarage() {
                           </div>
                         </div>
                       ))}
-                      <button className="w-4 h-4 rounded-full border border-border border-dashed flex items-center justify-center text-muted-foreground/30 hover:text-primary hover:border-primary transition-all">
+                      <button className="w-4 h-4 rounded-[4px] border border-border border-dashed flex items-center justify-center text-muted-foreground/30 hover:text-primary hover:border-primary transition-all">
                         <PlusCircle className="w-3 h-3" />
                       </button>
                     </div>

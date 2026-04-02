@@ -27,8 +27,8 @@ export function SoumissionCard({ item }: SubmissionCardProps) {
       layout
       whileHover={{ y: -1, borderColor: "rgba(var(--primary-rgb), 0.2)" }}
       className={cn(
-        "bg-card/60 backdrop-blur-md border border-border/30 rounded-[4px] p-4 cursor-grab transition-all hover:bg-card hover:border-border/50 group",
-        item.isUrgent && "border-l-2 border-l-red-500/50"
+        "bg-card border border-border/10 rounded-[4px] p-4 cursor-grab transition-all hover:bg-card hover:border-border/20 group shadow-none",
+        item.isUrgent && "border-l-2 border-l-red-500"
       )}
     >
        <div className="flex justify-between items-start mb-3">
@@ -36,7 +36,7 @@ export function SoumissionCard({ item }: SubmissionCardProps) {
             {item.ac} <span className="opacity-30">/ {item.id}</span>
           </span>
           <Badge className={cn(
-            "text-[9px] font-bold px-1.5 py-0.5 rounded-[2px] border-none shadow-none uppercase tracking-widest",
+            "text-[9px] font-bold px-1.5 py-0.5 rounded-[4px] border-none shadow-none uppercase tracking-widest",
             item.isUrgent ? "bg-red-500/10 text-red-500" : "bg-primary/10 text-primary"
           )}>
             {item.deadline}
@@ -61,7 +61,7 @@ export function SoumissionCard({ item }: SubmissionCardProps) {
              <span className="text-[9px] font-bold text-muted-foreground/30 uppercase tracking-widest group-hover:text-muted-foreground/50 transition-colors">
                 {item.budget}
              </span>
-             <Badge className="bg-primary/[0.03] text-primary/40 border border-primary/10 text-[9px] font-bold px-1 py-0.5 rounded-[2px] group-hover:text-primary transition-colors">
+             <Badge className="bg-primary/[0.03] text-primary/40 border border-primary/10 text-[9px] font-bold px-1 py-0.5 rounded-[4px] group-hover:text-primary transition-colors">
                 {item.type}
              </Badge>
           </div>

@@ -57,7 +57,7 @@ export function ModuleDescente() {
             <div className="flex flex-col gap-1.5">
               <span className="text-[10px] font-bold text-muted-foreground/40 uppercase tracking-widest">Coordonnées GPS</span>
               <div className="flex items-center gap-3 group cursor-pointer">
-                <div className="p-1 px-1.5 rounded-[2px] bg-muted border border-border group-hover:border-primary/30 transition-colors">
+                <div className="p-1 px-1.5 rounded-[4px]-sm bg-muted border border-border group-hover:border-primary/30 transition-colors">
                    <Navigation className="w-3.5 h-3.5 text-primary" />
                 </div>
                 <p className="text-sm font-bold text-foreground tabular-nums underline decoration-primary/20 underline-offset-4 group-hover:decoration-primary transition-all">
@@ -86,7 +86,7 @@ export function ModuleDescente() {
         {/* 📱 WHATSAPP BRIDGE TILE */}
         <div className="p-5 bg-muted/10 border border-primary/20 border-dashed rounded-[4px] group hover:bg-muted/20 transition-all cursor-default relative overflow-hidden">
           <div className="flex items-center gap-3 mb-4">
-             <div className="p-1.5 bg-primary/10 rounded-full">
+             <div className="p-1.5 bg-primary/10 rounded-[4px]">
                <MessageCircle className="w-4 h-4 text-primary" />
              </div>
              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">SABI Mobile Bridge</span>
@@ -95,7 +95,7 @@ export function ModuleDescente() {
             Vos notes vocales et photos envoyées au bot WhatsApp SABI sont automatiquement synchronisées ici via API.
           </p>
           <div className="mt-4 flex items-center gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+            <div className="w-1.5 h-1.5 rounded-[4px] bg-primary animate-pulse" />
             <span className="text-[9px] font-bold text-primary uppercase tracking-widest">Live Sync Active</span>
           </div>
         </div>

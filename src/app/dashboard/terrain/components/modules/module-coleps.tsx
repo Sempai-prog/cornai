@@ -34,10 +34,10 @@ export function ModuleColeps() {
   const allModulesComplete = Object.values(modulesStatus).every(s => s === "complete");
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 h-full pb-8">
+    <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 h-full pb-8 items-stretch">
       {/* 📦 LEFT : COMPILATION & SIZE GAUGE */}
-      <div className="space-y-6">
-        <aside className="p-6 bg-card border border-border rounded-[4px] relative overflow-hidden space-y-8">
+      <div className="h-full">
+        <aside className="p-6 bg-card border border-border rounded-[4px] relative overflow-hidden space-y-8 h-full flex flex-col">
           {/* Subtle Background Icon */}
           <HardDrive className="absolute -bottom-6 -right-6 w-32 h-32 text-foreground opacity-[0.02] pointer-events-none" />
 
@@ -95,8 +95,8 @@ export function ModuleColeps() {
               <div key={name} className="flex items-center justify-between p-3 bg-muted/10 border border-border rounded-[4px] group">
                 <div className="flex items-center gap-3">
                   <div className={cn(
-                    "w-1.5 h-1.5 rounded-full transition-all",
-                    status === "complete" ? "bg-primary shadow-[0_0_8px_rgba(var(--primary),0.4)]" : "bg-muted-foreground/20"
+                    "w-1.5 h-1.5 rounded-[4px] transition-all",
+                    status === "complete" ? "bg-primary" : "bg-muted-foreground/20"
                   )} />
                   <span className="text-[10px] font-bold text-foreground/80 uppercase tracking-tight group-hover:text-foreground transition-colors">{name}</span>
                 </div>
@@ -170,7 +170,7 @@ export function ModuleColeps() {
                     </h4>
                     <div className="flex items-center gap-3">
                         <span className="text-[9px] text-muted-foreground uppercase font-bold tracking-tight bg-muted px-1.5 py-0.5 rounded-[2px]">{doc.sourceModule}</span>
-                        <div className="w-1 h-1 rounded-full bg-border" />
+                        <div className="w-1 h-1 rounded-[4px] bg-border" />
                         <span className={cn(
                           "text-[9px] font-black uppercase tabular-nums tracking-tighter",
                           doc.status === "heavy" ? "text-amber-500" : "text-primary opacity-60"

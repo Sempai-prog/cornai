@@ -27,10 +27,10 @@ export function ModuleEquipe() {
   const getStatusIcon = (status: DocumentStatus) => {
     switch (status) {
       case "ready": return <CheckCircle2 className="w-3.5 h-3.5 text-primary" />;
-      case "warning": return <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />;
-      case "missing": return <div className="w-1.5 h-1.5 rounded-full bg-red-500" />;
-      case "pending": return <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />;
-      default: return <div className="w-1.5 h-1.5 rounded-full bg-muted" />;
+      case "warning": return <div className="w-1.5 h-1.5 rounded-[4px] bg-amber-500" />;
+      case "missing": return <div className="w-1.5 h-1.5 rounded-[4px] bg-red-500" />;
+      case "pending": return <div className="w-1.5 h-1.5 rounded-[4px] bg-blue-500" />;
+      default: return <div className="w-1.5 h-1.5 rounded-[4px] bg-muted" />;
     }
   };
 
@@ -50,7 +50,7 @@ export function ModuleEquipe() {
               <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest">
                 {MOCK_PERSONNEL.length} Experts Engagés
               </span>
-              <div className="w-1 h-1 rounded-full bg-border" />
+              <div className="w-1 h-1 rounded-[4px] bg-border" />
               <span className="text-[10px] text-primary uppercase font-bold tracking-widest">
                 {MOCK_PERSONNEL.filter(p => p.overallStatus === "conforme").length} Validés
               </span>
@@ -96,7 +96,7 @@ export function ModuleEquipe() {
                     {person.fullName}
                   </h4>
                   <div className="flex items-center gap-2">
-                    <span className="text-[9px] font-bold text-blue-500 uppercase tracking-[0.1em] bg-blue-500/5 px-2 py-0.5 rounded-[2px] border border-blue-500/10">
+                    <span className="text-[9px] font-bold text-blue-500 uppercase tracking-[0.1em] bg-blue-500/5 px-2 py-0.5 rounded-[4px]-sm border border-blue-500/10">
                       {person.posteId.replace("_", " ")}
                     </span>
                   </div>

@@ -23,9 +23,9 @@ export function SubmissionInspector() {
   }
 
   return (
-    <div className="w-full grid grid-cols-1 md:grid-cols-4 border border-border/40 divide-y md:divide-y-0 md:divide-x divide-border/40 rounded-[4px] bg-card/40 backdrop-blur-md shadow-sm overflow-hidden mb-8">
+    <div className="w-full grid grid-cols-1 md:grid-cols-4 border border-border/10 divide-y md:divide-y-0 md:divide-x divide-border/10 rounded-[4px] bg-card shadow-none overflow-hidden mb-8">
       {/* KPI 1 : URGENCE FORCLUSION */}
-      <div className="flex flex-col justify-center p-5 hover:bg-muted/10 transition-all group relative overflow-hidden">
+      <div className="flex flex-col justify-center p-5 hover:bg-muted transition-all group relative overflow-hidden">
         <div className="flex items-center gap-2.5 mb-4 opacity-40 group-hover:opacity-100 transition-opacity">
           <Clock className="h-4 w-4 text-red-500" />
           <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground truncate">
@@ -54,7 +54,7 @@ export function SubmissionInspector() {
       </div>
 
       {/* KPI 2 : BLINDAGE ADMINISTRATIF */}
-      <div className="flex flex-col justify-center p-5 hover:bg-muted/10 transition-all group">
+      <div className="flex flex-col justify-center p-5 hover:bg-muted transition-all group">
         <div className="flex items-center gap-2.5 mb-4 opacity-40 group-hover:opacity-100 transition-opacity">
           <ShieldAlert className="h-4 w-4 text-primary" />
           <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground truncate">
@@ -73,7 +73,7 @@ export function SubmissionInspector() {
       </div>
 
       {/* KPI 3 : SURFACE FINANCIÈRE */}
-      <div className="flex flex-col justify-center p-5 hover:bg-muted/10 transition-all group">
+      <div className="flex flex-col justify-center p-5 hover:bg-muted transition-all group">
         <div className="flex items-center gap-2.5 mb-4 opacity-40 group-hover:opacity-100 transition-opacity">
           <Wallet className="h-4 w-4 text-primary" />
           <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground truncate">
@@ -96,7 +96,7 @@ export function SubmissionInspector() {
         onClick={handleSimulateColeps}
         className={cn(
           "flex flex-col justify-center p-5 transition-all group relative cursor-pointer overflow-hidden",
-          isSimulating ? "bg-muted/40" : "hover:bg-emerald-500/[0.05]"
+           isSimulating ? "bg-muted" : "hover:bg-emerald-500/[0.03]"
         )}
       >
         <div className="flex items-center gap-2.5 mb-4 opacity-40 group-hover:opacity-100 transition-opacity">

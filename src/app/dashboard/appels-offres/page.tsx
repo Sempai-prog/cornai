@@ -3,6 +3,7 @@
 // ══════════════════════════════════════════
 
 import { Globe, Zap } from "lucide-react"
+import { StandardPageHeader } from "@/components/layout/standard-page-header"
 import { getDerniersAO } from "@/database/queries/ao"
 import { mapDBAOToUI } from "@/components/search/search-utils"
 import { SearchDashboardClient } from "./search-dashboard-client"
@@ -19,25 +20,31 @@ export default async function AppelsOffresPage() {
       {/* ───────────────────────────────────────────────────────────
           PLAN 1 — HEADER (Elite Precision)
           ─────────────────────────────────────────────────────────── */}
-      <div className="shrink-0 flex flex-col md:flex-row md:items-end justify-between border-b border-border/10 pb-6 mt-0 lg:mt-[-4px]">
-        <div className="space-y-1.5">
-           <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground leading-none">
-              Marchés publics en temps réel
-           </h1>
-           <div className="flex flex-wrap items-center gap-3 text-[11px] font-bold uppercase tracking-[0.2em] text-foreground/20">
-              <span className="flex items-center gap-1.5"><Globe className="h-4 w-4 opacity-40 text-slate-500" /> SYNCHRONISÉ COLEPS / ARMP</span>
-              <span className="opacity-10">/</span>
-              <span className="">BTP — CAMEROUN — AFRIQUE CENTRALE</span>
-           </div>
-        </div>
+      <StandardPageHeader
+        title="Radar Marchés Publics"
+        metadata="Poste de Pilotage — Veille Stratégique"
+        description={
+          <p>
+            Surveillance et détection en temps réel des avis d'appel d'offres. 
+            <span className="block mt-1">
+              Synchronisé avec <span className="text-foreground/40 font-black">COLEPS • ARMP</span> — Secteur BTP & Infrastructures.
+            </span>
+          </p>
+        }
+        cardA={{
+          label: "SYNC STATUS",
+          value: "LIVE",
+          subtext: "Dernière MAJ: 2min",
+          color: "primary",
+        }}
+        cardB={{
+          label: "FILTRES ACTIFS",
+          value: "08",
+          subtext: "Matching Intelligent",
+          color: "amber",
+        }}
+      />
 
-        <div className="flex items-center gap-2 hidden md:flex">
-           <div className="flex items-center gap-2 px-3 py-1.5 rounded-[4px] bg-primary/5 border border-primary/10 transition-all hover:bg-primary/10">
-              <Zap className="h-3 w-3 text-primary opacity-60" />
-              <span className="text-[10px] font-bold text-primary/60 uppercase tracking-[0.2em]">Matching Actif</span>
-           </div>
-        </div>
-      </div>
 
       {/* ───────────────────────────────────────────────────────────
           PLAN 2 — MOTEUR DE RECHERCHE (FULL-PAGE ENGINE)

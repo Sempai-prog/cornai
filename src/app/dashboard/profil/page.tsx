@@ -17,6 +17,7 @@ import {
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { StandardPageHeader } from "@/components/layout/standard-page-header"
 
 export default function ProfilCapacitePage() {
   return (
@@ -25,25 +26,32 @@ export default function ProfilCapacitePage() {
       {/* ───────────────────────────────────────────────────────────
           PLAN 1 — HEADER (Elite Precision)
           ─────────────────────────────────────────────────────────── */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-border/10 mt-0 lg:mt-[-4px]">
-        <div className="space-y-1.5">
-          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
-            Capacité Métier <span className="text-muted-foreground/30 font-light">/</span> <span className="text-primary/70">BTP</span>
-          </h1>
-          <p className="text-[11px] text-muted-foreground font-bold tracking-[0.2em] opacity-80 uppercase">
-            Pilotage des éligibilités aux marchés publics (ARMP / MINMAP)
+      <StandardPageHeader
+        title="Capacité Métier"
+        metadata="Poste de Pilotage — Profil Expert"
+        description={
+          <p>
+            Pilotage des éligibilités aux marchés publics. 
+            <span className="block mt-1">
+              Analyse de surface financière et technique — Standards <span className="text-foreground/40 font-black uppercase tracking-widest">ARMP / MINMAP</span>.
+            </span>
           </p>
-        </div>
+        }
+        cardA={{
+          label: "INDEX CAPACITÉ",
+          value: "88",
+          subtext: "Score de Compétitivité",
+          progress: 88,
+          color: "blue",
+        }}
+        cardB={{
+          label: "DOSSIER MAÎTRE",
+          value: "OK",
+          subtext: "00 Alerts Pending",
+          color: "emerald",
+        }}
+      />
 
-        <div className="flex items-center gap-3">
-          <Button variant="outline" className="h-9 px-4 rounded-[4px] border-border/40 bg-muted/20 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-muted/30 transition-all gap-2">
-            <RefreshCcw size={14} className="text-slate-500" /> Synchroniser
-          </Button>
-          <Button className="h-9 px-8 rounded-[4px] bg-primary text-black text-[10px] font-bold uppercase tracking-[0.25em] hover:opacity-90 transition-all shadow-lg shadow-primary/10 border-none">
-            Mettre à jour
-          </Button>
-        </div>
-      </div>
 
       {/* ───────────────────────────────────────────────────────────
           PLAN 2 — WORKSPACE CANONICAL (8/4 Split)

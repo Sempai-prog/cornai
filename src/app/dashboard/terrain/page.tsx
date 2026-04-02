@@ -32,7 +32,7 @@ export default function TerrainPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground px-6 py-8">
+    <div className="flex flex-col min-h-screen text-foreground">
       {/* Structural Header */}
       <TerrainHeader score={MOCK_SCORE} />
 
@@ -57,7 +57,7 @@ export default function TerrainPage() {
             SABI Intelligence Locale • DTAO v2024.1
           </span>
           <span className="text-[9px] uppercase font-medium tracking-tight text-muted-foreground italic">
-            Module Génération Volume 2 — Phase D1.5 Compliance
+            Module Pilotage Tactique — Phase D1.6 Master Compliance
           </span>
         </div>
         

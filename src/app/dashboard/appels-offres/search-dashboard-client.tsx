@@ -107,7 +107,7 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
   }, [query, filters, initialResults])
 
   return (
-    <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row gap-6 relative min-h-[calc(100vh-210px)] animate-in fade-in duration-700 px-4 sm:px-6 lg:px-0">
+    <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 relative min-h-[calc(100vh-210px)] animate-in fade-in duration-500 px-4 sm:px-6 lg:px-0 bg-transparent">
       
       {/* ───────────────────────────────────────────────────────────
           1. FILTRES "QUIET" (SIDEBAR RÉTRACTABLE)
@@ -123,7 +123,7 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
                {FILTER_CATEGORIES.map((cat) => (
                  <div 
                    key={cat.id} 
-                   className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-4 hover:border-border/60 hover:bg-card transition-all shadow-sm group whitespace-nowrap"
+                   className="bg-card border border-border/10 rounded-[4px] p-4 hover:border-border/20 hover:bg-card transition-all shadow-none group whitespace-nowrap"
                  >
                     <button 
                      onClick={() => toggleAccordion(cat.id)}
@@ -144,7 +144,7 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
                            <label key={item} className="flex items-center gap-3 cursor-pointer group/label">
                               <input 
                                  type="checkbox" 
-                                 className="h-3 w-3 rounded-[2px] border border-border/40 bg-background/40 checked:bg-primary checked:border-primary appearance-none cursor-pointer transition-all"
+                                 className="h-3 w-3 rounded-[2px] border border-border/10 bg-background checked:bg-primary checked:border-primary appearance-none cursor-pointer transition-all"
                                  checked={(filters as any)[cat.id].includes(item)}
                                  onChange={() => toggleFilter(cat.id as any, item)}
                               />
@@ -160,7 +160,7 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
                ))}
 
                {/* Ribbon Side Info (Independent Card) */}
-               <div className="p-4 bg-card/20 border border-border/20 rounded-[4px] flex items-center gap-3 opacity-30 mt-auto whitespace-nowrap">
+               <div className="p-4 bg-muted/5 border border-border/10 rounded-[4px] flex items-center gap-3 opacity-30 mt-auto whitespace-nowrap">
                    <ShieldCheck className="h-4 w-4" />
                    <span className="text-[10px] font-bold uppercase tracking-widest leading-none">Protection: ARMP-V4</span>
                </div>
@@ -171,15 +171,15 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
       {/* ───────────────────────────────────────────────────────────
           2. STATION DE TRI DYNAMIQUE (CONTENU PRINCIPAL)
           ─────────────────────────────────────────────────────────── */}
-      <div className="flex-1 flex flex-col gap-6 min-w-0 w-full">
+      <div className="flex-1 flex flex-col gap-8 min-w-0 w-full">
          
-         <header className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] relative">
+         <header className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-card border border-border/10 rounded-[4px] relative shadow-none">
             
             {/* TOGGLE SIDEBAR BUTTON (Positionné entre Sidebar et Header) */}
             <button 
                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                className={cn(
-                 "absolute -left-3 top-1/2 -translate-y-1/2 z-50 h-6 w-6 rounded-full bg-card border border-border/40 flex items-center justify-center text-foreground/40 hover:text-primary hover:border-primary/40 transition-all shadow-xl group",
+                 "absolute -left-3 top-1/2 -translate-y-1/2 z-50 h-6 w-6 rounded-[4px] bg-card border border-border/10 flex items-center justify-center text-foreground/40 hover:text-primary hover:border-primary/40 transition-all shadow-none group",
                  "md:flex hidden"
                )}
                title={isSidebarOpen ? "Fermer les filtres" : "Ouvrir les filtres"}
@@ -187,7 +187,7 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
                <ChevronRight className={cn("h-3 w-3 transition-transform duration-500", isSidebarOpen ? "rotate-180" : "rotate-0")} />
                
                {/* Tooltip Indication */}
-               <div className="absolute left-8 px-2 py-1 bg-popover text-popover-foreground text-[10px] font-bold uppercase tracking-widest rounded-[4px] border border-border opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap shadow-xl">
+               <div className="absolute left-8 px-2 py-1 bg-popover text-popover-foreground text-[10px] font-bold uppercase tracking-widest rounded-[4px] border border-border opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap shadow-none">
                   {isSidebarOpen ? "FERMER FILTRES" : "OUVRIR FILTRES"}
                </div>
             </button>
@@ -200,17 +200,17 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
                       placeholder={SABI_COPY.SEARCH.PLACEHOLDER}
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
-                      className="pl-9 h-11 bg-card/40 border-border/40 focus-visible:ring-primary/20 rounded-[4px] font-medium"
+                      className="pl-9 h-11 bg-background border-border/10 focus-visible:ring-primary/20 rounded-[4px] font-medium"
                     />
                   </div>
-                  <Button className="h-11 px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-[4px] shadow-sm flex items-center gap-2 ml-2">
+                  <Button className="h-11 px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-[4px] shadow-none flex items-center gap-2 ml-2">
                     <Zap className="size-4 fill-current" />
                     Scanner le Radar
                   </Button>
                   {query && (
                     <button 
                       onClick={() => setQuery("")}
-                      className="absolute right-32 p-1 rounded-full hover:bg-muted text-foreground/20 hover:text-foreground/60 transition-colors"
+                      className="absolute right-32 p-1 rounded-[4px] hover:bg-muted text-foreground/20 hover:text-foreground/60 transition-colors"
                     >
                       <FilterX className="h-3 w-3" />
                     </button>
@@ -219,12 +219,12 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
             </div>
             
             <div className="flex items-center gap-2">
-               <div className="flex items-center bg-background/40 rounded-[4px] p-0.5 border border-border/40">
+               <div className="flex items-center bg-background rounded-[4px] p-0.5 border border-border/10">
                   <button 
                     onClick={() => setViewMode("list")} 
                     className={cn(
                       "h-8 px-4 flex items-center gap-2 rounded-[4px] transition-all",
-                      viewMode === "list" ? "bg-card text-primary border border-border/40 shadow-sm" : "text-foreground/20 hover:text-foreground/40"
+                      viewMode === "list" ? "bg-card text-primary border border-border/10 shadow-none" : "text-foreground/20 hover:text-foreground/40"
                     )}
                   >
                     <ListIcon className="h-3.5 w-3.5" />
@@ -234,7 +234,7 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
                     onClick={() => setViewMode("table")} 
                     className={cn(
                       "h-8 px-4 flex items-center gap-2 rounded-[4px] transition-all",
-                      viewMode === "table" ? "bg-card text-primary border border-border/40 shadow-sm" : "text-foreground/20 hover:text-foreground/40"
+                      viewMode === "table" ? "bg-card text-primary border border-border/10 shadow-none" : "text-foreground/20 hover:text-foreground/40"
                     )}
                   >
                     <TableIcon className="h-3.5 w-3.5" />
@@ -274,9 +274,9 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
 
 function TableView({ results }: { results: SearchResult[] }) {
   return (
-    <div className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] overflow-hidden">
+    <div className="bg-card border border-border/10 rounded-[4px] overflow-hidden shadow-none">
        {/* TABLE HEADER */}
-       <div className="flex items-center gap-4 px-4 py-3 bg-muted/30 border-b border-border/40 select-none">
+       <div className="flex items-center gap-4 px-4 py-3 bg-muted border-b border-border/10 select-none">
           <div className="w-2.5 shrink-0" />
           <div className="w-[120px] shrink-0 text-[10px] font-semibold text-foreground/20 uppercase tracking-[0.2em]">Référence / AC</div>
           <div className="flex-1 text-[10px] font-semibold text-foreground/20 uppercase tracking-[0.2em]">Objet du Marché</div>
@@ -290,11 +290,11 @@ function TableView({ results }: { results: SearchResult[] }) {
           {results.map((item) => (
              <div 
                key={item.id} 
-               className="group flex items-center gap-4 px-4 h-12 border-b border-border/10 hover:bg-muted/30 transition-all cursor-pointer relative"
+               className="group flex items-center gap-4 px-4 h-12 border-b border-border/10 hover:bg-muted transition-all cursor-pointer relative"
              >
                 {/* 1. URGENCY INDICATOR (2px Pulse) */}
                 <div className={cn(
-                  "absolute left-0 top-1/4 bottom-1/4 w-[2px] rounded-r-full",
+                  "absolute left-0 top-1/4 bottom-1/4 w-[1.5px] rounded-r-[4px]",
                   parseInt(item.deadline) < 5 ? "bg-red-500" : parseInt(item.deadline) < 15 ? "bg-amber-500" : "bg-primary/50"
                 )} />
                 
@@ -322,9 +322,9 @@ function TableView({ results }: { results: SearchResult[] }) {
 
                 {/* 5. IA SCORE */}
                 <div className="w-[100px] shrink-0 flex items-center justify-center gap-2">
-                   <div className="h-1 w-12 bg-muted rounded-full overflow-hidden hidden sm:block">
+                   <div className="h-[2px] w-full bg-muted/20 rounded-[4px] overflow-hidden">
                       <div 
-                         className="h-full bg-primary shadow-[0_0_8px_rgba(37,211,102,0.4)]" 
+                         className="h-full bg-primary" 
                          style={{ width: `${item.matchScore}%` }} 
                       />
                    </div>

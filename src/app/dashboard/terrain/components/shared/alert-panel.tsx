@@ -38,7 +38,7 @@ export function AlertPanel({ type, title, message, icon = true }: AlertPanelProp
 
   return (
     <div className={cn(
-      "flex gap-4 p-4 rounded-[4px] border",
+      "flex gap-4 p-4 rounded-sabi border",
       config.bg,
       config.border
     )}>

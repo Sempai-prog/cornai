@@ -43,8 +43,8 @@ export function SearchResultRow({ item }: SearchResultRowProps) {
   return (
     <div 
       className={cn(
-        "group/card relative flex flex-col overflow-hidden rounded-[4px] border border-border/40 bg-card/80 backdrop-blur-md transition-all duration-300",
-        isExpanded ? "mb-4 border-border/60 bg-card shadow-xl" : "hover:bg-card hover:border-border/60"
+        "group/card relative flex flex-col overflow-hidden rounded-[4px] border border-border/10 bg-card transition-all duration-300",
+        isExpanded ? "mb-4 border-border/20 bg-card shadow-none" : "hover:bg-card hover:border-border/20"
       )}
     >
       {/* ───────────────────────────────────────────────────────────
@@ -124,13 +124,13 @@ export function SearchResultRow({ item }: SearchResultRowProps) {
               <span className="text-[8px] sm:text-[10px] text-foreground/20 font-black uppercase tracking-widest mt-1">Clôture</span>
            </div>
 
-           <div className="flex items-center ml-4">
-              <div className="h-8 w-8 rounded-full flex items-center justify-center text-muted-foreground transition-all group-hover/row:text-primary group-hover/row:bg-primary/5">
-                 <button onClick={(e) => { e.stopPropagation(); handleToggleExpand(); }}>
-                    <ChevronRight className={cn("h-4 w-4 transition-transform duration-500", isExpanded && "rotate-90")} />
-                 </button>
-              </div>
-           </div>
+            <div className="flex items-center ml-4">
+               <div className="h-8 w-8 rounded-[4px] flex items-center justify-center text-muted-foreground transition-all group-hover/row:text-primary group-hover/row:bg-primary/5 border border-transparent group-hover/row:border-border/10">
+                  <button onClick={(e) => { e.stopPropagation(); handleToggleExpand(); }}>
+                     <ChevronRight className={cn("h-4 w-4 transition-transform duration-500", isExpanded && "rotate-90")} />
+                  </button>
+               </div>
+            </div>
         </div>
       </div>
 
@@ -176,7 +176,7 @@ export function SearchResultRow({ item }: SearchResultRowProps) {
                        Retour à l&apos;analyse rapide
                     </button>
                     
-                    <div className="border border-border/40 rounded-[4px] overflow-hidden bg-muted/5">
+                    <div className="border border-border/10 rounded-[4px] overflow-hidden bg-muted/5">
                         <TenderInspectorPanel 
                             item={item} 
                             onStartWorkflow={handleStartWorkflow} 

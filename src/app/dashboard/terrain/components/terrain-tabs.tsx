@@ -38,16 +38,16 @@ export function TerrainTabs({ currentTab, onTabChange, moduleStatuses }: Terrain
   
   const getStatusColor = (status: ModuleStatus) => {
     switch (status) {
-      case "complete": return "bg-primary shadow-[0_0_8px_rgba(var(--primary),0.3)]";
-      case "warning": return "bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.2)]";
-      case "pending": return "bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.2)]";
+      case "complete": return "bg-primary";
+      case "warning": return "bg-amber-500";
+      case "pending": return "bg-blue-500";
       case "empty": return "bg-muted-foreground/20";
       default: return "bg-muted-foreground/10";
     }
   };
 
   return (
-    <div className="flex items-center gap-2 p-1.5 bg-card border border-border rounded-[4px] overflow-x-auto scrollbar-none mb-8 shadow-sm">
+    <div className="flex items-center gap-2 p-1.5 bg-card border border-border/10 rounded-[4px] overflow-x-auto scrollbar-none mb-8">
       {TABS.map((tab) => {
         const Icon = tab.icon;
         const isActive = currentTab === tab.id;
@@ -60,7 +60,7 @@ export function TerrainTabs({ currentTab, onTabChange, moduleStatuses }: Terrain
             className={cn(
               "flex items-center gap-3 px-5 py-3 rounded-[4px] transition-all duration-300 relative group min-w-[140px] border",
               isActive 
-                ? "bg-muted/50 text-foreground border-border shadow-inner" 
+                ? "bg-muted/50 text-foreground border-border" 
                 : "text-muted-foreground hover:bg-muted/20 hover:text-foreground/80 border-transparent shadow-none"
             )}
           >
