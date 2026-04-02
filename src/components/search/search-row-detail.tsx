@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Mini-Bento Expansion (Phase 2 — Go/No-Go Triage)
+// SABI — Mini-Bento Expansion (Phase 2 — Go/No-Go Triage)
 // ══════════════════════════════════════════
 
 "use client"
@@ -49,13 +49,13 @@ export function SearchRowDetail({ item, onOpenInspector }: SearchRowDetailProps)
 
       {/* BLOC 2 : FILTRE IA (Alerte Risque) */}
       <div className="flex flex-col gap-3 p-3.5 rounded-[4px] border border-red-500/10 bg-red-500/5 relative overflow-hidden group h-full">
-         <div className="flex items-center gap-2 text-red-500/40">
-            <AlertOctagon className="h-3 w-3" />
-            <span className="text-[9px] font-bold uppercase tracking-widest">Sécabilité / Risque IA</span>
-         </div>
-         <p className="text-[11px] font-semibold text-red-400 leading-tight tracking-tight">
-            {item.signal || "Vérifiez votre certificat de non-exclusion (ARMP) pour ce lot."}
-         </p>
+          <div className="flex items-center gap-2 text-red-600/40">
+             <AlertOctagon className="h-3 w-3" />
+             <span className="text-[9px] font-bold uppercase tracking-widest">Sécabilité / Risque IA</span>
+          </div>
+          <p className="text-[11px] font-semibold text-red-600/80 leading-tight tracking-tight">
+             {item.signal || "Vérifiez votre certificat de non-exclusion (ARMP) pour ce lot."}
+          </p>
          <div className="absolute -right-2 -bottom-2 opacity-5 scale-150 rotate-12 group-hover:rotate-0 transition-transform">
             <Zap className="h-12 w-12 text-red-500" />
          </div>
@@ -69,10 +69,10 @@ export function SearchRowDetail({ item, onOpenInspector }: SearchRowDetailProps)
          </div>
          <div className="space-y-2">
             <div className="flex items-center gap-2">
-               <Badge className={cn(
-                 "h-4 rounded-[2px] border-none px-1.5 text-[8px] font-black uppercase tracking-wider",
-                 item.modeSoumission === "COLEPS" ? "bg-primary text-black" : "bg-white/10 text-foreground/50"
-               )}>
+                <Badge className={cn(
+                  "h-4 rounded-[2px] border-none px-1.5 text-[8px] font-black uppercase tracking-wider",
+                  item.modeSoumission === "COLEPS" ? "bg-primary text-primary-foreground" : "bg-muted text-foreground/50"
+                )}>
                   {item.modeSoumission || "Physique"}
                </Badge>
                <span className="text-[10px] font-medium text-foreground/40 uppercase">Mode de soumission</span>

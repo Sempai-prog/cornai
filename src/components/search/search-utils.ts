@@ -112,6 +112,6 @@ export function generateWhatsAppLink(item: Partial<SearchResult>, actionType: st
   let message = ""
   const titre = item.title || "Titre non spécifié"
 
-  message = `Bonjour CORNAi, je souhaite des informations sur le marché : ${titre}.`
+  message = `Bonjour SABI, je souhaite des informations sur le marché : ${titre}.`
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
 }

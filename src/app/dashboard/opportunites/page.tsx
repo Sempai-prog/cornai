@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Pipeline des Opportunités (Board Full-Screen)
+// SABI — Pipeline des Opportunités (Board Full-Screen)
 // ══════════════════════════════════════════
 
 "use client"

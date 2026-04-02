@@ -38,10 +38,10 @@ const BenefitCard = ({ i, Icon, title, description, progress, range, color }: Be
           scale, 
           zIndex: i 
         }}
-        className="relative w-full max-w-[420px] p-7 rounded bg-white dark:bg-[#0A0A0A] border border-border transition-all duration-300 group overflow-hidden origin-top"
+        className="relative w-full max-w-[420px] p-7 rounded bg-card border border-border transition-all duration-300 group overflow-hidden origin-top"
       >
         {/* Watermark Number */}
-        <div className="absolute top-6 right-7 text-2xl font-medium text-gray-100 dark:text-white/5 select-none tracking-tighter">
+        <div className="absolute top-6 right-7 text-2xl font-medium text-muted/20 dark:text-muted/10 select-none tracking-tighter">
           0{i + 1}
         </div>
 
@@ -60,7 +60,7 @@ const BenefitCard = ({ i, Icon, title, description, progress, range, color }: Be
           {description}
         </p>
 
-        <div className="mt-7 pt-4 border-t border-slate-50 dark:border-white/5 flex items-center gap-2 text-[9px] font-medium uppercase tracking-widest text-[#C28E64]">
+        <div className="mt-7 pt-4 border-t border-border/10 flex items-center gap-2 text-[9px] font-medium uppercase tracking-widest text-[#C28E64]">
           <div className="h-1 w-1 rounded-full bg-[#C28E64] opacity-50" />
           <span>Expertise Locale</span>
         </div>
@@ -120,7 +120,7 @@ export function StackingBenefits() {
                 BENEFITS
               </span>
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tight leading-tight text-foreground">
-                Pourquoi choisir <br/> la solution CORNAi ?
+                Pourquoi choisir <br/> la solution SABI ?
               </h2>
               <p className="text-lg font-normal text-muted-foreground leading-relaxed max-w-md">
                  Une IA locale pour transformer votre PME en leader incontesté des marchés publics au Cameroun.

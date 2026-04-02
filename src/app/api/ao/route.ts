@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — API : Liste des AO (/api/ao)
+// SABI — API : Liste des AO (/api/ao)
 // ══════════════════════════════════════════
 
 import { db } from '@/database/client'

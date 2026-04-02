@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Ligne de Résultat (Logic V4 — Triage & Inception Transition)
+// SABI — Ligne de Résultat (Logic V4 — Triage & Inception Transition)
 // ══════════════════════════════════════════
 
 "use client"
@@ -94,10 +94,10 @@ export function SearchResultRow({ item }: SearchResultRowProps) {
                  <span className="text-[14px] font-black text-foreground/90 tracking-tighter">
                     {item.matchScore}%
                  </span>
-                 <div className={cn(
-                    "h-1.5 w-1.5 rounded-full ring-2 ring-primary/5 shadow-lg",
-                    item.matchLevel === 'excellent' ? "bg-primary shadow-primary/20" : "bg-foreground/10"
-                 )} />
+                  <div className={cn(
+                     "h-1.5 w-1.5 rounded-full ring-2 ring-primary/5 shadow-lg",
+                     item.matchLevel === 'excellent' ? "bg-primary shadow-primary/20" : "bg-muted"
+                  )} />
               </div>
               <span className="text-[10px] text-foreground/20 font-bold uppercase tracking-widest mt-1">Compatibilité</span>
            </div>
@@ -125,8 +125,10 @@ export function SearchResultRow({ item }: SearchResultRowProps) {
            </div>
 
            <div className="flex items-center ml-4">
-              <div className="h-8 w-8 rounded-full flex items-center justify-center text-foreground/10 group-hover/row:text-primary group-hover/row:bg-primary/5 transition-all">
-                 <ChevronRight className={cn("h-4 w-4 transition-transform duration-500", isExpanded && "rotate-90")} />
+              <div className="h-8 w-8 rounded-full flex items-center justify-center text-muted-foreground transition-all group-hover/row:text-primary group-hover/row:bg-primary/5">
+                 <button onClick={(e) => { e.stopPropagation(); handleToggleExpand(); }}>
+                    <ChevronRight className={cn("h-4 w-4 transition-transform duration-500", isExpanded && "rotate-90")} />
+                 </button>
               </div>
            </div>
         </div>

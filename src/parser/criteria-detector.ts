@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Criteria Detector (Regex + JSON)
+// SABI — Criteria Detector (Regex + JSON)
 // ══════════════════════════════════════════
 
 import { readFileSync, existsSync } from 'fs'

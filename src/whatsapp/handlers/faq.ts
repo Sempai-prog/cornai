@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Handler : FAQ & Aide
+// SABI — Handler : FAQ & Aide
 // ══════════════════════════════════════════
 
 import { db } from '../../database/client'
@@ -33,7 +33,7 @@ export async function handleFAQ(telephone: string, question: string) {
     })
 
     // 3. Construction du contexte pour Gemini
-    let context = "Informations issues de la base de connaissances CORNAi (Réglementation des Marchés Publics au Cameroun) :\n\n"
+    let context = "Informations issues de la base de connaissances SABI (Réglementation des Marchés Publics au Cameroun) :\n\n"
     
     faqResults.forEach((f: any) => {
       context += `Question : ${f.question}\nRéponse : ${f.reponseComplete}\nRéférence : ${f.referenceLegale || 'ARMP'}\n---\n`
@@ -48,7 +48,7 @@ export async function handleFAQ(telephone: string, question: string) {
     }
 
     // 4. Appel Gemini
-    const systemPrompt = `Tu es CORNAi, un assistant expert des marchés publics au Cameroun (ARMP). 
+    const systemPrompt = `Tu es SABI, un assistant expert des marchés publics au Cameroun (ARMP). 
 Réponds de manière concise et professionnelle à l'utilisateur sur WhatsApp. 
 Utilise le contexte fourni ci-dessous si possible. 
 Si la réponse est extraite de la base, cite toujours la source (ex: Art 12 du Code des Marchés).

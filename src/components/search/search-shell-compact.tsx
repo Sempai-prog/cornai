@@ -158,7 +158,7 @@ export function SearchShellCompact({ initialResults, isLoading: externalLoading 
 
         {/* Content Area */}
         <div className="flex h-full min-w-0 flex-1 flex-col overflow-hidden">
-          <div className="sticky top-0 z-10 bg-background/90 backdrop-blur border-b">
+          <div className="sticky top-0 z-10 bg-card border-b">
             <SearchToolbar
               query={query}
               onQueryChange={setQuery}

@@ -54,16 +54,16 @@ export default function RegisterPage() {
   ]
 
   return (
-    <div className="w-full flex flex-col md:flex-row bg-card/60 dark:bg-[#0c0c0c]/80 border border-border dark:border-white/5 shadow-2xl backdrop-blur-xl overflow-hidden rounded min-h-[600px] transition-colors duration-500">
+    <div className="w-full flex flex-col md:flex-row bg-card/60 dark:bg-card/80 border border-border dark:border-border/10 shadow-2xl backdrop-blur-xl overflow-hidden rounded min-h-[600px] transition-colors duration-500">
       
       {/* 1. PANNEAU DE GAUCHE : ÉTAPES / INFO */}
-      <div className="hidden md:flex flex-col justify-between p-12 md:w-[350px] border-r border-border dark:border-white/5 bg-gradient-to-b from-foreground/[0.02] to-transparent">
+      <div className="hidden md:flex flex-col justify-between p-12 md:w-[350px] border-r border-border dark:border-border/10 bg-gradient-to-b from-foreground/[0.02] to-transparent">
         <div>
           <Link href="/" className="flex items-center gap-2 mb-16 hover:opacity-80 transition-opacity">
             <div className="w-7 h-7 bg-[#25D366] flex items-center justify-center rounded">
               <ShieldCheck className="w-4 h-4 text-white dark:text-black" />
             </div>
-            <span className="text-foreground font-black tracking-[0.2em] text-xs">CORNAi</span>
+            <span className="text-foreground font-black tracking-[0.2em] text-xs">SABI</span>
           </Link>
           
           <div className="space-y-8">
@@ -96,7 +96,7 @@ export default function RegisterPage() {
                     {s.title}
                   </span>
                   {i < steps.length - 1 && (
-                    <div className="absolute left-3 top-6 w-[1px] h-6 bg-border dark:bg-white/5" />
+                    <div className="absolute left-3 top-6 w-[1px] h-6 bg-border dark:bg-border/10" />
                   )}
                 </div>
               ))}
@@ -114,7 +114,7 @@ export default function RegisterPage() {
       </div>
 
       {/* 2. PANNEAU DE DROITE : FORMULAIRE ÉTAPES */}
-      <div className="flex-1 p-8 md:p-14 bg-background/20 dark:bg-[#080808]/40 transition-colors duration-500">
+      <div className="flex-1 p-8 md:p-14 bg-background/20 dark:bg-muted/10 transition-colors duration-500">
         <div className="max-w-[400px] mx-auto h-full flex flex-col justify-center">
           <AnimatePresence mode="wait">
             <motion.div
@@ -141,7 +141,7 @@ export default function RegisterPage() {
                       <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground/30 group-focus-within:text-[#25D366] transition-colors" />
                       <Input 
                         placeholder="Nom de l'entreprise" 
-                        className="h-12 bg-background border-border dark:border-white/5 rounded pl-11 text-foreground font-bold text-xs uppercase focus-visible:ring-1 focus-visible:ring-[#25D366]/30 shadow-sm dark:shadow-none transition-all"
+                        className="h-12 bg-background border-border dark:border-border/10 rounded pl-11 text-foreground font-bold text-xs uppercase focus-visible:ring-1 focus-visible:ring-[#25D366]/30 shadow-sm dark:shadow-none transition-all"
                         value={formData.nom}
                         onChange={(e) => hangleChange("nom", e.target.value)}
                       />
@@ -153,7 +153,7 @@ export default function RegisterPage() {
                       <Smartphone className="absolute left-4 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground/30 group-focus-within:text-[#25D366] transition-colors" />
                       <Input 
                         placeholder="699 99 99 99" 
-                        className="h-12 bg-background border-border dark:border-white/5 rounded pl-11 text-foreground font-bold text-xs focus-visible:ring-1 focus-visible:ring-[#25D366]/30 shadow-sm dark:shadow-none transition-all"
+                        className="h-12 bg-background border-border dark:border-border/10 rounded pl-11 text-foreground font-bold text-xs focus-visible:ring-1 focus-visible:ring-[#25D366]/30 shadow-sm dark:shadow-none transition-all"
                         value={formData.telephone}
                         onChange={(e) => hangleChange("telephone", e.target.value)}
                       />
@@ -167,7 +167,7 @@ export default function RegisterPage() {
                   <div className="space-y-2">
                     <label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground/40 pl-0.5">Secteur principal</label>
                     <select 
-                      className="h-12 w-full px-4 bg-background border border-border dark:border-white/5 rounded text-xs font-bold text-foreground focus:outline-none focus:ring-1 focus:ring-[#25D366]/30 uppercase transition-all"
+                      className="h-12 w-full px-4 bg-background border border-border dark:border-border/10 rounded text-xs font-bold text-foreground focus:outline-none focus:ring-1 focus:ring-[#25D366]/30 uppercase transition-all"
                       value={formData.secteur}
                       onChange={(e) => hangleChange("secteur", e.target.value)}
                     >
@@ -180,7 +180,7 @@ export default function RegisterPage() {
                   <div className="space-y-2">
                     <label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground/40 pl-0.5">Région d&apos;intérêt</label>
                     <select 
-                      className="h-12 w-full px-4 bg-background border border-border dark:border-white/5 rounded text-xs font-bold text-foreground focus:outline-none focus:ring-1 focus:ring-[#25D366]/30 uppercase transition-all"
+                      className="h-12 w-full px-4 bg-background border border-border dark:border-border/10 rounded text-xs font-bold text-foreground focus:outline-none focus:ring-1 focus:ring-[#25D366]/30 uppercase transition-all"
                       value={formData.region}
                       onChange={(e) => hangleChange("region", e.target.value)}
                     >
@@ -202,7 +202,7 @@ export default function RegisterPage() {
                       <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground/30 group-focus-within:text-[#25D366] transition-colors" />
                       <Input 
                         placeholder="exemple@pme.cm" 
-                        className="h-12 bg-background border-border dark:border-white/5 rounded pl-11 text-foreground font-bold text-xs focus-visible:ring-1 focus-visible:ring-[#25D366]/30 shadow-sm dark:shadow-none transition-all"
+                        className="h-12 bg-background border-border dark:border-border/10 rounded pl-11 text-foreground font-bold text-xs focus-visible:ring-1 focus-visible:ring-[#25D366]/30 shadow-sm dark:shadow-none transition-all"
                         value={formData.email}
                         onChange={(e) => hangleChange("email", e.target.value)}
                       />
@@ -227,7 +227,7 @@ export default function RegisterPage() {
                   <Button 
                     variant="outline" 
                     onClick={handlePrev}
-                    className="h-12 px-6 border-border dark:border-white/5 rounded bg-background/50 text-muted-foreground/40 hover:text-foreground"
+                    className="h-12 px-6 border-border dark:border-border/10 rounded bg-background/50 text-muted-foreground/40 hover:text-foreground"
                   >
                     <ArrowLeft className="w-4 h-4" />
                   </Button>
@@ -237,12 +237,12 @@ export default function RegisterPage() {
                   className="flex-1 h-12 bg-[#25D366] text-white dark:text-black font-extrabold text-[10px] rounded hover:bg-[#25D366]/90 transition-all tracking-[0.2em] shadow-lg shadow-[#25D366]/10 dark:shadow-none"
                   disabled={isSubmitting || (step === 1 && (!formData.nom || !formData.telephone)) || (step === 2 && (!formData.secteur || !formData.region))}
                 >
-                  {isSubmitting ? "Initialisation..." : step < 3 ? "Continuer" : "Lancer CORNAi"}
+                  {isSubmitting ? "Initialisation..." : step < 3 ? "Continuer" : "Lancer SABI"}
                   {step < 3 && !isSubmitting && <ArrowRight className="ml-2 w-3 h-3" />}
                 </Button>
               </div>
 
-              <div className="mt-8 flex justify-center divide-x divide-border dark:divide-white/5 md:hidden">
+              <div className="mt-8 flex justify-center divide-x divide-border dark:divide-border/10 md:hidden">
                  <Link href="/login" className="px-4 text-[9px] font-black text-muted-foreground/40 tracking-widest hover:text-[#25D366]">Se connecter</Link>
                  <Link href="/" className="px-4 text-[9px] font-black text-muted-foreground/40 tracking-widest hover:text-foreground">Landing</Link>
               </div>

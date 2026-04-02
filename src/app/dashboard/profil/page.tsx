@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Pilotage de Capacité Métier (Profil Expert)
+// SABI — Pilotage de Capacité Métier (Profil Expert)
 // ══════════════════════════════════════════
 
 "use client"
@@ -63,10 +63,10 @@ export default function ProfilCapacitePage() {
          {/* CARTE 1 : IDENTITÉ LÉGALE */}
          <motion.div 
             whileHover={{ y: -4 }}
-            className="group bg-card/40 border border-black/5 dark:border-white/5 rounded-[4px] p-6 space-y-8 backdrop-blur-sm transition-all hover:bg-card/60 dark:hover:bg-card/30 hover:border-black/10 dark:hover:border-white/10"
+            className="group bg-card/40 border border-border/10 rounded-[4px] p-6 space-y-8 backdrop-blur-sm transition-all hover:bg-card/60 dark:hover:bg-card/30 hover:border-border/20"
          >
             <div className="flex items-center justify-between">
-               <div className="h-10 w-10 bg-black/5 dark:bg-white/5 rounded-[4px] flex items-center justify-center border border-black/10 dark:border-white/10 transition-colors">
+               <div className="h-10 w-10 bg-muted/10 rounded-[4px] flex items-center justify-center border border-border/20 transition-colors">
                   <Building2 className="h-5 w-5 text-slate-400 group-hover:text-primary transition-colors" />
                </div>
                <span className="text-[9px] font-bold text-primary/50 uppercase tracking-widest border border-primary/20 px-2 py-0.5 rounded-[2px] transition-colors">Vérifié</span>
@@ -78,7 +78,7 @@ export default function ProfilCapacitePage() {
                   <p className="text-lg font-semibold tracking-tight text-foreground/90 transition-colors">Antigravity BTP Sarl</p>
                </div>
 
-               <div className="grid grid-cols-1 gap-4 pt-4 border-t border-black/5 dark:border-white/5">
+               <div className="grid grid-cols-1 gap-4 pt-4 border-t border-border/10">
                   {[
                      { label: "NIU", value: "M051812739430" },
                      { label: "RCCM", value: "RC/YAE/2018/B/452" },
@@ -86,8 +86,8 @@ export default function ProfilCapacitePage() {
                      { label: "Catégorie BIP", value: "Catégorie B (Moyen)" }
                   ].map((item, i) => (
                      <div key={i} className="flex flex-col space-y-1 group/row cursor-default transition-all hover:translate-x-1">
-                        <span className="text-[9px] font-bold text-foreground/20 dark:text-foreground/20 uppercase tracking-[0.2em] transition-colors">{item.label}</span>
-                        <span className="text-[13px] font-medium text-foreground/70 dark:text-foreground/60 group-hover/row:text-foreground transition-colors">{item.value}</span>
+                        <span className="text-[9px] font-bold text-foreground/20 uppercase tracking-[0.2em] transition-colors">{item.label}</span>
+                        <span className="text-[13px] font-medium text-foreground/70 group-hover/row:text-foreground transition-colors">{item.value}</span>
                      </div>
                   ))}
                </div>
@@ -97,10 +97,10 @@ export default function ProfilCapacitePage() {
          {/* CARTE 2 : SURFACE FINANCIÈRE */}
          <motion.div 
             whileHover={{ y: -4 }}
-            className="group bg-card/40 border border-black/5 dark:border-white/5 rounded-[4px] p-6 space-y-8 backdrop-blur-sm transition-all hover:bg-card/60 dark:hover:bg-card/30 hover:border-black/10 dark:hover:border-white/10"
+            className="group bg-card/40 border border-border/10 rounded-[4px] p-6 space-y-8 backdrop-blur-sm transition-all hover:bg-card/60 dark:hover:bg-card/30 hover:border-border/20"
          >
             <div className="flex items-center justify-between">
-               <div className="h-10 w-10 bg-black/5 dark:bg-white/5 rounded-[4px] flex items-center justify-center border border-black/10 dark:border-white/10 transition-colors">
+               <div className="h-10 w-10 bg-muted/10 rounded-[4px] flex items-center justify-center border border-border/20 transition-colors">
                   <TrendingUp className="h-5 w-5 text-slate-400 group-hover:text-primary transition-colors" />
                </div>
                <div className="flex gap-1.5 items-center">
@@ -118,20 +118,20 @@ export default function ProfilCapacitePage() {
                      { year: "2023 (N-1)", value: "480 500 000", growth: "+8%" },
                      { year: "2022 (N-2)", value: "445 000 000", growth: "+5%" }
                   ].map((row, i) => (
-                     <div key={i} className="flex items-center justify-between p-3 bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 rounded-[4px] group/row transition-all hover:translate-x-1 hover:bg-black/[0.04] dark:hover:bg-white/[0.05]">
+                     <div key={i} className="flex items-center justify-between p-3 bg-muted/5 border border-border/10 rounded-[4px] group/row transition-all hover:translate-x-1 hover:bg-muted/10">
                         <div className="space-y-0.5">
                            <span className="text-[10px] font-bold text-foreground/40 uppercase tracking-wider transition-colors">{row.year}</span>
-                           <p className="text-[15px] font-bold text-foreground/80 dark:text-foreground/80 group-hover/row:text-primary transition-colors">{row.value} <span className="text-[10px] font-medium text-foreground/30 transition-colors">FCFA</span></p>
+                           <p className="text-[15px] font-bold text-foreground/80 group-hover/row:text-primary transition-colors">{row.value} <span className="text-[10px] font-medium text-foreground/30 transition-colors">FCFA</span></p>
                         </div>
                         <span className="text-[10px] font-bold text-primary/80 transition-all">{row.growth}</span>
                      </div>
                   ))}
                </div>
 
-               <div className="pt-4 border-t border-black/5 dark:border-white/5">
+               <div className="pt-4 border-t border-border/10">
                   <div className="flex items-center justify-between text-[11px]">
                      <span className="font-bold text-foreground/30 uppercase tracking-widest transition-colors">Capacité d'Autofinancement</span>
-                     <span className="font-semibold text-foreground/70 dark:text-foreground/60 transition-colors">85 400 000 FCFA</span>
+                     <span className="font-semibold text-foreground/70 transition-colors">85 400 000 FCFA</span>
                   </div>
                </div>
             </div>
@@ -140,10 +140,10 @@ export default function ProfilCapacitePage() {
          {/* CARTE 3 : RESSOURCES & EXPERTISE */}
          <motion.div 
             whileHover={{ y: -4 }}
-            className="group bg-card/40 border border-black/5 dark:border-white/5 rounded-[4px] p-6 space-y-8 backdrop-blur-sm transition-all hover:bg-card/60 dark:hover:bg-card/30 hover:border-black/10 dark:hover:border-white/10"
+            className="group bg-card/40 border border-border/10 rounded-[4px] p-6 space-y-8 backdrop-blur-sm transition-all hover:bg-card/60 dark:hover:bg-card/30 hover:border-border/20"
          >
             <div className="flex items-center justify-between">
-               <div className="h-10 w-10 bg-black/5 dark:bg-white/5 rounded-[4px] flex items-center justify-center border border-black/10 dark:border-white/10 transition-colors">
+               <div className="h-10 w-10 bg-muted/10 rounded-[4px] flex items-center justify-center border border-border/20 transition-colors">
                   <HardHat className="h-5 w-5 text-slate-400 group-hover:text-primary transition-colors" />
                </div>
                <Button size="icon" variant="ghost" className="h-8 w-8 text-foreground/20 hover:text-foreground rounded-[4px] transition-colors">
@@ -155,18 +155,18 @@ export default function ProfilCapacitePage() {
                <div className="space-y-4">
                   <h3 className="text-[11px] font-bold text-foreground/30 uppercase tracking-[0.15em] transition-colors">Ressources Humaines</h3>
                   <div className="grid grid-cols-2 gap-3">
-                     <div className="p-3 bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 rounded-[4px]">
+                     <div className="p-3 bg-muted/5 border border-border/10 rounded-[4px]">
                         <p className="text-xl font-light text-foreground/80 transition-colors">08</p>
-                        <span className="text-[9px] font-bold text-foreground/40 dark:text-foreground/20 uppercase tracking-widest transition-colors">Ingénieurs</span>
+                        <span className="text-[9px] font-bold text-foreground/40 uppercase tracking-widest transition-colors">Ingénieurs</span>
                      </div>
-                     <div className="p-3 bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 rounded-[4px]">
+                     <div className="p-3 bg-muted/5 border border-border/10 rounded-[4px]">
                         <p className="text-xl font-light text-foreground/80 transition-colors">14</p>
-                        <span className="text-[9px] font-bold text-foreground/40 dark:text-foreground/20 uppercase tracking-widest transition-colors">Techniciens</span>
+                        <span className="text-[9px] font-bold text-foreground/40 uppercase tracking-widest transition-colors">Techniciens</span>
                      </div>
                   </div>
                </div>
 
-               <div className="space-y-4 pt-4 border-t border-black/5 dark:border-white/5">
+               <div className="space-y-4 pt-4 border-t border-border/10">
                   <h3 className="text-[11px] font-bold text-foreground/30 uppercase tracking-[0.15em] transition-colors">Logistique Lourde (DQE/BPU)</h3>
                   <div className="space-y-2">
                      {[
@@ -177,7 +177,7 @@ export default function ProfilCapacitePage() {
                         <div key={i} className="flex items-center justify-between p-2 hover:translate-x-1 transition-all group/item">
                            <div className="flex items-center gap-3">
                               <item.icon size={14} className="text-slate-500 group-hover/item:text-primary transition-colors" />
-                              <span className="text-[12px] font-medium text-foreground/60 dark:text-foreground/50 group-hover/item:text-foreground/80 transition-colors">{item.label}</span>
+                              <span className="text-[12px] font-medium text-foreground/60 group-hover/item:text-foreground/80 transition-colors">{item.label}</span>
                            </div>
                            <span className="text-[12px] font-bold font-mono text-foreground/30 transition-colors">{item.qty}</span>
                         </div>
@@ -235,7 +235,7 @@ export default function ProfilCapacitePage() {
                </span>
              </div>
              <p className="text-[11px] text-foreground/60 font-medium leading-relaxed tracking-tight">
-               Ces données structurent votre éligibilité algorithmique aux Marchés Publics. CORNAi synchronise ces capacités avec le CCTP et le RPAO pour maximiser vos chances de succès.
+               Ces données structurent votre éligibilité algorithmique aux Marchés Publics. SABI synchronise ces capacités avec le CCTP et le RPAO pour maximiser vos chances de succès.
              </p>
           </div>
         </div>

@@ -41,7 +41,7 @@ export function SearchSidebar({ isCollapsed, filters, onFilterChange }: SidebarP
         isCollapsed && "justify-center px-0"
       )}>
         <div className="flex h-8 w-8 items-center justify-center rounded-[4px] bg-primary group-hover:scale-105 transition-transform shadow-sm">
-           <Zap className="h-5 w-5 text-white fill-white" />
+           <Zap className="h-5 w-5 text-primary-foreground fill-primary-foreground" />
         </div>
         {!isCollapsed && (
           <div className="flex flex-col">
@@ -174,7 +174,7 @@ function FilterListItem({ label, isActive, onClick }: { label: string, isActive:
       <span className={cn("text-[10px] tracking-tight", isActive ? "font-medium" : "font-normal")}>{label}</span>
       <div className={cn(
         "h-3.5 w-3.5 rounded-[2px] border transition-all flex items-center justify-center shrink-0",
-        isActive ? "border-primary bg-primary text-white" : "border-border/60 bg-background group-hover:border-foreground/30"
+        isActive ? "border-primary bg-primary text-primary-foreground" : "border-border/60 bg-background group-hover:border-foreground/30"
       )}>
         {isActive && <CheckCircle2 className="h-2.5 w-2.5" />}
       </div>

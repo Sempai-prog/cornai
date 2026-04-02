@@ -1,22 +1,35 @@
 // ══════════════════════════════════════════
-// CORNAi — Dashboard Home (Phase D1.7 — Elite Cockpit)
+// SABI — Dashboard Home (Phase D1.7 — Elite Cockpit)
 // ══════════════════════════════════════════
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Target,
-  FileText,
-  AlertTriangle,
-  Plus,
-  Compass,
-  ShieldCheck,
-  Activity,
+import { 
+  History, 
+  Search, 
+  ShieldCheck, 
+  LayoutDashboard, 
+  FileText, 
+  Target, 
+  Map, 
+  FolderLock, 
+  Zap,
+  Building2,
+  Wallet,
+  TrendingDown,
+  Trophy,
+  AlertCircle,
+  FileSearch,
+  CheckCircle2,
+  Calendar,
+  Layers,
   ChevronRight,
   Monitor,
-  CheckCircle2,
   Lock,
+  AlertTriangle,
+  Compass
 } from "lucide-react";
+import { SABI_COPY } from "@/lib/SabiCopy";
 import Link from "next/link";
 import { getDerniersAO } from "@/database/queries/ao";
 import { cn } from "@/lib/utils";
@@ -34,12 +47,13 @@ export default async function DashboardHome() {
           PLAN 1 — HEADER (SOPHISTIQUÉ & APAISÉ)
           ─────────────────────────────────────────────────────────── */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-border/10 mt-0 lg:mt-[-4px]">
-        <div className="space-y-1.5">
-          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
-            Antigravity BTP Sarl
+        <div className="flex flex-col gap-1">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">
+            {SABI_COPY.DASHBOARD.WELCOME}
           </h1>
-          <p className="text-[11px] text-muted-foreground font-bold tracking-[0.2em] opacity-80 uppercase">
-            Poste de pilotage intelligent pour le JDM (Journal des Marchés)
+          <p className="text-muted-foreground font-medium flex items-center gap-2">
+            <Building2 className="size-4" />
+            Secteur : BTP / Infrastructures — Standard ARMP
           </p>
         </div>
 
@@ -62,33 +76,31 @@ export default async function DashboardHome() {
       <div className="w-full grid grid-cols-1 md:grid-cols-4 border border-border/40 divide-y md:divide-y-0 md:divide-x divide-border/40 rounded-[4px] bg-card/40 backdrop-blur-md shadow-sm overflow-hidden">
         {[
           {
-            label: "MArchés JDM & COLEPS scannés",
-            value: "342",
-            trend: "+25%",
-            icon: Target,
+            label: SABI_COPY.DASHBOARD.STATS.COMPLIANCE,
+            value: "85%",
+            trend: "+5% vs mois dernier",
+            icon: ShieldCheck,
             trendType: "pos",
           },
           {
-            label: "Score de Matching IA",
-            value: "87",
-            suffix: "%",
-            trend: "OPTIMAL",
-            icon: Compass,
+            label: SABI_COPY.DASHBOARD.STATS.RADAR_MATCH,
+            value: "12",
+            trend: "2 nouvelles ce matin",
+            icon: Target,
             trendType: "neut",
           },
           {
-            label: "Dossiers en préparation",
-            value: "03",
-            trend: "ACTIF",
-            icon: FileText,
+            label: SABI_COPY.DASHBOARD.STATS.FINANCIAL_SURFACE,
+            value: "450M",
+            trend: "Sous-total : 1.2B CFA",
+            icon: Wallet,
             trendType: "neut",
           },
           {
-            label: "Indice de Conformité Admin.",
-            value: "92",
-            suffix: "%",
-            trend: "ALERTE",
-            icon: ShieldCheck,
+            label: SABI_COPY.DASHBOARD.STATS.ALERTS,
+            value: "02",
+            trend: "Urgence signalée",
+            icon: AlertCircle,
             trendType: "alert",
           },
         ].map((kpi, i) => (
@@ -111,11 +123,6 @@ export default async function DashboardHome() {
             <div className="flex items-baseline gap-3 leading-none">
               <span className="text-3xl font-semibold tracking-tighter text-foreground">
                 {kpi.value}
-                {kpi.suffix && (
-                  <span className="text-sm opacity-20 align-top">
-                    {kpi.suffix}
-                  </span>
-                )}
               </span>
 
               <span

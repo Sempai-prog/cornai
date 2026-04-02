@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Queries : Appels d'Offres (AO)
+// SABI — Queries : Appels d'Offres (AO)
 // ══════════════════════════════════════════
 
 import { db } from '../client'

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Mocks de Production (Logic V4 — Cameroun ARMP / MINMAP)
+// SABI — Mocks de Production (Logic V4 — Cameroun ARMP / MINMAP)
 // ══════════════════════════════════════════
 
 import { SearchResult } from "./search-types"

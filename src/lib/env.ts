@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Variables d'environnement typées
+// SABI — Variables d'environnement typées
 // ══════════════════════════════════════════
 
 export const env = {
@@ -24,7 +24,7 @@ export const env = {
   // R2 Storage
   R2_ACCESS_KEY_ID: process.env.R2_ACCESS_KEY_ID!,
   R2_SECRET_ACCESS_KEY: process.env.R2_SECRET_ACCESS_KEY!,
-  R2_BUCKET_NAME: process.env.R2_BUCKET_NAME || 'cornai-docs',
+  R2_BUCKET_NAME: process.env.R2_BUCKET_NAME || 'SABI-docs',
   R2_ENDPOINT: process.env.R2_ENDPOINT!,
 
   // App

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Client Neon + Drizzle
+// SABI — Client Neon + Drizzle
 // ══════════════════════════════════════════
 
 import { neon } from '@neondatabase/serverless'

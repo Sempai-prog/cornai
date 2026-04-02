@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Score Calculator
+// SABI — Score Calculator
 // ══════════════════════════════════════════
 
 import { formatFCFA, joursRestants } from '../lib/utils'

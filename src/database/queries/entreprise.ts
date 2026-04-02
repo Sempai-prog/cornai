@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Queries : Entreprises
+// SABI — Queries : Entreprises
 // ══════════════════════════════════════════
 
 import { db } from '../client'

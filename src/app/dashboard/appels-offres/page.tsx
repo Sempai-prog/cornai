@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Moteur de Recherche (Dashboard — SaaS Native)
+// SABI — Moteur de Recherche (Dashboard — SaaS Native)
 // ══════════════════════════════════════════
 
 import { Globe, Zap } from "lucide-react"

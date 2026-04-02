@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Global Search Omnibox (OMNIBOX)
+// SABI — Global Search Omnibox (OMNIBOX)
 // ══════════════════════════════════════════
 
 "use client"

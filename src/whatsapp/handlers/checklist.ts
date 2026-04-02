@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Handler : Checklist de soumission
+// SABI — Handler : Checklist de soumission
 // ══════════════════════════════════════════
 
 import { verifierConformite } from '../../conformity/document-checker'

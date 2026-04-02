@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — API : Checklist de conformité
+// SABI — API : Checklist de conformité
 // ══════════════════════════════════════════
 
 import { NextRequest, NextResponse } from 'next/server'

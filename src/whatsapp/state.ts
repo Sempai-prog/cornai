@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Gestion de l'état (State Management)
+// SABI — Gestion de l'état (State Management)
 // ══════════════════════════════════════════
 
 export type ConversationState = {

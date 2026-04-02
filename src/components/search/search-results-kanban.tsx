@@ -45,9 +45,9 @@ function SearchResultCard({ item }: { item: SearchResult }) {
   const isIncomplete = item.matchLevel === "incomplete"
   const isBlocked = item.isBlocked
 
-  const scoreColor = isExcellent ? "text-emerald-500" : isRecommended ? "text-cornai" : isRisky ? "text-red-500" : "text-muted-foreground"
-  const scoreBg = isExcellent ? "bg-emerald-500/5" : isRecommended ? "bg-cornai/5" : isRisky ? "bg-red-500/5" : "bg-muted-foreground/5"
-  const scoreOuterBg = isExcellent ? "bg-emerald-500/5" : isRecommended ? "bg-cornai/5" : isRisky ? "bg-red-500/5" : "bg-secondary/10"
+  const scoreColor = isExcellent ? "text-emerald-500" : isRecommended ? "text-SABI" : isRisky ? "text-red-500" : "text-muted-foreground"
+  const scoreBg = isExcellent ? "bg-emerald-500/5" : isRecommended ? "bg-SABI/5" : isRisky ? "bg-red-500/5" : "bg-muted-foreground/5"
+  const scoreOuterBg = isExcellent ? "bg-emerald-500/5" : isRecommended ? "bg-SABI/5" : isRisky ? "bg-red-500/5" : "bg-secondary/10"
 
   return (
     <div className={cn(
@@ -119,16 +119,16 @@ function SearchResultCard({ item }: { item: SearchResult }) {
                 </div>
 
                 <div className="flex gap-2">
-                   <Button asChild size="sm" className="h-8 flex-1 rounded-[4px] bg-primary text-[8.5px] font-medium text-white hover:bg-primary/90 border-none px-0">
-                      <a href={generateWhatsAppLink(item, "analyser-rpao")} target="_blank">
-                         Analyser RPAO
-                      </a>
-                   </Button>
-                   <Button asChild variant="outline" size="sm" className="h-8 w-8 rounded-[4px] border-border/40 hover:bg-secondary p-0">
-                      <a href={generateWhatsAppLink(item, "continuer-whatsapp")} target="_blank">
-                        <MessageCircle className="h-3.5 w-3.5 text-emerald-600" />
-                      </a>
-                   </Button>
+                    <Button asChild size="sm" className="h-8 flex-1 rounded-[4px] bg-primary text-[8.5px] font-medium text-primary-foreground hover:bg-primary/90 border-none px-0">
+                       <a href={generateWhatsAppLink(item, "analyser-rpao")} target="_blank">
+                          Analyser RPAO
+                       </a>
+                    </Button>
+                    <Button asChild variant="outline" size="sm" className="h-8 w-8 rounded-[4px] border-border/40 hover:bg-secondary p-0">
+                       <a href={generateWhatsAppLink(item, "continuer-whatsapp")} target="_blank">
+                         <MessageCircle className="h-3.5 w-3.5 text-emerald-600" />
+                       </a>
+                    </Button>
                 </div>
              </div>
            )}

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Centre de Conformité Administrative (ARMP)
+// SABI — Centre de Conformité Administrative (ARMP)
 // ══════════════════════════════════════════
 
 import { Button } from "@/components/ui/button"
@@ -88,7 +88,7 @@ export default function DocumentsPage() {
                 <div 
                     key={idx}
                     className={cn(
-                      "group flex items-center justify-between p-4 bg-card/40 border border-black/5 dark:border-white/5 rounded-[4px] transition-all duration-300 hover:bg-card/60 hover:translate-x-1",
+                      "group flex items-center justify-between p-4 bg-card border border-border/10 rounded-[4px] transition-all duration-300 hover:bg-card/60 hover:translate-x-1",
                       doc.urgent && "border-red-500/20"
                     )}
                 >
@@ -98,7 +98,7 @@ export default function DocumentsPage() {
                           "h-9 w-9 rounded-[4px] flex items-center justify-center border transition-all shadow-sm",
                           doc.urgent 
                             ? "bg-red-500/5 border-red-500/10 text-red-500" 
-                            : "bg-foreground/5 border-black/5 dark:border-white/10 text-foreground/40 group-hover:border-primary/20 group-hover:text-primary"
+                            : "bg-muted/10 border-border/20 text-foreground/40 group-hover:border-primary/20 group-hover:text-primary"
                       )}>
                           <FileText className="h-4 w-4" />
                       </div>
@@ -122,11 +122,11 @@ export default function DocumentsPage() {
                     <div className="flex items-center gap-6">
                       <div className={cn(
                         "px-2.5 py-0.5 rounded-[2px] text-[9px] font-bold tracking-[0.15em] uppercase border transition-colors",
-                        doc.status === 'EXPIRE' 
-                          ? "bg-red-500/10 text-red-500 border-red-500/20" 
-                          : doc.status === 'OPTIONNEL'
-                          ? "bg-foreground/5 text-foreground/40 border-black/10 dark:border-white/10"
-                          : "bg-green-500/10 text-green-500 border-green-500/20 shadow-[0_0_8px_rgba(37,211,102,0.1)]"
+                         doc.status === 'EXPIRE' 
+                           ? "bg-red-500/10 text-red-500 border-red-500/20" 
+                           : doc.status === 'OPTIONNEL'
+                           ? "bg-muted/5 text-foreground/40 border-border/20"
+                           : "bg-green-500/10 text-green-500 border-green-500/20 shadow-[0_0_8px_rgba(37,211,102,0.1)]"
                       )}>
                         {doc.status}
                       </div>

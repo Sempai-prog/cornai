@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Scraper ARMP.cm
+// SABI — Scraper ARMP.cm
 // ══════════════════════════════════════════
 
 import axios from 'axios'

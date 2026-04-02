@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Station de Travail 2.8 (Moteur de Recherche — Tableau de Fréquences)
+// SABI — Station de Travail 2.8 (Moteur de Recherche — Tableau de Fréquences)
 // ══════════════════════════════════════════
 
 "use client"
@@ -19,8 +19,20 @@ import {
   Zap,
   MoreHorizontal,
   ChevronRight,
-  Plus
+  Plus,
+  Filter,
+  Calendar,
+  MapPin,
+  Tag,
+  Building2,
+  AlertCircle,
+  LayoutGrid,
+  CheckCircle2,
+  FileText,
+  Globe,
+  ArrowRight
 } from "lucide-react"
+import { SABI_COPY } from "@/lib/SabiCopy"
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -34,10 +46,18 @@ import { cn } from "@/lib/utils"
 // CONFIGURATION MÉTIEUR (ARMP / Cameroun)
 // ───────────────────────────────────────────────────────────
 
+const SECTORS = SABI_COPY.SEARCH.FILTERS.SECTORS;
+const TYPES = [
+  SABI_COPY.SEARCH.FILTERS.TYPES.AONO,
+  SABI_COPY.SEARCH.FILTERS.TYPES.AONR,
+  SABI_COPY.SEARCH.FILTERS.TYPES.DC,
+  SABI_COPY.SEARCH.FILTERS.TYPES.ASMI
+];
+
 const FILTER_CATEGORIES = [
-  { id: "secteurs", title: "Secteurs d'Activité", items: ["Travaux", "Fournitures", "Services", "Intellectuelles"] },
+  { id: "secteurs", title: "Secteurs d'Activité", items: SECTORS },
   { id: "regions", title: "Régions Locales", items: ["Centre", "Littoral", "Ouest", "Nord", "Est", "Sud", "Nord-Ouest", "Sud-Ouest", "Adamaoua", "Extrême-Nord"] },
-  { id: "procedures", title: "Modes de Passation", items: ["AONO", "AONR", "DC", "AAMI", "AOIO", "AOR"] }
+  { id: "procedures", title: "Modes de Passation", items: TYPES }
 ]
 
 interface SearchDashboardClientProps {
@@ -167,30 +187,30 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
                <ChevronRight className={cn("h-3 w-3 transition-transform duration-500", isSidebarOpen ? "rotate-180" : "rotate-0")} />
                
                {/* Tooltip Indication */}
-               <div className="absolute left-8 px-2 py-1 bg-black dark:bg-zinc-900 text-white text-[10px] font-bold uppercase tracking-widest rounded-[4px] border border-white/10 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap shadow-xl">
+               <div className="absolute left-8 px-2 py-1 bg-popover text-popover-foreground text-[10px] font-bold uppercase tracking-widest rounded-[4px] border border-border opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap shadow-xl">
                   {isSidebarOpen ? "FERMER FILTRES" : "OUVRIR FILTRES"}
                </div>
             </button>
 
             <div className="flex-1 w-full max-w-2xl relative">
                <div className="relative flex items-center w-full group/input">
-                  <div className="absolute left-4.5 z-10">
-                     <Search className="h-4 w-4 text-foreground/30 group-focus-within/input:text-primary transition-colors" />
+                  <div className="relative flex-1">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                    <Input 
+                      placeholder={SABI_COPY.SEARCH.PLACEHOLDER}
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                      className="pl-9 h-11 bg-card/40 border-border/40 focus-visible:ring-primary/20 rounded-[4px] font-medium"
+                    />
                   </div>
-                  <Input 
-                     value={query}
-                     onChange={(e) => setQuery(e.target.value)}
-                     placeholder="Rechercher par ID, Autorité contractante, Mots-clés..." 
-                     className={cn(
-                       "h-11 w-full pl-12 pr-4 bg-background/40 border-border/40 rounded-[4px] text-[13px] font-medium tracking-tight",
-                       "placeholder:text-foreground/20 text-foreground outline-none",
-                       "focus:border-primary/40 focus:ring-0 transition-all shadow-inner"
-                     )}
-                  />
+                  <Button className="h-11 px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-[4px] shadow-sm flex items-center gap-2 ml-2">
+                    <Zap className="size-4 fill-current" />
+                    Scanner le Radar
+                  </Button>
                   {query && (
                     <button 
                       onClick={() => setQuery("")}
-                      className="absolute right-3 p-1 rounded-full hover:bg-foreground/5 text-foreground/20 hover:text-foreground/60 transition-colors"
+                      className="absolute right-32 p-1 rounded-full hover:bg-muted text-foreground/20 hover:text-foreground/60 transition-colors"
                     >
                       <FilterX className="h-3 w-3" />
                     </button>
@@ -302,7 +322,7 @@ function TableView({ results }: { results: SearchResult[] }) {
 
                 {/* 5. IA SCORE */}
                 <div className="w-[100px] shrink-0 flex items-center justify-center gap-2">
-                   <div className="h-1 w-12 bg-black/5 dark:bg-white/5 rounded-full overflow-hidden hidden sm:block">
+                   <div className="h-1 w-12 bg-muted rounded-full overflow-hidden hidden sm:block">
                       <div 
                          className="h-full bg-primary shadow-[0_0_8px_rgba(37,211,102,0.4)]" 
                          style={{ width: `${item.matchScore}%` }} 
@@ -313,7 +333,7 @@ function TableView({ results }: { results: SearchResult[] }) {
 
                 {/* 6. ACTION (Quick Eye/Plus) */}
                 <div className="w-10 shrink-0 flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
-                   <div className="h-7 w-7 rounded bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center text-primary hover:bg-primary hover:text-black transition-colors">
+                   <div className="h-7 w-7 rounded bg-muted border border-border/40 flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-colors">
                       <Plus size={14} />
                    </div>
                 </div>
@@ -329,12 +349,12 @@ function SidebarSkeleton() {
     <div className="space-y-8">
       {[1, 2, 3].map(i => (
         <div key={i} className="space-y-4">
-           <div className="h-4 w-24 bg-black/5 dark:bg-white/5 animate-pulse rounded" />
+           <div className="h-4 w-24 bg-muted animate-pulse rounded" />
            <div className="space-y-3">
               {[1, 2, 3, 4].map(j => (
                 <div key={j} className="flex gap-3 items-center">
-                   <div className="h-3.5 w-3.5 bg-black/5 dark:bg-white/5 rounded animate-pulse" />
-                   <div className="h-2.5 w-32 bg-black/5 dark:bg-white/5 rounded animate-pulse" />
+                   <div className="h-3.5 w-3.5 bg-muted rounded animate-pulse" />
+                   <div className="h-2.5 w-32 bg-muted rounded animate-pulse" />
                 </div>
               ))}
            </div>

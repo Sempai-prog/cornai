@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — AO Extractor (Gemini + DB)
+// SABI — AO Extractor (Gemini + DB)
 // ══════════════════════════════════════════
 
 import { db } from '@/database/client'

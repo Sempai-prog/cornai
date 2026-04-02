@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Client WhatsApp (WATI)
+// SABI — Client WhatsApp (WATI)
 // ══════════════════════════════════════════
 
 import axios from 'axios'
@@ -42,7 +42,7 @@ export async function envoyerTemplate(
 
     await api.post('/api/v1/sendTemplateMessage/' + numero, {
       template_name: templateName,
-      broadcast_name: 'cornai_notification',
+      broadcast_name: 'SABI_notification',
       parameters: Object.entries(parametres).map(([key, value]) => ({
         name: key,
         value,

@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — API : Webhook WhatsApp (WATI)
+// SABI — API : Webhook WhatsApp (WATI)
 // ══════════════════════════════════════════
 
 import { NextRequest, NextResponse } from 'next/server'

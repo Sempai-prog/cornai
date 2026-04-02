@@ -7,7 +7,7 @@ import { nanoid } from "nanoid"
 import { cookies } from "next/headers"
 
 /**
- * Onboarding minimal pour une PME sur CORNAi
+ * Onboarding minimal pour une PME sur SABI
  * Logique progressive profiling
  */
 export async function registerCompany(data: {

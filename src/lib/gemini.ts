@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Client Gemini 2.5 Flash (@google/genai)
+// SABI — Client Gemini 2.5 Flash (@google/genai)
 // ══════════════════════════════════════════
 
 import { GoogleGenAI } from '@google/genai'
@@ -103,7 +103,7 @@ export async function chatResponse(
   const result = await genAI.models.generateContent({
     model: FLASH,
     config: {
-      systemInstruction: `Tu es CORNAi, l'assistant IA des marchés publics camerounais.
+      systemInstruction: `Tu es SABI, l'assistant IA des marchés publics camerounais.
 Tu aides les PME à trouver et gagner des marchés publics.
 
 RÈGLES :

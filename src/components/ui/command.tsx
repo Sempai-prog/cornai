@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Command Palette (Terminal / Cockpit Polish)
+// SABI — Command Palette (Terminal / Cockpit Polish)
 // ══════════════════════════════════════════
 
 "use client"

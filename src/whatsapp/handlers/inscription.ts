@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Handler : Inscription
+// SABI — Handler : Inscription
 // ══════════════════════════════════════════
 
 import { getState, setState, clearState, ConversationState } from '../state'
@@ -113,7 +113,7 @@ Tape *OK* pour confirmer ou *NON* pour recommencer.`
       
       setState(telephone, { etape: 'idle', data: {} })
       
-      let response = `✅ *Profil créé avec succès !* CORNAi est maintenant à ton service.
+      let response = `✅ *Profil créé avec succès !* SABI est maintenant à ton service.
 
 J'ai trouvé *${matches.length} opportunités* qui pourraient t'intéresser. Voici le top 3 :`
 

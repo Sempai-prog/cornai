@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Handler : Détail Appel d'Offre (AO)
+// SABI — Handler : Détail Appel d'Offre (AO)
 // ══════════════════════════════════════════
 
 import { getAOById } from '../../database/queries/ao'

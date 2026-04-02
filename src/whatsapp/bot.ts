@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Bot Orchestrator (BOT.TS)
+// SABI — Bot Orchestrator (BOT.TS)
 // ══════════════════════════════════════════
 
 import { routeMessage } from './router'

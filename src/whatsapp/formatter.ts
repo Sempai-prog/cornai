@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════
-// CORNAi — Formattage WhatsApp (Bold, Italics, Emojis)
+// SABI — Formattage WhatsApp (Bold, Italics, Emojis)
 // ══════════════════════════════════════════
 
 import { formatFCFA, joursRestants } from '../lib/utils'
@@ -8,7 +8,7 @@ import { formatFCFA, joursRestants } from '../lib/utils'
  * Message de bienvenue au premier contact
  */
 export function formatBienvenue() {
-  return `👋 *Bienvenue sur CORNAi !* 🌽
+  return `👋 *Bienvenue sur SABI !* 🌽
 
 Je suis ton assistant personnel pour les *Marchés Publics au Cameroun*.
 

@@ -1,5 +1,4 @@
 import * as React from "react"
-import GlobalGridBackground from "@/components/ui/global-grid-background"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
 
 export default function AuthLayout({
@@ -9,10 +8,8 @@ export default function AuthLayout({
 }) {
   return (
     <div className="min-h-screen bg-background relative selection:bg-[#25D366]/20 transition-colors duration-500 overflow-hidden font-sans">
-      {/* Grille d'immersion landing */}
-      <div className="absolute inset-0 z-0 opacity-50 dark:opacity-100">
-        <GlobalGridBackground />
-      </div>
+      {/* Background immersion neutre */}
+      <div className="absolute inset-0 z-0 bg-background/50" />
       
       {/* Conteneur global et Toggle intégré */}
       <div className="relative z-10 flex flex-col min-h-screen">

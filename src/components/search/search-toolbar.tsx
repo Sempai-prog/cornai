@@ -95,7 +95,7 @@ export function SearchToolbar({
                className={cn(
                  "h-6 whitespace-nowrap rounded-[4px] border px-3 text-[9px] transition-all",
                  activeQuickFilter === 'RECOMMANDÉS' 
-                  ? "border-primary bg-primary text-white shadow-sm font-medium" 
+                  ? "border-primary bg-primary text-primary-foreground shadow-sm font-medium" 
                   : "border-primary/20 bg-primary/5 text-primary hover:bg-primary/10 font-normal"
                )}
             >
@@ -106,7 +106,7 @@ export function SearchToolbar({
                className={cn(
                   "h-6 whitespace-nowrap rounded-[4px] border px-3 text-[9px] transition-all",
                   activeQuickFilter === 'RISQUÉS' 
-                   ? "border-red-500 bg-red-500 text-white shadow-sm font-medium" 
+                   ? "border-red-500 bg-red-500 text-primary-foreground shadow-sm font-medium" 
                    : "border-red-500/20 bg-red-500/5 text-red-600 hover:bg-red-500/10 font-normal"
                )}
             >
@@ -117,7 +117,7 @@ export function SearchToolbar({
                className={cn(
                   "h-6 whitespace-nowrap rounded-[4px] border px-3 text-[9px] transition-all",
                   activeQuickFilter === 'URGENTS' 
-                   ? "border-foreground bg-foreground text-background shadow-sm font-medium" 
+                   ? "border-foreground bg-foreground text-primary-foreground shadow-sm font-medium" 
                    : "border-border bg-background text-foreground/40 hover:bg-secondary font-normal"
                )}
             >

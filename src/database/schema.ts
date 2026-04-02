@@ -1,5 +1,5 @@
 // ══════════════════════════════════════════════════════════
-// CORNAi — Schéma de base de données (Drizzle ORM)
+// SABI — Schéma de base de données (Drizzle ORM)
 // ══════════════════════════════════════════════════════════
 
 import {

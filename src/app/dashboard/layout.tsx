@@ -25,59 +25,85 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import {
-  LayoutDashboard,
-  Target,
-  Files,
-  User,
-  Bell,
-  LogOut,
-  Search,
-  ShieldCheck,
+import { 
+  History, 
+  Search, 
+  ShieldCheck, 
+  LayoutDashboard, 
+  FileText, 
+  Target, 
+  Map, 
+  FolderLock, 
+  Zap,
+  Menu,
   ChevronLeft,
-} from "lucide-react";
+  Settings,
+  HelpCircle,
+  LogOut,
+  Building2,
+  Wallet,
+  TrendingDown,
+  Bell
+} from "lucide-react"
+import { SABI_COPY } from "@/lib/SabiCopy";
 import { cn } from "@/lib/utils";
 import { GlobalSearch } from "@/components/layout/global-search";
 import { motion } from "framer-motion";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
-import GlobalGridBackground from "@/components/ui/global-grid-background";
 
 // Composant interne pour accéder au contexte SidebarProvider
 function DashboardShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const SIDEBAR_WIDTH_ICON = "4rem";
   const { toggleSidebar, state, isMobile } = useSidebar();
   const isCollapsed = state === "collapsed";
 
-  const navItems = [
-    { label: "Poste de pilotage", icon: LayoutDashboard, href: "/dashboard" },
-    {
-      label: "Moteur de recherche",
-      icon: Search,
-      href: "/dashboard/appels-offres",
-    },
-    {
-      label: "Veille stratégique",
-      icon: Target,
-      href: "/dashboard/opportunites",
-    },
-  ];
-
-  const workspaceItems = [
-    { label: "Dossier PME", icon: Files, href: "/dashboard/documents" },
-    { label: "Fiche Entreprise", icon: User, href: "/dashboard/profil" },
-  ];
+  const navigation = {
+    EXPLOITATION: [
+      { 
+        title: SABI_COPY.NAVIGATION.PILOTAGE, 
+        icon: LayoutDashboard, 
+        href: "/dashboard" 
+      },
+      { 
+        title: SABI_COPY.NAVIGATION.RADAR, 
+        icon: Search, 
+        href: "/dashboard/appels-offres" 
+      },
+      { 
+        title: SABI_COPY.NAVIGATION.SOUMISSIONS, 
+        icon: History, 
+        href: "/dashboard/soumissions" 
+      },
+    ],
+    WORKSPACE: [
+      { 
+        title: SABI_COPY.NAVIGATION.BLINDAGE, 
+        icon: FolderLock, 
+        href: "/dashboard/documents" 
+      },
+      { 
+        title: SABI_COPY.NAVIGATION.OFFRE_FINANCIERE, 
+        icon: Wallet, 
+        href: "/dashboard/profil" 
+      },
+      { 
+        title: SABI_COPY.NAVIGATION.TERRAIN, 
+        icon: Map, 
+        href: "/dashboard/terrain" 
+      }
+    ]
+  };
 
   // Détecter si on est sur le Kanban (Opportunités) pour désactiver le scroll global
   const isKanban = pathname === "/dashboard/opportunites";
 
   return (
     <div className="flex h-screen w-full bg-background/5 text-foreground overflow-hidden font-sans selection:bg-primary/20 antialiased transition-colors duration-500 relative">
-      <GlobalGridBackground />
-
       {/* SIDEBAR V1.7 - Elite Cockpit */}
       <Sidebar
         collapsible="icon"
-        className="border-r border-border/40 bg-card/80 backdrop-blur-xl z-20 transition-all duration-500 ease-in-out shadow-2xl shadow-black/20"
+        className="border-r border-border/40 bg-card/80 backdrop-blur-xl z-10 transition-all duration-500 ease-in-out"
       >
         <SidebarHeader className="h-14 flex flex-row items-center justify-center px-4 border-b border-border/40 overflow-hidden shrink-0">
           <Link
@@ -92,143 +118,119 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -10 }}
-                className="font-semibold tracking-tighter text-base text-foreground uppercase tracking-[0.05em] whitespace-nowrap"
+                className={cn(
+                  "ml-3 font-semibold text-lg tracking-tight bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent",
+                  isCollapsed ? "opacity-0 " : "opacity-100"
+                )}
               >
-                CORNAi
+                {SABI_COPY.BRAND.NAME}
               </motion.span>
             )}
           </Link>
         </SidebarHeader>
 
-        <SidebarContent className="py-6 space-y-8 overflow-x-hidden">
-          <SidebarMenu className="gap-1">
-            <div className="px-6 mb-4 h-4 flex items-center">
-              {!isCollapsed ? (
-                <h3 className="text-[10px] font-semibold text-foreground/30 uppercase tracking-[0.2em] whitespace-nowrap">
-                  Exploitation
-                </h3>
-              ) : (
-                <div className="w-full h-px bg-foreground/5" />
-              )}
-            </div>
-            <div className="px-2 space-y-1">
-              {navItems.map((item) => {
-                const isActive =
-                  pathname === item.href ||
-                  (item.href !== "/dashboard" &&
-                    pathname?.startsWith(item.href));
-                return (
-                  <SidebarMenuItem key={item.href}>
-                    <TooltipProvider delayDuration={0}>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <SidebarMenuButton
-                            asChild
-                            isActive={isActive}
-                            className={cn(
-                              "flex items-center gap-3 py-2 text-[13px] font-semibold transition-all group rounded-[4px] relative w-full",
-                              isCollapsed ? "justify-center px-0" : "pl-5 pr-4",
-                              isActive
-                                ? "bg-foreground/10 text-foreground border-l-2 border-primary"
-                                : "text-foreground/40 hover:text-foreground hover:bg-foreground/5 border-l-2 border-transparent",
-                            )}
-                          >
-                            <Link
-                              href={item.href}
-                              className="flex items-center w-full"
-                            >
-                              <item.icon
-                                size={20}
-                                className={cn(
-                                  "shrink-0 transition-colors",
-                                  isActive
-                                    ? "text-primary"
-                                    : "text-foreground/20 group-hover:text-foreground/50",
-                                )}
-                              />
-                              {!isCollapsed && (
-                                <span className="truncate">{item.label}</span>
+        <SidebarContent className="flex-1 px-4 py-6">
+          <SidebarMenu>
+            <div className="space-y-6">
+              {/* SECTION EXPLOITATION */}
+              <div className="space-y-2">
+                {!isCollapsed && (
+                  <h3 className="px-4 text-[10px] font-black uppercase tracking-[0.2em] text-foreground/20 mb-4">
+                    EXPLOITATION
+                  </h3>
+                )}
+                {navigation.EXPLOITATION.map((item) => {
+                  const isActive = pathname === item.href;
+                  return (
+                    <SidebarMenuItem key={item.href}>
+                      <TooltipProvider delayDuration={0}>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <SidebarMenuButton
+                              asChild
+                              isActive={isActive}
+                              className={cn(
+                                "h-10 transition-all duration-300 group relative",
+                                isCollapsed ? "px-0 justify-center" : "px-4 gap-3",
+                                isActive
+                                  ? "bg-primary/5 text-primary border-l-2 border-primary"
+                                  : "text-foreground/40 hover:text-foreground hover:bg-foreground/5 border-l-2 border-transparent"
                               )}
-                            </Link>
-                          </SidebarMenuButton>
-                        </TooltipTrigger>
-                        {isCollapsed && (
-                          <TooltipContent
-                            side="right"
-                            className="bg-black text-white text-[10px] font-bold uppercase tracking-widest border-white/10 ml-2"
-                          >
-                            {item.label}
-                          </TooltipContent>
-                        )}
-                      </Tooltip>
-                    </TooltipProvider>
-                  </SidebarMenuItem>
-                );
-              })}
-            </div>
-          </SidebarMenu>
+                            >
+                              <Link href={item.href} className="flex items-center">
+                                <item.icon
+                                  size={18}
+                                  className={cn(
+                                    "shrink-0 transition-transform duration-300 group-hover:scale-110",
+                                    isActive ? "text-primary" : "text-foreground/40"
+                                  )}
+                                  strokeWidth={isActive ? 2.5 : 2}
+                                />
+                                {!isCollapsed && (
+                                  <span className="font-bold tracking-tight text-[13px]">
+                                    {item.title}
+                                  </span>
+                                )}
+                              </Link>
+                            </SidebarMenuButton>
+                          </TooltipTrigger>
+                          {isCollapsed && <TooltipContent side="right">{item.title}</TooltipContent>}
+                        </Tooltip>
+                      </TooltipProvider>
+                    </SidebarMenuItem>
+                  );
+                })}
+              </div>
 
-          <SidebarMenu className="gap-1">
-            <div className="px-6 mb-4 mt-8 h-4 flex items-center">
-              {!isCollapsed ? (
-                <h3 className="text-[10px] font-semibold text-foreground/30 uppercase tracking-[0.2em] whitespace-nowrap">
-                  Workspace
-                </h3>
-              ) : (
-                <div className="w-full h-px bg-foreground/5" />
-              )}
-            </div>
-            <div className="px-2 space-y-1">
-              {workspaceItems.map((item) => {
-                const isActive = pathname === item.href;
-                return (
-                  <SidebarMenuItem key={item.href}>
-                    <TooltipProvider delayDuration={0}>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <SidebarMenuButton
-                            asChild
-                            isActive={isActive}
-                            className={cn(
-                              "flex items-center gap-3 py-2 text-[13px] font-semibold transition-all group rounded-[4px] relative w-full",
-                              isCollapsed ? "justify-center px-0" : "pl-5 pr-4",
-                              isActive
-                                ? "bg-foreground/10 text-foreground border-l-2 border-primary"
-                                : "text-foreground/40 hover:text-foreground hover:bg-foreground/5 border-l-2 border-transparent",
-                            )}
-                          >
-                            <Link
-                              href={item.href}
-                              className="flex items-center w-full"
-                            >
-                              <item.icon
-                                size={20}
-                                className={cn(
-                                  "shrink-0 transition-colors",
-                                  isActive
-                                    ? "text-primary"
-                                    : "text-foreground/20 group-hover:text-foreground/50",
-                                )}
-                              />
-                              {!isCollapsed && (
-                                <span className="truncate">{item.label}</span>
+              {/* SECTION WORKSPACE */}
+              <div className="space-y-2 pt-2">
+                {!isCollapsed && (
+                  <h3 className="px-4 text-[10px] font-black uppercase tracking-[0.2em] text-foreground/20 mb-4">
+                    WORKSPACE
+                  </h3>
+                )}
+                {navigation.WORKSPACE.map((item) => {
+                  const isActive = pathname === item.href;
+                  return (
+                    <SidebarMenuItem key={item.href}>
+                      <TooltipProvider delayDuration={0}>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <SidebarMenuButton
+                              asChild
+                              isActive={isActive}
+                              className={cn(
+                                "h-10 transition-all duration-300 group relative",
+                                isCollapsed ? "px-0 justify-center" : "px-4 gap-3",
+                                isActive
+                                  ? "bg-primary/5 text-primary border-l-2 border-primary"
+                                  : "text-foreground/40 hover:text-foreground hover:bg-foreground/5 border-l-2 border-transparent"
                               )}
-                            </Link>
-                          </SidebarMenuButton>
-                        </TooltipTrigger>
-                        {isCollapsed && (
-                          <TooltipContent
-                            side="right"
-                            className="bg-black text-white text-[10px] font-bold uppercase tracking-widest border-white/10 ml-2"
-                          >
-                            {item.label}
-                          </TooltipContent>
-                        )}
-                      </Tooltip>
-                    </TooltipProvider>
-                  </SidebarMenuItem>
-                );
-              })}
+                            >
+                              <Link href={item.href} className="flex items-center">
+                                <item.icon
+                                  size={18}
+                                  className={cn(
+                                    "shrink-0 transition-transform duration-300 group-hover:scale-110",
+                                    isActive ? "text-primary" : "text-foreground/40"
+                                  )}
+                                  strokeWidth={isActive ? 2.5 : 2}
+                                />
+                                {!isCollapsed && (
+                                  <span className="font-bold tracking-tight text-[13px]">
+                                    {item.title}
+                                  </span>
+                                )}
+                              </Link>
+                            </SidebarMenuButton>
+                          </TooltipTrigger>
+                          {isCollapsed && <TooltipContent side="right">{item.title}</TooltipContent>}
+                        </Tooltip>
+                      </TooltipProvider>
+                    </SidebarMenuItem>
+                  );
+                })}
+              </div>
             </div>
           </SidebarMenu>
         </SidebarContent>
@@ -237,7 +239,7 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
           <button
             className={cn(
               "flex items-center gap-3 py-2 rounded-[4px] text-[13px] font-semibold text-foreground/30 hover:text-foreground hover:bg-foreground/5 transition-colors overflow-hidden w-full",
-              isCollapsed ? "justify-center px-0" : "px-4",
+              isCollapsed ? "justify-center px-0" : "px-4"
             )}
           >
             <LogOut size={20} className="shrink-0" />
@@ -248,14 +250,14 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
       </Sidebar>
 
       {/* MAIN AREA */}
-      <div className="flex-1 flex flex-col min-w-0 relative z-10 transition-all duration-500 ease-in-out">
+      <div className="flex-1 flex flex-col min-w-0 relative z-20 transition-all duration-500 ease-in-out">
         <header className="relative h-14 flex items-center justify-between px-6 lg:px-6 border-b border-border/40 bg-card/70 backdrop-blur-md z-30 shrink-0">
           <div className="flex items-center gap-6">
             {/* Panel-Toggle Controller v1.8 — Absolute Intersection & Perfect Circular Geometry */}
             {!isMobile && (
               <button
                 onClick={() => toggleSidebar()}
-                className="absolute -left-4 top-3 z-[100] flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-[#0a0a0a] text-foreground/40 hover:text-foreground hover:bg-white/5 transition-all shadow-md cursor-pointer"
+                className="absolute -left-3 top-4 z-[100] flex h-6 w-6 items-center justify-center rounded-full border border-border/10 bg-card text-foreground/40 hover:text-primary hover:bg-primary/5 transition-all shadow-md cursor-pointer"
               >
                 <ChevronLeft
                   size={14}

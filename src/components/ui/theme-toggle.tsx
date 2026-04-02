@@ -6,7 +6,7 @@ import { useTheme } from "next-themes"
 import { motion, AnimatePresence } from "framer-motion"
 
 /**
- * ThemeToggle - CORNAi Quiet Design Component
+ * ThemeToggle - SABI Quiet Design Component
  * 
  * Un bouton de bascule ultra-minimaliste (h-6 w-6) qui gère le passage
  * entre le mode Jour (Light) et le mode Nuit (Dark).
@@ -21,7 +21,7 @@ export function ThemeToggle() {
   }, [])
 
   if (!mounted) {
-    return <div className="h-6 w-6 rounded-full border border-black/5 bg-black/[0.02]" />
+    return <div className="h-6 w-6 rounded-full border border-border bg-muted/40" />
   }
 
   const isDark = theme === "dark"
@@ -33,7 +33,7 @@ export function ThemeToggle() {
       }}
       whileTap={{ scale: 0.9 }}
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="relative h-6 w-6 flex items-center justify-center rounded-full border border-black/10 dark:border-white/10 bg-card hover:border-primary/40 text-foreground/40 hover:text-primary transition-all shadow-sm focus:outline-none group overflow-hidden"
+      className="relative h-6 w-6 flex items-center justify-center rounded-full border border-border bg-card hover:border-primary/40 text-foreground/40 hover:text-primary transition-all shadow-sm focus:outline-none group overflow-hidden"
       title={isDark ? "Passer en mode Jour (Clinical Light)" : "Passer en mode Nuit (Deep Night)"}
     >
       <AnimatePresence mode="wait">
@@ -54,7 +54,7 @@ export function ThemeToggle() {
       </AnimatePresence>
       
       {/* Tooltip ultra-minimaliste façon Panel-Toggle */}
-      <div className="absolute left-8 px-2 py-1 bg-black text-white text-[10px] font-bold rounded-[4px] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-xl border border-white/5">
+      <div className="absolute left-8 px-2 py-1 bg-foreground text-background text-[10px] font-bold rounded-[4px] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-xl border border-border/10">
         {isDark ? "MODE JOUR" : "MODE NUIT"}
       </div>
     </motion.button>
