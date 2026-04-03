@@ -491,6 +491,49 @@ export const piecesSoumission = pgTable('pieces_soumission', {
 ])
 
 // ═══════════════════════════════════════════
+// DESCENTE TERRAIN (Module Descente)
+// ═══════════════════════════════════════════
+export const visites_terrain = pgTable('visites_terrain', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  soumissionId: uuid('soumission_id').references(() => soumissions.id, { onDelete: 'cascade' }).notNull(),
+  entrepriseId: uuid('entreprise_id').references(() => entreprises.id, { onDelete: 'set null' }),
+  
+  dateVisite: timestamp('date_visite', { withTimezone: true }),
+  heureVisite: varchar('heure_visite', { length: 10 }),
+  latitude: numeric('latitude'),
+  longitude: numeric('longitude'),
+  precisionGps: varchar('precision_gps', { length: 100 }),
+  
+  maitreOuvrageRelais: varchar('maitre_ouvrage_relais', { length: 255 }),
+  observations: text('observations'),
+  
+  auditCritique: text('audit_critique'),
+  auditCritiqueImpact: varchar('audit_critique_impact', { length: 255 }),
+  
+  statutVisite: varchar('statut_visite', { length: 50 }).default('planifiee'),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+}, (table) => [
+  index('idx_visite_soumission').on(table.soumissionId),
+])
+
+export const photos_terrain = pgTable('photos_terrain', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  visiteId: uuid('visite_id').references(() => visites_terrain.id, { onDelete: 'cascade' }).notNull(),
+  
+  urlPhoto: varchar('url_photo', { length: 500 }),
+  legende: varchar('legende', { length: 255 }),
+  ordre: integer('ordre').default(0),
+  tailleMb: numeric('taille_mb').default('0'),
+  
+  gpsLatitude: numeric('gps_latitude'),
+  gpsLongitude: numeric('gps_longitude'),
+  
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+}, (table) => [
+  index('idx_photo_visite').on(table.visiteId),
+])
+
+// ═══════════════════════════════════════════
 // RELATIONS
 // ═══════════════════════════════════════════
 export const entreprisesRelations = relations(entreprises, ({ many }) => ({
@@ -561,5 +604,34 @@ export const piecesSoumissionRelations = relations(piecesSoumission, ({ one }) =
   soumission: one(soumissions, {
     fields: [piecesSoumission.soumissionId],
     references: [soumissions.id],
+  }),
+}))
+
+export const visitesTerrainRelations = relations(visites_terrain, ({ one, many }) => ({
+  soumission: one(soumissions, {
+    fields: [visites_terrain.soumissionId],
+    references: [soumissions.id],
+  }),
+  entreprise: one(entreprises, {
+    fields: [visites_terrain.entrepriseId],
+    references: [entreprises.id],
+  }),
+  photos: many(photos_terrain),
+}))
+
+export const photosTerrainRelations = relations(photos_terrain, ({ one }) => ({
+  visite: one(visites_terrain, {
+    fields: [photos_terrain.visiteId],
+    references: [visites_terrain.id],
+  }),
+}))
+export const notificationsRelations = relations(notifications, ({ one }) => ({
+  entreprise: one(entreprises, {
+    fields: [notifications.entrepriseId],
+    references: [entreprises.id],
+  }),
+  referenceAo: one(appelsOffres, {
+    fields: [notifications.referenceAoId],
+    references: [appelsOffres.id],
   }),
 }))

@@ -25,8 +25,17 @@ import {
 } from "@/components/ui/command"
 import { cn } from "@/lib/utils"
 
+import { searchGlobal } from "@/app/actions/search"
+import { useDebounce } from "@/hooks/use-debounce"
+import { useRouter } from "next/navigation"
+
 export function GlobalSearch() {
   const [open, setOpen] = React.useState(false)
+  const [query, setQuery] = React.useState("")
+  const [results, setResults] = React.useState<any>(null)
+  const [loading, setLoading] = React.useState(false)
+  const debouncedQuery = useDebounce(query, 300)
+  const router = useRouter()
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -38,6 +47,27 @@ export function GlobalSearch() {
     document.addEventListener("keydown", down)
     return () => document.removeEventListener("keydown", down)
   }, [])
+
+  React.useEffect(() => {
+    if (debouncedQuery.length < 2) {
+      setResults(null)
+      return
+    }
+
+    const fetchResults = async () => {
+      setLoading(true)
+      try {
+        const data = await searchGlobal(debouncedQuery)
+        setResults(data)
+      } catch (err) {
+        console.error(err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchResults()
+  }, [debouncedQuery])
 
   return (
     <>
@@ -59,7 +89,7 @@ export function GlobalSearch() {
           "group-hover:border-border/20 group-hover:bg-muted/50 group-focus:border-primary/40 group-focus:ring-1 group-focus:ring-primary/20",
           "text-[12px] text-muted-foreground font-medium"
         )}>
-          Rechercher un dossier, un document ARMP...
+          {query || "Rechercher un dossier, un document ARMP..."}
           
           <div className="ml-auto pointer-events-none hidden sm:flex items-center gap-1.5 px-1.5 py-0.5 rounded-[4px] border border-border/10 bg-muted text-[10px] font-semibold text-muted-foreground/60">
              <span className="text-[11px] opacity-40">⌘</span>K
@@ -68,57 +98,83 @@ export function GlobalSearch() {
       </div>
 
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Tapez votre recherche (ex: MINTP, Article 43...)" />
+        <CommandInput 
+          placeholder="Tapez votre recherche (ex: MINTP, Article 43...)" 
+          value={query}
+          onValueChange={setQuery}
+        />
         <CommandList className="max-h-[450px] scroll-smooth">
-          <CommandEmpty>Aucun résultat trouvé pour cette requête.</CommandEmpty>
+          {loading && <div className="p-4 text-center text-[11px] text-muted-foreground animate-pulse font-bold tracking-widest uppercase">Analyse en cours...</div>}
+          {!loading && !results && query.length < 2 && (
+            <div className="p-10 text-center space-y-2">
+              <Search className="size-8 mx-auto text-muted-foreground/20" />
+              <p className="text-[12px] text-muted-foreground/40 font-medium">Commencez à taper pour rechercher...</p>
+            </div>
+          )}
           
-          <CommandGroup heading="Appels d'Offres (JDM)">
-            <CommandItem className="hover:bg-primary/5 cursor-pointer">
-              <Target className="mr-2 h-4 w-4 text-primary/60" />
-              <div className="flex flex-col">
-                <span className="text-[13px] font-semibold">Travaux Routiers - MINTP (AONO)</span>
-                <span className="text-[10px] text-foreground/30 uppercase font-black">Marché Local • Centre</span>
-              </div>
-            </CommandItem>
-            <CommandItem className="hover:bg-primary/5 cursor-pointer">
-              <Target className="mr-2 h-4 w-4 text-primary/60" />
-              <div className="flex flex-col">
-                <span className="text-[13px] font-semibold">Construction du pont sur le Mbam</span>
-                <span className="text-[10px] text-foreground/30 uppercase font-black">Infrastructure • 450M FCFA</span>
-              </div>
-            </CommandItem>
-          </CommandGroup>
+          <CommandEmpty>Aucun résultat trouvé pour "{query}".</CommandEmpty>
+          
+          {results?.aos?.length > 0 && (
+            <CommandGroup heading="Appels d'Offres (Radar)">
+              {results.aos.map((ao: any) => (
+                <CommandItem 
+                  key={ao.id} 
+                  className="hover:bg-primary/5 cursor-pointer"
+                  onSelect={() => {
+                    setOpen(false)
+                    router.push(`/dashboard/radar?id=${ao.id}`)
+                  }}
+                >
+                  <Target className="mr-2 h-4 w-4 text-primary/60" />
+                  <div className="flex flex-col">
+                    <span className="text-[13px] font-semibold line-clamp-1">{ao.titreComplet}</span>
+                    <span className="text-[10px] text-foreground/30 uppercase font-black">
+                      {ao.institution} • {ao.numeroMarche || "AONO"}
+                    </span>
+                  </div>
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          )}
 
-          <CommandGroup heading="Documents Administratifs">
-            <CommandItem className="hover:bg-primary/5 cursor-pointer">
-              <FileCheck className="mr-2 h-4 w-4 text-primary/60" />
-              <div className="flex flex-col">
-                <span className="text-[13px] font-semibold">Attestation de Non Redevance (ANR)</span>
-                <span className="text-[10px] text-red-500/60 uppercase font-black italic">Expire bientôt</span>
-              </div>
-            </CommandItem>
-            <CommandItem className="hover:bg-primary/5 cursor-pointer">
-              <FileText className="mr-2 h-4 w-4 text-primary/60" />
-              <div className="flex flex-col">
-                <span className="text-[13px] font-semibold">Registre de Commerce (RCCM)</span>
-                <span className="text-[10px] text-foreground/30 uppercase font-black">Coffre-fort • Valide</span>
-              </div>
-            </CommandItem>
-          </CommandGroup>
+          {results?.docs?.length > 0 && (
+            <CommandGroup heading="Vos Documents (SI)">
+              {results.docs.map((doc: any) => (
+                <CommandItem 
+                  key={doc.id} 
+                  className="hover:bg-primary/5 cursor-pointer"
+                  onSelect={() => {
+                    setOpen(false)
+                    router.push(`/dashboard/documents`)
+                  }}
+                >
+                  <FileCheck className="mr-2 h-4 w-4 text-emerald-500/60" />
+                  <div className="flex flex-col">
+                    <span className="text-[13px] font-semibold">{doc.pieceId}</span>
+                    <span className={cn(
+                      "text-[10px] uppercase font-black italic",
+                      doc.statut === 'valide' ? "text-emerald-500/60" : "text-amber-500/60"
+                    )}>
+                      {doc.statut}
+                    </span>
+                  </div>
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          )}
 
-          <CommandGroup heading="Réglementation (ARMP)">
-            <CommandItem className="hover:bg-primary/5 cursor-pointer">
+          <CommandGroup heading="Raccourcis">
+            <CommandItem 
+              onSelect={() => {
+                setOpen(false)
+                router.push("/dashboard/annexe-16")
+              }}
+              className="hover:bg-primary/5 cursor-pointer"
+            >
               <Gavel className="mr-2 h-4 w-4 text-primary/60" />
               <div className="flex flex-col">
-                <span className="text-[13px] font-semibold">Article 43 - Code des Marchés Publics</span>
-                <span className="text-[10px] text-foreground/30 uppercase font-black">Conditions d'éligibilité</span>
-              </div>
-            </CommandItem>
-            <CommandItem className="hover:bg-primary/5 cursor-pointer">
-              <ShieldQuestion className="mr-2 h-4 w-4 text-primary/60" />
-              <div className="flex flex-col">
-                <span className="text-[13px] font-semibold">Délais de procédure de passation</span>
-                <span className="text-[10px] text-foreground/30 uppercase font-black">Décret 2024</span>
+                <span className="text-[13px] font-semibold">Annexe 16 - Référentiel légal</span>
+                <span className="text-[10px] text-foreground/30 uppercase font-black">Code des Marchés 2018</span>
               </div>
             </CommandItem>
           </CommandGroup>

@@ -6,8 +6,8 @@ import { SearchResult } from "./search-types"
 
 export const MOCK_SEARCH_RESULTS: SearchResult[] = [
   {
-    id: "AO-2026-045-MINTP",
-    title: "Entretien routier périodique de la route nationale N°3 (Axe Yaoundé-Douala)",
+    id: "81d2748f-8204-491d-99ea-b142ee124439",
+    title: "AO N°01/BTP/MINTP/2026 : Travaux de construction d'un pont sur la rivière Nyong",
     authority: "MINTP - Ministère des Travaux Publics",
     budget: "450 000 000 FCFA",
     region: "Centre / Littoral",
@@ -62,8 +62,8 @@ export const MOCK_SEARCH_RESULTS: SearchResult[] = [
     workflowState: "opportunite"
   },
   {
-    id: "AO-2026-012-MINSANTE",
-    title: "Fourniture de dispositifs médicaux pour l'Hôpital Central de Yaoundé",
+    id: "1681e8ec-0e37-42fc-9a2c-7f72fa431d64",
+    title: "AO N°02/Informatique/MINMAP/2026 : Fourniture de matériel informatique et serveurs",
     authority: "MINSANTE - Ministère de la Santé Publique",
     budget: "120 000 000 FCFA",
     region: "Centre",

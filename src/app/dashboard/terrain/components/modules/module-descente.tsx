@@ -18,15 +18,54 @@ import { MOCK_AUDIOS } from "../../lib/terrain-mock-data";
 import { cn } from "@/lib/utils";
 import { AlertPanel } from "../shared/alert-panel";
 
+export interface DescenteData {
+  id: string;
+  soumissionId: string;
+  entrepriseId: string | null;
+  dateVisite: Date | null;
+  heureVisite: string | null;
+  latitude: string | null;
+  longitude: string | null;
+  precisionGps: string | null;
+  maitreOuvrageRelais: string | null;
+  observations: string | null;
+  auditCritique: string | null;
+  auditCritiqueImpact: string | null;
+  statutVisite: string | null;
+  photos?: {
+    id: string;
+    visiteId: string;
+    urlPhoto: string | null;
+    legende: string | null;
+    ordre: number | null;
+    tailleMb: string | null;
+    gpsLatitude: string | null;
+    gpsLongitude: string | null;
+  }[];
+}
+
 interface ModuleDescenteProps {
   maitreOuvrage?: string;
+  data?: DescenteData | null;
 }
 
 /**
  * 📍 MODULE : DESCENTE (VISITE DE SITE) — Wired to DB (contextual)
  * Focus : Récupération des preuves de visite, coordonnées GPS et photos terrain.
  */
-export function ModuleDescente({ maitreOuvrage }: ModuleDescenteProps) {
+export function ModuleDescente({ maitreOuvrage, data }: ModuleDescenteProps) {
+  // Fallback data if DB is empty (though seed is run)
+  const displayDate = data?.dateVisite 
+    ? new Date(data.dateVisite).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+    : "Non planifiée";
+  
+  const displayTime = data?.heureVisite || "--:--";
+  const displayCoords = data?.latitude && data?.longitude 
+    ? `${data.latitude}° N, ${data.longitude}° E`
+    : "Non capturées";
+
+  const photos = data?.photos || [];
+
   return (
     <div className="space-y-4 h-full pb-8">
       {/* ROW 1 — Détails + Preuves */}
@@ -55,7 +94,7 @@ export function ModuleDescente({ maitreOuvrage }: ModuleDescenteProps) {
               <span className="text-[10px] font-bold text-muted-foreground/40 uppercase tracking-widest">Date & Heure</span>
               <div className="flex items-center gap-2">
                 <Clock className="w-3.5 h-3.5 text-muted-foreground opacity-30" />
-                <p className="text-sm font-bold text-foreground tabular-nums">28 Mars 2024 • 14:30</p>
+                <p className="text-sm font-bold text-foreground tabular-nums">{displayDate} • {displayTime}</p>
               </div>
             </div>
 
@@ -66,24 +105,24 @@ export function ModuleDescente({ maitreOuvrage }: ModuleDescenteProps) {
                    <Navigation className="w-3.5 h-3.5 text-primary" />
                 </div>
                 <p className="text-sm font-bold text-foreground tabular-nums underline decoration-primary/20 underline-offset-4 group-hover:decoration-primary transition-all">
-                  3.8480° N, 11.5021° E
+                  {displayCoords}
                 </p>
               </div>
               <p className="text-[9px] text-muted-foreground/60 italic font-medium uppercase tracking-tight mt-1">
-                Précision : 5m (Yaoundé, PK 0+000)
+                Précision : {data?.precisionGps || "N/A"}
               </p>
             </div>
 
             <div className="flex flex-col gap-1.5">
               <span className="text-[10px] font-bold text-muted-foreground/40 uppercase tracking-widest">Maître d'Ouvrage Relais</span>
               <p className="text-sm font-bold text-foreground uppercase tracking-tight">
-                MINMAP / Délégué Régional Centre
+                {data?.maitreOuvrageRelais || maitreOuvrage || "Non renseigné"}
               </p>
             </div>
           </div>
 
           <div className="mt-auto pt-6 relative z-10">
-            <button className="w-full h-12 flex items-center justify-center gap-3 bg-primary text-black font-bold rounded-[4px] text-[10px] uppercase tracking-widest transition-all hover:opacity-90">
+            <button className="w-full h-12 flex items-center justify-center gap-3 bg-primary text-black font-bold rounded-[4px] text-[10px] uppercase tracking-widest transition-all hover:opacity-90 disabled:opacity-50" disabled={!data}>
               <FileCheck className="w-4 h-4" />
               Générer l'Annexe 16 (Certificat)
             </button>
@@ -102,27 +141,34 @@ export function ModuleDescente({ maitreOuvrage }: ModuleDescenteProps) {
               </h3>
             </div>
             <span className="text-[10px] font-bold text-muted-foreground/30 uppercase tracking-[0.2em]">
-              4 PHOTOS CAPTURÉES
+              {photos.length} PHOTOS CAPTURÉES
             </span>
           </div>
 
           <div className="flex-1 overflow-y-auto max-h-[320px] pr-2">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-               {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="aspect-square bg-muted/10 rounded-[4px] border border-border/10 relative group cursor-zoom-in overflow-hidden transition-all hover:border-primary/40">
-                  <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-20 transition-opacity">
-                    <Camera className="w-10 h-10" />
-                  </div>
+               {photos.length > 0 ? photos.sort((a, b) => (a.ordre || 0) - (b.ordre || 0)).map((photo) => (
+                <div key={photo.id} className="aspect-square bg-muted/10 rounded-[4px] border border-border/10 relative group cursor-zoom-in overflow-hidden transition-all hover:border-primary/40">
+                  <img 
+                    src={photo.urlPhoto || ""} 
+                    alt={photo.legende || ""} 
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                  />
                   <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-3">
                     <p className="text-[8px] font-bold text-white uppercase tracking-tighter truncate">
-                      Photo_PK_12_{i}.jpg
+                      {photo.legende || "Photo terrain"}
                     </p>
                     <p className="text-[7px] text-white/60 font-medium uppercase tracking-widest mt-1">
-                      1.2 MB • GPS TAGGED
+                      {photo.tailleMb} MB • GPS TAGGED
                     </p>
                   </div>
                 </div>
-              ))}
+              )) : (
+                <div className="col-span-full h-32 flex flex-col items-center justify-center border border-dashed border-border/20 rounded-[4px] opacity-30">
+                  <Camera className="w-8 h-8 mb-2" />
+                  <span className="text-[10px] uppercase font-bold tracking-widest">Aucune photo</span>
+                </div>
+              )}
             </div>
           </div>
 
@@ -166,8 +212,13 @@ export function ModuleDescente({ maitreOuvrage }: ModuleDescenteProps) {
                   Point d'Audit Critique
                 </h4>
                 <p className="text-[11px] text-muted-foreground/80 leading-relaxed font-medium italic">
-                  Analyse de risque requise pour la déviation PK 5+200. Impact potentiel sur le Bordereau des Prix Unitaires (BPU) estimé à +12% sur ce lot.
+                  {data?.auditCritique || "Aucun point critique détecté pour le moment."}
                 </p>
+                {data?.auditCritiqueImpact && (
+                  <p className="text-[10px] text-amber-500/60 font-bold uppercase tracking-tight pt-1">
+                    Impact : {data.auditCritiqueImpact}
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -188,8 +239,8 @@ export function ModuleDescente({ maitreOuvrage }: ModuleDescenteProps) {
             <div className="absolute top-4 right-4 p-2 opacity-10 group-hover:opacity-60 transition-opacity cursor-pointer">
               <Share2 className="w-4 h-4" />
             </div>
-            <p className="text-sm font-medium text-foreground leading-relaxed pr-8">
-              "PK 5+200 : Présence d'un pont de secours en bois en mauvais état. Prévoir une déviation lourde par le village Mbankomo. Les sols semblent latéritiques sur les 3 premiers kilomètres."
+            <p className="text-sm font-medium text-foreground leading-relaxed pr-8 italic">
+              "{data?.observations || "Aucune observation transcrite."}"
             </p>
           </div>
         </div>
@@ -197,3 +248,4 @@ export function ModuleDescente({ maitreOuvrage }: ModuleDescenteProps) {
     </div>
   );
 }
+

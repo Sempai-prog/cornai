@@ -23,12 +23,10 @@ export async function createOrGetSoumission(aoId: string) {
     })
 
     if (existing) {
-      console.log(`[SOUMISSION] Reprise du dossier existant : ${existing.id}`)
       return { success: true, id: existing.id }
     }
 
     // 2. Créer une nouvelle soumission si elle n'existe pas
-    console.log(`[SOUMISSION] Création d'un nouveau dossier pour AO : ${aoId}`)
     const [newSoumission] = await db.insert(soumissions).values({
       entrepriseId,
       appelOffreId: aoId,

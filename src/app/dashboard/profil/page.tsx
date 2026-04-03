@@ -8,6 +8,8 @@ import { cn, formatXAF } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { StandardPageHeader } from "@/components/layout/standard-page-header"
 import { getProfilEntreprise, getReferencesEntreprise, calculateCompanyAge } from "@/database/queries/profil"
+import { EditableField } from "@/components/profil/editable-field"
+import { ProfilImprovementButton } from "@/components/profil/profile-actions"
 
 const DEMO_ENTREPRISE_ID = "cf83af70-d49b-4a72-8222-201f08a05a8a"
 
@@ -70,23 +72,16 @@ export default async function ProfilCapacitePage() {
               </div>
               
               <div className="space-y-6">
-                <div className="space-y-1">
-                  <h4 className="text-[11px] font-bold text-foreground/30 uppercase tracking-[0.15em]">Raison Sociale</h4>
-                  <p className="text-lg font-semibold tracking-tight text-foreground/90">{profile.nom}</p>
-                </div>
+                <EditableField label="Raison Sociale" fieldName="nom" initialValue={profile.nom || ""} />
 
                 <div className="grid grid-cols-1 gap-4 pt-4 border-t border-border/10">
-                  {[
-                    { label: "NIU", value: profile.niu || "Non renseigné" },
-                    { label: "RCCM", value: profile.rccm || "Non renseigné" },
-                    { label: "Siège Social", value: profile.ville ? `${profile.ville}, ${profile.adresse || ''}` : "Non renseigné" },
-                    { label: "Forme Juridique", value: profile.formeJuridique || "Sarl" }
-                  ].map((item, i) => (
-                    <div key={i} className="flex flex-col space-y-1 group/row cursor-default transition-all hover:translate-x-1">
-                      <span className="text-[9px] font-bold text-foreground/20 uppercase tracking-[0.2em]">{item.label}</span>
-                      <span className="text-[13px] font-medium text-foreground/70 group-hover/row:text-foreground">{item.value}</span>
-                    </div>
-                  ))}
+                  <EditableField label="Gérant" fieldName="gerantNom" initialValue={profile.gerantNom || ""} />
+                  <EditableField label="Téléphone" fieldName="telephone" initialValue={profile.telephone || ""} />
+                  <EditableField label="Email" fieldName="email" initialValue={profile.email || ""} />
+                  <EditableField label="NIU" fieldName="niu" initialValue={profile.niu || ""} />
+                  <EditableField label="RCCM" fieldName="rccm" initialValue={profile.rccm || ""} />
+                  <EditableField label="Ville" fieldName="ville" initialValue={profile.ville || ""} />
+                  <EditableField label="Forme Juridique" fieldName="formeJuridique" initialValue={profile.formeJuridique || "Sarl"} />
                 </div>
               </div>
             </div>
@@ -107,17 +102,24 @@ export default async function ProfilCapacitePage() {
                 <h3 className="text-[11px] font-bold text-foreground/30 uppercase tracking-[0.15em]">Chiffre d'Affaires (Réel)</h3>
                 
                 <div className="space-y-4">
+                  <EditableField 
+                    label="2024 (N)" 
+                    fieldName="caDernierExercice" 
+                    initialValue={profile.caDernierExercice || 0} 
+                    type="number"
+                    className="p-3 bg-muted/10 border border-border/10 rounded-[4px] group/row transition-all hover:translate-x-1 hover:bg-muted/20"
+                  />
+
                   {[
-                    { year: "2024 (N)", value: formatXAF(profile.caDernierExercice || 0), growth: "+12%" },
                     { year: "2023 (N-1)", value: formatXAF((profile.caDernierExercice || 0) * 0.9), growth: "+8%" },
                     { year: "2022 (N-2)", value: formatXAF((profile.caDernierExercice || 0) * 0.8), growth: "+5%" }
                   ].map((row, i) => (
-                    <div key={i} className="flex items-center justify-between p-3 bg-muted/10 border border-border/10 rounded-[4px] group/row transition-all hover:translate-x-1 hover:bg-muted/20">
+                    <div key={i} className="flex items-center justify-between p-3 bg-muted/5 border border-border/5 rounded-[4px] opacity-60">
                       <div className="space-y-0.5">
                         <span className="text-[10px] font-bold text-foreground/40 uppercase tracking-wider">{row.year}</span>
-                        <p className="text-[15px] font-bold text-foreground/80 group-hover/row:text-primary">{row.value}</p>
+                        <p className="text-[13px] font-bold text-foreground/80">{row.value}</p>
                       </div>
-                      <span className="text-[10px] font-bold text-primary/80 transition-all">{row.growth}</span>
+                      <span className="text-[9px] font-bold text-foreground/20 italic">Historique</span>
                     </div>
                   ))}
                 </div>
@@ -200,9 +202,7 @@ export default async function ProfilCapacitePage() {
                }
             </p>
 
-            <Button variant="ghost" className="w-full h-9 text-[10px] font-bold uppercase tracking-widest text-primary hover:bg-primary/5 gap-2 rounded-[4px] border border-primary/10">
-               Améliorer le score <ArrowRight size={12} />
-            </Button>
+            <ProfilImprovementButton />
           </div>
 
           <div className="bg-card border border-border/10 rounded-[4px] p-6">

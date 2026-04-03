@@ -12,7 +12,8 @@ import {
   CheckCircle2,
   AlertCircle,
   Scale,
-  CalendarDays
+  CalendarDays,
+  Loader2
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -24,12 +25,14 @@ interface TenderInspectorPanelProps {
   item: any
   onStartWorkflow?: () => void
   isInceptionMode?: boolean
+  isStarting?: boolean
 }
 
 export function TenderInspectorPanel({ 
   item, 
   onStartWorkflow,
-  isInceptionMode = false 
+  isInceptionMode = false,
+  isStarting = false 
 }: TenderInspectorPanelProps) {
   if (!item) return null
 
@@ -85,36 +88,69 @@ export function TenderInspectorPanel({
             </div>
          </div>
 
-         {/* Le Ruban de Pilotage (Metric Ribbon) */}
-         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 p-4 bg-muted/10 border border-border/10 rounded-[4px]">
-            <div className="flex flex-col gap-1">
-               <span className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-wider">Budget Prévisionnel</span>
-               <div className="flex items-center gap-2">
-                  <Wallet className="h-3.5 w-3.5 text-primary/60" />
-                  <span className="text-[13px] font-bold text-foreground/90">{item.budget || "450M FCFA"}</span>
+         {/* Le Ruban de Pilotage (Metric Ribbon) + CTA INCEPTION */}
+         <div className="flex flex-col gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 p-4 bg-muted/10 border border-border/10 rounded-[4px]">
+               <div className="flex flex-col gap-1">
+                  <span className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-wider">Budget Prévisionnel</span>
+                  <div className="flex items-center gap-2">
+                     <Wallet className="h-3.5 w-3.5 text-primary/60" />
+                     <span className="text-[13px] font-bold text-foreground/90">{item.budget || "450M FCFA"}</span>
+                  </div>
+               </div>
+               <div className="flex flex-col gap-1 border-l border-border/10 pl-4">
+                  <span className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-wider">Caution de Soumission</span>
+                  <div className="flex items-center gap-2">
+                     <Scale className="h-3.5 w-3.5 text-primary/60" />
+                     <span className="text-[13px] font-bold text-foreground/90">{item.cautionSoumission || "9M FCFA"}</span>
+                  </div>
+               </div>
+               <div className="flex flex-col gap-1 border-l border-border/10 pl-4">
+                  <span className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-wider">Délai de Validité</span>
+                  <div className="flex items-center gap-2">
+                     <CalendarDays className="h-3.5 w-3.5 text-primary/60" />
+                     <span className="text-[13px] font-bold text-foreground/90">90 jours</span>
+                  </div>
+               </div>
+               <div className="flex flex-col gap-1 border-l border-border/10 pl-4 bg-primary/5 -m-4 p-4 rounded-r-[4px]">
+                  <span className="text-[10px] font-semibold text-primary/60 uppercase tracking-wider">Verdict IA Expert</span>
+                  <div className="flex items-center gap-2">
+                     <ShieldCheck className="h-3.5 w-3.5 text-primary" />
+                     <span className="text-[13px] font-black text-primary tracking-tight">ÉLIGIBLE — SCORE 94%</span>
+                  </div>
                </div>
             </div>
-            <div className="flex flex-col gap-1 border-l border-border/10 pl-4">
-               <span className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-wider">Caution de Soumission</span>
-               <div className="flex items-center gap-2">
-                  <Scale className="h-3.5 w-3.5 text-primary/60" />
-                  <span className="text-[13px] font-bold text-foreground/90">{item.cautionSoumission || "9M FCFA"}</span>
+
+            {/* CTA PROPRIÉTAIRE (Visible partout) */}
+            <Button
+               onClick={(e) => {
+                  e.stopPropagation();
+                  onStartWorkflow?.();
+               }}
+               disabled={isStarting}
+               className={cn(
+                 "w-full h-12 flex items-center justify-between px-6 text-sm font-black uppercase tracking-[0.1em] rounded-[4px] border transition-all",
+                 item.workflowState === 'montage' || item.workflowState === 'soumis'
+                   ? "bg-primary/5 text-primary border-primary/20 hover:bg-primary/10"
+                   : "bg-primary text-primary-foreground border-transparent hover:bg-primary/90 shadow-lg shadow-primary/10",
+                 isStarting && "opacity-50 cursor-wait"
+               )}
+            >
+               <div className="flex items-center gap-3">
+                  {isStarting ? (
+                     <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                     <Zap className="h-5 w-5 fill-current" />
+                  )}
+                  <span>
+                     {isStarting ? "Initialisation..." : 
+                        (item.workflowState === 'montage' || item.workflowState === 'soumis' 
+                           ? "REPRENDRE DOSSIER" 
+                           : "PRÉPARER SOUMISSION")}
+                  </span>
                </div>
-            </div>
-            <div className="flex flex-col gap-1 border-l border-border/10 pl-4">
-               <span className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-wider">Délai de Validité</span>
-               <div className="flex items-center gap-2">
-                  <CalendarDays className="h-3.5 w-3.5 text-primary/60" />
-                  <span className="text-[13px] font-bold text-foreground/90">90 jours</span>
-               </div>
-            </div>
-            <div className="flex flex-col gap-1 border-l border-border/10 pl-4 bg-primary/5 -m-4 p-4 rounded-r-[4px]">
-               <span className="text-[10px] font-semibold text-primary/60 uppercase tracking-wider">Verdict IA Expert</span>
-               <div className="flex items-center gap-2">
-                  <ShieldCheck className="h-3.5 w-3.5 text-primary" />
-                  <span className="text-[13px] font-black text-primary tracking-tight">ÉLIGIBLE — SCORE 94%</span>
-               </div>
-            </div>
+               {!isStarting && <ChevronRight className="h-5 w-5 ml-2 transition-transform group-hover:translate-x-1" />}
+            </Button>
          </div>
       </header>
 
@@ -241,14 +277,25 @@ export function TenderInspectorPanel({
          <div className="absolute bottom-0 left-0 right-0 p-8 bg-background z-20 pt-16">
             <Button 
                onClick={onStartWorkflow}
-               className="w-full h-14 rounded-[4px] bg-primary text-primary-foreground text-[13px] font-extrabold border-none hover:bg-primary/90 transition-all flex items-center justify-between px-8 group shadow-none"
+               disabled={isStarting}
+               className={cn(
+                 "w-full h-14 rounded-[4px] bg-primary text-primary-foreground text-[13px] font-extrabold border-none hover:bg-primary/90 transition-all flex items-center justify-between px-8 group shadow-none",
+                 isStarting && "opacity-50 cursor-wait"
+               )}
             >
                <div className="flex items-center gap-3">
-                  <Zap className="h-5 w-5 fill-current" />
-                  CRÉER LE DOSSIER DE RÉPONSE
+                  {isStarting ? (
+                     <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                     <Zap className="h-5 w-5 fill-current" />
+                  )}
+                  {isStarting ? "CHARGEMENT..." : 
+                     (item.workflowState === 'montage' || item.workflowState === 'soumis' 
+                        ? "REPRENDRE LE DOSSIER EN COURS" 
+                        : "CRÉER LE DOSSIER DE RÉPONSE")}
                </div>
-              <ChevronRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-           </Button>
+               {!isStarting && <ChevronRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />}
+            </Button>
         </div>
       )}
     </div>

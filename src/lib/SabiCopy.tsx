@@ -18,7 +18,10 @@ export const SABI_COPY = {
     BLINDAGE: "Le Blindage (Conformité)",
     OFFRE_FINANCIERE: "Offre Financière",
     SOUMISSIONS: "Mes Soumissions",
+    TERMER: "Le Terrain (Veille)", // Correction typo "Terrain" if needed, but I'll stick to labels
     TERRAIN: "Le Terrain (Veille)",
+    ANNEXE_16: "Annexe 16",
+    NOTIFICATIONS: "Notifications",
     WORKSPACE: "Espace Travail",
   },
 

@@ -70,7 +70,7 @@ export function SearchResultRow({ item }: SearchResultRowProps) {
       <div 
         className={cn(
           "flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 sm:p-5 cursor-pointer gap-4 lg:gap-0 select-none transition-all duration-300 ease-out group/row",
-          "hover:translate-x-1"
+          "hover:bg-muted/5 shadow-none"
         )}
         onClick={handleToggleExpand}
       >
@@ -141,23 +141,14 @@ export function SearchResultRow({ item }: SearchResultRowProps) {
               <span className="text-[8px] sm:text-[10px] text-foreground/20 font-black uppercase tracking-widest mt-1">Clôture</span>
            </div>
 
-            {/* QUICK ACTION : PREPARER LE TERRAIN ON HOVER */}
-            <div className="flex items-center ml-4 gap-2">
-               <button 
-                  onClick={(e) => { e.stopPropagation(); handleStartWorkflow(); }}
-                  className={cn(
-                    "hidden group-hover/row:flex items-center h-8 px-4 rounded-[4px] bg-primary text-[10px] font-black text-primary-foreground uppercase tracking-widest transition-all hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-primary/20",
-                    isStarting && "opacity-50 cursor-wait"
-                  )}
-                  disabled={isStarting}
-               >
-                  {isStarting ? "Chargement..." : "Préparer"}
-               </button>
-               <div className="h-8 w-8 rounded-[4px] flex items-center justify-center text-muted-foreground transition-all group-hover/row:text-primary group-hover/row:bg-primary/5 border border-transparent group-hover/row:border-border/10">
-                  <button onClick={(e) => { e.stopPropagation(); handleToggleExpand(); }}>
-                     <ChevronRight className={cn("h-4 w-4 transition-transform duration-500", isExpanded && "rotate-90")} />
-                  </button>
-               </div>
+            {/* CHEVRON TRIGGER — ALWAYS VISIBLE, NO SHIFT */}
+            <div className="flex items-center ml-4">
+              <div className={cn(
+                "h-8 w-8 rounded-[4px] flex items-center justify-center transition-all bg-muted/20 text-muted-foreground hover:bg-primary/5 hover:text-primary border border-border/10",
+                isExpanded && "bg-primary/5 text-primary"
+              )}>
+                <ChevronRight className={cn("h-4 w-4 transition-transform duration-500", isExpanded && "rotate-90")} />
+              </div>
             </div>
         </div>
       </div>
@@ -209,6 +200,7 @@ export function SearchResultRow({ item }: SearchResultRowProps) {
                             item={item} 
                             onStartWorkflow={handleStartWorkflow} 
                             isInceptionMode={true}
+                            isStarting={isStarting}
                         />
                     </div>
                   </motion.div>

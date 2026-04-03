@@ -14,10 +14,10 @@ import {
   Eye,
   Upload,
   FileUp,
-  Download as LucideDownload
 } from "lucide-react";
 import { getConformiteComplete } from "@/database/queries/documents";
 import { formatDateline, cn } from "@/lib/utils";
+import { GeneratePDFButton, UploadZone, ItemActions } from "@/components/documents/document-actions";
 
 // ID démo (Phase de test)
 const DEMO_ENTREPRISE_ID = "cf83af70-d49b-4a72-8222-201f08a05a8a";
@@ -100,19 +100,7 @@ export default async function DocumentsPage() {
       />
 
       {/* Upload Zone (Prominent & Immediate) */}
-      <div className="border border-dashed border-border/10 rounded-[4px] p-8 flex flex-col items-center justify-center gap-4 bg-card hover:bg-card/80 hover:border-primary/40 transition-all cursor-pointer group relative overflow-hidden">
-        <div className="w-12 h-12 rounded-[4px] bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-          <FileUp className="w-6 h-6 text-primary" />
-        </div>
-        <div className="text-center">
-          <p className="text-sm font-bold text-foreground/80 tracking-tight uppercase">Déposez une nouvelle pièce administrative</p>
-          <p className="text-[11px] text-muted-foreground/40 mt-1 font-medium italic">SABI scanne et extrait automatiquement les dates d'expiration via Scan AI</p>
-        </div>
-        <div className="flex gap-2">
-          <span className="text-[9px] font-black px-2 py-0.5 bg-muted/10 rounded-[2px] text-muted-foreground/30 border border-border/10 tracking-widest">PDF</span>
-          <span className="text-[9px] font-black px-2 py-0.5 bg-muted/10 rounded-[2px] text-muted-foreground/30 border border-border/10 tracking-widest">MAX 10MB</span>
-        </div>
-      </div>
+      <UploadZone />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Liste (2/3) */}
@@ -175,14 +163,7 @@ export default async function DocumentsPage() {
                         {item.status}
                       </span>
 
-                      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button className="p-1.5 rounded-[4px] hover:bg-foreground/5 text-muted-foreground/40 hover:text-foreground transition-colors">
-                          <Eye className="w-4 h-4" />
-                        </button>
-                        <button className="p-1.5 rounded-[4px] hover:bg-foreground/5 text-muted-foreground/40 hover:text-foreground transition-colors">
-                          <Upload className="w-4 h-4" />
-                        </button>
-                      </div>
+                      <ItemActions />
                     </div>
                   </div>
                 </div>
@@ -278,10 +259,7 @@ export default async function DocumentsPage() {
               )}
             </div>
 
-            <button className="w-full py-4 bg-foreground text-background text-[10px] font-black uppercase tracking-[0.2em] rounded-[4px] hover:opacity-90 transition-all flex items-center justify-center gap-2 group">
-              Générer Bilan PDF
-              <LucideDownload className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform" />
-            </button>
+            <GeneratePDFButton />
 
             {/* Expert Info - Integrated in the same sticky card */}
             <div className="pt-8 mt-8 border-t border-border/10 flex gap-4 relative overflow-hidden">

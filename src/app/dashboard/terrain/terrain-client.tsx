@@ -39,6 +39,7 @@ interface TerrainClientPageProps {
     statut: string | null;
     alerte: string | null;
   }[];
+  descenteData?: any;
   compilationData: {
     id: string;
     nomFichier: string;
@@ -62,9 +63,11 @@ export function TerrainClientPage({
   aoInstitution,
   garageData,
   equipeData,
+  descenteData,
   compilationData,
 }: TerrainClientPageProps) {
   const [activeTab, setActiveTab] = useState<TerrainTabId>("transcripteur");
+
 
   // Compute compilation module statuses from real data
   const compilationModuleStatuses = {
@@ -83,7 +86,7 @@ export function TerrainClientPage({
       case "equipe":
         return <ModuleEquipe membres={equipeData} />;
       case "descente":
-        return <ModuleDescente maitreOuvrage={aoInstitution} />;
+        return <ModuleDescente maitreOuvrage={aoInstitution} data={descenteData} />;
       case "coleps":
         return (
           <ModuleColeps

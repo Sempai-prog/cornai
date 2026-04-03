@@ -25,7 +25,10 @@ interface SearchRowDetailProps {
   onOpenInspector: () => void
 }
 
-export function SearchRowDetail({ item, onOpenInspector }: SearchRowDetailProps) {
+export function SearchRowDetail({ 
+  item, 
+  onOpenInspector
+}: SearchRowDetailProps) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 bg-muted/10 border-y border-border/10 animate-in fade-in slide-in-from-top-2 duration-300">
       
@@ -96,19 +99,20 @@ export function SearchRowDetail({ item, onOpenInspector }: SearchRowDetailProps)
             <span className="text-[14px] font-black text-primary leading-none uppercase">{item.matchScore}%</span>
          </div>
          
-         <div className="flex-1 flex items-end">
-            <Button 
-               onClick={(e) => {
-                  e.stopPropagation();
-                  onOpenInspector();
-               }}
-               variant="ghost" 
-               className="w-full h-10 rounded-[4px] text-[10px] font-bold text-primary group-hover/action:bg-primary/5 border border-primary/10 transition-all px-3 group"
-            >
-               DAO COMPLET
-               <ChevronRight className="h-3.5 w-3.5 ml-auto group-hover:translate-x-1 transition-transform" />
-            </Button>
-         </div>
+          <div className="mt-auto pt-4">
+             {/* BOUTON UNIQUE — DAO COMPLET (neutre, outline, informatif) */}
+             <Button 
+                onClick={(e) => {
+                   e.stopPropagation();
+                   onOpenInspector();
+                }}
+                variant="outline" 
+                className="w-full h-10 rounded-[4px] text-[10px] font-black uppercase tracking-wider text-primary border-primary/20 hover:bg-primary/5 hover:border-primary/40 transition-all px-4 flex items-center justify-between group shadow-sm shadow-primary/5"
+             >
+                CONSULTER LE DAO
+                <ChevronRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+             </Button>
+          </div>
       </div>
 
     </div>

@@ -10,6 +10,8 @@ import {
   materielProjet,
   equipeProjet,
   piecesSoumission,
+  visites_terrain,
+  photos_terrain,
 } from './schema'
 import { eq } from 'drizzle-orm'
 
@@ -17,6 +19,30 @@ const ENTREPRISE_ID = 'cf83af70-d49b-4a72-8222-201f08a05a8a' // Antigravity BTP
 
 async function seed() {
   console.log('🌱 Début du seed Terrain...')
+
+  // ═══════════════════════════════════════════
+  // 0. S'assurer que l'entreprise de démo existe
+  // ═══════════════════════════════════════════
+  const existingEntreprise = await db
+    .select()
+    .from(entreprises)
+    .where(eq(entreprises.id, ENTREPRISE_ID))
+    .limit(1)
+
+  if (existingEntreprise.length === 0) {
+    console.log('🏢 Création de l\'entreprise "Antigravity BTP"...')
+    await db.insert(entreprises).values({
+      id: ENTREPRISE_ID,
+      nom: 'Antigravity BTP',
+      niu: 'M123456789012',
+      rccm: 'RC/YAO/2024/B/1234',
+      telephone: '+237 600 00 00 00',
+      email: 'contact@antigravity-btp.cm',
+      ville: 'Yaoundé',
+      region: 'Centre',
+      plan: 'premium',
+    })
+  }
 
   // ═══════════════════════════════════════════
   // 1. Vérifier qu'un AO existe
@@ -329,6 +355,59 @@ async function seed() {
     ])
   }
 
+  // ═══════════════════════════════════════════
+  // 8. Seed DESCENTE TERRAIN (Module Descente)
+  // ═══════════════════════════════════════════
+  console.log('🚙 Seed descente terrain (Visites)...')
+
+  await db.delete(visites_terrain).where(eq(visites_terrain.soumissionId, soumissionId))
+
+  const [visite] = await db.insert(visites_terrain).values({
+    soumissionId,
+    entrepriseId: ENTREPRISE_ID,
+    dateVisite: new Date('2024-03-10T09:00:00Z'),
+    heureVisite: '09:00',
+    latitude: '3.8483',
+    longitude: '11.5021',
+    precisionGps: '± 3 mètres',
+    maitreOuvrageRelais: 'Ing. Mballa (Délégué Régional MINMAP)',
+    observations: 'Le site est accessible par une piste latéritique. Le PK 0+000 est bien identifié. Présence de réseaux électriques à déplacer.',
+    auditCritique: 'Nécessité de déplacement de 12 poteaux Moyenne Tension non prévus au DAO initial.',
+    auditCritiqueImpact: 'Risque de retard de 2 mois sur la phase d\'installation du chantier.',
+    statutVisite: 'terminee',
+  }).returning()
+
+  await db.insert(photos_terrain).values([
+    {
+      visiteId: visite.id,
+      urlPhoto: 'https://images.unsplash.com/photo-1541888946425-d81bb19480c5?auto=format&fit=crop&q=80&w=800',
+      legende: 'Vue d\'ensemble du site (PK 0+000)',
+      ordre: 1,
+      tailleMb: '2.4',
+    },
+    {
+      visiteId: visite.id,
+      urlPhoto: 'https://images.unsplash.com/photo-1504307651254-35682f94a1d8?auto=format&fit=crop&q=80&w=800',
+      legende: 'Détail de la zone de franchissement',
+      ordre: 2,
+      tailleMb: '3.1',
+    },
+    {
+      visiteId: visite.id,
+      urlPhoto: 'https://images.unsplash.com/photo-1517089535819-de372141d2cc?auto=format&fit=crop&q=80&w=800',
+      legende: 'Obstacle : Poteaux MT à déplacer',
+      ordre: 3,
+      tailleMb: '1.8',
+    },
+    {
+      visiteId: visite.id,
+      urlPhoto: 'https://images.unsplash.com/photo-1589939705384-5185138a047a?auto=format&fit=crop&q=80&w=800',
+      legende: 'Type de sol observé (Échantillon S1)',
+      ordre: 4,
+      tailleMb: '2.7',
+    },
+  ])
+
   console.log('')
   console.log('✅ Seed terminé avec succès !')
   console.log('')
@@ -337,6 +416,7 @@ async function seed() {
   console.log('   → 5 matériels dans Le Garage')
   console.log('   → 4 membres d\'équipe dans Personnel')
   console.log('   → 3 pièces dans Compilation')
+  console.log('   → 1 visite terrain avec 4 photos')
   console.log('   → CA Antigravity BTP : 1.85 Mds FCFA')
   console.log('   → 2 soumissions supplémentaires pour le Kanban')
 

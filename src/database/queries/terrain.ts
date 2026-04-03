@@ -10,6 +10,8 @@ import {
   materielProjet,
   equipeProjet,
   piecesSoumission,
+  visites_terrain,
+  photos_terrain,
 } from '../schema'
 import { eq, and, desc } from 'drizzle-orm'
 
@@ -98,6 +100,24 @@ export async function getCompilationData(soumissionId: string) {
 }
 
 // ═══════════════════════════════════════════
+// MODULE 1 — DESCENTE (Visite Terrain)
+// ═══════════════════════════════════════════
+export async function getDescenteData(soumissionId: string) {
+  try {
+    const visite = await db.query.visites_terrain.findFirst({
+      where: eq(visites_terrain.soumissionId, soumissionId),
+      with: {
+        photos: true,
+      },
+    })
+    return visite || null
+  } catch (error) {
+    console.error('Error in getDescenteData:', error)
+    return null
+  }
+}
+
+// ═══════════════════════════════════════════
 // AGGREGATION — Données complètes du Terrain
 // ═══════════════════════════════════════════
 export async function getTerrainFullData(entrepriseId: string, soumissionId?: string) {
@@ -117,14 +137,16 @@ export async function getTerrainFullData(entrepriseId: string, soumissionId?: st
       aoInstitution: null,
       garageData: [],
       equipeData: [],
+      descenteData: null,
       compilationData: [],
     };
   }
 
-  // 2. Charger les données des 3 modules câblés en parallèle
-  const [garageData, equipeData, compilationData] = await Promise.all([
+  // 2. Charger les données des 4 modules câblés en parallèle
+  const [garageData, equipeData, descenteData, compilationData] = await Promise.all([
     getGarageData(soumission.id),
     getEquipeData(soumission.id),
+    getDescenteData(soumission.id),
     getCompilationData(soumission.id),
   ]);
 
@@ -134,6 +156,7 @@ export async function getTerrainFullData(entrepriseId: string, soumissionId?: st
     aoInstitution: soumission.appelOffre?.institution || null,
     garageData,
     equipeData,
+    descenteData,
     compilationData,
   };
 }

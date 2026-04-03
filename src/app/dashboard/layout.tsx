@@ -35,13 +35,16 @@ import {
   ChevronLeft,
   Target,
   LogOut,
-  Bell
+  Bell,
+  TrendingUp
 } from "lucide-react"
 import { SABI_COPY } from "@/lib/SabiCopy";
 import { cn } from "@/lib/utils";
 import { GlobalSearch } from "@/components/layout/global-search";
 import { motion } from "framer-motion";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { getUnreadCount } from "@/app/actions/notifications";
+import * as React from "react";
 
 // Composant interne pour accéder au contexte SidebarProvider
 function DashboardShell({ children }: { children: React.ReactNode }) {
@@ -49,8 +52,28 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
   const SIDEBAR_WIDTH_ICON = "4rem";
   const { toggleSidebar, state, isMobile } = useSidebar();
   const isCollapsed = state === "collapsed";
+  const [unreadCount, setUnreadCount] = React.useState(0);
 
-  const navigation = {
+  React.useEffect(() => {
+    async function loadCount() {
+      try {
+        const count = await getUnreadCount();
+        setUnreadCount(count);
+      } catch (e) {
+        console.error("Failed to load notifications count", e);
+      }
+    }
+    loadCount();
+  }, []);
+  
+  interface NavigationItem {
+    title: string;
+    icon: any;
+    href: string;
+    badge?: string;
+  }
+
+  const navigation: { EXPLOITATION: NavigationItem[], WORKSPACE: NavigationItem[] } = {
     EXPLOITATION: [
       { 
         title: SABI_COPY.NAVIGATION.PILOTAGE, 
@@ -88,6 +111,16 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
         title: SABI_COPY.NAVIGATION.TERRAIN, 
         icon: Map, 
         href: "/dashboard/terrain" 
+      },
+      { 
+        title: SABI_COPY.NAVIGATION.ANNEXE_16, 
+        icon: TrendingUp, 
+        href: "/dashboard/annexe-16",
+      },
+      { 
+        title: SABI_COPY.NAVIGATION.NOTIFICATIONS, 
+        icon: Bell, 
+        href: "/dashboard/notifications",
       }
     ]
   };
@@ -155,21 +188,28 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
                                   : "text-foreground/40 hover:text-foreground hover:bg-foreground/5 border-l-2 border-transparent"
                               )}
                             >
-                              <Link href={item.href} className="flex items-center">
-                                <item.icon
-                                  size={18}
-                                  className={cn(
-                                    "shrink-0 transition-transform duration-300 group-hover:scale-110",
-                                    isActive ? "text-primary" : "text-foreground/40"
+                                <Link href={item.href} className="flex items-center w-full">
+                                  <item.icon
+                                    size={18}
+                                    className={cn(
+                                      "shrink-0 transition-transform duration-300 group-hover:scale-110",
+                                      isActive ? "text-primary" : "text-foreground/40"
+                                    )}
+                                    strokeWidth={isActive ? 2.5 : 2}
+                                  />
+                                  {!isCollapsed && (
+                                    <div className="flex-1 flex items-center justify-between ml-3 overflow-hidden">
+                                      <span className="font-bold tracking-tight text-[13px] truncate">
+                                        {item.title}
+                                      </span>
+                                      {item.badge && (
+                                        <span className="text-[7.5px] font-black px-1.5 py-0.5 rounded-[2px] bg-primary/10 text-primary border border-primary/20 tracking-widest uppercase shrink-0 ml-2">
+                                          {item.badge}
+                                        </span>
+                                      )}
+                                    </div>
                                   )}
-                                  strokeWidth={isActive ? 2.5 : 2}
-                                />
-                                {!isCollapsed && (
-                                  <span className="font-bold tracking-tight text-[13px]">
-                                    {item.title}
-                                  </span>
-                                )}
-                              </Link>
+                                </Link>
                             </SidebarMenuButton>
                           </TooltipTrigger>
                           {isCollapsed && <TooltipContent side="right">{item.title}</TooltipContent>}
@@ -205,21 +245,28 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
                                   : "text-foreground/40 hover:text-foreground hover:bg-foreground/5 border-l-2 border-transparent"
                               )}
                             >
-                              <Link href={item.href} className="flex items-center">
-                                <item.icon
-                                  size={18}
-                                  className={cn(
-                                    "shrink-0 transition-transform duration-300 group-hover:scale-110",
-                                    isActive ? "text-primary" : "text-foreground/40"
+                                <Link href={item.href} className="flex items-center w-full">
+                                  <item.icon
+                                    size={18}
+                                    className={cn(
+                                      "shrink-0 transition-transform duration-300 group-hover:scale-110",
+                                      isActive ? "text-primary" : "text-foreground/40"
+                                    )}
+                                    strokeWidth={isActive ? 2.5 : 2}
+                                  />
+                                  {!isCollapsed && (
+                                    <div className="flex-1 flex items-center justify-between ml-3 overflow-hidden">
+                                      <span className="font-bold tracking-tight text-[13px] truncate">
+                                        {item.title}
+                                      </span>
+                                      {item.badge && (
+                                        <span className="text-[7.5px] font-black px-1.5 py-0.5 rounded-[2px] bg-primary/10 text-primary border border-primary/20 tracking-widest uppercase shrink-0 ml-2">
+                                          {item.badge}
+                                        </span>
+                                      )}
+                                    </div>
                                   )}
-                                  strokeWidth={isActive ? 2.5 : 2}
-                                />
-                                {!isCollapsed && (
-                                  <span className="font-bold tracking-tight text-[13px]">
-                                    {item.title}
-                                  </span>
-                                )}
-                              </Link>
+                                </Link>
                             </SidebarMenuButton>
                           </TooltipTrigger>
                           {isCollapsed && <TooltipContent side="right">{item.title}</TooltipContent>}
@@ -265,10 +312,15 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
             </div>
             
             <div className="flex items-center gap-3">
-              <button className="h-10 w-10 flex items-center justify-center rounded-[4px] border border-border/10 bg-card hover:bg-muted/50 transition-colors relative group">
+              <Link 
+                href="/dashboard/notifications"
+                className="h-10 w-10 flex items-center justify-center rounded-[4px] border border-border/10 bg-card hover:bg-muted/50 transition-colors relative group"
+              >
                 <Bell className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                <span className="absolute top-2.5 right-2.5 h-1.5 w-1.5 rounded-full bg-primary border-2 border-background" />
-              </button>
+                {unreadCount > 0 && (
+                  <span className="absolute top-2.5 right-2.5 h-1.5 w-1.5 rounded-full bg-primary border-2 border-background animate-pulse" />
+                )}
+              </Link>
 
               <ThemeToggle />
               

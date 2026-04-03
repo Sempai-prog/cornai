@@ -29,7 +29,9 @@ export default async function TerrainPage({ searchParams }: { searchParams: Prom
     equipe: equipeTotal === 0 ? 'empty' as const
       : equipeComplete === equipeTotal ? 'complete' as const
       : 'warning' as const,
-    descente: 'empty' as const,          // MVP: stays mock-empty
+    descente: data.descenteData 
+      ? (data.descenteData.statutVisite === 'terminee' ? 'complete' as const : 'warning' as const)
+      : 'empty' as const,
   }
 
   // Overall score
@@ -59,7 +61,9 @@ export default async function TerrainPage({ searchParams }: { searchParams: Prom
       aoInstitution={data.aoInstitution || undefined}
       garageData={data.garageData}
       equipeData={data.equipeData}
+      descenteData={data.descenteData as any}
       compilationData={compilationSerialized}
     />
   )
 }
+
