@@ -1,57 +1,39 @@
-// ══════════════════════════════════════════
-// SABI — Inspecteur Latéral Expert (Phase 3 — Deep Dive / Inception Ready)
-// ══════════════════════════════════════════
-
 "use client"
 
 import * as React from "react"
 import { 
-  X, 
-  Search, 
   ShieldCheck, 
-  LayoutDashboard, 
-  FileText, 
-  Target, 
-  Map, 
-  FolderLock, 
-  Zap,
-  Building2,
+  Users2, 
+  Construction, 
   Wallet,
-  TrendingDown,
-  Trophy,
-  AlertCircle,
-  FileSearch,
-  CheckCircle2,
-  Calendar,
-  Layers,
-  ArrowRight,
-  ExternalLink,
-  MessageCircle,
-  FileDown,
-  ShieldAlert,
-  Info,
-  HardHat,
-  ChevronRight,
   ArrowLeft,
+  ChevronRight,
+  Zap,
+  CheckCircle2,
+  AlertCircle,
   Scale,
-  CalendarDays,
-  Users2,
-  Construction,
+  CalendarDays
 } from "lucide-react"
-import { SABI_COPY } from "@/lib/SabiCopy"
-import { SearchResult } from "./search-types"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { SABI_COPY } from "@/lib/SabiCopy"
 
 interface TenderInspectorPanelProps {
-  item: SearchResult
-  onStartWorkflow: () => void
+  item: any
+  onStartWorkflow?: () => void
   isInceptionMode?: boolean
 }
 
-export function TenderInspectorPanel({ item, onStartWorkflow, isInceptionMode }: TenderInspectorPanelProps) {
+export function TenderInspectorPanel({ 
+  item, 
+  onStartWorkflow,
+  isInceptionMode = false 
+}: TenderInspectorPanelProps) {
+  if (!item) return null
+
+  // Dans InceptionMode (imbriqué dans un autre panel), on simplifie le layout
   const Container = isInceptionMode ? 'div' : ScrollArea;
   const containerProps = isInceptionMode ? { className: "flex-1" } : { className: "flex-1 px-8 py-6" };
 
@@ -63,7 +45,7 @@ export function TenderInspectorPanel({ item, onStartWorkflow, isInceptionMode }:
       
       {/* HEADER & RUBAN DE PILOTAGE (Metric Ribbon) */}
       <header className={cn(
-        "border-b border-border/10 bg-card/20 backdrop-blur-sm",
+        "border-b border-border/10 bg-card",
         isInceptionMode ? "p-6" : "p-8"
       )}>
          {/* Haut : Contexte & Navigation */}
@@ -104,7 +86,7 @@ export function TenderInspectorPanel({ item, onStartWorkflow, isInceptionMode }:
          </div>
 
          {/* Le Ruban de Pilotage (Metric Ribbon) */}
-         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 p-4 bg-muted/20 border border-border/10 rounded-[4px]">
+         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 p-4 bg-muted/10 border border-border/10 rounded-[4px]">
             <div className="flex flex-col gap-1">
                <span className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-wider">Budget Prévisionnel</span>
                <div className="flex items-center gap-2">
@@ -144,7 +126,7 @@ export function TenderInspectorPanel({ item, onStartWorkflow, isInceptionMode }:
          )}>
             
             {/* CARTE 1 : L'ENVELOPPE B (TECHNIQUE) -> LA PIÈCE MAITRESSE (col-span-8) */}
-            <div className="lg:col-span-8 flex flex-col h-auto bg-card border border-border/10 rounded-[4px] p-6 shadow-sm">
+            <div className="lg:col-span-8 flex flex-col h-auto bg-card border border-border/10 rounded-[4px] p-6">
                <div className="flex items-center justify-between mb-8">
                   <div className="flex flex-col gap-1">
                      <span className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-widest">Enveloppe B</span>
@@ -162,10 +144,10 @@ export function TenderInspectorPanel({ item, onStartWorkflow, isInceptionMode }:
                         <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground/60">Personnel Clé</span>
                      </div>
                      <ul className="space-y-3">
-                        <li className="flex flex-col p-3 bg-muted/40 border border-border/10 rounded-[4px]">
+                        <li className="flex flex-col p-3 bg-muted/10 border border-border/10 rounded-[4px]">
                            <span className="text-[11px] font-bold text-foreground/80 lowercase">Ingénieur du Marché (10 ans xp)</span>
                         </li>
-                        <li className="flex flex-col p-3 bg-muted/40 border border-border/10 rounded-[4px]">
+                        <li className="flex flex-col p-3 bg-muted/10 border border-border/10 rounded-[4px]">
                            <span className="text-[11px] font-bold text-foreground/80 lowercase">Conducteur de Travaux (05 ans xp)</span>
                         </li>
                      </ul>
@@ -178,10 +160,10 @@ export function TenderInspectorPanel({ item, onStartWorkflow, isInceptionMode }:
                         <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground/60">Logistique & Matériel</span>
                      </div>
                       <ul className="space-y-3">
-                         <li className="flex flex-col p-3 bg-muted/40 border border-border/10 rounded-[4px]">
+                         <li className="flex flex-col p-3 bg-muted/10 border border-border/10 rounded-[4px]">
                             <span className="text-[11px] font-bold text-foreground/80 lowercase">Véhicule de liaison 4x4</span>
                          </li>
-                         <li className="flex flex-col p-3 bg-muted/40 border border-border/10 rounded-[4px]">
+                         <li className="flex flex-col p-3 bg-muted/10 border border-border/10 rounded-[4px]">
                             <span className="text-[11px] font-bold text-foreground/80 lowercase">Station de travail DAO/CAO</span>
                          </li>
                       </ul>
@@ -211,26 +193,26 @@ export function TenderInspectorPanel({ item, onStartWorkflow, isInceptionMode }:
             <div className="lg:col-span-4 flex flex-col gap-6">
                
                 {/* CARTE 2 : L'ENVELOPPE A (ADMINISTRATIVE) */}
-                <div className="flex flex-col h-auto bg-card border border-border/10 rounded-[4px] p-6 shadow-sm">
+                <div className="flex flex-col h-auto bg-card border border-border/10 rounded-[4px] p-6">
                    <span className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-widest mb-1">Enveloppe A</span>
                    <h3 className="text-sm font-bold text-foreground/90 uppercase tracking-tight mb-6">Conformité Administrative</h3>
                   
                   <div className="flex flex-col gap-2">
-                      {item.conformitePME.enveloppeA.pieces.map((piece, idx) => (
-                         <div key={idx} className="flex items-center justify-between p-3 rounded-[4px] border border-border/10 bg-muted/20 hover:bg-muted/30 transition-all">
+                      {item.conformitePME.enveloppeA.pieces.map((piece: any, idx: number) => (
+                         <div key={idx} className="flex items-center justify-between p-3 rounded-[4px] border border-border/10 bg-muted/10 hover:bg-muted/20 transition-all">
                             <span className="text-[11px] font-bold text-muted-foreground/60 truncate pr-4">{piece.name}</span>
-                           {piece.status === 'valid' ? (
-                              <CheckCircle2 className="h-3 w-3 text-primary" />
-                           ) : (
-                              <AlertCircle className="h-3 w-3 text-red-500" />
-                           )}
-                        </div>
-                     ))}
+                            {piece.status === 'valid' ? (
+                               <CheckCircle2 className="h-3 w-3 text-primary" />
+                            ) : (
+                               <AlertCircle className="h-3 w-3 text-red-500" />
+                            )}
+                         </div>
+                      ))}
                   </div>
                </div>
 
                 {/* CARTE 3 : L'ENVELOPPE C (FINANCIÈRE) */}
-                <div className="flex flex-col h-auto bg-card border border-border/10 rounded-[4px] p-6 shadow-sm">
+                <div className="flex flex-col h-auto bg-card border border-border/10 rounded-[4px] p-6">
                    <span className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-widest mb-1">Enveloppe C</span>
                    <h3 className="text-sm font-bold text-foreground/90 uppercase tracking-tight mb-6">Dossier Financier</h3>
                   
@@ -242,7 +224,7 @@ export function TenderInspectorPanel({ item, onStartWorkflow, isInceptionMode }:
                            <span className="text-[11px] font-bold text-primary uppercase">Format Vérifié</span>
                         </div>
                      </div>
-                      <div className="p-3 bg-muted/20 border border-border/10 rounded-[4px]">
+                      <div className="p-3 bg-muted/10 border border-border/10 rounded-[4px]">
                          <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest block mb-1">Analyse des prix</span>
                          <span className="text-[11px] font-bold text-muted-foreground/60 capitalize whitespace-nowrap">Conforme aux prix de référence</span>
                       </div>
@@ -256,10 +238,10 @@ export function TenderInspectorPanel({ item, onStartWorkflow, isInceptionMode }:
       {/* STICKY FOOTER : ACTION PRIMAIRE — ONLY IN SIDEBAR PANEL TO AVOID INCEPTION COLLISIONS */}
       {/* FOOTER : ACTION PRIMAIRE (Sticky) */}
       {!isInceptionMode && (
-         <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-background via-background/95 to-transparent z-20 pt-16">
+         <div className="absolute bottom-0 left-0 right-0 p-8 bg-background z-20 pt-16">
             <Button 
                onClick={onStartWorkflow}
-               className="w-full h-14 rounded-[4px] bg-primary text-primary-foreground text-[13px] font-extrabold border-none hover:bg-primary/90 transition-all flex items-center justify-between px-8 group shadow-[0_0_50px_rgba(var(--primary),0.1)]"
+               className="w-full h-14 rounded-[4px] bg-primary text-primary-foreground text-[13px] font-extrabold border-none hover:bg-primary/90 transition-all flex items-center justify-between px-8 group shadow-none"
             >
                <div className="flex items-center gap-3">
                   <Zap className="h-5 w-5 fill-current" />
@@ -269,7 +251,6 @@ export function TenderInspectorPanel({ item, onStartWorkflow, isInceptionMode }:
            </Button>
         </div>
       )}
-
     </div>
-  )
+  );
 }

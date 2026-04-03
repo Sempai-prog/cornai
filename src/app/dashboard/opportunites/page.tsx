@@ -7,13 +7,15 @@
 import * as React from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { 
-  GripVertical, 
+  GripVertical,
   ChevronRight,
   ShieldAlert,
   MoreHorizontal,
   Activity
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useRouter } from "next/navigation"
+import { createOrGetSoumission } from "@/app/actions/soumissions"
 import { Badge } from "@/components/ui/badge"
 
 // --- TYPES ---
@@ -113,12 +115,12 @@ const COLUMNS: { id: OpportunityStatus; label: string; description: string }[] =
 
 export default function OpportunitesPage() {
   return (
-    <div className="flex flex-col gap-8 animate-in fade-in duration-500 antialiased bg-transparent">
+    <div className="flex flex-col gap-8 animate-in fade-in duration-500 antialiased bg-transparent h-[calc(100vh-140px)]">
       
       {/* ───────────────────────────────────────────────────────────
           PLAN 1 — HEADER (Elite Precision)
           ─────────────────────────────────────────────────────────── */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-border/10 mt-0 lg:mt-[-4px]">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-border/10 mt-0 lg:mt-[-4px] shrink-0">
         <div className="space-y-1.5">
           <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
             Pipeline Opportunités <span className="text-muted-foreground/30 font-light">/</span> <span className="text-primary/70">JDM</span>
@@ -141,17 +143,17 @@ export default function OpportunitesPage() {
       {/* ───────────────────────────────────────────────────────────
           PLAN 2 — WORKSPACE CANONICAL (8/4 Split)
           ─────────────────────────────────────────────────────────── */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 flex-1 min-h-0">
         
         {/* LE FLUX (8/12) — KANBAN BOARD */}
-        <div className="lg:col-span-8 flex flex-col min-w-0">
-          <div className="flex items-center justify-between mb-6 h-6">
+        <div className="lg:col-span-8 flex flex-col min-w-0 h-full">
+          <div className="flex items-center justify-between mb-6 h-6 shrink-0">
             <h2 className="text-[11px] font-bold text-foreground/40 uppercase tracking-[0.2em]">
               Cycle de Vie des Soumissions
             </h2>
           </div>
 
-          <div className="flex gap-8 overflow-x-auto min-h-0 pb-6 custom-scrollbar scroll-smooth">
+          <div className="flex gap-4 overflow-x-auto min-h-0 h-full pb-6 custom-scrollbar scroll-smooth">
              {COLUMNS.map((column) => (
                <KanbanColumn 
                  key={column.id} 
@@ -163,14 +165,14 @@ export default function OpportunitesPage() {
         </div>
 
         {/* L'INSPECTEUR (4/12) — INFO & ANALYTICS */}
-        <div className="lg:col-span-4 flex flex-col gap-4 sticky top-6 self-start">
+        <div className="lg:col-span-4 flex flex-col gap-4 sticky top-6 self-start shrink-0">
            <div className="flex items-center mb-6 h-6">
              <h2 className="text-[11px] font-bold text-foreground/40 uppercase tracking-[0.2em]">
                Diagnostic Pipeline
              </h2>
            </div>
 
-           <div className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-6 shadow-none">
+           <div className="bg-card border border-border/10 rounded-[4px] p-6 shadow-none">
              <div className="flex items-center gap-3 pb-4 border-b border-border/10 mb-6">
                <Activity className="h-5 w-5 text-primary/60" />
                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/30">
@@ -179,7 +181,7 @@ export default function OpportunitesPage() {
              </div>
              
              <div className="space-y-4">
-               <div className="p-4 rounded bg-primary/[0.03] border border-primary/10">
+               <div className="p-4 rounded-[4px] bg-primary/5 border border-primary/10">
                  <p className="text-[10px] font-bold text-primary uppercase tracking-[0.2em] mb-1">Score Global</p>
                  <p className="text-2xl font-semibold tracking-tighter text-foreground">92.4%</p>
                  <p className="text-[11px] text-foreground/50 font-medium leading-relaxed mt-2 tracking-tight">
@@ -189,7 +191,7 @@ export default function OpportunitesPage() {
              </div>
            </div>
 
-           <div className="bg-card/80 backdrop-blur-md border border-border/40 rounded-[4px] p-6 shadow-none">
+           <div className="bg-card border border-border/10 rounded-[4px] p-6 shadow-none">
              <div className="flex items-center gap-3 pb-4 border-b border-border/10 mb-6">
                <ShieldAlert className="h-5 w-5 text-amber-500/60" />
                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/30">
@@ -197,7 +199,7 @@ export default function OpportunitesPage() {
                </span>
              </div>
              <p className="text-[11px] text-foreground/60 font-medium leading-relaxed tracking-tight">
-               Attention : Le cumul des cautions de soumission pour les 3 marchés en &quot;Montage&quot; s&apos;élève à 22M FCFA. Vérifiez vos lignes de crédit disponibles auprès de vos banques partenaires.
+                Attention : Le cumul des cautions de soumission pour les 3 marchés en &quot;Montage&quot; s&apos;élève à 22M FCFA. Vérifiez vos lignes de crédit disponibles auprès de vos banques partenaires.
              </p>
            </div>
         </div>
@@ -208,7 +210,7 @@ export default function OpportunitesPage() {
 
 function KanbanColumn({ column, items }: { column: typeof COLUMNS[0], items: Opportunity[] }) {
   return (
-    <div className="w-[320px] shrink-0 flex flex-col h-full bg-muted/5 border border-border/10 rounded-[4px] p-2 transition-colors">
+    <div className="w-[280px] shrink-0 flex flex-col h-full bg-muted/10 border border-border/10 rounded-[4px] p-2 transition-colors">
        {/* Column Head */}
        <div className="flex items-center justify-between px-3 py-3 mb-2 shrink-0">
           <div className="space-y-0.5">
@@ -229,7 +231,6 @@ function KanbanColumn({ column, items }: { column: typeof COLUMNS[0], items: Opp
             ))}
           </AnimatePresence>
           
-          {/* Nouveau: Bouton rapide d'ajout si utile */}
           <button className="w-full py-4 border border-dashed border-border/40 rounded-[4px] text-[10px] font-bold uppercase tracking-widest text-muted-foreground/20 hover:text-primary hover:border-primary/20 transition-all">
              + Ajouter une veille
           </button>
@@ -239,13 +240,33 @@ function KanbanColumn({ column, items }: { column: typeof COLUMNS[0], items: Opp
 }
 
 function OpportunityCard({ item }: { item: Opportunity }) {
-  return (
+    const router = useRouter()
+    const [isStarting, setIsStarting] = React.useState(false)
+
+    const handleAction = async () => {
+        if (isStarting) return
+        setIsStarting(true)
+        try {
+            const res = await createOrGetSoumission(item.id)
+            if (res.success && res.id) {
+                router.push(`/dashboard/terrain?soumissionId=${res.id}`)
+            }
+        } catch (err) {
+            console.error(err)
+        } finally {
+            setIsStarting(false)
+        }
+    }
+
+    return (
     <motion.div 
       layout
       whileHover={{ y: -2, borderColor: "var(--border)" }}
+      onClick={handleAction}
       className={cn(
-        "bg-card backdrop-blur-md border border-border/40 rounded-[4px] p-4 cursor-grab transition-all hover:bg-card hover:border-border/60 shadow-none",
-        "active:cursor-grabbing active:scale-[0.98] active:z-50 duration-200"
+        "bg-card border border-border/10 rounded-[4px] p-4 cursor-pointer transition-all hover:bg-card hover:border-border/60 shadow-none",
+        isStarting && "opacity-50 grayscale",
+        "active:scale-[0.98] active:z-50 duration-200"
       )}
     >
        {/* Card Header (Sigle MO | Badge & Grip) */}
@@ -263,7 +284,7 @@ function OpportunityCard({ item }: { item: Opportunity }) {
        </div>
 
        {/* Card Body (Titre) */}
-       <h4 className="text-[13px] font-semibold text-foreground/90 line-clamp-2 leading-relaxed mb-4 tracking-tight transition-colors">
+       <h4 className="text-[12px] font-semibold text-foreground/90 line-clamp-2 leading-tight mb-4 tracking-tight transition-colors">
           {item.title}
        </h4>
 
@@ -297,4 +318,3 @@ function OpportunityCard({ item }: { item: Opportunity }) {
     </motion.div>
   )
 }
-

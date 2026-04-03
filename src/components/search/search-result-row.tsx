@@ -16,9 +16,11 @@ import { Badge } from "@/components/ui/badge"
 import { SearchRowDetail } from "./search-row-detail"
 import { TenderInspectorPanel } from "./tender-inspector-panel"
 import { cn } from "@/lib/utils"
+import { AnimatePresence, motion } from "framer-motion"
+import { useRouter } from "next/navigation"
+import { createOrGetSoumission } from "@/app/actions/soumissions"
 import { SearchResult } from "./search-types"
 import { formatMarketType } from "./search-utils"
-import { AnimatePresence, motion } from "framer-motion"
 
 interface SearchResultRowProps {
   item: SearchResult
@@ -27,6 +29,8 @@ interface SearchResultRowProps {
 export function SearchResultRow({ item }: SearchResultRowProps) {
   const [isExpanded, setIsExpanded] = React.useState(false)
   const [showFullDao, setShowFullDao] = React.useState(false)
+  const [isStarting, setIsStarting] = React.useState(false)
+  const router = useRouter()
   
   const handleToggleExpand = () => {
     if (isExpanded && showFullDao) {
@@ -36,8 +40,21 @@ export function SearchResultRow({ item }: SearchResultRowProps) {
     }
   }
 
-  const handleStartWorkflow = () => {
-    console.log(`Starting workflow for: ${item.id}`);
+  const handleStartWorkflow = async () => {
+    if (isStarting) return;
+    setIsStarting(true);
+    try {
+      const res = await createOrGetSoumission(item.id);
+      if (res.success && res.id) {
+        router.push(`/dashboard/terrain?soumissionId=${res.id}`);
+      } else {
+        alert(res.error || "Une erreur est survenue");
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsStarting(false);
+    }
   }
 
   return (
@@ -95,8 +112,8 @@ export function SearchResultRow({ item }: SearchResultRowProps) {
                     {item.matchScore}%
                  </span>
                   <div className={cn(
-                     "h-1.5 w-1.5 rounded-full ring-2 ring-primary/5 shadow-lg",
-                     item.matchLevel === 'excellent' ? "bg-primary shadow-primary/20" : "bg-muted"
+                     "h-1.5 w-1.5 rounded-full ring-2 ring-primary/10",
+                     item.matchLevel === 'excellent' ? "bg-primary" : "bg-muted"
                   )} />
               </div>
               <span className="text-[10px] text-foreground/20 font-bold uppercase tracking-widest mt-1">Compatibilité</span>
@@ -124,7 +141,18 @@ export function SearchResultRow({ item }: SearchResultRowProps) {
               <span className="text-[8px] sm:text-[10px] text-foreground/20 font-black uppercase tracking-widest mt-1">Clôture</span>
            </div>
 
-            <div className="flex items-center ml-4">
+            {/* QUICK ACTION : PREPARER LE TERRAIN ON HOVER */}
+            <div className="flex items-center ml-4 gap-2">
+               <button 
+                  onClick={(e) => { e.stopPropagation(); handleStartWorkflow(); }}
+                  className={cn(
+                    "hidden group-hover/row:flex items-center h-8 px-4 rounded-[4px] bg-primary text-[10px] font-black text-primary-foreground uppercase tracking-widest transition-all hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-primary/20",
+                    isStarting && "opacity-50 cursor-wait"
+                  )}
+                  disabled={isStarting}
+               >
+                  {isStarting ? "Chargement..." : "Préparer"}
+               </button>
                <div className="h-8 w-8 rounded-[4px] flex items-center justify-center text-muted-foreground transition-all group-hover/row:text-primary group-hover/row:bg-primary/5 border border-transparent group-hover/row:border-border/10">
                   <button onClick={(e) => { e.stopPropagation(); handleToggleExpand(); }}>
                      <ChevronRight className={cn("h-4 w-4 transition-transform duration-500", isExpanded && "rotate-90")} />
@@ -176,7 +204,7 @@ export function SearchResultRow({ item }: SearchResultRowProps) {
                        Retour à l&apos;analyse rapide
                     </button>
                     
-                    <div className="border border-border/10 rounded-[4px] overflow-hidden bg-muted/5">
+                    <div className="border border-border/10 rounded-[4px] overflow-hidden bg-muted/10">
                         <TenderInspectorPanel 
                             item={item} 
                             onStartWorkflow={handleStartWorkflow} 

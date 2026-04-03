@@ -26,3 +26,41 @@ export function joursRestants(date: Date | string | null) {
   const days = Math.ceil(diff / (1000 * 60 * 60 * 24))
   return days > 0 ? days : 0
 }
+
+/**
+ * Formate un montant en format compact XAF (ex: 450M FCFA, 1.2 Mds FCFA)
+ */
+export function formatXAF(montant: number): string {
+  if (montant >= 1_000_000_000) {
+    return `${(montant / 1_000_000_000).toFixed(1)} Mds FCFA`;
+  }
+  if (montant >= 1_000_000) {
+    return `${(montant / 1_000_000).toFixed(0)} M FCFA`;
+  }
+  if (montant >= 1_000) {
+    return `${(montant / 1_000).toFixed(0)} K FCFA`;
+  }
+  return `${montant.toLocaleString('fr-FR')} FCFA`;
+}
+
+/**
+ * Formate une date limite en format relatif ou complet FR
+ */
+export function formatDateline(date: Date | string | null): string {
+  if (!date) return "N/A";
+  const d = new Date(date);
+  const now = new Date();
+  const diff = d.getTime() - now.getTime();
+  const jours = Math.ceil(diff / (1000 * 60 * 60 * 24));
+  
+  if (jours < 0) return "Forclus";
+  if (jours === 0) return "Aujourd'hui";
+  if (jours === 1) return "Demain";
+  if (jours <= 7) return `${jours} jours`;
+  
+  return d.toLocaleDateString('fr-FR', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+}

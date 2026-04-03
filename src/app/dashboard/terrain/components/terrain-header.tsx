@@ -20,24 +20,30 @@ export function TerrainHeader({ score }: TerrainHeaderProps) {
       metadata="Poste de Pilotage — Moteur d'Audit"
       description={
         <p>
-          Moteur d'intelligence documentaire pour l'offre technique. 
+          Moteur d'intelligence documentaire pour l'offre technique.
           <span className="block mt-1">
-            Transcription terrain et mise en conformité <span className="text-foreground/40 uppercase font-black">DTAO v2024.1</span>.
+            Transcription terrain et mise en conformité{" "}
+            <span className="text-foreground/40 uppercase font-black">
+              DTAO v2024.1
+            </span>
+            .
           </span>
         </p>
       }
       cardA={{
         label: "Audit Engine",
         value: `${score.percentage}`,
-        subtext: `${score.modulesValidated}/${score.modulesTotal} Validés`,
+        subtext: `Audit Engine ${score.percentage}`,
         progress: score.percentage,
         color: score.percentage >= 80 ? "primary" : "amber",
+        valueClassName: "text-2xl",
       }}
       cardB={{
         label: "Knowledge Base",
-        value: "ARMP • MINMAP",
-        subtext: "Code des Marchés",
+        value: "ARMP  MINMAP",
+        subtext: "Knowledge Base",
         color: "amber",
+        valueClassName: "text-lg",
       }}
     />
   );

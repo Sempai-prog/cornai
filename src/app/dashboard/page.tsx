@@ -6,46 +6,71 @@ import { StandardPageHeader } from "@/components/layout/standard-page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { 
-  History, 
-  Search, 
   ShieldCheck, 
-  LayoutDashboard, 
-  FileText, 
   Target, 
-  Map, 
-  FolderLock, 
-  Zap,
   Building2,
   Wallet,
-  TrendingDown,
-  Trophy,
   AlertCircle,
   FileSearch,
   CheckCircle2,
-  Calendar,
-  Layers,
   ChevronRight,
-  Monitor,
-  Lock,
   AlertTriangle,
   Compass
 } from "lucide-react";
 import { SABI_COPY } from "@/lib/SabiCopy";
 import Link from "next/link";
 import { getDerniersAO } from "@/database/queries/ao";
-import { cn } from "@/lib/utils";
+import { 
+  getConformiteScore, 
+  getSoumissionsEnCoursCount, 
+  getSurfaceFinanciere 
+} from "@/database/queries/dashboard";
+import { getDocumentsEntreprise } from "@/database/queries/entreprise";
+import { cn, formatXAF, joursRestants } from "@/lib/utils";
 import { SearchResultRow } from "@/components/search/search-result-row";
-import { SearchResult } from "@/components/search/search-types";
+import { mapDBAOToUI } from "@/components/search/search-utils";
 
 export const dynamic = "force-dynamic";
 
 export default async function DashboardHome() {
-  const recommendedAOs = await getDerniersAO(3);
+  // TODO: Remplacer par l'ID de l'entreprise connectée une fois l'auth câblée
+  const entrepriseId = "cf83af70-d49b-4a72-8222-201f08a05a8a"; 
+
+  // Fetch initial des données en parallèle
+  const [
+    dbAOs,
+    conformite,
+    soumissionsEnCours,
+    surfaceFinanciere,
+    documents
+  ] = await Promise.all([
+    getDerniersAO(3),
+    getConformiteScore(entrepriseId),
+    getSoumissionsEnCoursCount(entrepriseId),
+    getSurfaceFinanciere(entrepriseId),
+    getDocumentsEntreprise(entrepriseId)
+  ]);
+
+  // Mapping des opportunités DB -> UI
+  const opportunities = dbAOs.map(mapDBAOToUI);
+
+  // Analyse des documents pour le diagnostic
+  const documentsExpirants = (documents || []).filter(doc => {
+    const jours = joursRestants(doc.dateExpiration);
+    return doc.statut === 'valide' && jours > 0 && jours <= 7;
+  });
+
+  const documentsPerimes = (documents || []).filter(doc => {
+    const jours = joursRestants(doc.dateExpiration);
+    return doc.statut === 'expire' || (doc.statut === 'valide' && jours <= 0);
+  });
+
+  const alertCount = documentsExpirants.length + documentsPerimes.length;
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500 antialiased bg-transparent">
       {/* ───────────────────────────────────────────────────────────
-          PLAN 1 — HEADER (SOPHISTIQUÉ & APAISÉ)
+          PLAN 1 — HEADER (SOPHISTIQUE & APAISE)
           ─────────────────────────────────────────────────────────── */}
       <StandardPageHeader
         title={SABI_COPY.DASHBOARD.WELCOME}
@@ -57,15 +82,15 @@ export default async function DashboardHome() {
           </p>
         }
         cardA={{
-          label: "CONFORMITÉ",
-          value: "85",
-          subtext: "+5% mensuel",
-          progress: 85,
-          color: "primary",
+          label: "CONFORMITE",
+          value: String(conformite.score),
+          subtext: `${conformite.valides}/${conformite.total} pièces`,
+          progress: conformite.score,
+          color: conformite.score > 80 ? "primary" : conformite.score > 50 ? "amber" : "red",
         }}
         cardB={{
           label: "RADAR MATCH",
-          value: "12",
+          value: String(opportunities.length),
           subtext: "Opportunités Libres",
           color: "amber",
         }}
@@ -79,31 +104,31 @@ export default async function DashboardHome() {
         {[
           {
             label: SABI_COPY.DASHBOARD.STATS.COMPLIANCE,
-            value: "85%",
-            trend: "+5% vs mois dernier",
+            value: `${conformite.score}%`,
+            trend: conformite.valides === conformite.total ? "Dossier Complet" : `${conformite.total - conformite.valides} manquantes`,
             icon: ShieldCheck,
-            trendType: "pos",
+            trendType: conformite.score > 80 ? "pos" : "neut",
           },
           {
             label: SABI_COPY.DASHBOARD.STATS.RADAR_MATCH,
-            value: "12",
-            trend: "2 nouvelles ce matin",
+            value: String(opportunities.length),
+            trend: "Opportunités détectées",
             icon: Target,
             trendType: "neut",
           },
           {
             label: SABI_COPY.DASHBOARD.STATS.FINANCIAL_SURFACE,
-            value: "450M",
-            trend: "Sous-total : 1.2B CFA",
+            value: formatXAF(surfaceFinanciere),
+            trend: "CA Dernier Exercice",
             icon: Wallet,
             trendType: "neut",
           },
           {
             label: SABI_COPY.DASHBOARD.STATS.ALERTS,
-            value: "02",
-            trend: "Urgence signalée",
+            value: alertCount.toString().padStart(2, '0'),
+            trend: alertCount > 0 ? "Urgence signalée" : "Aucune urgence",
             icon: AlertCircle,
-            trendType: "alert",
+            trendType: alertCount > 0 ? "alert" : "neut",
           },
         ].map((kpi, i) => (
           <div
@@ -163,94 +188,80 @@ export default async function DashboardHome() {
           </div>
 
           <div className="flex flex-col gap-2">
-            {[
-              {
-                id: "AO-2024-MINTP",
-                title: "Construction du pont sur le Mbam (AONO)",
-                authority: "MINTP - Direction des Investissements",
-                budget: "450M FCFA",
-                region: "Centre",
-                deadline: "14 jours",
-                type: "AONO",
-                sector: "Travaux",
-                matchScore: 94,
-                matchLevel: "excellent" as const,
-                complexiteMontage: "Moyenne" as const,
-                conformitePME: {
-                  enveloppeA: {
-                    status: "OK" as const,
-                    pieces: [{ name: "ANR", status: "valid" as const }],
-                  },
-                  enveloppeB: {
-                    status: "OK" as const,
-                    exigences: ["Expérience 5 ans", "Matériel"],
-                  },
-                  enveloppeC: {
-                    status: "OK" as const,
-                    bpuStatus: "Généré" as const,
-                  },
-                },
-                workflowState: "opportunite" as const,
-              },
-              {
-                id: "DC-DLA-002",
-                title: "Achat de matériel informatique et réseaux",
-                authority: "Mairie de Douala 1er",
-                budget: "12M FCFA",
-                region: "Littoral",
-                deadline: "4 jours",
-                type: "DC",
-                sector: "Fournitures",
-                matchScore: 81,
-                matchLevel: "recommended" as const,
-                complexiteMontage: "Faible" as const,
-                conformitePME: {
-                  enveloppeA: {
-                    status: "OK" as const,
-                    pieces: [{ name: "Quitus", status: "valid" as const }],
-                  },
-                  enveloppeB: {
-                    status: "OK" as const,
-                    exigences: ["Échantillons", "Garantie 1 an"],
-                  },
-                  enveloppeC: {
-                    status: "OK" as const,
-                    bpuStatus: "En cours" as const,
-                  },
-                },
-                workflowState: "opportunite" as const,
-              },
-            ].map((item) => (
-              <SearchResultRow key={item.id} item={item} />
-            ))}
+            {opportunities.length > 0 ? (
+              opportunities.map((item) => (
+                <SearchResultRow key={item.id} item={item} />
+              ))
+            ) : (
+              <div className="py-12 border border-dashed border-border/20 rounded-[4px] text-center">
+                <FileSearch className="size-8 text-foreground/10 mx-auto mb-3" />
+                <p className="text-[13px] text-muted-foreground/60 italic">
+                  Aucune opportunité récente détectée.
+                </p>
+                <p className="text-[11px] text-muted-foreground/30 mt-1 uppercase tracking-widest font-bold">
+                  Radar en surveillance...
+                </p>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* INSPECTEUR DE CONFORMITÉ (4/12) — FIXED ON SCROLL */}
+        {/* INSPECTEUR DE CONFORMITE (4/12) — FIXED ON SCROLL */}
         <div className="lg:col-span-4 flex flex-col gap-4 sticky top-6 self-start">
-          {/* CARTE 1 : ALERTES DE CONFORMITÉ */}
+          {/* CARTE 1 : ALERTES DE CONFORMITE */}
           <div className="bg-card border border-border/10 rounded-[4px] p-6 shadow-none">
             <div className="flex items-center gap-3 pb-4 border-b border-border/10 mb-6 h-6">
-              <ShieldCheck className="h-5 w-5 text-red-500/60" />
+              <ShieldCheck className={cn("h-5 w-5", alertCount > 0 ? "text-red-500/60" : "text-primary/60")} />
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/30">
                 Alertes Conformité
               </span>
             </div>
 
-            <div className="p-4 rounded-[4px] bg-red-500/5 border border-red-500/10 hover:border-red-500/20 transition-all cursor-pointer group/alert">
-              <div className="flex items-center justify-between mb-2">
-                <p className="text-[10px] font-bold text-red-500 uppercase tracking-widest leading-none">
-                  ANR (Impôts)
-                </p>
-                <AlertTriangle className="h-4 w-4 text-red-500 opacity-50 group-hover/alert:opacity-100 transition-all" />
+            {alertCount > 0 ? (
+              <div className="space-y-4">
+                {[...documentsPerimes, ...documentsExpirants].slice(0, 2).map((doc, idx) => (
+                  <div 
+                    key={doc.id}
+                    className={cn(
+                      "p-4 rounded-[4px] border transition-all cursor-pointer group/alert",
+                      doc.statut === 'expire' || joursRestants(doc.dateExpiration) <= 0 
+                        ? "bg-red-500/5 border-red-500/10 hover:border-red-500/20" 
+                        : "bg-amber-500/5 border-amber-500/10 hover:border-amber-500/20"
+                    )}
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <p className={cn(
+                        "text-[10px] font-bold uppercase tracking-widest leading-none",
+                        doc.statut === 'expire' || joursRestants(doc.dateExpiration) <= 0 ? "text-red-500" : "text-amber-500"
+                      )}>
+                        {doc.pieceId}
+                      </p>
+                      <AlertTriangle className={cn(
+                        "h-4 w-4 opacity-50 group-hover/alert:opacity-100 transition-all",
+                        doc.statut === 'expire' || joursRestants(doc.dateExpiration) <= 0 ? "text-red-500" : "text-amber-500"
+                      )} />
+                    </div>
+                    <p className="text-[13px] font-semibold text-foreground tracking-tight leading-snug">
+                      {doc.statut === 'expire' || joursRestants(doc.dateExpiration) <= 0 
+                        ? "Document déjà périmé" 
+                        : `Expire dans ${joursRestants(doc.dateExpiration)} jours`
+                      }
+                    </p>
+                    <p className={cn(
+                      "text-[9px] font-bold uppercase tracking-wider mt-2.5",
+                      doc.statut === 'expire' || joursRestants(doc.dateExpiration) <= 0 ? "text-red-500/60" : "text-amber-500/60"
+                    )}>
+                      Risque de rejet ARMP
+                    </p>
+                  </div>
+                ))}
               </div>
-              <p className="text-[13px] font-semibold text-foreground tracking-tight leading-snug">
-                Attestation périmée dans 4 jours
-              </p>
-              <p className="text-[9px] text-red-500/60 font-bold uppercase tracking-wider mt-2.5">
-                Risque de rejet CIPM
-              </p>
-            </div>
+            ) : (
+              <div className="py-6 text-center">
+                <CheckCircle2 className="size-8 text-primary/20 mx-auto mb-3" />
+                <p className="text-[12px] text-foreground/50 font-medium">Votre dossier est à jour.</p>
+              </div>
+            )}
 
             <Button className="w-full mt-6 bg-muted border border-border/10 text-foreground/50 font-bold text-[10px] uppercase tracking-[0.2em] h-11 rounded-[4px] hover:bg-muted/80 transition-all">
               Mettre à jour le dossier
@@ -268,8 +279,10 @@ export default async function DashboardHome() {
           
             <div className="rounded-[4px] border-l border-primary/20 pl-4 py-1">
               <p className="text-[12px] text-foreground/70 font-medium leading-relaxed tracking-tight">
-                &quot;Attention, selon les directives de l&apos;ARMP, votre ANR
-                date de plus de 3 mois, elle sera rejetée par la CIPM.&quot;
+                {alertCount > 0 
+                  ? `Attention, vous avez ${alertCount} document(s) critiques qui nécessitent une mise à jour immédiate pour rester éligible.`
+                  : "Excellent. Votre structure juridique et fiscale est parfaitement alignée avec les exigences du code des marchés publics."
+                }
               </p>
             </div>
 

@@ -12,37 +12,73 @@ import {
   Package,
   Wrench
 } from "lucide-react";
-import { MOCK_GARAGE, MOCK_RPAO_EQUIPMENT } from "../../lib/terrain-mock-data";
-import { EquipmentItem, DocumentStatus } from "../../lib/terrain-types";
 import { cn } from "@/lib/utils";
 import { StatusBadge } from "../shared/status-badge";
 import { AlertPanel } from "../shared/alert-panel";
 
+interface MaterielItem {
+  id: string;
+  nom: string;
+  typeMateriel: string | null;
+  designation: string | null;
+  quantiteRequise: number | null;
+  quantiteDisponible: number | null;
+  statut: string | null;
+  exigenceMatch: string | null;
+  docsValides: number | null;
+  docsRequis: number | null;
+}
+
+interface ModuleGarageProps {
+  materiel: MaterielItem[];
+  aoReference?: string;
+}
+
 /**
- * 🚜 MODULE : LE GARAGE
+ * 🚜 MODULE : LE GARAGE — Wired to DB
  * Focus : Gestion du parc matériel et conformité des pièces administratives (Engins).
  */
-export function ModuleGarage() {
-  const getDocStatusColor = (status: DocumentStatus) => {
-    switch (status) {
-      case "ready": return "text-primary";
-      case "warning": return "text-amber-500";
-      case "missing": return "text-red-500";
-      default: return "text-muted-foreground";
+export function ModuleGarage({ materiel, aoReference }: ModuleGarageProps) {
+  // Group materiel by exigenceMatch to create RPAO status cards
+  const exigenceGroups = materiel.reduce((acc, item) => {
+    const key = item.exigenceMatch || 'Non assigné';
+    if (!acc[key]) {
+      acc[key] = { label: key, type: item.typeMateriel || 'MATÉRIEL', items: [], quantiteRequise: item.quantiteRequise || 1 };
     }
-  };
+    acc[key].items.push(item);
+    return acc;
+  }, {} as Record<string, { label: string; type: string; items: MaterielItem[]; quantiteRequise: number }>);
+
+  const exigenceList = Object.values(exigenceGroups);
+
+  // Find the critical item for the alert
+  const criticalItem = materiel.find(m => m.statut === 'attention' || m.statut === 'incomplet');
+
+  // Empty state
+  if (materiel.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center py-24 text-center space-y-4">
+        <div className="w-16 h-16 rounded-[4px] bg-muted/30 border border-border flex items-center justify-center">
+          <Warehouse className="w-8 h-8 text-muted-foreground/30" />
+        </div>
+        <h3 className="text-sm font-bold text-foreground uppercase tracking-wider">Aucun Matériel Enregistré</h3>
+        <p className="text-[11px] text-muted-foreground max-w-md">
+          Ajoutez les engins et équipements requis par le RPAO pour activer ce module.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 h-full pb-8">
       {/* 📊 RPAO STATUS BAR : TRACKING EXIGENCES MINIMALES */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {MOCK_RPAO_EQUIPMENT.map((req) => {
-          const matched = MOCK_GARAGE.filter(g => g.matchedRequirement === req.id);
-          const count = matched.length;
-          const isComplete = count >= req.quantity;
+        {exigenceList.map((req) => {
+          const count = req.items.length;
+          const isComplete = req.items.every(i => i.statut === 'complet');
 
           return (
-            <div key={req.id} className="p-5 bg-card border border-border rounded-[4px] relative overflow-hidden group">
+            <div key={req.label} className="p-5 bg-card border border-border rounded-[4px] relative overflow-hidden group">
               <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
                 <Package className="w-8 h-8 text-muted-foreground" />
               </div>
@@ -66,7 +102,7 @@ export function ModuleGarage() {
                       {count}
                     </span>
                     <span className="text-xs text-muted-foreground/40 font-bold uppercase tracking-widest translate-y-1">
-                      / {req.quantity}
+                      / {req.quantiteRequise}
                     </span>
                   </div>
                   {isComplete ? (
@@ -126,32 +162,30 @@ export function ModuleGarage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
-              {MOCK_GARAGE.map((item) => (
+              {materiel.map((item) => (
                 <tr key={item.id} className="hover:bg-muted/5 transition-colors group">
                   <td className="px-6 py-4">
                     <div className="flex flex-col">
-                      <span className="text-sm font-bold text-foreground group-hover:text-primary transition-colors">{item.name}</span>
-                      <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-tight mt-1">{item.type}</span>
+                      <span className="text-sm font-bold text-foreground group-hover:text-primary transition-colors">{item.nom}</span>
+                      <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-tight mt-1">{item.typeMateriel}</span>
                     </div>
                   </td>
                   <td className="px-6 py-4">
-                    <span className="text-[10px] px-2 py-1 bg-muted border border-border text-foreground font-bold rounded-[4px]-sm uppercase tracking-tighter">
-                      {MOCK_RPAO_EQUIPMENT.find(r => r.id === item.matchedRequirement)?.label || "Aucun"}
+                    <span className="text-[10px] px-2 py-1 bg-card border border-border/10 text-foreground font-bold rounded-[4px] uppercase tracking-tighter">
+                      {item.exigenceMatch || "Aucun"}
                     </span>
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center justify-center gap-2">
-                      {item.documents.map((doc) => (
-                        <div key={doc.id} className="relative group/doc cursor-help">
-                          <CheckCircle2 className={cn("w-4 h-4", getDocStatusColor(doc.status))} />
-                          {/* Tooltip Simulation */}
-                          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/doc:block bg-popover border border-border px-3 py-1.5 rounded-[4px]-sm whitespace-nowrap z-30 shadow-2xl">
-                            <div className="flex flex-col gap-0.5">
-                              <span className="text-[10px] text-foreground font-bold uppercase tracking-tight">{doc.label}</span>
-                              <span className={cn("text-[8px] font-bold uppercase", getDocStatusColor(doc.status))}>{doc.status}</span>
-                            </div>
-                          </div>
-                        </div>
+                      {/* Doc status indicators from DB counts */}
+                      {Array.from({ length: item.docsRequis || 3 }).map((_, i) => (
+                        <CheckCircle2 
+                          key={i} 
+                          className={cn(
+                            "w-4 h-4",
+                            i < (item.docsValides || 0) ? "text-primary" : "text-muted-foreground/20"
+                          )} 
+                        />
                       ))}
                       <button className="w-4 h-4 rounded-[4px] border border-border border-dashed flex items-center justify-center text-muted-foreground/30 hover:text-primary hover:border-primary transition-all">
                         <PlusCircle className="w-3 h-3" />
@@ -160,10 +194,10 @@ export function ModuleGarage() {
                   </td>
                   <td className="px-6 py-4">
                     <StatusBadge 
-                      status={item.status === "conforme" ? "complete" : item.status === "critique" ? "warning" : "warning"}
+                      status={item.statut === "complet" ? "complete" : item.statut === "attention" ? "warning" : "warning"}
                       className={cn(
                         "text-[9px] w-24",
-                        item.status === "eliminatoire" && "text-red-500 bg-red-500/10"
+                        item.statut === "incomplet" && "text-red-500 bg-red-500/10"
                       )}
                     />
                   </td>
@@ -180,11 +214,13 @@ export function ModuleGarage() {
       </div>
 
       {/* ⚠️ AUDIT ALERT : ANTI-NDEM LAYER */}
-      <AlertPanel 
-        type="warning"
-        title="Avertissement Anti-Elimination"
-        message="Le Bulldozer SD16 est marqué comme 'Critique' car il manque l'engagement de location. Selon le RPAO (Art 12.b), l'absence de ce document est un motif d'élimination technique directe au Cameroun."
-      />
+      {criticalItem && (
+        <AlertPanel 
+          type="warning"
+          title="Avertissement Anti-Elimination"
+          message={`${criticalItem.nom} est marqué comme '${criticalItem.statut}' — ${(criticalItem.docsRequis || 3) - (criticalItem.docsValides || 0)} document(s) manquant(s). Selon le RPAO, l'absence de ces documents est un motif d'élimination technique directe.`}
+        />
+      )}
     </div>
   );
 }

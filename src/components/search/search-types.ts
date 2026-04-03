@@ -56,6 +56,7 @@ export interface SearchResult {
   workflowState: "opportunite" | "eval" | "montage" | "soumis"
   status?: "new" | "urgent" | "recommended" | "excellent" | "risky" | "incomplete"
   financement?: string // ex: "BIP 2026", "Fond Routier"
+  isBlocked?: boolean // Flag pour appels bloqués
 }
 
 export type SearchState = "initial" | "loading" | "results" | "no_results" | "error"

@@ -21,10 +21,14 @@ import {
   ShieldAlert,
   FileCheck2
 } from "lucide-react"
-import Link from "next/link"
+import { cn } from "@/lib/utils"
+import { startWorkflowAction } from "@/app/actions/soumissions"
+import { db } from "@/database/client"
+import { soumissions } from "@/database/schema"
+import { eq, and } from "drizzle-orm"
 import { getAOById } from "@/database/queries/ao"
 import { notFound } from "next/navigation"
-import { cn } from "@/lib/utils"
+import Link from "next/link"
 
 export const dynamic = 'force-dynamic'
 
@@ -36,6 +40,16 @@ export default async function AppelsOffreDetailPage({ params }: { params: Promis
   if (!ao) {
     notFound()
   }
+
+  // Check if a dossier already exists for this AO (using hardcoded entrepriseId for now)
+  const entrepriseId = "cf83af70-d49b-4a72-8222-201f08a05a8a"
+  const existingSoumission = await db.query.soumissions.findFirst({
+    where: and(
+      eq(soumissions.entrepriseId, entrepriseId),
+      eq(soumissions.appelOffreId, id)
+    )
+  })
+  const hasExistingDossier = !!existingSoumission
 
   // Domain logic mocks for demo
   const mo = ao.institution || "Maître d'Ouvrage (MO)"
@@ -85,9 +99,18 @@ export default async function AppelsOffreDetailPage({ params }: { params: Promis
            <Button variant="outline" className="h-9 px-4 rounded-[4px] border-border/40 bg-muted/10 text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground hover:text-foreground transition-all">
               Archiver
            </Button>
-           <Button className="h-9 px-8 rounded-[4px] bg-primary text-black text-[10px] font-bold uppercase tracking-[0.2em] hover:opacity-90 transition-all shadow-lg shadow-primary/10 border-none">
-              Générer Offre (IA)
-           </Button>
+           <form action={async () => {
+             "use server"
+             await startWorkflowAction(id)
+           }}>
+             <Button type="submit" className="h-9 px-8 rounded-[4px] bg-primary text-black text-[10px] font-bold uppercase tracking-[0.2em] hover:opacity-90 transition-all shadow-lg shadow-primary/10 border-none group">
+                {hasExistingDossier ? (
+                  <>REPRENDRE LE DOSSIER <FileCheck2 className="ml-2 h-3.5 w-3.5 transition-transform group-hover:scale-110" /></>
+                ) : (
+                  <>PRÉPARER LA SOUMISSION <ArrowLeft className="ml-2 h-3.5 w-3.5 rotate-180 transition-transform group-hover:translate-x-1" /></>
+                )}
+             </Button>
+           </form>
         </div>
       </div>
 

@@ -160,7 +160,7 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
                ))}
 
                {/* Ribbon Side Info (Independent Card) */}
-               <div className="p-4 bg-muted/5 border border-border/10 rounded-[4px] flex items-center gap-3 opacity-30 mt-auto whitespace-nowrap">
+               <div className="p-4 bg-muted/10 border border-border/10 rounded-[4px] flex items-center gap-3 opacity-30 mt-auto whitespace-nowrap">
                    <ShieldCheck className="h-4 w-4" />
                    <span className="text-[10px] font-bold uppercase tracking-widest leading-none">Protection: ARMP-V4</span>
                </div>
@@ -333,7 +333,7 @@ function TableView({ results }: { results: SearchResult[] }) {
 
                 {/* 6. ACTION (Quick Eye/Plus) */}
                 <div className="w-10 shrink-0 flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
-                   <div className="h-7 w-7 rounded bg-muted border border-border/40 flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-colors">
+                   <div className="h-7 w-7 rounded bg-muted border border-border/10 flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-colors">
                       <Plus size={14} />
                    </div>
                 </div>

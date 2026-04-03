@@ -425,6 +425,72 @@ export const sessions = pgTable('sessions', {
 })
 
 // ═══════════════════════════════════════════
+// MATÉRIEL PROJET (Le Garage)
+// ═══════════════════════════════════════════
+export const materielProjet = pgTable('materiel_projet', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  soumissionId: uuid('soumission_id').references(() => soumissions.id, { onDelete: 'cascade' }),
+  entrepriseId: uuid('entreprise_id').references(() => entreprises.id, { onDelete: 'cascade' }),
+
+  nom: varchar('nom', { length: 255 }).notNull(),
+  typeMateriel: varchar('type_materiel', { length: 100 }), // ENGIN LOURD, LOGISTIQUE, PETIT MATERIEL
+  designation: varchar('designation', { length: 255 }),
+  quantiteRequise: integer('quantite_requise').default(1),
+  quantiteDisponible: integer('quantite_disponible').default(0),
+  statut: varchar('statut', { length: 50 }).default('incomplet'), // complet, attention, incomplet
+  exigenceMatch: varchar('exigence_match', { length: 255 }),
+  docsValides: integer('docs_valides').default(0),
+  docsRequis: integer('docs_requis').default(3),
+
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+}, (table) => [
+  index('idx_materiel_soumission').on(table.soumissionId),
+  index('idx_materiel_entreprise').on(table.entrepriseId),
+])
+
+// ═══════════════════════════════════════════
+// ÉQUIPE PROJET (Personnel)
+// ═══════════════════════════════════════════
+export const equipeProjet = pgTable('equipe_projet', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  soumissionId: uuid('soumission_id').references(() => soumissions.id, { onDelete: 'cascade' }),
+  entrepriseId: uuid('entreprise_id').references(() => entreprises.id, { onDelete: 'cascade' }),
+
+  nom: varchar('nom', { length: 255 }).notNull(),
+  role: varchar('role', { length: 100 }), // CHEF PROJET, CHEF CHANTIER, TOPOGRAPHE
+  qualification: varchar('qualification', { length: 255 }),
+  experienceAnnees: integer('experience_annees').default(0),
+  cvSigne: boolean('cv_signe').default(false),
+  diplomeCertifie: boolean('diplome_certifie').default(false),
+  attestations: varchar('attestations', { length: 50 }).default('pending'), // ok, pending, missing
+  statut: varchar('statut', { length: 50 }).default('incomplet'), // complet, attention, incomplet
+  alerte: text('alerte'), // ex: "AGENT PUBLIC DÉTECTÉ (MINEPAT)"
+
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+}, (table) => [
+  index('idx_equipe_soumission').on(table.soumissionId),
+  index('idx_equipe_entreprise').on(table.entrepriseId),
+])
+
+// ═══════════════════════════════════════════
+// PIÈCES SOUMISSION (Compilation COLEPS)
+// ═══════════════════════════════════════════
+export const piecesSoumission = pgTable('pieces_soumission', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  soumissionId: uuid('soumission_id').references(() => soumissions.id, { onDelete: 'cascade' }).notNull(),
+
+  nomFichier: varchar('nom_fichier', { length: 255 }).notNull(),
+  typePiece: varchar('type_piece', { length: 100 }), // memoire_technique, pieces_materiel, dossier_personnel
+  tailleMb: numeric('taille_mb').default('0'),
+  moduleSource: varchar('module_source', { length: 50 }), // transcripteur, garage, equipe, descente
+  statut: varchar('statut', { length: 50 }).default('draft'), // draft, final, heavy
+
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+}, (table) => [
+  index('idx_pieces_soumission').on(table.soumissionId),
+])
+
+// ═══════════════════════════════════════════
 // RELATIONS
 // ═══════════════════════════════════════════
 export const entreprisesRelations = relations(entreprises, ({ many }) => ({
@@ -435,6 +501,8 @@ export const entreprisesRelations = relations(entreprises, ({ many }) => ({
   notifications: many(notifications),
   paiements: many(paiements),
   sessions: many(sessions),
+  materiel: many(materielProjet),
+  equipe: many(equipeProjet),
 }))
 
 export const appelsOffresRelations = relations(appelsOffres, ({ many }) => ({
@@ -453,7 +521,7 @@ export const matchingsRelations = relations(matchings, ({ one }) => ({
   }),
 }))
 
-export const soumissionsRelations = relations(soumissions, ({ one }) => ({
+export const soumissionsRelations = relations(soumissions, ({ one, many }) => ({
   entreprise: one(entreprises, {
     fields: [soumissions.entrepriseId],
     references: [entreprises.id],
@@ -461,5 +529,37 @@ export const soumissionsRelations = relations(soumissions, ({ one }) => ({
   appelOffre: one(appelsOffres, {
     fields: [soumissions.appelOffreId],
     references: [appelsOffres.id],
+  }),
+  materiel: many(materielProjet),
+  equipe: many(equipeProjet),
+  pieces: many(piecesSoumission),
+}))
+
+export const materielProjetRelations = relations(materielProjet, ({ one }) => ({
+  soumission: one(soumissions, {
+    fields: [materielProjet.soumissionId],
+    references: [soumissions.id],
+  }),
+  entreprise: one(entreprises, {
+    fields: [materielProjet.entrepriseId],
+    references: [entreprises.id],
+  }),
+}))
+
+export const equipeProjetRelations = relations(equipeProjet, ({ one }) => ({
+  soumission: one(soumissions, {
+    fields: [equipeProjet.soumissionId],
+    references: [soumissions.id],
+  }),
+  entreprise: one(entreprises, {
+    fields: [equipeProjet.entrepriseId],
+    references: [entreprises.id],
+  }),
+}))
+
+export const piecesSoumissionRelations = relations(piecesSoumission, ({ one }) => ({
+  soumission: one(soumissions, {
+    fields: [piecesSoumission.soumissionId],
+    references: [soumissions.id],
   }),
 }))

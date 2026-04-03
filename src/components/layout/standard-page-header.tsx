@@ -9,9 +9,11 @@ interface HeaderCardProps {
   subtext: string;
   color?: "primary" | "amber" | "red" | "blue" | "emerald";
   progress?: number;
+  valueClassName?: string;
+  labelClassName?: string;
 }
 
-function HeaderCard({ label, value, subtext, color = "primary", progress }: HeaderCardProps) {
+function HeaderCard({ label, value, subtext, color = "primary", progress, valueClassName, labelClassName }: HeaderCardProps) {
   const colorMap = {
     primary: "bg-primary",
     amber: "bg-amber-500",
@@ -32,14 +34,14 @@ function HeaderCard({ label, value, subtext, color = "primary", progress }: Head
     <div className="size-36 aspect-square bg-card border border-border/10 rounded-[4px] p-5 flex flex-col justify-between overflow-hidden relative group/card shadow-none">
       <div className="flex flex-col gap-1">
         <div className={cn("w-6 h-[1.5px] mb-1.5", colorMap[color])} />
-        <span className="text-[11px] font-bold text-muted-foreground/30 leading-tight">
+        <span className={cn("text-[11px] font-bold text-muted-foreground/30 leading-tight", labelClassName)}>
           {label}
         </span>
       </div>
 
       <div className="space-y-4">
         <div className="flex items-baseline gap-1">
-          <span className="text-3xl font-bold tracking-tighter leading-none tabular-nums text-foreground/90">
+          <span className={cn("text-3xl font-bold tracking-tighter leading-none tabular-nums text-foreground/90", valueClassName)}>
             {value}
           </span>
         </div>

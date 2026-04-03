@@ -55,7 +55,7 @@ export const MOCK_SEARCH_RESULTS: SearchResult[] = [
         exigences: ["Ingénieur Génie Civil (10 ans)", "Compacteur vibrant"]
       },
       enveloppeC: {
-        status: "Généré",
+        status: "OK",
         bpuStatus: "Généré"
       }
     },

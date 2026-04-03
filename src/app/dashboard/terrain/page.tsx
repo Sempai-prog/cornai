@@ -1,78 +1,65 @@
-"use client";
+import { getTerrainFullData } from '@/database/queries/terrain'
+import { TerrainClientPage } from './terrain-client'
 
-import React, { useState } from "react";
-import { TerrainHeader } from "./components/terrain-header";
-import { TerrainTabs, TerrainTabId } from "./components/terrain-tabs";
-import { ModuleTranscripteur } from "./components/modules/module-transcripteur";
-import { ModuleGarage } from "./components/modules/module-garage";
-import { ModuleEquipe } from "./components/modules/module-equipe";
-import { ModuleDescente } from "./components/modules/module-descente";
-import { ModuleColeps } from "./components/modules/module-coleps";
-import { MOCK_SCORE, MOCK_COLEPS } from "./lib/terrain-mock-data";
+const DEMO_ENTREPRISE_ID = 'cf83af70-d49b-4a72-8222-201f08a05a8a'
 
 /**
  * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  * PAGE : LE TERRAIN (SABI v1.6)
  * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- * Architecture : Tab-based navigation
+ * Architecture : Server Component → fetches data → passes to Client
  * Design System : Quiet Design (Clinical Light / Deep Night)
  */
-export default function TerrainPage() {
-  const [activeTab, setActiveTab] = useState<TerrainTabId>("transcripteur");
+export default async function TerrainPage({ searchParams }: { searchParams: Promise<{ soumissionId?: string }> }) {
+  const { soumissionId } = await searchParams
+  const data = await getTerrainFullData(DEMO_ENTREPRISE_ID, soumissionId)
 
-  const renderModule = () => {
-    switch (activeTab) {
-      case "transcripteur": return <ModuleTranscripteur />;
-      case "garage": return <ModuleGarage />;
-      case "equipe": return <ModuleEquipe />;
-      case "descente": return <ModuleDescente />;
-      case "coleps": return <ModuleColeps />;
-      default: return <ModuleTranscripteur />;
-    }
-  };
+  // Compute the terrain score from real data
+  const garageComplete = data.garageData.filter(m => m.statut === 'complet').length
+  const garageTotal = data.garageData.length
+  const equipeComplete = data.equipeData.filter(e => e.statut === 'complet').length
+  const equipeTotal = data.equipeData.length
+
+  // Module statuses based on real data
+  const moduleStatuses = {
+    transcripteur: 'complete' as const,  // MVP: stays mock-complete
+    garage: garageTotal === 0 ? 'empty' as const 
+      : garageComplete === garageTotal ? 'complete' as const 
+      : 'warning' as const,
+    equipe: equipeTotal === 0 ? 'empty' as const
+      : equipeComplete === equipeTotal ? 'complete' as const
+      : 'warning' as const,
+    descente: 'empty' as const,          // MVP: stays mock-empty
+  }
+
+  // Overall score
+  const modulesValidated = Object.values(moduleStatuses).filter(s => s === 'complete').length
+  const hasCompilation = data.compilationData.length > 0
+  const totalModules = 5
+  const percentage = Math.round(((modulesValidated + (hasCompilation ? 0.5 : 0)) / totalModules) * 100)
+
+  const score = {
+    percentage,
+    modulesValidated,
+    modulesTotal: totalModules as 5,
+    color: percentage >= 60 ? 'hsl(142 72% 46%)' : percentage >= 30 ? 'hsl(38 92% 50%)' : 'hsl(0 84% 60%)',
+  }
+
+  // Serialize compilation data (numeric → number)
+  const compilationSerialized = data.compilationData.map(p => ({
+    ...p,
+    tailleMb: Number(p.tailleMb) || 0,
+  }))
 
   return (
-    <div className="flex flex-col min-h-screen text-foreground">
-      {/* Structural Header */}
-      <TerrainHeader score={MOCK_SCORE} />
-
-      {/* Navigation Tabs */}
-      <TerrainTabs 
-        currentTab={activeTab} 
-        onTabChange={setActiveTab}
-        moduleStatuses={MOCK_COLEPS.modulesStatus}
-      />
-
-      {/* Active Module Content */}
-      <main className="flex-1 animate-in fade-in duration-500 delay-150">
-        <div key={activeTab} className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-          {renderModule()}
-        </div>
-      </main>
-
-      {/* Footer Meta (SABI Quiet Style) */}
-      <footer className="mt-12 flex flex-col md:flex-row items-center justify-between gap-4 border-t border-border pt-6 pb-2 opacity-40">
-        <div className="flex flex-col gap-1">
-          <span className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground">
-            SABI Intelligence Locale • DTAO v2024.1
-          </span>
-          <span className="text-[9px] uppercase font-medium tracking-tight text-muted-foreground italic">
-            Module Pilotage Tactique — Phase D1.6 Master Compliance
-          </span>
-        </div>
-        
-        <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-            <span className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground">
-              COLEPS Readiness : High
-            </span>
-          </div>
-          <span className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground/60 border-l border-border pl-6">
-            Ref: SABI-TR-2024
-          </span>
-        </div>
-      </footer>
-    </div>
-  );
+    <TerrainClientPage
+      score={score}
+      moduleStatuses={moduleStatuses}
+      aoNom={data.aoNom || undefined}
+      aoInstitution={data.aoInstitution || undefined}
+      garageData={data.garageData}
+      equipeData={data.equipeData}
+      compilationData={compilationSerialized}
+    />
+  )
 }

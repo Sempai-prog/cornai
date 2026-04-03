@@ -25,11 +25,16 @@ const CHAPTERS = [
   { id: "organisation", title: "Chapitre 3 : Organisation de l'Implantation", tag: "ANNEXE 8.2", tagType: "annexe" },
 ];
 
+interface ModuleTranscripteurProps {
+  aoNom?: string;
+  dtaoReference?: string;
+}
+
 /**
- * 🎨 MODULE : TRANSRIPTEUR CCTP
+ * 🎨 MODULE : TRANSRIPTEUR CCTP — Wired to DB (contextual)
  * Focus : Conversion des notes vocales terrain en chapitres du Mémoire Technique.
  */
-export function ModuleTranscripteur() {
+export function ModuleTranscripteur({ aoNom, dtaoReference }: ModuleTranscripteurProps) {
   const [expandedChapter, setExpandedChapter] = useState<string | null>("conception");
   const [selectedAudio, setSelectedAudio] = useState<string | null>(null);
 
@@ -57,8 +62,8 @@ export function ModuleTranscripteur() {
               className={cn(
                 "w-full text-left p-4 rounded-[4px] border transition-all duration-200 group relative overflow-hidden",
                 selectedAudio === audio.id 
-                  ? "bg-primary/[0.03] border-primary/30" 
-                  : "bg-card border-border hover:border-border/80 hover:bg-muted/30"
+                  ? "bg-primary/[0.05] border-primary/30" 
+                  : "bg-card border-border/10 hover:border-border hover:bg-muted/10"
               )}
             >
               {selectedAudio === audio.id && (
@@ -109,7 +114,7 @@ export function ModuleTranscripteur() {
             key={chapter.id}
             className={cn(
               "border border-border rounded-[4px] overflow-hidden transition-all duration-300",
-              expandedChapter === chapter.id ? "bg-card ring-1 ring-primary/10" : "bg-card/40"
+              expandedChapter === chapter.id ? "bg-card px-2" : "bg-muted/10 border-border/5"
             )}
           >
             {/* Accordion Header */}
@@ -128,19 +133,18 @@ export function ModuleTranscripteur() {
                   <h4 className="text-sm font-bold text-foreground tracking-tight">
                     {chapter.title}
                   </h4>
-                  <div className="flex items-center gap-2">
-                    <StatusBadge 
-                      status={chapter.tagType === "required" ? "warning" : "pending"} 
-                      className={cn(
-                        "text-[9px]",
-                        chapter.tagType === "required" && "text-red-500 bg-red-500/10",
-                        chapter.tagType === "scoring" && "text-amber-500 bg-amber-500/10",
-                        chapter.tagType === "annexe" && "text-blue-500 bg-blue-500/10"
-                      )}
-                    />
-                    <span className="text-[10px] font-bold text-muted-foreground/40 uppercase tracking-widest">
+                  <div className="flex items-center gap-3">
+                    <div className={cn(
+                      "h-5 px-2 rounded-[2px] flex items-center justify-center text-[10px] font-black uppercase tracking-widest",
+                      chapter.tagType === "required" ? "bg-red-500 text-white" : "bg-primary/10 text-primary"
+                    )}>
                       {chapter.tag}
-                    </span>
+                    </div>
+                    {chapter.tagType === "required" && (
+                      <span className="text-[10px] font-bold text-red-500/60 uppercase tracking-tight">
+                        Indispensable au DTAO
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>

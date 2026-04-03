@@ -7,12 +7,14 @@ export const SABI_COPY = {
   BRAND: {
     NAME: "SABI",
     TAGLINE: "L'Intelligence au Service de la Commande Publique",
-    MISSION: "Sécuriser et optimiser l'accès des PME aux Marchés Publics Camerounais.",
+    MISSION:
+      "Sécuriser et optimiser l'accès des PME aux Marchés Publics Camerounais.",
   },
-  
+
   NAVIGATION: {
     PILOTAGE: "Poste de Pilotage",
-    RADAR: "Le Radar (Appels d'Offres)",
+    RADAR: "Le Radar (AO)",
+    OPPORTUNITES: "Opportunités",
     BLINDAGE: "Le Blindage (Conformité)",
     OFFRE_FINANCIERE: "Offre Financière",
     SOUMISSIONS: "Mes Soumissions",
@@ -42,13 +44,18 @@ export const SABI_COPY = {
         DC: "DC (Demande de Cotations)",
         ASMI: "ASMI (Sollicitation de Manifestation d'Intérêt)",
       },
-      SECTORS: ["Bâtiment / TP", "Fournitures", "Services Prestations Intellectuelles"],
+      SECTORS: [
+        "Bâtiment / TP",
+        "Fournitures",
+        "Services Prestations Intellectuelles",
+      ],
     },
   },
 
   BLINDAGE: {
     TITLE: "Le Blindage Administratif",
-    SUBTITLE: "Vérification de la conformité de l'Enveloppe A (Pièces Administratives)",
+    SUBTITLE:
+      "Vérification de la conformité de l'Enveloppe A (Pièces Administratives)",
     STATUS: {
       VALID: "Pièce Conforme & À Jour",
       EXPIRED: "Pièce Expirée (Risque de Rejet)",
@@ -66,6 +73,7 @@ export const SABI_COPY = {
   ALERTS: {
     DISQUALIFICATION: "Risque de disqualification identifié.",
     FORCLUSION: "Délai de dépôt critique (H-24).",
-    TECHNICAL_ERROR: "Une erreur technique s'est produite lors du traitement du DAO.",
-  }
+    TECHNICAL_ERROR:
+      "Une erreur technique s'est produite lors du traitement du DAO.",
+  },
 };

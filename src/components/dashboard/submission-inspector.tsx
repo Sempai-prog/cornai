@@ -7,14 +7,26 @@ import {
   ShieldAlert, 
   Zap, 
   ChevronRight,
-  Info,
   Activity,
   Wallet
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { SABI_COPY } from "@/lib/SabiCopy"
 
-export function SubmissionInspector() {
+interface SubmissionInspectorProps {
+  urgentTask?: {
+    deadline: string
+    title: string
+  }
+  complianceScore?: number
+  financialSurface?: string
+}
+
+export function SubmissionInspector({ 
+  urgentTask, 
+  complianceScore = 100, 
+  financialSurface = "1.2B" 
+}: SubmissionInspectorProps) {
   const [isSimulating, setIsSimulating] = React.useState(false)
 
   const handleSimulateColeps = () => {
@@ -35,10 +47,10 @@ export function SubmissionInspector() {
 
         <div className="flex items-baseline gap-3 leading-none relative z-10">
           <span className="text-3xl font-semibold tracking-tighter text-red-500">
-            J-04
+            {urgentTask?.deadline || "N/A"}
           </span>
-          <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-foreground/30 truncate">
-            MINTP Tronçon Mbalmayo
+          <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-foreground/30 truncate max-w-[150px]">
+             {urgentTask?.title || "Aucun dossier urgent"}
           </span>
         </div>
         
@@ -46,7 +58,7 @@ export function SubmissionInspector() {
         <div className="absolute bottom-0 left-0 h-0.5 bg-red-500/20 w-full overflow-hidden">
            <motion.div 
               initial={{ width: 0 }} 
-              animate={{ width: "80%" }} 
+              animate={{ width: urgentTask ? "80%" : "0%" }} 
               transition={{ duration: 1, delay: 0.5 }}
               className="h-full bg-red-500" 
            />
@@ -64,10 +76,13 @@ export function SubmissionInspector() {
 
         <div className="flex items-baseline gap-3 leading-none">
           <span className="text-3xl font-semibold tracking-tighter text-foreground">
-            100%
+            {complianceScore}%
           </span>
-          <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-emerald-500">
-            Dossier FEICOM Sécurisé
+          <span className={cn(
+             "text-[10px] font-bold uppercase tracking-[0.1em]",
+             complianceScore >= 100 ? "text-emerald-500" : "text-amber-500"
+          )}>
+            {complianceScore >= 100 ? "Dossier Sécurisé" : "Carence Détectée"}
           </span>
         </div>
       </div>
@@ -83,10 +98,10 @@ export function SubmissionInspector() {
 
         <div className="flex items-baseline gap-3 leading-none">
           <span className="text-3xl font-semibold tracking-tighter text-foreground">
-            1.2B
+            {financialSurface}
           </span>
-          <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-foreground/30">
-            Cautions Cumulées (FCFA)
+          <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-foreground/30 truncate">
+             Cautions Cumulées (FCFA)
           </span>
         </div>
       </div>
@@ -102,7 +117,7 @@ export function SubmissionInspector() {
         <div className="flex items-center gap-2.5 mb-4 opacity-40 group-hover:opacity-100 transition-opacity">
           <Zap className={cn("h-4 w-4", isSimulating ? "text-muted-foreground animate-pulse" : "text-emerald-500")} />
           <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground truncate">
-            Simulation Dépôt COLEPS
+             Dossier Prêt ? Scellage COLEPS
           </span>
         </div>
 
@@ -117,7 +132,7 @@ export function SubmissionInspector() {
                 className="flex items-center gap-3"
               >
                 <Activity className="h-5 w-5 text-emerald-500 animate-spin" />
-                <span className="text-xl font-semibold tracking-tight text-emerald-500 italic">Scellage...</span>
+                <span className="text-xl font-semibold tracking-tight text-emerald-500 italic">Signature...</span>
               </motion.div>
             ) : (
               <motion.div 

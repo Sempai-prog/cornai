@@ -33,8 +33,8 @@ import {
   Map, 
   FolderLock, 
   ChevronLeft,
+  Target,
   LogOut,
-  Wallet,
   Bell
 } from "lucide-react"
 import { SABI_COPY } from "@/lib/SabiCopy";
@@ -63,6 +63,11 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
         href: "/dashboard/appels-offres" 
       },
       { 
+        title: SABI_COPY.NAVIGATION.OPPORTUNITES, 
+        icon: Target, 
+        href: "/dashboard/opportunites" 
+      },
+      { 
         title: SABI_COPY.NAVIGATION.SOUMISSIONS, 
         icon: History, 
         href: "/dashboard/soumissions" 
@@ -76,7 +81,7 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
       },
       { 
         title: SABI_COPY.NAVIGATION.OFFRE_FINANCIERE, 
-        icon: Wallet, 
+        icon: FolderLock, 
         href: "/dashboard/profil" 
       },
       { 

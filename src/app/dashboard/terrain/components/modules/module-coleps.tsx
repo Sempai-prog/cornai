@@ -14,24 +14,53 @@ import {
   Activity,
   Globe
 } from "lucide-react";
-import { MOCK_COLEPS } from "../../lib/terrain-mock-data";
-import { ColepsDocument, ModuleStatus } from "../../lib/terrain-types";
+import { ModuleStatus } from "../../lib/terrain-types";
 import { cn } from "@/lib/utils";
 import { ProgressBar } from "../shared/progress-bar";
 import { StatusBadge } from "../shared/status-badge";
 import { AlertPanel } from "../shared/alert-panel";
 
+interface PieceSoumission {
+  id: string;
+  nomFichier: string;
+  typePiece: string | null;
+  tailleMb: number;
+  moduleSource: string | null;
+  statut: string | null;
+}
+
+interface ModuleColepsProps {
+  pieces: PieceSoumission[];
+  moduleStatuts: Record<string, ModuleStatus>;
+}
+
 /**
- * 🛂 MODULE : COLEPS PRE-FLIGHT
+ * 🛂 MODULE : COLEPS PRE-FLIGHT — Wired to DB
  * Focus : Vérification finale du poids numérique et compilation du Volume 2.
  */
-export function ModuleColeps() {
-  const { totalSizeMb, maxSizeMb, isCompliant, documents, modulesStatus } = MOCK_COLEPS;
+export function ModuleColeps({ pieces, moduleStatuts }: ModuleColepsProps) {
+  const maxSizeMb = 25; // COLEPS platform limit
+  const totalSizeMb = pieces.reduce((sum, p) => sum + (p.tailleMb || 0), 0);
   const percentage = (totalSizeMb / maxSizeMb) * 100;
   const isOverSize = totalSizeMb > maxSizeMb;
 
   // Calcul auto de la conformité globale (TOUS les modules doivent être complete)
-  const allModulesComplete = Object.values(modulesStatus).every(s => s === "complete");
+  const allModulesComplete = Object.values(moduleStatuts).every(s => s === "complete");
+
+  // Empty state
+  if (pieces.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center py-24 text-center space-y-4">
+        <div className="w-16 h-16 rounded-[4px] bg-muted/30 border border-border flex items-center justify-center">
+          <FileArchive className="w-8 h-8 text-muted-foreground/30" />
+        </div>
+        <h3 className="text-sm font-bold text-foreground uppercase tracking-wider">Aucune Pièce Compilée</h3>
+        <p className="text-[11px] text-muted-foreground max-w-md">
+          Complétez d'abord les modules Transcripteur, Garage et Personnel pour générer les pièces du Volume 2.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 h-full pb-8 items-stretch">
@@ -91,7 +120,7 @@ export function ModuleColeps() {
           {/* Module Guard Status Grid */}
           <div className="grid grid-cols-1 gap-2 pt-4 border-t border-border relative z-10">
             <p className="text-[9px] font-bold text-muted-foreground/40 uppercase tracking-[0.2em] mb-2">Statut Intégrité Modules</p>
-            {Object.entries(modulesStatus).map(([name, status]) => (
+            {Object.entries(moduleStatuts).map(([name, status]) => (
               <div key={name} className="flex items-center justify-between p-3 bg-muted/10 border border-border rounded-[4px] group">
                 <div className="flex items-center gap-3">
                   <div className={cn(
@@ -158,7 +187,7 @@ export function ModuleColeps() {
           </div>
 
           <div className="divide-y divide-border overflow-y-auto flex-1">
-            {documents.map((doc) => (
+            {pieces.map((doc) => (
               <div key={doc.id} className="p-5 flex items-center justify-between hover:bg-muted/5 transition-colors group">
                 <div className="flex items-center gap-5">
                   <div className="w-10 h-10 rounded-[4px] bg-muted/30 border border-border flex items-center justify-center text-muted-foreground/40 group-hover:text-primary group-hover:bg-primary/5 group-hover:border-primary/20 transition-all">
@@ -166,23 +195,23 @@ export function ModuleColeps() {
                   </div>
                   <div className="space-y-1">
                     <h4 className="text-xs font-bold text-foreground group-hover:text-primary transition-colors">
-                      {doc.fileName}
+                      {doc.nomFichier}
                     </h4>
                     <div className="flex items-center gap-3">
-                        <span className="text-[9px] text-muted-foreground uppercase font-bold tracking-tight bg-muted px-1.5 py-0.5 rounded-[2px]">{doc.sourceModule}</span>
+                        <span className="text-[9px] text-muted-foreground uppercase font-bold tracking-tight bg-muted px-1.5 py-0.5 rounded-[2px]">{doc.moduleSource}</span>
                         <div className="w-1 h-1 rounded-[4px] bg-border" />
                         <span className={cn(
                           "text-[9px] font-black uppercase tabular-nums tracking-tighter",
-                          doc.status === "heavy" ? "text-amber-500" : "text-primary opacity-60"
+                          doc.statut === "heavy" ? "text-amber-500" : "text-primary opacity-60"
                         )}>
-                          {doc.sizeMb} MB
+                          {doc.tailleMb.toFixed(1)} MB
                         </span>
                       </div>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-3">
-                  {doc.canCompress && (
+                  {doc.tailleMb > 5 && (
                     <button className="h-8 px-3 bg-muted/40 hover:bg-muted border border-border border-dashed rounded-[4px] text-[9px] font-bold uppercase tracking-widest text-muted-foreground transition-all">
                       Compresser PDF
                     </button>
