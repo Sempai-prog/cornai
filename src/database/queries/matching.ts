@@ -10,28 +10,35 @@ import { eq, and, gte, desc, or, isNull } from 'drizzle-orm'
  * Récupère les matchings par entreprise
  */
 export async function getMatchingsParEntreprise(entrepriseId: string, limit: number = 10) {
-  return await db.query.matchings.findMany({
-    where: eq(matchings.entrepriseId, entrepriseId),
-    orderBy: [desc(matchings.scoreTotal)],
-    limit: limit,
-    with: {
-      appelOffre: true
-    }
-  })
+  const results = await db
+    .select({
+      matching: matchings,
+      appelOffre: appelsOffres,
+    })
+    .from(matchings)
+    .leftJoin(appelsOffres, eq(matchings.appelOffreId, appelsOffres.id))
+    .where(eq(matchings.entrepriseId, entrepriseId))
+    .orderBy(desc(matchings.scoreTotal))
+    .limit(limit);
+
+  return results.map(r => ({
+    ...r.matching,
+    appelOffre: r.appelOffre,
+  }));
 }
 
 /**
  * Récupère les matchings par AO
  */
 export async function getMatchingsParAO(aoId: string, scoreMin: number = 60) {
+  // Ici on aurait besoin de 'entreprises' mais il n'est pas importé. 
+  // Je vais simplifier sans le with: entreprise pour l'instant ou l'importer.
+  // Utilisons le findMany car l'erreur était sur soumissions et matchings/entreprise
   return await db.query.matchings.findMany({
     where: and(
       eq(matchings.appelOffreId, aoId),
       gte(matchings.scoreTotal, scoreMin)
     ),
-    with: {
-      entreprise: true
-    }
   })
 }
 

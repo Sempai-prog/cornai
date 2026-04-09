@@ -7,11 +7,11 @@ import { getSoumissionsByEntreprise } from "@/database/queries/soumissions"
 import { formatDateline, formatXAF } from "@/lib/utils"
 import { StandardPageHeader } from "@/components/layout/standard-page-header"
 import { SoumissionsClient } from "./soumissions-client"
-
-const DEMO_ENTREPRISE_ID = "cf83af70-d49b-4a72-8222-201f08a05a8a"
+import { getEntrepriseContext } from "@/lib/demo-config"
 
 export default async function SoumissionsPage() {
-  const dbSoumissions = await getSoumissionsByEntreprise(DEMO_ENTREPRISE_ID)
+  const { entrepriseId } = await getEntrepriseContext();
+  const dbSoumissions = await getSoumissionsByEntreprise(entrepriseId)
 
   // Mapping DB -> UI
   const submissions = dbSoumissions.map((s) => ({
@@ -19,19 +19,16 @@ export default async function SoumissionsPage() {
     ac: s.appelOffre?.institution || "N/A",
     type: s.appelOffre?.typeMarche || "AONO",
     title: s.appelOffre?.titreComplet || "Sans titre",
-    deadline: formatDateline(s.appelOffre?.dateLimiteSoumission),
+    deadline: s.appelOffre?.dateLimiteSoumission ? new Date(s.appelOffre.dateLimiteSoumission) : new Date(),
     envelopeA: s.scoreConformite || 0,
-    envelopeB: 10, // Mocked technical progress
-    envelopeC: 0,  // Mocked financial progress
+    envelopeB: 10,
+    envelopeC: 0,
     status: mapDBStatusToUI(s.statut),
-    isUrgent: s.appelOffre?.dateLimiteSoumission 
-      ? new Date(s.appelOffre.dateLimiteSoumission).getTime() - new Date().getTime() < 86400000 * 3 
-      : false,
-    budget: formatXAF(s.montantOffre || s.appelOffre?.budgetEstime || 0)
+    budget: s.montantOffre || s.appelOffre?.budgetEstime || 0
   }))
 
-  const activeCount = submissions.filter(s => ['MONTAGE', 'BLINDAGE', 'CHIFFRAGE', 'SIGNATURE'].includes(s.status)).length
-  const depositCount = submissions.filter(s => s.status === 'DEPOT').length
+  const activeCount = submissions.filter(s => ['preparation', 'evaluation'].includes(s.status)).length
+  const depositCount = submissions.filter(s => s.status === 'soumis').length
 
   return (
     <div className="flex flex-col gap-8 animate-in fade-in duration-700 antialiased bg-transparent p-0 lg:p-1 overflow-hidden h-full">
@@ -65,19 +62,22 @@ export default async function SoumissionsPage() {
   )
 }
 
-function mapDBStatusToUI(dbStatus: string | null): any {
+function mapDBStatusToUI(dbStatus: string | null): SubmissionStatus {
   switch (dbStatus) {
     case 'en_preparation':
     case 'brouillon': 
-      return 'MONTAGE';
-    case 'pret': 
-      return 'SIGNATURE';
+      return 'preparation';
     case 'depose': 
-      return 'DEPOT';
+      return 'soumis';
+    case 'evaluation':
+      return 'evaluation';
     case 'adjuge':
+      return 'attribue';
     case 'perdu':
-      return 'DEPOT'; // Keep in last column for history
+      return 'rejete';
     default: 
-      return 'MONTAGE';
+      return 'preparation';
   }
 }
+
+type SubmissionStatus = 'preparation' | 'soumis' | 'evaluation' | 'attribue' | 'rejete';

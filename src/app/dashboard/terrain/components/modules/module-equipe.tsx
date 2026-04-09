@@ -14,6 +14,8 @@ import {
   AlertTriangle
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { EmptyState } from "@/components/ui/empty-state";
+import { DialogAjoutMembre } from "@/components/terrain/dialog-ajout-membre";
 
 interface MembreEquipe {
   id: string;
@@ -42,10 +44,15 @@ export function ModuleEquipe({ membres }: ModuleEquipeProps) {
 
   if (membres.length === 0) {
     return (
-      <div className="bg-card border border-border/10 rounded-[4px] p-12 flex flex-col items-center justify-center text-center">
-        <Briefcase className="h-8 w-8 text-muted-foreground/30 mb-3" />
-        <p className="text-sm text-muted-foreground">Aucun expert engagé</p>
-        <p className="text-xs text-muted-foreground/50 mt-1">Utilisez "Ajouter Expert" pour constituer votre équipe</p>
+      <div className="flex flex-col items-center justify-center p-12 bg-card border border-border/50 border-dashed rounded-[4px]">
+        <div className="w-16 h-16 rounded-full bg-primary/5 flex items-center justify-center mb-4">
+          <Users className="w-8 h-8 text-primary/50" />
+        </div>
+        <h3 className="text-sm font-bold text-foreground mb-2 uppercase tracking-widest">Équipe Vide</h3>
+        <p className="text-xs text-muted-foreground text-center max-w-md mx-auto mb-6">
+          Aucun expert technique n'est encore associé à ce projet. Constituez votre équipe pour répondre aux exigences du dossier technique.
+        </p>
+        <DialogAjoutMembre />
       </div>
     );
   }
@@ -79,10 +86,7 @@ export function ModuleEquipe({ membres }: ModuleEquipeProps) {
             <Import className="h-3.5 h-3.5" />
             Pool RH
           </button>
-          <button className="h-8 px-3 bg-primary text-black rounded-sabi text-[10px] font-bold uppercase tracking-widest hover:bg-primary/90 transition-all flex items-center gap-2">
-            <UserPlus className="h-3.5 h-3.5" />
-            Ajouter Expert
-          </button>
+          <DialogAjoutMembre />
         </div>
       </div>
 

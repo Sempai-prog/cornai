@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { Providers } from "@/components/providers";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -45,10 +46,12 @@ export default function RootLayout({
   return (
     <html lang="fr" suppressHydrationWarning>
       <body className={inter.className} suppressHydrationWarning>
-        <Providers>
-          {children}
-          <Toaster position="top-right" richColors />
-        </Providers>
+        <NuqsAdapter>
+          <Providers>
+            {children}
+            <Toaster position="top-right" richColors />
+          </Providers>
+        </NuqsAdapter>
       </body>
     </html>
   );

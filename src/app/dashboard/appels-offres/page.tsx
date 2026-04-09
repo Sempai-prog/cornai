@@ -4,15 +4,40 @@
 
 import { Globe, Zap } from "lucide-react"
 import { StandardPageHeader } from "@/components/layout/standard-page-header"
-import { getDerniersAO } from "@/database/queries/ao"
+import { getAppelsOffresPagines } from "@/app/actions/appels-offres"
 import { mapDBAOToUI } from "@/components/search/search-utils"
 import { SearchDashboardClient } from "./search-dashboard-client"
 
 export const dynamic = 'force-dynamic'
 
-export default async function AppelsOffresPage() {
-  const dbAos = await getDerniersAO(20)
-  const results = dbAos.map(mapDBAOToUI)
+interface PageProps {
+  searchParams: Promise<{
+    page?: string
+    q?: string
+    secteur?: string
+    region?: string
+    type?: string
+  }>
+}
+
+export default async function AppelsOffresPage({ searchParams }: PageProps) {
+  const resolvedParams = await searchParams
+  
+  const page = parseInt(resolvedParams.page || '1')
+  const q = resolvedParams.q
+  const secteur = resolvedParams.secteur
+  const region = resolvedParams.region
+  const type = resolvedParams.type
+
+  const { donnees, pagination } = await getAppelsOffresPagines({
+    page,
+    recherche: q,
+    secteur,
+    region,
+    type
+  })
+
+  const results = donnees.map(mapDBAOToUI)
   
   return (
     <div className="space-y-6 flex flex-col h-full animate-in fade-in duration-500 bg-transparent">
@@ -38,10 +63,10 @@ export default async function AppelsOffresPage() {
           color: "primary",
         }}
         cardB={{
-          label: "FILTRES ACTIFS",
-          value: "08",
-          subtext: "Matching Intelligent",
-          color: "amber",
+          label: "ITEMS RÉELS",
+          value: pagination.total.toString().padStart(2, '0'),
+          subtext: "Base de Données",
+          color: "blue",
         }}
       />
 
@@ -50,7 +75,10 @@ export default async function AppelsOffresPage() {
           PLAN 2 — MOTEUR DE RECHERCHE (FULL-PAGE ENGINE)
           ─────────────────────────────────────────────────────────── */}
       <div className="flex-1 min-h-0 bg-transparent">
-        <SearchDashboardClient initialResults={results} />
+        <SearchDashboardClient 
+          initialResults={results} 
+          pagination={pagination}
+        />
       </div>
     </div>
   )

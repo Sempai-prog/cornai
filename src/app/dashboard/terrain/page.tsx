@@ -1,18 +1,12 @@
 import { getTerrainFullData } from '@/database/queries/terrain'
 import { TerrainClientPage } from './terrain-client'
+import { getEntrepriseContext } from '@/lib/demo-config'
+import { MOCK_AUDIOS } from './lib/terrain-mock-data'
 
-const DEMO_ENTREPRISE_ID = 'cf83af70-d49b-4a72-8222-201f08a05a8a'
-
-/**
- * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- * PAGE : LE TERRAIN (SABI v1.6)
- * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- * Architecture : Server Component → fetches data → passes to Client
- * Design System : Quiet Design (Clinical Light / Deep Night)
- */
 export default async function TerrainPage({ searchParams }: { searchParams: Promise<{ soumissionId?: string }> }) {
   const { soumissionId } = await searchParams
-  const data = await getTerrainFullData(DEMO_ENTREPRISE_ID, soumissionId)
+  const { entrepriseId } = await getEntrepriseContext();
+  const data = await getTerrainFullData(entrepriseId, soumissionId)
 
   // Compute the terrain score from real data
   const garageComplete = data.garageData.filter(m => m.statut === 'complet').length
@@ -63,6 +57,8 @@ export default async function TerrainPage({ searchParams }: { searchParams: Prom
       equipeData={data.equipeData}
       descenteData={data.descenteData as any}
       compilationData={compilationSerialized}
+      audios={MOCK_AUDIOS}
+      soumissionId={data.soumission?.id}
     />
   )
 }

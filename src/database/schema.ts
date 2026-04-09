@@ -510,6 +510,10 @@ export const visites_terrain = pgTable('visites_terrain', {
   auditCritique: text('audit_critique'),
   auditCritiqueImpact: varchar('audit_critique_impact', { length: 255 }),
   
+  transcription: text('transcription'),
+  transcriptionStatut: varchar('transcription_statut', { length: 50 }).default('idle'),
+  transcriptionDate: timestamp('transcription_date', { withTimezone: true }),
+  
   statutVisite: varchar('statut_visite', { length: 50 }).default('planifiee'),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
 }, (table) => [

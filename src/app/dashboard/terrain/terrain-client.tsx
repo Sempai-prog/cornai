@@ -9,6 +9,10 @@ import { ModuleEquipe } from "./components/modules/module-equipe";
 import { ModuleDescente } from "./components/modules/module-descente";
 import { ModuleColeps } from "./components/modules/module-coleps";
 import { TerrainScore, ModuleStatus } from "./lib/terrain-types";
+import { EmptyState } from "@/components/ui/empty-state";
+import { Map, Briefcase, Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 interface TerrainClientPageProps {
   score: TerrainScore;
@@ -48,6 +52,8 @@ interface TerrainClientPageProps {
     moduleSource: string | null;
     statut: string | null;
   }[];
+  audios?: any[];
+  soumissionId?: string;
 }
 
 /**
@@ -65,9 +71,29 @@ export function TerrainClientPage({
   equipeData,
   descenteData,
   compilationData,
+  audios = [],
+  soumissionId,
 }: TerrainClientPageProps) {
   const [activeTab, setActiveTab] = useState<TerrainTabId>("transcripteur");
 
+  // Fallback: No active AO or submission found
+  if (!aoNom && !aoInstitution && garageData.length === 0 && equipeData.length === 0) {
+    return (
+      <div className="flex flex-col h-[calc(100vh-12rem)]">
+        <div className="flex-1 flex items-center justify-center">
+          <EmptyState
+            icon={Map}
+            titre="Aucune Soumission Active"
+            description="Le cockpit terrain nécessite une soumission en cours pour agréger les données techniques. Sélectionnez une opportunité ou créez un nouveau dossier."
+            action={{
+              label: "Explorer le Marché",
+              href: "/dashboard/appels-offres"
+            }}
+          />
+        </div>
+      </div>
+    );
+  }
 
   // Compute compilation module statuses from real data
   const compilationModuleStatuses = {
@@ -80,7 +106,7 @@ export function TerrainClientPage({
   const renderModule = () => {
     switch (activeTab) {
       case "transcripteur":
-        return <ModuleTranscripteur aoNom={aoNom} dtaoReference="DTAO v2024.1" />;
+        return <ModuleTranscripteur aoNom={aoNom} dtaoReference="DTAO v2024.1" audios={audios} soumissionId={soumissionId} />;
       case "garage":
         return <ModuleGarage materiel={garageData} aoReference={aoNom} />;
       case "equipe":
@@ -121,7 +147,7 @@ export function TerrainClientPage({
       {/* Footer Meta (SABI Quiet Style) */}
       <footer className="mt-12 flex flex-col md:flex-row items-center justify-between gap-4 border-t border-border pt-6 pb-2 opacity-40">
         <div className="flex flex-col gap-1">
-          <span className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground">
+          <span className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground/60">
             SABI Intelligence Locale • DTAO v2024.1
           </span>
           <span className="text-[9px] uppercase font-medium tracking-tight text-muted-foreground italic">
@@ -132,11 +158,11 @@ export function TerrainClientPage({
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-            <span className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground">
-              COLEPS Readiness : High
+            <span className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground/60">
+              COLEPS Readiness : {score.percentage > 70 ? "High" : score.percentage > 30 ? "Medium" : "Low"}
             </span>
           </div>
-          <span className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground/60 border-l border-border pl-6">
+          <span className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground/40 border-l border-border pl-6">
             Ref: SABI-TR-2024
           </span>
         </div>

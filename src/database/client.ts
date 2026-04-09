@@ -9,7 +9,11 @@ import { loadEnvConfig } from '@next/env'
 
 loadEnvConfig(process.cwd())
 
-const sql = neon(process.env.DATABASE_URL!)
+const sql = neon(process.env.DATABASE_URL!, {
+  fetchOptions: {
+    cache: 'no-store',
+  }
+})
 
 export const db = drizzle(sql, { schema })
 

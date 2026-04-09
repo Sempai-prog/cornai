@@ -18,12 +18,11 @@ import {
 import { getConformiteComplete } from "@/database/queries/documents";
 import { formatDateline, cn } from "@/lib/utils";
 import { GeneratePDFButton, UploadZone, ItemActions } from "@/components/documents/document-actions";
-
-// ID démo (Phase de test)
-const DEMO_ENTREPRISE_ID = "cf83af70-d49b-4a72-8222-201f08a05a8a";
+import { getEntrepriseContext } from "@/lib/demo-config";
 
 export default async function DocumentsPage() {
-  const { documents, manquantes, stats } = await getConformiteComplete(DEMO_ENTREPRISE_ID);
+  const { entrepriseId } = await getEntrepriseContext();
+  const { documents, manquantes, stats } = await getConformiteComplete(entrepriseId);
 
   // Mapping des documents existants
   const docRows = documents.map(d => {

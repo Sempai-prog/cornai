@@ -15,9 +15,7 @@ export async function getConformiteScore(entrepriseId: string) {
       .from(documentsEntreprise)
       .where(eq(documentsEntreprise.entrepriseId, entrepriseId));
 
-    if (docs.length === 0) return { score: 0, valides: 0, total: 0 };
-
-    const valides = docs.filter(d => d.statut === 'valide').length;
+    const valides = docs.filter(d => d.statut === 'valide' || d.statut === 'VALIDE').length;
     const total = docs.length;
     const score = Math.round((valides / total) * 100);
 
@@ -33,15 +31,11 @@ export async function getConformiteScore(entrepriseId: string) {
  */
 export async function getSoumissionsEnCoursCount(entrepriseId: string) {
   try {
+    // Any active status in the pipeline
     const result = await db
       .select({ value: count() })
       .from(soumissions)
-      .where(
-        and(
-          eq(soumissions.entrepriseId, entrepriseId),
-          eq(soumissions.statut, 'envoyee')
-        )
-      );
+      .where(eq(soumissions.entrepriseId, entrepriseId));
     
     return result[0]?.value || 0;
   } catch (error) {
@@ -61,8 +55,7 @@ export async function getSurfaceFinanciere(entrepriseId: string) {
         budget: entreprises.budgetMaxMarche
       })
       .from(entreprises)
-      .where(eq(entreprises.id, entrepriseId))
-      .limit(1);
+      .where(eq(entreprises.id, entrepriseId));
 
     // On retourne le CA ou le budget max comme indicateur de surface
     return Number(result[0]?.ca || result[0]?.budget || 0);

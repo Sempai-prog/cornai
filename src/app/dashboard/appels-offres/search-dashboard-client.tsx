@@ -32,79 +32,82 @@ import {
   Globe,
   ArrowRight
 } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { useSearchAppelsOffres } from "@/hooks/use-search-appels-offres"
+import { PaginationSabi } from "@/components/ui/pagination-sabi"
 import { SABI_COPY } from "@/lib/SabiCopy"
-
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { SearchResultRow } from "@/components/search/search-result-row"
 import { SearchResult } from "@/components/search/search-types"
-import { cn } from "@/lib/utils"
 
 // ───────────────────────────────────────────────────────────
 // CONFIGURATION MÉTIEUR (ARMP / Cameroun)
 // ───────────────────────────────────────────────────────────
 
 const SECTORS = SABI_COPY.SEARCH.FILTERS.SECTORS;
-const TYPES = [
-  SABI_COPY.SEARCH.FILTERS.TYPES.AONO,
-  SABI_COPY.SEARCH.FILTERS.TYPES.AONR,
-  SABI_COPY.SEARCH.FILTERS.TYPES.DC,
-  SABI_COPY.SEARCH.FILTERS.TYPES.ASMI
+const PROCEDURES = [
+  { value: "AONO", label: SABI_COPY.SEARCH.FILTERS.TYPES.AONO },
+  { value: "AONR", label: SABI_COPY.SEARCH.FILTERS.TYPES.AONR },
+  { value: "DC", label: SABI_COPY.SEARCH.FILTERS.TYPES.DC },
+  { value: "ASMI", label: SABI_COPY.SEARCH.FILTERS.TYPES.ASMI },
+];
+
+const REGIONS = [
+  "Centre", "Littoral", "Ouest", "Nord", "Est", "Sud", "Nord-Ouest", "Sud-Ouest", "Adamaoua", "Extrême-Nord"
 ];
 
 const FILTER_CATEGORIES = [
-  { id: "secteurs", title: "Secteurs d'Activité", items: SECTORS },
-  { id: "regions", title: "Régions Locales", items: ["Centre", "Littoral", "Ouest", "Nord", "Est", "Sud", "Nord-Ouest", "Sud-Ouest", "Adamaoua", "Extrême-Nord"] },
-  { id: "procedures", title: "Modes de Passation", items: TYPES }
+  { id: "secteurs", title: "Secteurs d'Activité", items: SECTORS.map(s => ({ value: s, label: s })) },
+  { id: "regions", title: "Régions Locales", items: REGIONS.map(r => ({ value: r, label: r })) },
+  { id: "procedures", title: "Modes de Passation", items: PROCEDURES }
 ]
 
 interface SearchDashboardClientProps {
   initialResults: SearchResult[]
+  pagination: {
+    total: number
+    page: number
+    totalPages: number
+    parPage: number
+  }
 }
 
-export function SearchDashboardClient({ initialResults }: SearchDashboardClientProps) {
+export function SearchDashboardClient({ initialResults, pagination }: SearchDashboardClientProps) {
+  const { page, setPage, recherche, handleRecherche, secteur, setSecteur, region, setRegion, type, setType } = useSearchAppelsOffres()
+  const [localSearch, setLocalSearch] = React.useState(recherche)
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(true)
-  const [query, setQuery] = React.useState("")
   const [viewMode, setViewMode] = React.useState<"list" | "table">("list")
-  const [isLoading, setIsLoading] = React.useState(true)
   const [openAccordions, setOpenAccordions] = React.useState<Record<string, boolean>>({ secteurs: true })
-  const [filters, setFilters] = React.useState({
-    secteurs: [] as string[],
-    regions: [] as string[],
-    procedures: [] as string[],
-  })
+  const [isPending, startTransition] = React.useTransition()
 
-  React.useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 800)
-    return () => clearTimeout(timer)
-  }, [])
+  // Synchronisation de la recherche locale avec le paramètre d'URL (nuqs)
+  const onSearchChange = (val: string) => {
+    setLocalSearch(val)
+    startTransition(() => {
+      handleRecherche(val)
+    })
+  }
 
   const toggleAccordion = (id: string) => {
     setOpenAccordions(prev => ({ ...prev, [id]: !prev[id] }))
   }
 
-  const toggleFilter = (key: keyof typeof filters, value: string) => {
-    setFilters(prev => ({
-      ...prev,
-      [key]: prev[key].includes(value) 
-        ? prev[key].filter(v => v !== value) 
-        : [...prev[key], value]
-    }))
+  const toggleFilter = (key: string, value: string) => {
+    startTransition(() => {
+      if (key === 'secteurs') {
+        setSecteur(secteur === value ? null : value)
+      } else if (key === 'regions') {
+        setRegion(region === value ? null : value)
+      } else if (key === 'procedures') {
+        setType(type === value ? null : value)
+      }
+      setPage(1)
+    })
   }
 
-  const filteredResults = React.useMemo(() => {
-    let base = initialResults
-    if (query) {
-      const q = query.toLowerCase()
-      base = base.filter(r => (r.title?.toLowerCase().includes(q)) || (r.authority?.toLowerCase().includes(q)) || (r.id?.toLowerCase().includes(q)))
-    }
-    if (filters.secteurs.length > 0) base = base.filter(r => filters.secteurs.includes(r.sector))
-    if (filters.regions.length > 0) base = base.filter(r => filters.regions.includes(r.region))
-    if (filters.procedures.length > 0) base = base.filter(r => filters.procedures.includes(r.type))
-    return base
-  }, [query, filters, initialResults])
+  const filteredResults = initialResults
 
   return (
     <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 relative min-h-[calc(100vh-210px)] animate-in fade-in duration-500 px-4 sm:px-6 lg:px-0 bg-transparent">
@@ -116,11 +119,7 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
         "flex-shrink-0 flex flex-col gap-4 select-none transition-all duration-500 ease-in-out overflow-hidden mt-0.5",
         isSidebarOpen ? "w-full lg:w-72 opacity-100" : "w-0 opacity-0 pointer-events-none hidden lg:flex"
       )}>
-         {isLoading ? (
-            <SidebarSkeleton />
-         ) : (
-            <>
-               {FILTER_CATEGORIES.map((cat) => (
+         {FILTER_CATEGORIES.map((cat) => (
                  <div 
                    key={cat.id} 
                    className="bg-card border border-border/10 rounded-[4px] p-4 hover:border-border/20 hover:bg-card transition-all shadow-none group whitespace-nowrap"
@@ -141,17 +140,25 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
                     {openAccordions[cat.id] && (
                       <div className="mt-4 space-y-3 animate-in fade-in slide-in-from-top-1 duration-300">
                          {cat.items.map((item) => (
-                           <label key={item} className="flex items-center gap-3 cursor-pointer group/label">
+                           <label key={item.value} className="flex items-center gap-3 cursor-pointer group/label">
                               <input 
                                  type="checkbox" 
                                  className="h-3 w-3 rounded-[2px] border border-border/10 bg-background checked:bg-primary checked:border-primary appearance-none cursor-pointer transition-all"
-                                 checked={(filters as any)[cat.id].includes(item)}
-                                 onChange={() => toggleFilter(cat.id as any, item)}
+                                 checked={
+                                   cat.id === 'secteurs' ? secteur === item.value : 
+                                   cat.id === 'regions' ? region === item.value : 
+                                   type === item.value
+                                 }
+                                 onChange={() => toggleFilter(cat.id, item.value)}
                               />
                               <span className={cn(
-                                 "text-[12px] font-bold transition-colors truncate tracking-tight uppercase",
-                                 (filters as any)[cat.id].includes(item) ? "text-primary" : "text-foreground/30 group-hover/label:text-foreground/60"
-                              )}>{item}</span>
+                                 "text-[12px] font-bold transition-colors truncate tracking-tight uppercase max-w-[200px]",
+                                 (
+                                   cat.id === 'secteurs' ? secteur === item.value : 
+                                   cat.id === 'regions' ? region === item.value : 
+                                   type === item.value
+                                 ) ? "text-primary" : "text-foreground/30 group-hover/label:text-foreground/60"
+                              )} title={item.label}>{item.label}</span>
                            </label>
                          ))}
                       </div>
@@ -164,8 +171,6 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
                    <ShieldCheck className="h-4 w-4" />
                    <span className="text-[10px] font-bold uppercase tracking-widest leading-none">Protection: ARMP-V4</span>
                </div>
-            </>
-         )}
       </aside>
 
       {/* ───────────────────────────────────────────────────────────
@@ -198,18 +203,25 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
                     <Input 
                       placeholder={SABI_COPY.SEARCH.PLACEHOLDER}
-                      value={query}
-                      onChange={(e) => setQuery(e.target.value)}
+                      value={localSearch}
+                      onChange={(e) => onSearchChange(e.target.value)}
                       className="pl-9 h-11 bg-background border-border/10 focus-visible:ring-primary/20 rounded-[4px] font-medium"
                     />
                   </div>
-                  <Button className="h-11 px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-[4px] shadow-none flex items-center gap-2 ml-2">
+                  <Button 
+                    onClick={() => {
+                      startTransition(() => {
+                        handleRecherche.flush()
+                      })
+                    }}
+                    className="h-11 px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-[4px] shadow-none flex items-center gap-2 ml-2"
+                  >
                     <Zap className="size-4 fill-current" />
                     Scanner le Radar
                   </Button>
-                  {query && (
+                  {localSearch && (
                     <button 
-                      onClick={() => setQuery("")}
+                      onClick={() => onSearchChange("")}
                       className="absolute right-32 p-1 rounded-[4px] hover:bg-muted text-foreground/20 hover:text-foreground/60 transition-colors"
                     >
                       <FilterX className="h-3 w-3" />
@@ -245,7 +257,10 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
          </header>
 
          {/* ZONE DES RÉSULTATS */}
-         <div className="flex-1 min-h-0">
+         <div className={cn(
+            "flex-1 min-h-0 transition-opacity duration-300",
+            isPending ? "opacity-40 pointer-events-none" : "opacity-100"
+         )}>
             {viewMode === "list" ? (
                <div className="flex flex-col gap-3 pb-20">
                   {filteredResults.map((item) => (
@@ -256,7 +271,18 @@ export function SearchDashboardClient({ initialResults }: SearchDashboardClientP
                <TableView results={filteredResults} />
             )}
             
-            {!isLoading && filteredResults.length === 0 && (
+            <PaginationSabi 
+              page={page}
+              totalPages={pagination.totalPages}
+              total={pagination.total}
+              onPageChange={(p) => {
+                startTransition(() => {
+                  setPage(p)
+                })
+              }}
+            />
+            
+            {filteredResults.length === 0 && (
                <div className="flex flex-col items-center justify-center py-40 opacity-10">
                   <Search size={40} className="mb-4" />
                   <h3 className="text-sm font-semibold uppercase tracking-[0.3em]">Néant</h3>

@@ -2,9 +2,8 @@
 
 import * as React from "react"
 import { motion } from "framer-motion"
-import { GripVertical } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { Badge } from "@/components/ui/badge"
+import { GripVertical, Clock, Building2 } from "lucide-react"
+import { cn, formatXAF } from "@/lib/utils"
 
 interface SubmissionCardProps {
   item: {
@@ -12,58 +11,66 @@ interface SubmissionCardProps {
     ac: string
     type: string
     title: string
-    deadline: string
+    deadline: Date
     envelopeA: number
     envelopeB: number
     envelopeC: number
-    isUrgent?: boolean
-    budget: string
+    budget: number
   }
 }
 
 export function SoumissionCard({ item }: SubmissionCardProps) {
+  const daysLeft = Math.ceil((new Date(item.deadline).getTime() - Date.now()) / 86400000)
+  const isUrgent = daysLeft >= 0 && daysLeft <= 3
+
   return (
     <motion.div 
       layout
-      whileHover={{ y: -1, borderColor: "rgba(var(--primary-rgb), 0.2)" }}
+      whileHover={{ y: -1 }}
       className={cn(
-        "bg-card border border-border/10 rounded-[4px] p-4 cursor-grab transition-all hover:bg-card hover:border-border/20 group shadow-none",
-        item.isUrgent && "border-l-2 border-l-red-500"
+        "bg-card border border-border/10 rounded-[4px] p-3 cursor-grab transition-all hover:border-primary/20 group shadow-none relative overflow-hidden",
+        isUrgent && "border-l-2 border-l-red-500"
       )}
     >
-       <div className="flex justify-between items-start mb-3">
-          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/40 group-hover:text-muted-foreground transition-colors uppercase">
-            {item.ac} <span className="opacity-30">/ {item.id}</span>
+       <div className="flex justify-between items-start mb-2">
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/20 group-hover:text-primary/60 transition-colors truncate max-w-[180px]">
+            {item.ac}
           </span>
-          <Badge className={cn(
-            "text-[9px] font-bold px-1.5 py-0.5 rounded-[4px] border-none shadow-none uppercase tracking-widest",
-            item.isUrgent ? "bg-red-500/10 text-red-500" : "bg-primary/10 text-primary"
-          )}>
-            {item.deadline}
-          </Badge>
+          <div className="flex items-center gap-1.5 shrink-0">
+             <span className="text-[9px] font-mono text-muted-foreground/30 tabular-nums">
+                #{item.id}
+             </span>
+          </div>
        </div>
 
-       <h4 className="text-[12px] font-semibold text-foreground/80 line-clamp-2 leading-relaxed mb-4 tracking-tight group-hover:text-foreground transition-colors">
+       <h4 className="text-[12px] font-bold text-foreground/80 line-clamp-2 leading-snug mb-3 tracking-tight group-hover:text-foreground transition-colors">
           {item.title}
        </h4>
 
-       <div className="flex items-center justify-between mb-4">
-          <div className="flex gap-4">
+       <div className="flex items-center gap-4 mb-3">
+          <div className="flex gap-3">
               <EnvelopeIndicator label="A" progress={item.envelopeA} />
               <EnvelopeIndicator label="B" progress={item.envelopeB} />
               <EnvelopeIndicator label="C" progress={item.envelopeC} />
           </div>
-          <GripVertical size={12} className="text-muted-foreground/10 group-hover:text-muted-foreground/30 transition-colors" />
        </div>
 
-       <div className="pt-3 border-t border-border/10">
-          <div className="flex items-center justify-between">
-             <span className="text-[9px] font-bold text-muted-foreground/30 uppercase tracking-widest group-hover:text-muted-foreground/50 transition-colors">
-                {item.budget}
+       <div className="pt-2 border-t border-border/10 flex items-center justify-between">
+          <div className="flex flex-col">
+             <span className="text-[10px] font-black text-foreground tabular-nums tracking-tighter">
+                {formatXAF(item.budget)}
              </span>
-             <Badge className="bg-primary/[0.03] text-primary/40 border border-primary/10 text-[9px] font-bold px-1 py-0.5 rounded-[4px] group-hover:text-primary transition-colors">
-                {item.type}
-             </Badge>
+             <span className="text-[8px] font-bold text-muted-foreground/30 uppercase tracking-widest">
+                BUDGET PRÉVISIONNEL
+             </span>
+          </div>
+          
+          <div className={cn(
+            "flex items-center gap-1 text-[9px] font-black tracking-widest px-1.5 py-0.5 rounded-[2px] tabular-nums border",
+            isUrgent ? "bg-red-500/5 text-red-500 border-red-500/10" : "bg-muted/10 text-muted-foreground/40 border-border/5"
+          )}>
+            <Clock className="size-2.5" />
+            J-{daysLeft < 0 ? 0 : daysLeft}
           </div>
        </div>
     </motion.div>
@@ -75,14 +82,14 @@ function EnvelopeIndicator({ label, progress }: { label: string, progress: numbe
   const isPartial = progress > 0 && progress < 100
 
   return (
-    <div className="flex items-center gap-1.5">
+    <div className="flex items-center gap-1">
        <div className={cn(
-         "w-2 h-2 rounded-full",
-         isDone ? "bg-primary" : isPartial ? "bg-primary/40 animate-pulse" : "bg-muted/20"
+         "w-1.5 h-1.5 rounded-full",
+         isDone ? "bg-primary" : isPartial ? "bg-primary/40 animate-pulse" : "bg-muted/10"
        )} />
        <span className={cn(
-         "text-[9px] font-bold uppercase tracking-widest",
-         isDone ? "text-foreground" : "text-muted-foreground/30"
+         "text-[9px] font-black uppercase tracking-widest",
+         isDone ? "text-foreground/60" : "text-muted-foreground/20"
        )}>{label}</span>
     </div>
   )

@@ -13,11 +13,12 @@ import {
   Zap,
   Plus
 } from "lucide-react";
-import { MOCK_AUDIOS } from "../../lib/terrain-mock-data";
 import { AudioSource, ChapterId } from "../../lib/terrain-types";
 import { cn } from "@/lib/utils";
 import { AlertPanel } from "../shared/alert-panel";
 import { StatusBadge } from "../shared/status-badge";
+import { EmptyState } from "@/components/ui/empty-state";
+import { TranscripteurAudio } from "@/components/terrain/transcripteur-audio";
 
 const CHAPTERS = [
   { id: "conception", title: "Chapitre 1 : Conception Technique", tag: "OBLIGATOIRE", tagType: "required" },
@@ -28,15 +29,27 @@ const CHAPTERS = [
 interface ModuleTranscripteurProps {
   aoNom?: string;
   dtaoReference?: string;
+  audios?: AudioSource[];
+  soumissionId?: string;
 }
 
 /**
  * 🎨 MODULE : TRANSRIPTEUR CCTP — Wired to DB (contextual)
  * Focus : Conversion des notes vocales terrain en chapitres du Mémoire Technique.
  */
-export function ModuleTranscripteur({ aoNom, dtaoReference }: ModuleTranscripteurProps) {
+export function ModuleTranscripteur({ aoNom, dtaoReference, audios = [], soumissionId }: ModuleTranscripteurProps) {
   const [expandedChapter, setExpandedChapter] = useState<string | null>("conception");
   const [selectedAudio, setSelectedAudio] = useState<string | null>(null);
+
+  if (audios.length === 0 && !aoNom) {
+    return (
+       <EmptyState 
+         icon={Mic}
+         titre="Transcripteur Prêt"
+         description="Commencez par enregistrer une note vocale ou activez l'IA pour générer le contenu de votre mémoire technique."
+       />
+    )
+  }
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6 items-start pb-8">
@@ -50,12 +63,12 @@ export function ModuleTranscripteur({ aoNom, dtaoReference }: ModuleTranscripteu
             </h3>
           </div>
           <span className="text-[10px] font-bold text-muted-foreground bg-muted px-2 py-0.5 rounded-[2px] tabular-nums">
-            {MOCK_AUDIOS.length} FILES
+            {audios.length} FILES
           </span>
         </div>
 
         <div className="space-y-3 max-h-[65vh] overflow-y-auto scrollbar-thin pr-2">
-          {MOCK_AUDIOS.map((audio) => (
+          {audios.map((audio) => (
             <button
               key={audio.id}
               onClick={() => setSelectedAudio(audio.id)}
@@ -101,10 +114,9 @@ export function ModuleTranscripteur({ aoNom, dtaoReference }: ModuleTranscripteu
           ))}
         </div>
 
-        <button className="w-full mt-6 py-3 bg-muted/40 hover:bg-muted border border-border border-dashed rounded-[4px] text-[10px] font-bold uppercase tracking-widest text-muted-foreground transition-all flex items-center justify-center gap-2">
-          <Plus className="w-3.5 h-3.5" />
-          Import Manuel
-        </button>
+        <div className="mt-6">
+          <TranscripteurAudio soumissionId={soumissionId || 'demo_soumission_id'} />
+        </div>
       </aside>
 
       {/* 📄 MAIN : MÉMOIRE TECHNIQUE ACCORDION */}

@@ -13,8 +13,8 @@ export const SABI_COPY = {
 
   NAVIGATION: {
     PILOTAGE: "Poste de Pilotage",
-    RADAR: "Le Radar (AO)",
-    OPPORTUNITES: "Opportunités",
+    RADAR: "Le Marché (Global)",
+    OPPORTUNITES: "Mes Opportunités",
     BLINDAGE: "Le Blindage (Conformité)",
     OFFRE_FINANCIERE: "Offre Financière",
     SOUMISSIONS: "Mes Soumissions",
@@ -43,7 +43,7 @@ export const SABI_COPY = {
       TITLE: "Filtres ARMP de Précision",
       TYPES: {
         AONO: "AONO (Appel d'Offres National Ouvert)",
-        AONR: "AONR (Appel d'Offres National Restreint) ",
+        AONR: "AONR (Appel d'Offres National Restreint)",
         DC: "DC (Demande de Cotations)",
         ASMI: "ASMI (Sollicitation de Manifestation d'Intérêt)",
       },

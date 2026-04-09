@@ -37,9 +37,14 @@ export async function getEntreprisesActives() {
  * Récupère les documents d'une entreprise
  */
 export async function getDocumentsEntreprise(entrepriseId: string) {
-  return await db.query.documentsEntreprise.findMany({
-    where: eq(documentsEntreprise.entrepriseId, entrepriseId),
-  })
+  try {
+    return await db.query.documentsEntreprise.findMany({
+      where: eq(documentsEntreprise.entrepriseId, entrepriseId),
+    })
+  } catch (e) {
+    console.error("Error in getDocumentsEntreprise:", e);
+    return []
+  }
 }
 
 /**

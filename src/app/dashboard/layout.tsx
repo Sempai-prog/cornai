@@ -26,17 +26,17 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { 
-  History, 
-  Search, 
-  ShieldCheck, 
-  LayoutDashboard, 
-  Map, 
-  FolderLock, 
-  ChevronLeft,
-  Target,
+  Globe,
   LogOut,
   Bell,
-  TrendingUp
+  TrendingUp,
+  Zap,
+  LayoutDashboard,
+  History,
+  FolderLock,
+  Map,
+  ChevronLeft,
+  ShieldCheck,
 } from "lucide-react"
 import { SABI_COPY } from "@/lib/SabiCopy";
 import { cn } from "@/lib/utils";
@@ -82,13 +82,14 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
       },
       { 
         title: SABI_COPY.NAVIGATION.RADAR, 
-        icon: Search, 
+        icon: Globe, 
         href: "/dashboard/appels-offres" 
       },
       { 
         title: SABI_COPY.NAVIGATION.OPPORTUNITES, 
-        icon: Target, 
-        href: "/dashboard/opportunites" 
+        icon: Zap, 
+        href: "/dashboard/opportunites",
+        badge: "IA"
       },
       { 
         title: SABI_COPY.NAVIGATION.SOUMISSIONS, 

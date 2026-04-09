@@ -3,117 +3,224 @@
 import * as React from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { 
-  GripVertical,
   Activity,
   ShieldAlert,
-  MoreHorizontal
+  ChevronRight
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useRouter } from "next/navigation"
 import { createOrGetSoumission } from "@/app/actions/soumissions"
 import { Badge } from "@/components/ui/badge"
+import { StandardPageHeader } from "@/components/layout/standard-page-header"
+import { SABI_COPY } from "@/lib/SabiCopy"
 import type { Opportunity, OpportunityStatus } from "@/app/actions/matchings-pipeline"
 
-const COLUMNS: { id: OpportunityStatus; label: string; description: string }[] = [
-  { id: 'QUALIF', label: 'Veille & Qualification', description: 'Matches IA' },
-  { id: 'DECISION', label: 'Go / No-Go', description: 'Critères RPAO' },
-  { id: 'MONTAGE', label: 'Montage Dossier', description: 'Enveloppes A,B,C' },
-  { id: 'DEPOT', label: 'Dépôt Plis', description: 'Dépôt COLEPS' },
-  { id: 'ATTRIBUTION', label: 'Attribution', description: 'Résultats' },
+// ═══════════════════════════════════════════
+// CONFIGURATION DES ÉTAPES DU PIPELINE
+// ═══════════════════════════════════════════
+const PIPELINE_STAGES = [
+  {
+    id: 'veille',
+    label: 'VEILLE & QUALIFICATION',
+    sublabel: 'Matches IA',
+    dot: 'bg-primary',           // Vert = actif
+  },
+  {
+    id: 'go_no_go',
+    label: 'GO / NO-GO',
+    sublabel: 'Critères RPAO',
+    dot: 'bg-amber-500',         // Orange = décision
+  },
+  {
+    id: 'montage',
+    label: 'MONTAGE DOSSIER',
+    sublabel: 'Enveloppes A, B, C',
+    dot: 'bg-primary',           // Vert = actif
+  },
+  {
+    id: 'soumis',
+    label: 'SOUMIS / EN ATTENTE',
+    sublabel: 'COLEPS · ARMP',
+    dot: 'bg-muted-foreground/30', // Gris = en attente
+  },
+  {
+    id: 'resultat',
+    label: 'RÉSULTATS',
+    sublabel: 'Attribution · Rejet',
+    dot: 'bg-muted-foreground/30', // Gris = futur
+  },
 ]
 
 export function OpportunitesBoard({ initialItems }: { initialItems: Opportunity[] }) {
   const [items, setItems] = React.useState(initialItems)
 
-  // Recalculate global score for the sidebar
   const avgScore = items.length > 0 
     ? (items.reduce((acc, curr) => acc + curr.score, 0) / items.length).toFixed(1)
     : "0.0"
 
-  return (
-    <div className="flex flex-col gap-8 animate-in fade-in duration-500 antialiased bg-transparent h-[calc(100vh-140px)]">
-      
-      {/* HEADER */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-border/10 mt-0 lg:mt-[-4px] shrink-0">
-        <div className="space-y-1.5">
-          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
-            Pipeline Opportunités <span className="text-muted-foreground/30 font-light">/</span> <span className="text-primary/70">JDM</span>
-          </h1>
-          <p className="text-[11px] text-muted-foreground font-bold tracking-[0.2em] opacity-80 uppercase">
-            Management de Workflow Industriel ARMP
-          </p>
-        </div>
+  // Grouper les opportunités par statut mappé aux stages
+  const byStage = {
+    veille: items.filter(o => o.status === 'QUALIF'),
+    go_no_go: items.filter(o => o.status === 'DECISION'),
+    montage: items.filter(o => o.status === 'MONTAGE'),
+    soumis: items.filter(o => o.status === 'DEPOT'),
+    resultat: items.filter(o => o.status === 'ATTRIBUTION'),
+  }
 
-        <div className="flex items-center gap-3">
-          <div className="flex -space-x-2">
-            {[1, 2, 3].map(i => (
-              <div key={i} className="h-7 w-7 rounded-full border-2 border-background bg-muted/60" />
-            ))}
-          </div>
-          <p className="text-[10px] font-semibold text-foreground/40 uppercase tracking-widest">+{items.length} Opportunités</p>
-        </div>
-      </div>
+  return (
+    <div className="flex flex-col gap-8 animate-in fade-in duration-700 antialiased bg-transparent min-h-screen">
+      
+      {/* HEADER — Standard SABI V1.6 */}
+      <StandardPageHeader
+        title={SABI_COPY.NAVIGATION.OPPORTUNITES}
+        metadata="POSTE DE PILOTAGE — SÉLECTION IA"
+        description={
+          <p>
+            Opportunités qualifiées spécifiquement pour le profil <span className="text-primary font-bold">Antigravity BTP</span> par le moteur SABI Matcher.
+            <span className="block mt-1">
+              Visualisation chirurgicale du flux <span className="text-foreground/40 font-black uppercase tracking-widest">ARMP / COLEPS</span>.
+            </span>
+          </p>
+        }
+        cardA={{
+          label: "OPPORTUNITÉS",
+          value: items.length.toString().padStart(2, '0'),
+          subtext: "Filtrées par IA",
+          color: "primary",
+        }}
+        cardB={{
+          label: "CONFIANCE IA",
+          value: `${avgScore}%`,
+          subtext: "Indice de Match",
+          progress: parseFloat(avgScore),
+          color: "emerald",
+        }}
+      />
 
       {/* WORKSPACE */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 flex-1 min-h-0">
         
-        {/* KANBAN BOARD */}
+        {/* TIMELINE COLUMN */}
         <div className="lg:col-span-8 flex flex-col min-w-0 h-full">
-          <div className="flex items-center justify-between mb-6 h-6 shrink-0">
-            <h2 className="text-[11px] font-bold text-foreground/40 uppercase tracking-[0.2em]">
-              Cycle de Vie des Soumissions
-            </h2>
-          </div>
+            <div className="relative">
+              {/* Titre de section */}
+              <div className="flex items-center gap-3 mb-6">
+                <span className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">
+                  Cycle de Vie des Soumissions
+                </span>
+                <div className="flex-1 h-px bg-primary/20" />
+                <span className="text-[10px] font-bold text-muted-foreground/40 uppercase tracking-widest">
+                  {items.length} dossier{items.length !== 1 ? 's' : ''} actif{items.length !== 1 ? 's' : ''}
+                </span>
+              </div>
 
-          <div className="flex gap-4 overflow-x-auto min-h-0 h-full pb-6 custom-scrollbar scroll-smooth">
-             {COLUMNS.map((column) => (
-               <KanbanColumn 
-                 key={column.id} 
-                 column={column} 
-                 items={items.filter(opt => opt.status === column.id)} 
-               />
-             ))}
-          </div>
+              {/* Timeline */}
+              <div className="relative pl-6">
+                
+                {/* Ligne verticale de connexion */}
+                <div className="absolute left-[7px] top-4 bottom-4 w-px bg-border/5" />
+
+                {PIPELINE_STAGES.map((stage) => {
+                  const stageOpps = byStage[stage.id as keyof typeof byStage] || []
+                  const isEmpty = stageOpps.length === 0
+
+                  return (
+                    <div key={stage.id} className="relative mb-6 last:mb-0">
+
+                      {/* ─── EN-TÊTE DE L'ÉTAPE ─── */}
+                      <div className="flex items-center gap-3 py-2 sticky top-0 bg-background z-10 mb-4">
+                        {/* Dot de l'étape */}
+                        <div className={cn(
+                          "absolute -left-[23px] h-3.5 w-3.5 rounded-full border-2 border-background flex items-center justify-center z-20",
+                          isEmpty ? "bg-muted/30" : stage.dot
+                        )} />
+
+                        {/* Label étape */}
+                        <div className="flex items-center gap-3 flex-1">
+                          <span className={cn(
+                            "text-[11px] font-black uppercase tracking-[0.2em]",
+                            isEmpty ? "text-muted-foreground/20" : "text-foreground/80"
+                          )}>
+                            {stage.label}
+                          </span>
+                          <span className="text-[10px] font-bold text-muted-foreground/20 uppercase tracking-widest">
+                            {stage.sublabel}
+                          </span>
+                        </div>
+
+                        {/* Compteur */}
+                        <span className={cn(
+                          "text-[10px] font-black px-2 py-0.5 rounded-[2px] transition-colors",
+                          stageOpps.length > 0
+                            ? "bg-primary/10 text-primary border border-primary/20"
+                            : "bg-muted/10 text-muted-foreground/20 border border-border/5"
+                        )}>
+                          {stageOpps.length} AO
+                        </span>
+
+                        {/* Ligne horizontale */}
+                        <div className="flex-none w-8 h-px bg-border/5" />
+                      </div>
+
+                      {/* ─── CARDS DE L'ÉTAPE ─── */}
+                      <div className="space-y-3 pb-2">
+                        {stageOpps.length > 0 ? (
+                          <AnimatePresence mode="popLayout">
+                            {stageOpps.map((opp) => (
+                              <PipelineRow key={opp.id} opportunity={opp} />
+                            ))}
+                          </AnimatePresence>
+                        ) : (
+                          <EmptyStageRow stage={stage} />
+                        )}
+                      </div>
+
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
         </div>
 
         {/* SIDEBAR ANALYTICS */}
         <div className="lg:col-span-4 flex flex-col gap-4 sticky top-6 self-start shrink-0">
            <div className="flex items-center mb-6 h-6">
-             <h2 className="text-[11px] font-bold text-foreground/40 uppercase tracking-[0.2em]">
+             <h2 className="text-[11px] font-black text-foreground/40 uppercase tracking-[0.2em]">
                Diagnostic Pipeline
              </h2>
            </div>
 
-           <div className="bg-card border border-border/10 rounded-[4px] p-6 shadow-none">
-             <div className="flex items-center gap-3 pb-4 border-b border-border/10 mb-6">
-               <Activity className="h-5 w-5 text-primary/60" />
-               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/30">
-                 Performance Matching
-               </span>
+           <div className="bg-card border border-border/5 rounded-[4px] p-6 shadow-none flex flex-col gap-6">
+             <div className="flex items-center gap-3 pb-4 border-b border-border/5">
+                <div className="h-10 w-10 rounded-[4px] bg-primary/5 flex items-center justify-center border border-primary/10">
+                  <Activity className="h-5 w-5 text-primary" />
+                </div>
+                <div className="space-y-0.5">
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/30">
+                    Performance Match
+                  </span>
+                  <p className="text-2xl font-extrabold tracking-tighter text-foreground tabular-nums">{avgScore}%</p>
+                </div>
              </div>
              
-             <div className="space-y-4">
-               <div className="p-4 rounded-[4px] bg-primary/5 border border-primary/10">
-                 <p className="text-[10px] font-bold text-primary uppercase tracking-[0.2em] mb-1">Score Global</p>
-                 <p className="text-2xl font-semibold tracking-tighter text-foreground">{avgScore}%</p>
-                 <p className="text-[11px] text-foreground/50 font-medium leading-relaxed mt-2 tracking-tight">
-                   Ce score reflète l&apos;adéquation entre votre profil technique et les appels d&apos;offres détectés.
-                 </p>
-               </div>
-             </div>
+             <p className="text-[11px] text-foreground/50 font-medium leading-relaxed tracking-tight">
+               Ce score d'adéquation diagnostique votre éligibilité technique selon les critères critiques du <span className="font-bold">RPAO</span>.
+             </p>
            </div>
 
-           <div className="bg-card border border-border/10 rounded-[4px] p-6 shadow-none">
-             <div className="flex items-center gap-3 pb-4 border-b border-border/10 mb-6">
-               <ShieldAlert className="h-5 w-5 text-amber-500/60" />
-               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/30">
-                 Alerte Capacité
-               </span>
+           <div className="bg-card border border-border/5 rounded-[4px] p-6 shadow-none">
+             <div className="flex items-center gap-3 pb-4 border-b border-border/5 mb-6">
+                <div className="h-10 w-10 rounded-[4px] bg-amber-500/5 flex items-center justify-center border border-amber-500/10 text-amber-500">
+                  <ShieldAlert className="h-5 w-5" />
+                </div>
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/30">
+                  Alerte Capacité
+                </span>
              </div>
              <p className="text-[11px] text-foreground/60 font-medium leading-relaxed tracking-tight">
                 {items.filter(i => i.status === 'MONTAGE').length > 0 
-                  ? `Vous avez ${items.filter(i => i.status === 'MONTAGE').length} dossiers en montage. Surveillez l'encours de vos cautions de soumission.`
-                  : "Aucun dossier en montage pour le moment. Votre capacité financière est optimale."
+                  ? `Analyse SABI : ${items.filter(i => i.status === 'MONTAGE').length} dossiers en cours. Risque de saturation de cautionnement identifié.`
+                  : "Aucun dossier critique en montage. Capacité financière de soumission disponible."
                 }
              </p>
            </div>
@@ -123,107 +230,114 @@ export function OpportunitesBoard({ initialItems }: { initialItems: Opportunity[
   )
 }
 
-function KanbanColumn({ column, items }: { column: typeof COLUMNS[0], items: Opportunity[] }) {
-  return (
-    <div className="w-[280px] shrink-0 flex flex-col h-full bg-muted/10 border border-border/10 rounded-[4px] p-2 transition-colors">
-       <div className="flex items-center justify-between px-3 py-3 mb-2 shrink-0">
-          <div className="space-y-0.5">
-             <h3 className="text-[11px] font-bold text-foreground/50 uppercase tracking-[0.2em] flex items-center gap-2 transition-colors">
-                {column.label}
-                <span className="text-[10px] text-muted-foreground/30 font-bold">{items.length}</span>
-             </h3>
-             <p className="text-[10px] text-muted-foreground/30 font-bold uppercase tracking-[0.2em] transition-colors">{column.description}</p>
-          </div>
-          <MoreHorizontal className="h-4 w-4 text-foreground/10 hover:text-foreground/40 cursor-pointer transition-colors" />
-       </div>
+function PipelineRow({ opportunity }: { opportunity: Opportunity }) {
+  const router = useRouter()
+  const [isStarting, setIsStarting] = React.useState(false)
 
-       <div className="flex-1 overflow-y-auto space-y-3 p-1 custom-scrollbar">
-          <AnimatePresence mode="popLayout">
-            {items.map((item) => (
-               <OpportunityCard key={item.id} item={item} />
-            ))}
-          </AnimatePresence>
-          
-          <button className="w-full py-4 border border-dashed border-border/40 rounded-[4px] text-[10px] font-bold uppercase tracking-widest text-muted-foreground/20 hover:text-primary hover:border-primary/20 transition-all">
-             + Ajouter une veille
-          </button>
-       </div>
-    </div>
+  const scoreColor = opportunity.score >= 60
+    ? 'text-primary'
+    : opportunity.score >= 30
+      ? 'text-amber-500'
+      : 'text-red-500'
+
+  const statutLabel = opportunity.status === 'QUALIF' ? 'INDÉFINI' : 'EN COURS'
+  const statutConfig = {
+    'INDÉFINI': { bg: 'bg-muted/10', text: 'text-muted-foreground/40', border: 'border-border/5' },
+    'EN COURS': { bg: 'bg-primary/5', text: 'text-primary', border: 'border-primary/10' },
+    'URGENT': { bg: 'bg-red-500/5', text: 'text-red-500', border: 'border-red-500/10' },
+  }[opportunity.isUrgent ? 'URGENT' : statutLabel] || { bg: 'bg-muted/10', text: 'text-muted-foreground', border: 'border-border/5' }
+
+  const handleAction = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    if (isStarting) return
+    setIsStarting(true)
+    try {
+        const res = await createOrGetSoumission(opportunity.id)
+        if (res.success && res.id) {
+            router.push(`/dashboard/terrain?soumissionId=${res.id}`)
+        }
+    } catch (err) {
+        console.error(err)
+    } finally {
+        setIsStarting(false)
+    }
+  }
+
+  return (
+    <motion.div 
+      layout
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      whileHover={{ x: 4 }}
+      onClick={handleAction}
+      className={cn(
+        "group bg-card border border-border/5 rounded-[4px] p-4 cursor-pointer transition-all hover:border-primary/20 shadow-none relative overflow-hidden",
+        isStarting && "opacity-50 grayscale"
+      )}
+    >
+      {/* Ligne 1 : Autorité · Secteur + Score + Statut */}
+      <div className="flex items-center justify-between gap-3 mb-2.5">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="text-[10px] font-black text-foreground/20 uppercase tracking-[0.2em] truncate group-hover:text-primary/60 transition-colors">
+            {opportunity.ac} <span className="opacity-40 font-bold ml-1">/ {opportunity.type}</span>
+          </span>
+        </div>
+        <div className="flex items-center gap-3 shrink-0">
+          <span className={cn("text-[10px] font-black tracking-widest tabular-nums", scoreColor)}>
+            {Math.round(opportunity.score || 0)}% MATCH
+          </span>
+          <span className={cn(
+            "text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-[2px] border",
+            statutConfig.bg, statutConfig.text, statutConfig.border
+          )}>
+            {statutLabel}
+          </span>
+        </div>
+      </div>
+
+      {/* Ligne 2 : Titre de l'AO */}
+      <p className="text-[13px] font-bold text-foreground/80 mb-3 line-clamp-2 leading-tight tracking-tight group-hover:text-foreground transition-colors">
+        {opportunity.title}
+      </p>
+
+      {/* Ligne 3 : Métadonnées */}
+      <div className="flex items-center justify-between pt-3 border-t border-border/5">
+        <div className="flex items-center gap-4 text-[10px] font-bold text-muted-foreground/30 uppercase tracking-widest">
+          {/* Caution */}
+          <span className="flex items-center gap-1.5">
+            CAUTION : <span className="text-foreground/40 font-black tabular-nums tracking-tighter">{opportunity.caution}</span>
+          </span>
+          {/* Enveloppes */}
+          <span className="flex items-center gap-1.5">
+            ENV. <div className="flex gap-1 items-center">
+              <div className={cn("w-1.5 h-1.5 rounded-full", opportunity.envelopes.a ? "bg-primary/40" : "bg-muted/10")} />
+              <div className={cn("w-1.5 h-1.5 rounded-full", opportunity.envelopes.b ? "bg-primary/40" : "bg-muted/10")} />
+              <div className={cn("w-1.5 h-1.5 rounded-full", opportunity.envelopes.c ? "bg-primary/40" : "bg-muted/10")} />
+            </div>
+          </span>
+          {/* Date limite */}
+          <span className={cn("font-black tracking-widest", opportunity.isUrgent ? "text-red-500/50" : "text-amber-500/30")}>
+            {opportunity.deadline}
+          </span>
+        </div>
+
+        {/* Bouton action */}
+        <div className="flex items-center gap-1 text-[10px] font-black text-primary hover:text-primary/80 uppercase tracking-[0.2em] transition-all opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0">
+          TERRAIN
+          <ChevronRight className="h-3.5 w-3.5" />
+        </div>
+      </div>
+    </motion.div>
   )
 }
 
-function OpportunityCard({ item }: { item: Opportunity }) {
-    const router = useRouter()
-    const [isStarting, setIsStarting] = React.useState(false)
-
-    const handleAction = async () => {
-        if (isStarting) return
-        setIsStarting(true)
-        try {
-            const res = await createOrGetSoumission(item.id)
-            if (res.success && res.id) {
-                router.push(`/dashboard/terrain?soumissionId=${res.id}`)
-            }
-        } catch (err) {
-            console.error(err)
-        } finally {
-            setIsStarting(false)
-        }
-    }
-
-    return (
-    <motion.div 
-      layout
-      whileHover={{ y: -2, borderColor: "var(--border)" }}
-      onClick={handleAction}
-      className={cn(
-        "bg-card border border-border/10 rounded-[4px] p-4 cursor-pointer transition-all hover:bg-card hover:border-border/60 shadow-none",
-        isStarting && "opacity-50 grayscale",
-        "active:scale-[0.98] active:z-50 duration-200"
-      )}
-    >
-       <div className="flex justify-between items-start mb-2.5">
-          <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-muted-foreground/50 transition-colors uppercase">{item.ac} <span className="opacity-40 font-bold lowercase">/ {item.type}</span></span>
-          <div className="flex items-center gap-2">
-              <Badge className={cn(
-                "text-[10px] font-bold px-1.5 py-0.5 rounded-[4px] border-none shadow-none uppercase tracking-wider",
-                item.isUrgent ? "bg-red-500/10 text-red-500" : "bg-primary/10 text-primary"
-              )}>
-                {item.deadline}
-              </Badge>
-              <GripVertical size={14} className="text-muted-foreground/20 hover:text-foreground transition-colors" />
-          </div>
-       </div>
-
-       <h4 className="text-[12px] font-semibold text-foreground/90 line-clamp-2 leading-tight mb-4 tracking-tight transition-colors">
-          {item.title}
-       </h4>
-
-       <div className="flex items-center gap-4 mb-4">
-          <div className="flex gap-1.5">
-             <div className={cn("w-1.5 h-1.5 rounded-full", item.envelopes.a ? "bg-primary" : "bg-muted/30")} />
-             <div className={cn("w-1.5 h-1.5 rounded-full", item.envelopes.b ? "bg-primary" : "bg-muted/30")} />
-             <div className={cn("w-1.5 h-1.5 rounded-full", item.envelopes.c ? "bg-primary" : "bg-muted/30")} />
-          </div>
-          <span className="text-[10px] font-bold text-foreground/15 uppercase tracking-[0.25em] transition-colors">Enveloppes A • B • C</span>
-       </div>
-
-       <div className="flex justify-between items-end pt-3 border-t border-border/10">
-          <div className="flex flex-col gap-0.5">
-             <span className="text-[10px] font-bold text-muted-foreground/30 uppercase tracking-widest transition-colors">Caution</span>
-             <span className="text-[10px] text-muted-foreground/60 font-mono tracking-tighter flex items-center gap-1.5 transition-colors">
-                <ShieldAlert size={10} className={item.caution !== "N/A" ? "text-amber-500/40" : "text-muted-foreground/10"} />
-                {item.caution}
-             </span>
-          </div>
-          
-          <div className="flex flex-col items-end gap-0.5">
-             <span className="text-[10px] font-bold text-foreground/20 uppercase tracking-widest transition-colors">Match IA</span>
-             <Badge className="bg-primary/5 text-primary border border-primary/20 hover:bg-primary/10 transition-colors text-[10px] font-bold px-1.5 py-0.5 rounded-[4px] shadow-none">
-                {item.score}% Match
-             </Badge>
-          </div>
-       </div>
-    </motion.div>
+function EmptyStageRow({ stage }: { stage: typeof PIPELINE_STAGES[0] }) {
+  return (
+    <div className="bg-muted/5 border border-border/5 border-dashed rounded-[4px] p-6 flex items-center justify-center transition-colors hover:bg-muted/8">
+      <span className="text-[10px] text-muted-foreground/20 font-black uppercase tracking-[0.25em]">
+        Aucun dossier en phase {stage.label.toLowerCase()}
+      </span>
+    </div>
   )
 }

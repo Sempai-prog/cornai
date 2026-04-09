@@ -1,0 +1,14 @@
+﻿C:\Users\HP\.gemini\antigravity\scratch\cornai\src\app\(auth)\login\page.tsx
+C:\Users\HP\.gemini\antigravity\scratch\cornai\src\app\(auth)\register\page.tsx
+C:\Users\HP\.gemini\antigravity\scratch\cornai\src\app\dashboard\analytics\page.tsx
+C:\Users\HP\.gemini\antigravity\scratch\cornai\src\app\dashboard\annexe-16\page.tsx
+C:\Users\HP\.gemini\antigravity\scratch\cornai\src\app\dashboard\appels-offres\[id]\page.tsx
+C:\Users\HP\.gemini\antigravity\scratch\cornai\src\app\dashboard\appels-offres\page.tsx
+C:\Users\HP\.gemini\antigravity\scratch\cornai\src\app\dashboard\documents\page.tsx
+C:\Users\HP\.gemini\antigravity\scratch\cornai\src\app\dashboard\notifications\page.tsx
+C:\Users\HP\.gemini\antigravity\scratch\cornai\src\app\dashboard\opportunites\page.tsx
+C:\Users\HP\.gemini\antigravity\scratch\cornai\src\app\dashboard\page.tsx
+C:\Users\HP\.gemini\antigravity\scratch\cornai\src\app\dashboard\profil\page.tsx
+C:\Users\HP\.gemini\antigravity\scratch\cornai\src\app\dashboard\soumissions\page.tsx
+C:\Users\HP\.gemini\antigravity\scratch\cornai\src\app\dashboard\terrain\page.tsx
+C:\Users\HP\.gemini\antigravity\scratch\cornai\src\app\page.tsx

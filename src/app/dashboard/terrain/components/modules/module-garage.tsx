@@ -15,6 +15,8 @@ import {
 import { cn } from "@/lib/utils";
 import { StatusBadge } from "../shared/status-badge";
 import { AlertPanel } from "../shared/alert-panel";
+import { EmptyState } from "@/components/ui/empty-state";
+import { DialogAjoutEngin } from "@/components/terrain/dialog-ajout-engin";
 
 interface MaterielItem {
   id: string;
@@ -57,14 +59,15 @@ export function ModuleGarage({ materiel, aoReference }: ModuleGarageProps) {
   // Empty state
   if (materiel.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-24 text-center space-y-4">
-        <div className="w-16 h-16 rounded-[4px] bg-muted/30 border border-border flex items-center justify-center">
-          <Warehouse className="w-8 h-8 text-muted-foreground/30" />
+      <div className="flex flex-col items-center justify-center p-12 bg-card border border-border/50 border-dashed rounded-[4px]">
+        <div className="w-16 h-16 rounded-full bg-primary/5 flex items-center justify-center mb-4">
+          <Warehouse className="w-8 h-8 text-primary/50" />
         </div>
-        <h3 className="text-sm font-bold text-foreground uppercase tracking-wider">Aucun Matériel Enregistré</h3>
-        <p className="text-[11px] text-muted-foreground max-w-md">
-          Ajoutez les engins et équipements requis par le RPAO pour activer ce module.
+        <h3 className="text-sm font-bold text-foreground mb-2 uppercase tracking-widest">Garage Vide</h3>
+        <p className="text-xs text-muted-foreground text-center max-w-md mx-auto mb-6">
+          Aucun engin n'est actuellement assigné à cette soumission. Ajoutez le matériel dédié (ex: Camions, Niveleuses) pour construire votre dossier technique et générer la documentation conforme au RPAO.
         </p>
+        <DialogAjoutEngin />
       </div>
     );
   }
@@ -147,6 +150,8 @@ export function ModuleGarage({ materiel, aoReference }: ModuleGarageProps) {
               className="w-full bg-background/50 border border-border rounded-[4px] py-2 pl-10 pr-4 text-[10px] font-bold uppercase tracking-wider focus:outline-none focus:border-primary/40 transition-colors placeholder:text-muted-foreground/30"
             />
           </div>
+          
+          <DialogAjoutEngin />
         </div>
 
         {/* Dense Data Grid */}

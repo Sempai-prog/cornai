@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
 import { ProgressBar } from "../shared/progress-bar";
 import { StatusBadge } from "../shared/status-badge";
 import { AlertPanel } from "../shared/alert-panel";
+import { EmptyState } from "@/components/ui/empty-state";
 
 interface PieceSoumission {
   id: string;
@@ -50,15 +51,11 @@ export function ModuleColeps({ pieces, moduleStatuts }: ModuleColepsProps) {
   // Empty state
   if (pieces.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-24 text-center space-y-4">
-        <div className="w-16 h-16 rounded-[4px] bg-muted/30 border border-border flex items-center justify-center">
-          <FileArchive className="w-8 h-8 text-muted-foreground/30" />
-        </div>
-        <h3 className="text-sm font-bold text-foreground uppercase tracking-wider">Aucune Pièce Compilée</h3>
-        <p className="text-[11px] text-muted-foreground max-w-md">
-          Complétez d'abord les modules Transcripteur, Garage et Personnel pour générer les pièces du Volume 2.
-        </p>
-      </div>
+      <EmptyState
+        icon={FileArchive}
+        titre="Index Vide"
+        description="Aucune pièce n'a été compilée pour le moment. Gérez les modules précédents pour alimenter le Volume 2."
+      />
     );
   }
 

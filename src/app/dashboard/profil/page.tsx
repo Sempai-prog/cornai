@@ -10,12 +10,12 @@ import { StandardPageHeader } from "@/components/layout/standard-page-header"
 import { getProfilEntreprise, getReferencesEntreprise, calculateCompanyAge } from "@/database/queries/profil"
 import { EditableField } from "@/components/profil/editable-field"
 import { ProfilImprovementButton } from "@/components/profil/profile-actions"
-
-const DEMO_ENTREPRISE_ID = "cf83af70-d49b-4a72-8222-201f08a05a8a"
+import { getEntrepriseContext } from "@/lib/demo-config"
 
 export default async function ProfilCapacitePage() {
-  const profile = await getProfilEntreprise(DEMO_ENTREPRISE_ID)
-  const references = await getReferencesEntreprise(DEMO_ENTREPRISE_ID)
+  const { entrepriseId } = await getEntrepriseContext();
+  const profile = await getProfilEntreprise(entrepriseId)
+  const references = await getReferencesEntreprise(entrepriseId)
 
   if (!profile) return <div>Profil non trouvé.</div>
 

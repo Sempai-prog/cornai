@@ -1,0 +1,8 @@
+﻿src/app/dashboard/annexe-16/page.tsx(100,110): error TS2345: Argument of type 'Date | null | undefined' is not assignable to parameter of type 'string | Date | null'.
+  Type 'undefined' is not assignable to type 'string | Date | null'.
+src/app/dashboard/soumissions/page.tsx(31,48): error TS2367: This comparison appears to be unintentional because the types 'SubmissionStatus' and '"DEPOT"' have no overlap.
+src/app/dashboard/soumissions/soumissions-client.tsx(71,9): error TS2322: Type '{ deadline: string | Date; title: string; } | undefined' is not assignable to type '{ deadline: string; title: string; } | undefined'.
+  Type '{ deadline: string | Date; title: string; }' is not assignable to type '{ deadline: string; title: string; }'.
+    Types of property 'deadline' are incompatible.
+      Type 'string | Date' is not assignable to type 'string'.
+        Type 'Date' is not assignable to type 'string'.

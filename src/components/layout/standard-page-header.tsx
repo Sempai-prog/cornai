@@ -31,34 +31,44 @@ function HeaderCard({ label, value, subtext, color = "primary", progress, valueC
   };
 
   return (
-    <div className="size-36 aspect-square bg-card border border-border/10 rounded-[4px] p-5 flex flex-col justify-between overflow-hidden relative group/card shadow-none">
-      <div className="flex flex-col gap-1">
-        <div className={cn("w-6 h-[1.5px] mb-1.5", colorMap[color])} />
-        <span className={cn("text-[11px] font-bold text-muted-foreground/30 leading-tight", labelClassName)}>
+    <div className="size-36 bg-card border border-border/10 rounded-[4px] p-4 flex flex-col justify-between overflow-hidden relative group/card shadow-none">
+      {/* 1. TOP : INDICATOR + LABEL */}
+      <div className="flex flex-col gap-1.5 shrink-0 overflow-hidden">
+        <div className={cn("w-6 h-[1.5px] transition-all duration-300", colorMap[color])} />
+        <span className={cn(
+          "text-[9px] font-bold text-muted-foreground/30 leading-none uppercase tracking-widest whitespace-nowrap overflow-hidden text-ellipsis", 
+          labelClassName
+        )}>
           {label}
         </span>
       </div>
 
-      <div className="space-y-4">
-        <div className="flex items-baseline gap-1">
-          <span className={cn("text-3xl font-bold tracking-tighter leading-none tabular-nums text-foreground/90", valueClassName)}>
-            {value}
-          </span>
+      {/* 2. CENTER : MAIN VALUE (PERFECT VERTICAL CENTERING) */}
+      <div className="flex-1 flex items-center justify-center py-2 overflow-hidden px-1">
+        <span className={cn(
+          "text-2xl font-black tracking-tighter leading-[1.1] tabular-nums text-foreground/90 text-center line-clamp-2", 
+          valueClassName
+        )}>
+          {value}
+        </span>
+      </div>
+      
+      {/* 3. BOTTOM : INDICATOR + SUBTEXT */}
+      <div className="flex flex-col gap-2 shrink-0 overflow-hidden">
+        {/* Dynamic or Static Balance Bar */}
+        <div className="h-[1.5px] w-full bg-muted/10 rounded-full overflow-hidden relative">
+          <div 
+            className={cn("h-full transition-all duration-500 ease-out", colorMap[color])} 
+            style={{ width: progress !== undefined ? `${progress}%` : '24px' }}
+          />
         </div>
         
-        <div className="flex flex-col gap-1.5">
-          {progress !== undefined && (
-            <div className="h-[2px] w-full bg-muted/20 rounded-[4px] overflow-hidden">
-              <div 
-                className={cn("h-full", colorMap[color])} 
-                style={{ width: `${progress}%` }}
-              />
-            </div>
-          )}
-          <span className={cn("text-[10px] font-medium leading-tight", progress !== undefined ? "text-muted-foreground/30" : textMap[color])}>
-            {subtext}
-          </span>
-        </div>
+        <span className={cn(
+          "text-[8px] font-bold uppercase tracking-widest leading-none whitespace-nowrap overflow-hidden text-ellipsis", 
+          progress !== undefined ? "text-muted-foreground/40" : textMap[color]
+        )}>
+          {subtext}
+        </span>
       </div>
     </div>
   );

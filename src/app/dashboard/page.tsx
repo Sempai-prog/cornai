@@ -27,14 +27,14 @@ import {
 } from "@/database/queries/dashboard";
 import { getDocumentsEntreprise } from "@/database/queries/entreprise";
 import { cn, formatXAF, joursRestants } from "@/lib/utils";
+import { getEntrepriseContext } from "@/lib/demo-config";
 import { SearchResultRow } from "@/components/search/search-result-row";
 import { mapDBAOToUI } from "@/components/search/search-utils";
 
 export const dynamic = "force-dynamic";
 
 export default async function DashboardHome() {
-  // TODO: Remplacer par l'ID de l'entreprise connectée une fois l'auth câblée
-  const entrepriseId = "cf83af70-d49b-4a72-8222-201f08a05a8a"; 
+  const { entrepriseId } = await getEntrepriseContext();
 
   // Fetch initial des données en parallèle
   const [
@@ -98,9 +98,9 @@ export default async function DashboardHome() {
 
 
       {/* ───────────────────────────────────────────────────────────
-          PLAN 2 — METRIC RIBBON (FUSION ABSOLUE - divide-x)
+          PLAN 2 — METRICS (TAB BAR STRUCTURE - BRUTALISM)
           ─────────────────────────────────────────────────────────── */}
-      <div className="w-full grid grid-cols-1 md:grid-cols-4 border border-border/10 divide-y md:divide-y-0 md:divide-x divide-border/10 rounded-[4px] bg-card shadow-none overflow-hidden">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 p-1.5 bg-card border border-border/10 rounded-[4px] shadow-none overflow-hidden">
         {[
           {
             label: SABI_COPY.DASHBOARD.STATS.COMPLIANCE,
@@ -133,38 +133,53 @@ export default async function DashboardHome() {
         ].map((kpi, i) => (
           <div
             key={i}
-            className="flex flex-col justify-center p-5 hover:bg-muted transition-all group"
+             className={cn(
+              "flex items-center gap-4 px-4 py-4 rounded-[4px] transition-all duration-300 relative group border",
+              kpi.trendType === "alert" 
+                ? "bg-red-500/5 text-foreground border-red-500/10" 
+                : "bg-muted/10 text-foreground border-transparent hover:bg-muted/30 hover:border-border/50"
+            )}
           >
-            <div className="flex items-center gap-2.5 mb-4 opacity-40 group-hover:opacity-100 transition-opacity">
-              <kpi.icon
-                className={cn(
-                  "h-4 w-4",
-                  kpi.trendType === "alert" ? "text-red-500" : "text-primary",
-                )}
-              />
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground truncate">
-                {kpi.label}
-              </span>
-            </div>
+             {/* Indicator Bar */}
+             {(kpi.trendType === "alert" || kpi.trendType === "pos") && (
+               <div className={cn(
+                 "absolute bottom-1.5 left-1.5 right-1.5 h-[1.5px]",
+                 kpi.trendType === "alert" ? "bg-red-500/80" : "bg-primary/80 opacity-0 group-hover:opacity-100 transition-opacity"
+               )} />
+             )}
 
-            <div className="flex items-baseline gap-3 leading-none">
-              <span className="text-3xl font-semibold tracking-tighter text-foreground">
-                {kpi.value}
-              </span>
+             <div className="relative shrink-0">
+               <kpi.icon className={cn(
+                  "w-5 h-5 transition-all duration-300", 
+                  kpi.trendType === "alert" ? "text-red-500 scale-110" : "text-muted-foreground/40 group-hover:text-primary group-hover:scale-110"
+                )} />
+                <div 
+                  className={cn(
+                    "absolute -bottom-1 -right-1 w-2.5 h-2.5 rounded-full border-2 border-card z-10",
+                    kpi.trendType === "pos" ? "bg-primary" : kpi.trendType === "alert" ? "bg-red-500" : "bg-muted-foreground/20"
+                  )}
+                />
+             </div>
 
-              <span
-                className={cn(
-                  "text-[10px] font-bold uppercase tracking-[0.1em]",
-                  kpi.trendType === "pos"
-                    ? "text-primary/80"
-                    : kpi.trendType === "alert"
-                      ? "text-red-500/80"
-                      : "text-foreground/30",
-                )}
-              >
-                {kpi.trend}
-              </span>
-            </div>
+              <div className="flex flex-col items-start min-w-0 flex-1">
+                 <span className={cn(
+                   "text-[10px] font-bold uppercase tracking-[0.1em] leading-none truncate w-full mb-1",
+                   "text-muted-foreground/60 group-hover:text-muted-foreground transition-colors"
+                 )}>
+                   {kpi.label}
+                 </span>
+                 <div className="flex items-baseline gap-2.5 w-full h-6 overflow-hidden">
+                   <span className="text-xl font-bold tracking-tight text-foreground leading-none tabular-nums">
+                     {kpi.value}
+                   </span>
+                  <span className={cn(
+                    "text-[8px] font-bold uppercase tracking-tight transition-colors truncate",
+                    kpi.trendType === "pos" ? "text-primary/70" : kpi.trendType === "alert" ? "text-red-500/70" : "text-muted-foreground/50 group-hover:text-muted-foreground/80"
+                  )}>
+                    {kpi.trend}
+                  </span>
+                </div>
+             </div>
           </div>
         ))}
       </div>
