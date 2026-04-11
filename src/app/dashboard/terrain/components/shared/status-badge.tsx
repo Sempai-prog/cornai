@@ -37,7 +37,7 @@ export function StatusBadge({ status, className }: StatusBadgeProps) {
 
   return (
     <div className={cn(
-      "px-2 py-0.5 rounded-sabi text-[10px] font-bold uppercase tracking-tight inline-flex items-center justify-center",
+      "px-2 py-0.5 rounded-sabi text-[10px] font-semibold uppercase tracking-tight inline-flex items-center justify-center",
       config.bg,
       config.color,
       className

@@ -43,3 +43,14 @@ export async function getSoumissionsEnCoursCount(entrepriseId: string) {
   })
   return results.length
 }
+/**
+ * Récupère une soumission complète avec toutes ses relations (AO, etc.)
+ */
+export async function getSoumissionComplete(id: string) {
+  return await db.query.soumissions.findFirst({
+    where: eq(soumissions.id, id),
+    with: {
+      appelOffre: true
+    }
+  })
+}

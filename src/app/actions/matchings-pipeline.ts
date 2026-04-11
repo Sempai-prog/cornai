@@ -39,8 +39,8 @@ export async function getPipelineOpportunities(): Promise<Opportunity[]> {
     const soumissionMap = new Map(allSoumissions.map(s => [s.appelOffreId, s]))
 
     // 3. Map to Opportunity type
-    const pipeline: Opportunity[] = allMatchings.map(m => {
-      const ao = m.appelOffre
+    const pipeline: Opportunity[] = allMatchings.filter(m => m.appelOffre != null).map(m => {
+      const ao = m.appelOffre!
       const s = soumissionMap.get(ao.id)
 
       // Calculate Deadline string

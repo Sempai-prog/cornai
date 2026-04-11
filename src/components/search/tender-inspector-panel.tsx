@@ -70,7 +70,7 @@ export function TenderInspectorPanel({
                <div className="flex items-center gap-3 mt-2 text-muted-foreground/60">
                   <div className="flex items-center gap-2 mb-2">
                     <ShieldCheck className="size-4 text-emerald-500" />
-                    <h3 className="text-[11px] font-bold uppercase tracking-wider text-foreground">
+                    <h3 className="text-[11px] font-semibold uppercase tracking-wider text-foreground">
                       Diagnostic du Blindage (Volume 1)
                     </h3>
                   </div>
@@ -82,7 +82,7 @@ export function TenderInspectorPanel({
             </div>
 
             <div className="hidden lg:flex items-center gap-2">
-               <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px] px-3 py-1 font-bold">
+               <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px] px-3 py-1 font-semibold">
                   {item.type || "DAO — NATIONAL"}
                </Badge>
             </div>
@@ -95,28 +95,28 @@ export function TenderInspectorPanel({
                   <span className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-wider">Budget Prévisionnel</span>
                   <div className="flex items-center gap-2">
                      <Wallet className="h-3.5 w-3.5 text-primary/60" />
-                     <span className="text-[13px] font-bold text-foreground/90">{item.budget || "450M FCFA"}</span>
+                     <span className="text-[13px] font-semibold text-foreground/90">{item.budget || "450M FCFA"}</span>
                   </div>
                </div>
                <div className="flex flex-col gap-1 border-l border-border/10 pl-4">
                   <span className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-wider">Caution de Soumission</span>
                   <div className="flex items-center gap-2">
                      <Scale className="h-3.5 w-3.5 text-primary/60" />
-                     <span className="text-[13px] font-bold text-foreground/90">{item.cautionSoumission || "9M FCFA"}</span>
+                     <span className="text-[13px] font-semibold text-foreground/90">{item.cautionSoumission || "9M FCFA"}</span>
                   </div>
                </div>
                <div className="flex flex-col gap-1 border-l border-border/10 pl-4">
                   <span className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-wider">Délai de Validité</span>
                   <div className="flex items-center gap-2">
                      <CalendarDays className="h-3.5 w-3.5 text-primary/60" />
-                     <span className="text-[13px] font-bold text-foreground/90">90 jours</span>
+                     <span className="text-[13px] font-semibold text-foreground/90">90 jours</span>
                   </div>
                </div>
                <div className="flex flex-col gap-1 border-l border-border/10 pl-4 bg-primary/5 -m-4 p-4 rounded-r-[4px]">
                   <span className="text-[10px] font-semibold text-primary/60 uppercase tracking-wider">Verdict IA Expert</span>
                   <div className="flex items-center gap-2">
                      <ShieldCheck className="h-3.5 w-3.5 text-primary" />
-                     <span className="text-[13px] font-black text-primary tracking-tight">ÉLIGIBLE — SCORE 94%</span>
+                     <span className="text-[13px] font-semibold text-primary tracking-tight">ÉLIGIBLE — SCORE 94%</span>
                   </div>
                </div>
             </div>
@@ -129,7 +129,7 @@ export function TenderInspectorPanel({
                }}
                disabled={isStarting}
                className={cn(
-                 "w-full h-12 flex items-center justify-between px-6 text-sm font-black uppercase tracking-[0.1em] rounded-[4px] border transition-all",
+                 "w-full h-12 flex items-center justify-between px-6 text-sm font-semibold uppercase tracking-[0.1em] rounded-[4px] border transition-all",
                  item.workflowState === 'montage' || item.workflowState === 'soumis'
                    ? "bg-primary/5 text-primary border-primary/20 hover:bg-primary/10"
                    : "bg-primary text-primary-foreground border-transparent hover:bg-primary/90 shadow-lg shadow-primary/10",
@@ -166,7 +166,7 @@ export function TenderInspectorPanel({
                <div className="flex items-center justify-between mb-8">
                   <div className="flex flex-col gap-1">
                      <span className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-widest">Enveloppe B</span>
-                     <h3 className="text-sm font-bold text-foreground/90 uppercase tracking-tight">Analyse & Exigences Techniques</h3>
+                     <h3 className="text-sm font-semibold text-foreground/90 uppercase tracking-tight">Analyse & Exigences Techniques</h3>
                   </div>
                   <Badge variant="outline" className="border-primary/20 text-primary text-[9px] h-5">Poids : 60%</Badge>
                </div>
@@ -177,14 +177,14 @@ export function TenderInspectorPanel({
                   <div className="flex flex-col gap-4">
                      <div className="flex items-center gap-2 text-muted-foreground/40">
                         <Users2 className="h-3.5 w-3.5" />
-                        <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground/60">Personnel Clé</span>
+                        <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/60">Personnel Clé</span>
                      </div>
                      <ul className="space-y-3">
                         <li className="flex flex-col p-3 bg-muted/10 border border-border/10 rounded-[4px]">
-                           <span className="text-[11px] font-bold text-foreground/80 lowercase">Ingénieur du Marché (10 ans xp)</span>
+                           <span className="text-[11px] font-semibold text-foreground/80 lowercase">Ingénieur du Marché (10 ans xp)</span>
                         </li>
                         <li className="flex flex-col p-3 bg-muted/10 border border-border/10 rounded-[4px]">
-                           <span className="text-[11px] font-bold text-foreground/80 lowercase">Conducteur de Travaux (05 ans xp)</span>
+                           <span className="text-[11px] font-semibold text-foreground/80 lowercase">Conducteur de Travaux (05 ans xp)</span>
                         </li>
                      </ul>
                   </div>
@@ -193,14 +193,14 @@ export function TenderInspectorPanel({
                   <div className="flex flex-col gap-4">
                      <div className="flex items-center gap-2 text-muted-foreground/40">
                         <Construction className="h-3.5 w-3.5" />
-                        <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground/60">Logistique & Matériel</span>
+                        <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/60">Logistique & Matériel</span>
                      </div>
                       <ul className="space-y-3">
                          <li className="flex flex-col p-3 bg-muted/10 border border-border/10 rounded-[4px]">
-                            <span className="text-[11px] font-bold text-foreground/80 lowercase">Véhicule de liaison 4x4</span>
+                            <span className="text-[11px] font-semibold text-foreground/80 lowercase">Véhicule de liaison 4x4</span>
                          </li>
                          <li className="flex flex-col p-3 bg-muted/10 border border-border/10 rounded-[4px]">
-                            <span className="text-[11px] font-bold text-foreground/80 lowercase">Station de travail DAO/CAO</span>
+                            <span className="text-[11px] font-semibold text-foreground/80 lowercase">Station de travail DAO/CAO</span>
                          </li>
                       </ul>
                    </div>
@@ -209,7 +209,7 @@ export function TenderInspectorPanel({
                 <div className="mt-8 pt-8 border-t border-border/10">
                   <div className="flex items-center gap-2 mb-2">
                     <Wallet className="size-4 text-blue-500" />
-                    <h3 className="text-[11px] font-bold uppercase tracking-wider text-foreground">
+                    <h3 className="text-[11px] font-semibold uppercase tracking-wider text-foreground">
                       {SABI_COPY.NAVIGATION.OFFRE_FINANCIERE} (Volume 3)
                     </h3>
                   </div>
@@ -231,12 +231,12 @@ export function TenderInspectorPanel({
                 {/* CARTE 2 : L'ENVELOPPE A (ADMINISTRATIVE) */}
                 <div className="flex flex-col h-auto bg-card border border-border/10 rounded-[4px] p-6">
                    <span className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-widest mb-1">Enveloppe A</span>
-                   <h3 className="text-sm font-bold text-foreground/90 uppercase tracking-tight mb-6">Conformité Administrative</h3>
+                   <h3 className="text-sm font-semibold text-foreground/90 uppercase tracking-tight mb-6">Conformité Administrative</h3>
                   
                   <div className="flex flex-col gap-2">
                       {item.conformitePME.enveloppeA.pieces.map((piece: any, idx: number) => (
                          <div key={idx} className="flex items-center justify-between p-3 rounded-[4px] border border-border/10 bg-muted/10 hover:bg-muted/20 transition-all">
-                            <span className="text-[11px] font-bold text-muted-foreground/60 truncate pr-4">{piece.name}</span>
+                            <span className="text-[11px] font-semibold text-muted-foreground/60 truncate pr-4">{piece.name}</span>
                             {piece.status === 'valid' ? (
                                <CheckCircle2 className="h-3 w-3 text-primary" />
                             ) : (
@@ -250,19 +250,19 @@ export function TenderInspectorPanel({
                 {/* CARTE 3 : L'ENVELOPPE C (FINANCIÈRE) */}
                 <div className="flex flex-col h-auto bg-card border border-border/10 rounded-[4px] p-6">
                    <span className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-widest mb-1">Enveloppe C</span>
-                   <h3 className="text-sm font-bold text-foreground/90 uppercase tracking-tight mb-6">Dossier Financier</h3>
+                   <h3 className="text-sm font-semibold text-foreground/90 uppercase tracking-tight mb-6">Dossier Financier</h3>
                   
                   <div className="grid grid-cols-1 gap-3">
                      <div className="p-3 bg-primary/5 border border-primary/10 rounded-[4px]">
-                        <span className="text-[9px] font-bold text-primary/60 uppercase tracking-widest block mb-1">BPU / DQE</span>
+                        <span className="text-[9px] font-semibold text-primary/60 uppercase tracking-widest block mb-1">BPU / DQE</span>
                         <div className="flex items-center gap-2">
                            <ShieldCheck className="h-3 w-3 text-primary" />
-                           <span className="text-[11px] font-bold text-primary uppercase">Format Vérifié</span>
+                           <span className="text-[11px] font-semibold text-primary uppercase">Format Vérifié</span>
                         </div>
                      </div>
                       <div className="p-3 bg-muted/10 border border-border/10 rounded-[4px]">
-                         <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest block mb-1">Analyse des prix</span>
-                         <span className="text-[11px] font-bold text-muted-foreground/60 capitalize whitespace-nowrap">Conforme aux prix de référence</span>
+                         <span className="text-[9px] font-semibold text-muted-foreground uppercase tracking-widest block mb-1">Analyse des prix</span>
+                         <span className="text-[11px] font-semibold text-muted-foreground/60 capitalize whitespace-nowrap">Conforme aux prix de référence</span>
                       </div>
                   </div>
                </div>
@@ -279,7 +279,7 @@ export function TenderInspectorPanel({
                onClick={onStartWorkflow}
                disabled={isStarting}
                className={cn(
-                 "w-full h-14 rounded-[4px] bg-primary text-primary-foreground text-[13px] font-extrabold border-none hover:bg-primary/90 transition-all flex items-center justify-between px-8 group shadow-none",
+                 "w-full h-14 rounded-[4px] bg-primary text-primary-foreground text-[13px] font-semibold border-none hover:bg-primary/90 transition-all flex items-center justify-between px-8 group shadow-none",
                  isStarting && "opacity-50 cursor-wait"
                )}
             >

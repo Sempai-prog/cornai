@@ -248,6 +248,11 @@ export const soumissions = pgTable('soumissions', {
   montantRecommande: bigint('montant_recommande', { mode: 'number' }),
   margeEstimee: numeric('marge_estimee_pourcent'),
 
+  // Suivi des Volumes (Sprint B & C)
+  avancementAdmin: integer('avancement_admin').default(0),
+  avancementTech: integer('avancement_tech').default(0),
+  avancementFinancier: integer('avancement_financier').default(0),
+
   statut: varchar('statut', { length: 30 }).default('en_preparation'),
   dateDepot: timestamp('date_depot', { withTimezone: true }),
 
@@ -449,6 +454,37 @@ export const materielProjet = pgTable('materiel_projet', {
 ])
 
 // ═══════════════════════════════════════════
+// MATÉRIEL GLOBAL (Parc de l'entreprise)
+// ═══════════════════════════════════════════
+export const materielGlobal = pgTable('materiel_global', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  entrepriseId: uuid('entreprise_id').references(() => entreprises.id, { onDelete: 'cascade' }).notNull(),
+  nom: varchar('nom', { length: 255 }).notNull(),
+  type: varchar('type', { length: 50 }).notNull(), // ENGIN, VEHICULE, MATÉRIEL
+  marque: varchar('marque', { length: 100 }),
+  modele: varchar('modele', { length: 100 }),
+  immatriculation: varchar('immatriculation', { length: 50 }),
+  dateAchat: date('date_achat'),
+  valeurAchat: bigint('valeur_achat', { mode: 'number' }),
+  disponibilite: boolean('disponibilite').default(true),
+  statut: varchar('statut', { length: 20 }).default('actif'),
+  photoUrl: text('photo_url'),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+})
+
+// ═══════════════════════════════════════════
+// AFFECTATION MATÉRIEL (Table de Jonction)
+// ═══════════════════════════════════════════
+export const soumissionEngins = pgTable('soumission_engins', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  soumissionId: uuid('soumission_id').references(() => soumissions.id, { onDelete: 'cascade' }).notNull(),
+  enginId: uuid('engin_id').references(() => materielGlobal.id, { onDelete: 'cascade' }).notNull(),
+  roleMarche: varchar('role_marche', { length: 255 }), // Rôle spécifique pour ce chantier
+  commentaire: text('commentaire'),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+})
+
+// ═══════════════════════════════════════════
 // ÉQUIPE PROJET (Personnel)
 // ═══════════════════════════════════════════
 export const equipeProjet = pgTable('equipe_projet', {
@@ -579,6 +615,7 @@ export const soumissionsRelations = relations(soumissions, ({ one, many }) => ({
   }),
   materiel: many(materielProjet),
   equipe: many(equipeProjet),
+  engins: many(soumissionEngins),
   pieces: many(piecesSoumission),
 }))
 
@@ -639,3 +676,84 @@ export const notificationsRelations = relations(notifications, ({ one }) => ({
     references: [appelsOffres.id],
   }),
 }))
+
+export const materielGlobalRelations = relations(materielGlobal, ({ one, many }) => ({
+  entreprise: one(entreprises, {
+    fields: [materielGlobal.entrepriseId],
+    references: [entreprises.id],
+  }),
+  affectations: many(soumissionEngins),
+}))
+
+export const soumissionEnginsRelations = relations(soumissionEngins, ({ one }) => ({
+  soumission: one(soumissions, {
+    fields: [soumissionEngins.soumissionId],
+    references: [soumissions.id],
+  }),
+  engin: one(materielGlobal, {
+    fields: [soumissionEngins.enginId],
+    references: [materielGlobal.id],
+  }),
+}))
+// ═══════════════════════════════════════════
+// NOTES AUDIO (Module Transcripteur)
+// ═══════════════════════════════════════════
+export const notesAudio = pgTable('notes_audio', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  soumissionId: uuid('soumission_id').references(() => soumissions.id, { onDelete: 'cascade' }).notNull(),
+  
+  nomFichier: varchar('nom_fichier', { length: 255 }).notNull(),
+  audioUrl: text('audio_url').notNull(),
+  tailleMb: numeric('taille_mb'),
+  dureeSecondes: integer('duree_secondes'),
+  
+  transcription: text('transcription'),
+  resumeAI: text('resume_ai'),
+  motsCles: text('mots_cles').array(),
+  
+  statut: varchar('statut', { length: 20 }).default('en_traitement'), // en_traitement, transcrit, erreur
+  
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+});
+
+// ═══════════════════════════════════════════
+// LIGNES FINANCIÈRES (BPU / DQE)
+// ═══════════════════════════════════════════
+export const lignesFinancieres = pgTable('lignes_financieres', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  soumissionId: uuid('soumission_id').references(() => soumissions.id, { onDelete: 'cascade' }).notNull(),
+
+  numero: varchar('numero', { length: 20 }), // ex: 101, 2.1
+  designation: text('designation').notNull(),
+  unite: varchar('unite', { length: 50 }),
+  quantite: numeric('quantite').default('1'),
+  prixUnitaire: bigint('prix_unitaire', { mode: 'number' }).default(0),
+  
+  // Analyse de risque
+  prixReference: bigint('prix_reference', { mode: 'number' }),
+  scoreAnomalie: integer('score_anomalie').default(0), // 0-100 (différence avec mercuriale)
+
+  section: varchar('section', { length: 100 }), // ex: Installation de chantier, Terrassement
+  
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow(),
+});
+
+// ═══════════════════════════════════════════
+// MÉMOIRE TECHNIQUE (Module Compilation)
+// ═══════════════════════════════════════════
+export const memoireTechnique = pgTable('memoire_technique', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  soumissionId: uuid('soumission_id').references(() => soumissions.id, { onDelete: 'cascade' }).notNull(),
+  
+  structure: jsonb('structure_sections'), // [{ titre: 'Sommaire', avancement: 100, ... }]
+  scoreGlobal: integer('score_global').default(0),
+  
+  derniereCompilation: timestamp('derniere_compilation', { withTimezone: true }),
+  archiveUrl: text('archive_url'),
+  tailleArchiveMb: numeric('taille_archive_mb'),
+  
+  statut: varchar('statut', { length: 20 }).default('en_redaction'),
+  
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow(),
+});

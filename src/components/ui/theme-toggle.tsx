@@ -54,7 +54,7 @@ export function ThemeToggle() {
       </AnimatePresence>
       
       {/* Tooltip ultra-minimaliste façon Panel-Toggle */}
-      <div className="absolute left-8 px-2 py-1 bg-foreground text-background text-[10px] font-bold rounded-[4px] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-border/10">
+      <div className="absolute left-8 px-2 py-1 bg-foreground text-background text-[10px] font-semibold rounded-[4px] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-border/10">
         {isDark ? "MODE JOUR" : "MODE NUIT"}
       </div>
     </motion.button>

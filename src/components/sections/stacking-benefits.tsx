@@ -119,7 +119,7 @@ export function StackingBenefits() {
               <span className="text-[10px] font-medium tracking-[0.3em] text-[#C28E64] uppercase transition-colors">
                 BENEFITS
               </span>
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tight leading-tight text-foreground">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight leading-tight text-foreground">
                 Pourquoi choisir <br/> la solution SABI ?
               </h2>
               <p className="text-lg font-normal text-muted-foreground leading-relaxed max-w-md">

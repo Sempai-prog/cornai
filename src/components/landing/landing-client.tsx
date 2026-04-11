@@ -117,12 +117,12 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
             <div className="w-7 h-7 rounded bg-primary flex items-center justify-center shadow-[0_0_15px_rgba(37,211,102,0.3)]">
               <ShieldCheck className="text-white w-4 h-4" strokeWidth={2.5} />
             </div>
-            <span className="font-bold text-lg tracking-tighter hidden sm:block">
+            <span className="font-semibold text-lg tracking-tighter hidden sm:block">
               SABI
             </span>
           </div>
 
-          <nav className="hidden md:flex items-center gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-foreground/40 absolute left-1/2 -translate-x-1/2">
+          <nav className="hidden md:flex items-center gap-8 text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground/40 absolute left-1/2 -translate-x-1/2">
             <a href="#radar" className="hover:text-primary transition-colors">
               Radar
             </a>
@@ -151,13 +151,13 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
             <div className="hidden sm:flex items-center gap-3">
               <Link
                 href="/login"
-                className="text-[10px] font-black hover:text-primary transition-colors text-foreground/40 uppercase tracking-[0.2em]"
+                className="text-[10px] font-semibold hover:text-primary transition-colors text-foreground/40 uppercase tracking-[0.2em]"
               >
                 Accès Cockpit
               </Link>
               <Button
                 asChild
-                className="bg-primary hover:bg-primary/90 text-black px-6 py-1.5 h-9 rounded-[4px] text-[10px] font-black uppercase tracking-[0.2em] shadow-none border-none transition-all active:scale-95"
+                className="bg-primary hover:bg-primary/90 text-black px-6 py-1.5 h-9 rounded-[4px] text-[10px] font-semibold uppercase tracking-[0.2em] shadow-none border-none transition-all active:scale-95"
               >
                 <Link href="/register">S'inscrire</Link>
               </Button>
@@ -187,7 +187,7 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-6xl font-black tracking-tight mb-6 leading-[0.95] text-foreground"
+            className="text-4xl md:text-6xl font-semibold tracking-tight mb-6 leading-[0.95] text-foreground"
           >
             L'assistant qui Gagne vos <br className="hidden md:block" /> Marchés
             au Cameroun
@@ -215,14 +215,14 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
               </select>
             </div>
 
-            <button className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-black px-10 py-4 rounded-[4px] text-[10px] font-black uppercase tracking-[0.2em] flex items-center justify-center shadow-xl shadow-primary/10 transition-all active:scale-95 group border-none">
+            <button className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-black px-10 py-4 rounded-[4px] text-[10px] font-semibold uppercase tracking-[0.2em] flex items-center justify-center shadow-xl shadow-primary/10 transition-all active:scale-95 group border-none">
               <MessageCircle className="w-4 h-4 mr-3" />
               Parler à SABI sur WhatsApp
               <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
             </button>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10 text-[10px] font-black uppercase tracking-widest text-foreground/30">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10 text-[10px] font-semibold uppercase tracking-widest text-foreground/30">
             <div className="flex items-center gap-2">
               <Check className="w-4 h-4 text-primary" />
               <span>Conforme ARMP</span>
@@ -259,54 +259,54 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
           <div className="relative w-full overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]">
             <div className="flex w-max animate-infinite-scroll items-center gap-16 lg:gap-32 py-2">
               <div className="flex items-center gap-16 md:gap-32">
-                <div className="text-sm font-black uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
+                <div className="text-sm font-semibold uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
                   ARMP
                 </div>
-                <div className="text-sm font-black uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
+                <div className="text-sm font-semibold uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
                   MINMAP
                 </div>
-                <div className="text-sm font-black uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
+                <div className="text-sm font-semibold uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
                   COLEPS
                 </div>
-                <div className="text-sm font-black uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
+                <div className="text-sm font-semibold uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
                   MTN MOMO
                 </div>
-                <div className="text-sm font-black uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
+                <div className="text-sm font-semibold uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
                   Orange Money
                 </div>
-                <div className="text-sm font-black uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
+                <div className="text-sm font-semibold uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
                   CNPS
                 </div>
-                <div className="text-sm font-black uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
+                <div className="text-sm font-semibold uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
                   DGSN
                 </div>
-                <div className="text-sm font-black uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
+                <div className="text-sm font-semibold uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
                   BGFI Bank
                 </div>
               </div>
               <div className="flex items-center gap-16 md:gap-32">
-                <div className="text-sm font-black uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
+                <div className="text-sm font-semibold uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
                   ARMP
                 </div>
-                <div className="text-sm font-black uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
+                <div className="text-sm font-semibold uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
                   MINMAP
                 </div>
-                <div className="text-sm font-black uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
+                <div className="text-sm font-semibold uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
                   COLEPS
                 </div>
-                <div className="text-sm font-black uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
+                <div className="text-sm font-semibold uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
                   MTN MOMO
                 </div>
-                <div className="text-sm font-black uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
+                <div className="text-sm font-semibold uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
                   Orange Money
                 </div>
-                <div className="text-sm font-black uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
+                <div className="text-sm font-semibold uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
                   CNPS
                 </div>
-                <div className="text-sm font-black uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
+                <div className="text-sm font-semibold uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
                   DGSN
                 </div>
-                <div className="text-sm font-black uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
+                <div className="text-sm font-semibold uppercase tracking-[0.2em] whitespace-nowrap opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-default">
                   BGFI Bank
                 </div>
               </div>
@@ -325,10 +325,10 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
       >
         <div className="container mx-auto max-w-[1100px]">
           <div className="text-center mb-12 space-y-3">
-            <h2 className="text-[10px] font-black tracking-[0.3em] text-primary uppercase">
+            <h2 className="text-[10px] font-semibold tracking-[0.3em] text-primary uppercase">
               IA Spécialisée
             </h2>
-            <h3 className="text-2xl md:text-4xl font-black tracking-tight text-foreground">
+            <h3 className="text-2xl md:text-4xl font-semibold tracking-tight text-foreground">
               Intelligence Locale
             </h3>
           </div>
@@ -343,10 +343,10 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
                 <Target className="w-6 h-6" />
               </div>
               <div className="flex-1">
-                <Badge className="mb-4 bg-primary/20 text-primary hover:bg-primary/30 border-none px-3 py-1 text-[8px] font-black tracking-widest uppercase">
+                <Badge className="mb-4 bg-primary/20 text-primary hover:bg-primary/30 border-none px-3 py-1 text-[8px] font-semibold tracking-widest uppercase">
                   Propulsé par SABI Core v2
                 </Badge>
-                <h4 className="text-4xl font-black mb-5 text-foreground tracking-tighter leading-[0.9] uppercase">
+                <h4 className="text-4xl font-semibold mb-5 text-foreground tracking-tighter leading-[0.9] uppercase">
                   Diagnostic des <br />
                   Critères Bloquants
                 </h4>
@@ -355,7 +355,7 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
                   rejet. Ne perdez des jours sur un dossier perdu d'avance.
                 </p>
               </div>
-              <div className="mt-auto pt-10 flex items-center gap-4 text-[9px] font-black uppercase tracking-[0.2em] text-foreground/20">
+              <div className="mt-auto pt-10 flex items-center gap-4 text-[9px] font-semibold uppercase tracking-[0.2em] text-foreground/20">
                 <div className="flex items-center gap-2 text-primary/60">
                   <Check className="w-3 h-3" />
                   <span>Zéro Omission</span>
@@ -374,7 +374,7 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <h4 className="text-xl font-black text-foreground group-hover:text-primary transition-colors">
+                  <h4 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
                     Conformité ARMP
                   </h4>
                   <Badge className="bg-emerald-500/10 text-emerald-500 border-none text-[8px] uppercase">
@@ -441,10 +441,10 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
       <section id="tarifs" className="py-32 px-4 bg-transparent relative z-10">
         <div className="container mx-auto max-w-[1100px]">
           <div className="text-center mb-16 space-y-4">
-            <h2 className="text-xs font-black tracking-[0.3em] text-primary uppercase">
+            <h2 className="text-xs font-semibold tracking-[0.3em] text-primary uppercase">
               Tarifs
             </h2>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tight leading-tight text-foreground">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight leading-tight text-foreground">
               Pourquoi choisir <br /> la solution SABI ?
             </h2>
 
@@ -477,7 +477,7 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
           <div className="grid md:grid-cols-3 gap-6 max-w-[900px] mx-auto items-center">
             {/* Starter */}
             <div className="p-8 rounded border border-border bg-card/30 backdrop-blur-xl">
-              <h4 className="text-lg font-black mb-2 text-foreground">
+              <h4 className="text-lg font-semibold mb-2 text-foreground">
                 Starter
               </h4>
               <div className="flex items-baseline gap-1 mb-8">
@@ -488,7 +488,7 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
                   F/MOIS
                 </span>
               </div>
-              <ul className="space-y-4 mb-8 text-xs font-bold text-foreground/70">
+              <ul className="space-y-4 mb-8 text-xs font-semibold text-foreground/70">
                 <li className="flex gap-3 items-center">
                   <Check className="h-3 w-3 text-primary" /> 3 Analyses IA /
                   mois
@@ -515,10 +515,10 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
                 Business IA
               </h4>
               <div className="flex items-baseline gap-1 mb-8">
-                <span className="text-4xl font-black text-foreground">
+                <span className="text-4xl font-semibold text-foreground">
                   {annualBilling ? "49 900" : "59 900"}
                 </span>
-                <span className="text-foreground/30 text-[10px] font-black">
+                <span className="text-foreground/30 text-[10px] font-semibold">
                   F/MOIS
                 </span>
               </div>
@@ -578,15 +578,15 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
       <section className="py-24 px-4 bg-transparent relative z-10">
         <div className="container mx-auto max-w-[1100px]">
           <div className="bg-primary/5 border border-primary/20 rounded-[4px] p-12 md:p-24 text-center backdrop-blur-xl shadow-none relative overflow-hidden group">
-            <h3 className="text-3xl md:text-5xl font-black tracking-tight mb-8 text-foreground group-hover:scale-[1.01] transition-transform duration-700">
+            <h3 className="text-3xl md:text-5xl font-semibold tracking-tight mb-8 text-foreground group-hover:scale-[1.01] transition-transform duration-700">
               Transformez votre{" "}
               <span className="text-primary">destinée commerciale</span>
             </h3>
-            <p className="text-lg text-foreground/40 mb-12 max-w-2xl mx-auto font-bold leading-relaxed">
+            <p className="text-lg text-foreground/40 mb-12 max-w-2xl mx-auto font-semibold leading-relaxed">
               Rejoignez les leaders de la nouvelle économie camerounaise. L'IA
               n'est plus une option, c'est votre bouclier contre les rejets.
             </p>
-            <button className="bg-primary hover:bg-primary/90 text-black px-12 py-5 rounded-[4px] text-[10px] font-black uppercase tracking-[0.3em] inline-flex items-center shadow-2xl shadow-primary/20 transition-all active:scale-95 border-none">
+            <button className="bg-primary hover:bg-primary/90 text-black px-12 py-5 rounded-[4px] text-[10px] font-semibold uppercase tracking-[0.3em] inline-flex items-center shadow-2xl shadow-primary/20 transition-all active:scale-95 border-none">
               <MessageCircle className="w-5 h-5 mr-4" />
               Lancer le Radar SABI sur WhatsApp
             </button>
@@ -601,23 +601,23 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
             <div className="md:col-span-1 space-y-6">
               <div className="flex items-center gap-2">
                 <div className="w-7 h-7 rounded bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
-                  <span className="text-white font-black text-xs">C</span>
+                  <span className="text-white font-semibold text-xs">C</span>
                 </div>
-                <span className="font-black text-xl tracking-tighter text-foreground">
+                <span className="font-semibold text-xl tracking-tighter text-foreground">
                   SABI
                 </span>
               </div>
-              <p className="text-xs font-bold text-foreground/30 leading-relaxed uppercase tracking-widest">
+              <p className="text-xs font-semibold text-foreground/30 leading-relaxed uppercase tracking-widest">
                 L'Intelligence Artificielle de pointe pour la commande publique
                 CAMEROUN.
               </p>
             </div>
 
             <div>
-              <h5 className="text-[10px] font-black mb-6 text-foreground uppercase tracking-[0.2em] opacity-30">
+              <h5 className="text-[10px] font-semibold mb-6 text-foreground uppercase tracking-[0.2em] opacity-30">
                 Plateforme
               </h5>
-              <ul className="space-y-4 text-xs font-bold text-foreground/50">
+              <ul className="space-y-4 text-xs font-semibold text-foreground/50">
                 <li>
                   <a href="#" className="hover:text-primary transition-colors">
                     Veille Stratégique
@@ -637,10 +637,10 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
             </div>
 
             <div>
-              <h5 className="text-[10px] font-black mb-6 text-foreground uppercase tracking-[0.2em] opacity-30">
+              <h5 className="text-[10px] font-semibold mb-6 text-foreground uppercase tracking-[0.2em] opacity-30">
                 Légal
               </h5>
-              <ul className="space-y-4 text-xs font-bold text-foreground/50">
+              <ul className="space-y-4 text-xs font-semibold text-foreground/50">
                 <li>
                   <a href="#" className="hover:text-primary transition-colors">
                     Confidentialité
@@ -660,14 +660,14 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
             </div>
 
             <div>
-              <h5 className="text-[10px] font-black mb-6 text-foreground uppercase tracking-[0.2em] opacity-30">
+              <h5 className="text-[10px] font-semibold mb-6 text-foreground uppercase tracking-[0.2em] opacity-30">
                 Newsletter
               </h5>
               <div className="flex gap-2">
                 <input
                   type="email"
                   placeholder="votre@email.com"
-                  className="bg-background border border-border rounded px-4 py-2 text-xs w-full outline-none focus:border-primary/50 font-bold transition-all"
+                  className="bg-background border border-border rounded px-4 py-2 text-xs w-full outline-none focus:border-primary/50 font-semibold transition-all"
                 />
                 <button className="bg-secondary hover:bg-border text-foreground px-4 py-2 rounded transition-all active:scale-95">
                   <ArrowRight className="w-4 h-4" />
@@ -676,7 +676,7 @@ export default function LandingClient({ initialResults }: LandingClientProps) {
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row items-center justify-between pt-10 border-t border-border/40 text-[10px] font-black tracking-widest text-foreground/20 uppercase">
+          <div className="flex flex-col md:flex-row items-center justify-between pt-10 border-t border-border/40 text-[10px] font-semibold tracking-widest text-foreground/20 uppercase">
             <p>© 2026 SABI Intelligence. Marque déposée.</p>
             <div className="flex gap-6 mt-6 md:mt-0">
               <X className="w-4 h-4 cursor-pointer hover:text-primary" />

@@ -167,7 +167,7 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
               {/* SECTION EXPLOITATION */}
               <div className="space-y-2">
                 {!isCollapsed && (
-                  <h3 className="px-4 text-[10px] font-black uppercase tracking-[0.2em] text-foreground/20 mb-4">
+                  <h3 className="px-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground/20 mb-4">
                     EXPLOITATION
                   </h3>
                 )}
@@ -200,11 +200,11 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
                                   />
                                   {!isCollapsed && (
                                     <div className="flex-1 flex items-center justify-between ml-3 overflow-hidden">
-                                      <span className="font-bold tracking-tight text-[13px] truncate">
+                                      <span className="font-semibold tracking-tight text-[13px] truncate">
                                         {item.title}
                                       </span>
                                       {item.badge && (
-                                        <span className="text-[7.5px] font-black px-1.5 py-0.5 rounded-[2px] bg-primary/10 text-primary border border-primary/20 tracking-widest uppercase shrink-0 ml-2">
+                                        <span className="text-[7.5px] font-semibold px-1.5 py-0.5 rounded-[2px] bg-primary/10 text-primary border border-primary/20 tracking-widest uppercase shrink-0 ml-2">
                                           {item.badge}
                                         </span>
                                       )}
@@ -224,7 +224,7 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
               {/* SECTION WORKSPACE */}
               <div className="space-y-2 pt-2">
                 {!isCollapsed && (
-                  <h3 className="px-4 text-[10px] font-black uppercase tracking-[0.2em] text-foreground/20 mb-4">
+                  <h3 className="px-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground/20 mb-4">
                     WORKSPACE
                   </h3>
                 )}
@@ -257,11 +257,11 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
                                   />
                                   {!isCollapsed && (
                                     <div className="flex-1 flex items-center justify-between ml-3 overflow-hidden">
-                                      <span className="font-bold tracking-tight text-[13px] truncate">
+                                      <span className="font-semibold tracking-tight text-[13px] truncate">
                                         {item.title}
                                       </span>
                                       {item.badge && (
-                                        <span className="text-[7.5px] font-black px-1.5 py-0.5 rounded-[2px] bg-primary/10 text-primary border border-primary/20 tracking-widest uppercase shrink-0 ml-2">
+                                        <span className="text-[7.5px] font-semibold px-1.5 py-0.5 rounded-[2px] bg-primary/10 text-primary border border-primary/20 tracking-widest uppercase shrink-0 ml-2">
                                           {item.badge}
                                         </span>
                                       )}
@@ -329,11 +329,11 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
               
               <button className="flex items-center gap-3 pl-1 pr-1 py-1 rounded-[4px] border border-border/10 bg-card hover:bg-muted/50 transition-colors group">
                 <div className="h-8 w-8 rounded-[4px] bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:bg-primary/20 transition-colors">
-                  <span className="text-[11px] font-bold text-primary">JD</span>
+                  <span className="text-[11px] font-semibold text-primary">JD</span>
                 </div>
                 <div className="flex flex-col items-start pr-3 hidden sm:flex">
-                  <span className="text-[11px] font-bold leading-tight group-hover:text-primary transition-colors">Joker Design</span>
-                  <span className="text-[9px] text-muted-foreground/40 uppercase tracking-widest font-black leading-none mt-1">Elite Member</span>
+                  <span className="text-[11px] font-semibold leading-tight group-hover:text-primary transition-colors">Joker Design</span>
+                  <span className="text-[9px] text-muted-foreground/40 uppercase tracking-widest font-semibold leading-none mt-1">Elite Member</span>
                 </div>
               </button>
             </div>

@@ -1,9 +1,62 @@
 'use server'
 
 import { db } from '@/database/client';
-import { visites_terrain, soumissions, entreprises, appelsOffres } from '@/database/schema';
+import { visites_terrain } from '@/database/schema';
 import { eq } from 'drizzle-orm';
+import { revalidatePath } from 'next/cache';
 import { Annexe16Data } from '@/lib/generateurs/pdf/annexe-16.generator';
+
+/**
+ * Sauvegarder ou mettre à jour un rapport de visite de site
+ */
+export async function upsertVisiteTerrain(
+  soumissionId: string,
+  data: {
+    dateVisite: string,
+    heureVisite: string,
+    maitreOuvrageRelais: string,
+    observations: string,
+    latitude?: string,
+    longitude?: string
+  }
+) {
+  try {
+    const existant = await db.query.visites_terrain.findFirst({
+      where: eq(visites_terrain.soumissionId, soumissionId)
+    });
+
+    if (existant) {
+      await db.update(visites_terrain)
+        .set({
+          dateVisite: new Date(data.dateVisite),
+          heureVisite: data.heureVisite,
+          maitreOuvrageRelais: data.maitreOuvrageRelais,
+          observations: data.observations,
+          latitude: data.latitude,
+          longitude: data.longitude,
+        })
+        .where(eq(visites_terrain.id, existant.id));
+    } else {
+      await db.insert(visites_terrain)
+        .values({
+          soumissionId,
+          dateVisite: new Date(data.dateVisite),
+          heureVisite: data.heureVisite,
+          maitreOuvrageRelais: data.maitreOuvrageRelais,
+          observations: data.observations,
+          latitude: data.latitude,
+          longitude: data.longitude,
+          statutVisite: 'effectuee'
+        });
+    }
+
+    revalidatePath(`/dashboard/soumissions/${soumissionId}/terrain/descente`);
+    return { success: true };
+  } catch (error: any) {
+    console.error('[Terrain] Erreur upsert:', error);
+    return { success: false, error: error.message };
+  }
+}
 
 export async function getTerrainDataPourAnnexe(soumissionId: string): Promise<Annexe16Data | null> {
   try {

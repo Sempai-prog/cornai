@@ -163,17 +163,17 @@ export default async function DashboardHome() {
 
               <div className="flex flex-col items-start min-w-0 flex-1">
                  <span className={cn(
-                   "text-[10px] font-bold uppercase tracking-[0.1em] leading-none truncate w-full mb-1",
+                   "text-[10px] font-semibold uppercase tracking-[0.1em] leading-none truncate w-full mb-1",
                    "text-muted-foreground/60 group-hover:text-muted-foreground transition-colors"
                  )}>
                    {kpi.label}
                  </span>
                  <div className="flex items-baseline gap-2.5 w-full h-6 overflow-hidden">
-                   <span className="text-xl font-bold tracking-tight text-foreground leading-none tabular-nums">
+                   <span className="text-xl font-semibold tracking-tight text-foreground leading-none tabular-nums">
                      {kpi.value}
                    </span>
                   <span className={cn(
-                    "text-[8px] font-bold uppercase tracking-tight transition-colors truncate",
+                    "text-[8px] font-semibold uppercase tracking-tight transition-colors truncate",
                     kpi.trendType === "pos" ? "text-primary/70" : kpi.trendType === "alert" ? "text-red-500/70" : "text-muted-foreground/50 group-hover:text-muted-foreground/80"
                   )}>
                     {kpi.trend}
@@ -191,12 +191,12 @@ export default async function DashboardHome() {
         {/* FLUX D'OPPORTUNITÉS (8/12) */}
         <div className="lg:col-span-8 flex flex-col">
           <div className="flex items-center justify-between mb-6 h-6">
-            <h2 className="text-[11px] font-bold text-foreground/40 uppercase tracking-[0.2em]">
+            <h2 className="text-[11px] font-semibold text-foreground/40 uppercase tracking-[0.2em]">
               Opportunités Récentes (Matches IA)
             </h2>
             <Link
               href="/dashboard/appels-offres"
-              className="text-[10px] font-bold uppercase tracking-[0.1em] text-primary hover:opacity-70 transition-all flex items-center gap-2"
+              className="text-[10px] font-semibold uppercase tracking-[0.1em] text-primary hover:opacity-70 transition-all flex items-center gap-2"
             >
               Tout voir <ChevronRight className="h-3 w-3" />
             </Link>
@@ -213,7 +213,7 @@ export default async function DashboardHome() {
                 <p className="text-[13px] text-muted-foreground/60 italic">
                   Aucune opportunité récente détectée.
                 </p>
-                <p className="text-[11px] text-muted-foreground/30 mt-1 uppercase tracking-widest font-bold">
+                <p className="text-[11px] text-muted-foreground/30 mt-1 uppercase tracking-widest font-semibold">
                   Radar en surveillance...
                 </p>
               </div>
@@ -227,7 +227,7 @@ export default async function DashboardHome() {
           <div className="bg-card border border-border/10 rounded-[4px] p-6 shadow-none">
             <div className="flex items-center gap-3 pb-4 border-b border-border/10 mb-6 h-6">
               <ShieldCheck className={cn("h-5 w-5", alertCount > 0 ? "text-red-500/60" : "text-primary/60")} />
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/30">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground/30">
                 Alertes Conformité
               </span>
             </div>
@@ -246,7 +246,7 @@ export default async function DashboardHome() {
                   >
                     <div className="flex items-center justify-between mb-2">
                       <p className={cn(
-                        "text-[10px] font-bold uppercase tracking-widest leading-none",
+                        "text-[10px] font-semibold uppercase tracking-widest leading-none",
                         doc.statut === 'expire' || joursRestants(doc.dateExpiration) <= 0 ? "text-red-500" : "text-amber-500"
                       )}>
                         {doc.pieceId}
@@ -263,7 +263,7 @@ export default async function DashboardHome() {
                       }
                     </p>
                     <p className={cn(
-                      "text-[9px] font-bold uppercase tracking-wider mt-2.5",
+                      "text-[9px] font-semibold uppercase tracking-wider mt-2.5",
                       doc.statut === 'expire' || joursRestants(doc.dateExpiration) <= 0 ? "text-red-500/60" : "text-amber-500/60"
                     )}>
                       Risque de rejet ARMP
@@ -278,7 +278,7 @@ export default async function DashboardHome() {
               </div>
             )}
 
-            <Button className="w-full mt-6 bg-muted border border-border/10 text-foreground/50 font-bold text-[10px] uppercase tracking-[0.2em] h-11 rounded-[4px] hover:bg-muted/80 transition-all">
+            <Button className="w-full mt-6 bg-muted border border-border/10 text-foreground/50 font-semibold text-[10px] uppercase tracking-[0.2em] h-11 rounded-[4px] hover:bg-muted/80 transition-all">
               Mettre à jour le dossier
             </Button>
           </div>
@@ -287,7 +287,7 @@ export default async function DashboardHome() {
           <div className="bg-card border border-border/10 rounded-[4px] p-6 shadow-none">
             <div className="flex items-center gap-3 pb-4 border-b border-border/10 mb-6 h-6">
               <Compass className="h-5 w-5 text-primary/60" />
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/30">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground/30">
                 Diagnostic ARMP
               </span>
             </div>
@@ -303,7 +303,7 @@ export default async function DashboardHome() {
 
             <Link
               href="/dashboard/documents"
-              className="block text-center mt-6 text-[10px] font-bold text-primary uppercase tracking-[0.1em] hover:underline transition-all"
+              className="block text-center mt-6 text-[10px] font-semibold text-primary uppercase tracking-[0.1em] hover:underline transition-all"
             >
               Accéder au coffre-fort
             </Link>

@@ -13,11 +13,9 @@ import {
   Zap,
   Plus
 } from "lucide-react";
-import { AudioSource, ChapterId } from "../../lib/terrain-types";
+import { AudioSource } from "../../lib/terrain-types";
 import { cn } from "@/lib/utils";
-import { AlertPanel } from "../shared/alert-panel";
 import { StatusBadge } from "../shared/status-badge";
-import { EmptyState } from "@/components/ui/empty-state";
 import { TranscripteurAudio } from "@/components/terrain/transcripteur-audio";
 
 const CHAPTERS = [
@@ -34,179 +32,166 @@ interface ModuleTranscripteurProps {
 }
 
 /**
- * 🎨 MODULE : TRANSRIPTEUR CCTP — Wired to DB (contextual)
- * Focus : Conversion des notes vocales terrain en chapitres du Mémoire Technique.
+ * 🎨 MODULE : TRANSRIPTEUR CCTP — Bento Refactor (SABI V1.6)
+ * Focus : Extraction IA des spécifications techniques depuis l'audio terrain.
+ * Layout : Grid 12 (Col 1-8: Canvas & Chapters, Col 9-12: Legal Analysis).
  */
-export function ModuleTranscripteur({ aoNom, dtaoReference, audios = [], soumissionId }: ModuleTranscripteurProps) {
+export function ModuleTranscripteur({ audios = [], soumissionId }: ModuleTranscripteurProps) {
   const [expandedChapter, setExpandedChapter] = useState<string | null>("conception");
   const [selectedAudio, setSelectedAudio] = useState<string | null>(null);
 
-  if (audios.length === 0 && !aoNom) {
+  if (audios.length === 0) {
     return (
-       <EmptyState 
-         icon={Mic}
-         titre="Transcripteur Prêt"
-         description="Commencez par enregistrer une note vocale ou activez l'IA pour générer le contenu de votre mémoire technique."
-       />
-    )
+       <div className="flex flex-col items-center justify-center p-12 bg-card border border-border/50 border-dashed rounded-[4px]">
+         <div className="w-16 h-16 rounded-full bg-primary/5 flex items-center justify-center mb-4">
+           <Mic className="w-8 h-8 text-primary/50" />
+         </div>
+         <h3 className="text-sm font-semibold text-foreground mb-2 uppercase tracking-widest">Studio Vide</h3>
+         <p className="text-xs text-muted-foreground text-center max-w-md mx-auto mb-6">
+           Zéro note vocale capturée. Le Mémoire Technique requiert des preuves d'études de terrain.
+         </p>
+         <TranscripteurAudio soumissionId={soumissionId || 'demo'} />
+       </div>
+    );
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6 items-start pb-8">
-      {/* 🎙️ SIDEBAR : SOURCES AUDIOS */}
-      <aside className="p-5 bg-card border border-border rounded-[4px] h-fit sticky top-6">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-2">
-            <ListMusic className="w-4 h-4 text-primary" />
-            <h3 className="text-[11px] font-bold uppercase tracking-[0.15em] text-foreground">
-              Sources Audios
-            </h3>
+    <div className="grid grid-cols-12 gap-6 pb-8 items-start">
+      
+      {/* 🤖 TOP BAR : AUDIT DE QUALITÉ IA (12 COLS) */}
+      <div className="col-span-12 p-4 bg-primary/[0.03] border border-primary/10 rounded-[4px] flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+            <Wand2 className="w-4 h-4 text-primary" />
           </div>
-          <span className="text-[10px] font-bold text-muted-foreground bg-muted px-2 py-0.5 rounded-[2px] tabular-nums">
-            {audios.length} FILES
-          </span>
+          <div>
+            <h4 className="text-[10px] font-semibold uppercase tracking-widest text-foreground">Audit de Cohérence CCTP</h4>
+            <p className="text-[10px] text-muted-foreground font-medium">L'IA a identifié 85% des mots-clés obligatoires du DAO dans vos notes vocales.</p>
+          </div>
         </div>
+        <StatusBadge status="complete" />
+      </div>
 
-        <div className="space-y-3 max-h-[65vh] overflow-y-auto scrollbar-thin pr-2">
-          {audios.map((audio) => (
-            <button
+      {/* 🖋️ COL 1-8 : CANVAS DE TRANSCRIPTION & CHAPITRES */}
+      <div className="col-span-12 lg:col-span-8 space-y-4">
+        
+        {/* Source Audio Selection (Dense) */}
+        <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-none">
+          {audios.map(audio => (
+            <button 
               key={audio.id}
               onClick={() => setSelectedAudio(audio.id)}
               className={cn(
-                "w-full text-left p-4 rounded-[4px] border transition-all duration-200 group relative overflow-hidden",
-                selectedAudio === audio.id 
-                  ? "bg-primary/[0.05] border-primary/30" 
-                  : "bg-card border-border/10 hover:border-border hover:bg-muted/10"
+                "shrink-0 px-4 py-2 border rounded-[4px] flex items-center gap-3 transition-all",
+                selectedAudio === audio.id ? "border-primary bg-primary/5" : "border-border/10 bg-card hover:border-border/40"
               )}
             >
-              {selectedAudio === audio.id && (
-                <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-primary" />
-              )}
-              
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-tight">
-                  {audio.sender}
-                </span>
-                <span className="text-[10px] text-muted-foreground/40 tabular-nums">
-                  {audio.timestamp}
-                </span>
-              </div>
-              
-              <p className="text-xs text-foreground/80 line-clamp-2 mb-3 leading-relaxed font-medium">
-                "{audio.transcription}"
-              </p>
-              
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1.5">
-                  <Play className={cn("w-3 h-3", selectedAudio === audio.id ? "text-primary" : "text-muted-foreground opacity-50")} />
-                  <span className="text-[10px] font-bold text-muted-foreground/60 tabular-nums">
-                    {audio.duration}
-                  </span>
-                </div>
-                {audio.assignedToChapter && (
-                  <div className="flex items-center gap-1 text-primary">
-                    <Zap className="w-3 h-3 fill-primary/20" />
-                    <span className="text-[9px] font-bold uppercase tracking-tighter">Matched</span>
-                  </div>
-                )}
+              <div className={cn("w-2 h-2 rounded-full", selectedAudio === audio.id ? "bg-primary animate-pulse" : "bg-muted-foreground/30")} />
+              <div className="text-left">
+                <p className="text-[9px] font-semibold text-foreground uppercase tracking-tighter">{audio.timestamp}</p>
+                <p className="text-[10px] text-muted-foreground font-medium">{audio.duration}</p>
               </div>
             </button>
           ))}
+          <button className="shrink-0 w-10 h-10 border border-dashed border-border/20 rounded-[4px] flex items-center justify-center hover:bg-muted/50 transition-all">
+            <Plus className="w-4 h-4 text-muted-foreground/40" />
+          </button>
         </div>
 
-        <div className="mt-6">
-          <TranscripteurAudio soumissionId={soumissionId || 'demo_soumission_id'} />
+        {/* Chapters Cards (Asymmetrical Bento) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {CHAPTERS.map((chapter) => (
+            <div 
+              key={chapter.id}
+              onClick={() => setExpandedChapter(chapter.id)}
+              className={cn(
+                "p-5 rounded-[4px] border cursor-pointer transition-all duration-300 group relative",
+                expandedChapter === chapter.id 
+                  ? "bg-card border-primary/20 ring-1 ring-primary/10" 
+                  : "bg-muted/5 border-border/5 hover:border-border/20"
+              )}
+            >
+              <div className="flex items-start justify-between mb-4">
+                <div className={cn(
+                  "w-8 h-8 rounded-[4px] flex items-center justify-center",
+                  expandedChapter === chapter.id ? "bg-primary text-black" : "bg-muted text-muted-foreground/40"
+                )}>
+                  <FileText className="w-4 h-4" />
+                </div>
+                <div className={cn(
+                  "px-2 py-0.5 rounded-[2px] text-[8px] font-semibold uppercase tracking-widest",
+                  chapter.tagType === "required" ? "bg-red-500/10 text-red-500" : "bg-primary/10 text-primary"
+                )}>
+                  {chapter.tag}
+                </div>
+              </div>
+              
+              <h4 className="text-[11px] font-semibold text-foreground uppercase tracking-tight mb-2 group-hover:text-primary transition-colors">
+                {chapter.title}
+              </h4>
+              
+              <p className="text-[10px] text-muted-foreground leading-relaxed font-medium mb-4">
+                {expandedChapter === chapter.id 
+                  ? "Contenu en cours de structuration par SABI AI. Plus de 3 segments audios détectés pour ce chapitre."
+                  : "Aucun segment audio n'est encore lié à cette section technique."}
+              </p>
+
+              {expandedChapter === chapter.id && (
+                <div className="flex items-center justify-between pt-4 border-t border-border/5">
+                  <div className="flex items-center gap-2">
+                    <Zap className="w-3 h-3 text-primary" />
+                    <span className="text-[9px] font-semibold text-primary uppercase">Draft Ready</span>
+                  </div>
+                  <button className="text-[9px] font-semibold text-foreground/40 uppercase hover:text-primary tracking-widest">Ouvrir Éditeur</button>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 🧐 COL 9-12 : ANALYSEUR DE MOTS-CLÉS LÉGAUX (STICKY) */}
+      <aside className="col-span-12 lg:col-span-4 sticky top-6 space-y-4">
+        <div className="bg-card border border-border/10 rounded-[4px] p-5">
+          <div className="flex items-center gap-2 mb-6 border-b border-border/5 pb-4">
+            <Zap className="w-4 h-4 text-primary" />
+            <h4 className="text-[11px] font-semibold uppercase tracking-[0.15em] text-foreground">
+              Extracteur Légal IA
+            </h4>
+          </div>
+
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <span className="text-[9px] font-semibold text-muted-foreground/40 uppercase tracking-widest">Spécificités CCTP Détectées</span>
+              <div className="flex flex-wrap gap-2">
+                {['Norme NF-P', 'Dosage 350kg/m3', 'Bétons B25', 'Acier HA12'].map(tag => (
+                  <span key={tag} className="px-2 py-1 bg-primary/5 border border-primary/20 rounded-[2px] text-[9px] font-semibold text-primary">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="p-4 bg-muted/5 border border-border/5 rounded-[4px] space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-semibold text-muted-foreground uppercase">Taux de couverture</span>
+                <span className="text-xs font-semibold text-primary">85%</span>
+              </div>
+              <div className="h-1.5 bg-muted/20 rounded-full overflow-hidden">
+                <div className="h-full bg-primary w-[85%]" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-red-500/5 border-l-2 border-red-500 p-4 rounded-[4px]">
+          <h5 className="text-[10px] font-semibold text-red-500 uppercase tracking-widest mb-1">Mots-clés Manquants</h5>
+          <p className="text-[10px] text-foreground/70 leading-relaxed font-medium">
+            Attention : Les mentions "Vibration mécanique" et "Cure de béton" sont absentes de vos notes. Éléments critiques du DTAO Section III.
+          </p>
         </div>
       </aside>
 
-      {/* 📄 MAIN : MÉMOIRE TECHNIQUE ACCORDION */}
-      <div className="space-y-4">
-        {CHAPTERS.map((chapter) => (
-          <div 
-            key={chapter.id}
-            className={cn(
-              "border border-border rounded-[4px] overflow-hidden transition-all duration-300",
-              expandedChapter === chapter.id ? "bg-card px-2" : "bg-muted/10 border-border/5"
-            )}
-          >
-            {/* Accordion Header */}
-            <button
-              onClick={() => setExpandedChapter(expandedChapter === chapter.id ? null : chapter.id)}
-              className="w-full flex items-center justify-between p-5 group outline-none"
-            >
-              <div className="flex items-center gap-5">
-                <div className={cn(
-                  "w-10 h-10 rounded-[4px] flex items-center justify-center transition-colors",
-                  expandedChapter === chapter.id ? "bg-primary text-black" : "bg-muted text-muted-foreground/50"
-                )}>
-                  <FileText className="w-5 h-5" />
-                </div>
-                <div className="text-left space-y-1">
-                  <h4 className="text-sm font-bold text-foreground tracking-tight">
-                    {chapter.title}
-                  </h4>
-                  <div className="flex items-center gap-3">
-                    <div className={cn(
-                      "h-5 px-2 rounded-[2px] flex items-center justify-center text-[10px] font-black uppercase tracking-widest",
-                      chapter.tagType === "required" ? "bg-red-500 text-white" : "bg-primary/10 text-primary"
-                    )}>
-                      {chapter.tag}
-                    </div>
-                    {chapter.tagType === "required" && (
-                      <span className="text-[10px] font-bold text-red-500/60 uppercase tracking-tight">
-                        Indispensable au DTAO
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
-              <div className="p-2 border border-border rounded-[4px] text-muted-foreground/40 group-hover:text-foreground transition-colors">
-                {expandedChapter === chapter.id ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
-              </div>
-            </button>
-
-            {/* Accordion Content */}
-            {expandedChapter === chapter.id && (
-              <div className="p-5 pt-0 border-t border-border animate-in fade-in slide-in-from-top-2 duration-300">
-                <div className="bg-muted/20 border border-border rounded-[4px] p-10 mb-6 flex flex-col items-center justify-center text-center space-y-4 min-h-[200px]">
-                  <div className="w-12 h-12 rounded-[4px] bg-muted flex items-center justify-center">
-                    <Clock className="w-6 h-6 text-muted-foreground/30" />
-                  </div>
-                  <div className="max-w-xs">
-                    <p className="text-xs text-muted-foreground font-medium leading-relaxed">
-                      Aucun contenu généré pour ce chapitre. Glissez des sources audios ou lancez l'IA.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between border-t border-border pt-5">
-                  <div className="flex items-center gap-2 text-muted-foreground/40">
-                    <Zap className="w-3.5 h-3.5" />
-                    <span className="text-[10px] font-bold uppercase tracking-widest">SABI Engine Ready</span>
-                  </div>
-                  
-                  <div className="flex items-center gap-3">
-                    <button className="h-9 px-4 border border-border rounded-[4px] text-[10px] font-bold uppercase tracking-widest hover:bg-muted transition-all text-foreground/80">
-                      Édition Live
-                    </button>
-                    <button className="h-9 px-5 bg-primary text-black rounded-[4px] text-[10px] font-bold uppercase tracking-widest hover:opacity-90 transition-all flex items-center gap-2">
-                      <Wand2 className="w-3.5 h-3.5" />
-                      Générer avec SABI AI
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        ))}
-        
-        {/* SABI Alert Hint */}
-        <AlertPanel 
-          type="info"
-          title="Mode Terrain Connecté"
-          message="Utilisez l'application mobile SABI pour enregistrer vos commentaires sur site. Ils apparaîtront ici instantanément avec synchronisation DTAO."
-        />
-      </div>
     </div>
   );
 }

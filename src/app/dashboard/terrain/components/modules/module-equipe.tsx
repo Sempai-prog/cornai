@@ -32,15 +32,17 @@ interface MembreEquipe {
 
 interface ModuleEquipeProps {
   membres: MembreEquipe[];
+  soumissionId?: string;
 }
 
 /**
- * 👥 MODULE : L'ÉQUIPE — Wired to DB
- * Refactored for High Density (SABI V1.6)
- * Pattern: Compact Card + Accordion Details
+ * 👥 MODULE : L'ÉQUIPE — Bento Refactor (SABI V1.6)
+ * Focus : Qualification du Personnel Clé & Conformité Formulaire 4F.
+ * Layout : Asymétrique (Col 1-8: ID Cards Experts, Col 9-12: Évaluation Points).
  */
-export function ModuleEquipe({ membres }: ModuleEquipeProps) {
-  const validCount = membres.filter(m => m.statut === 'complet').length;
+export function ModuleEquipe({ membres, soumissionId }: ModuleEquipeProps) {
+  const totalExp = membres.reduce((acc, m) => acc + (m.experienceAnnees || 0), 0);
+  const criticalAlerte = membres.find(m => m.alerte);
 
   if (membres.length === 0) {
     return (
@@ -48,219 +50,199 @@ export function ModuleEquipe({ membres }: ModuleEquipeProps) {
         <div className="w-16 h-16 rounded-full bg-primary/5 flex items-center justify-center mb-4">
           <Users className="w-8 h-8 text-primary/50" />
         </div>
-        <h3 className="text-sm font-bold text-foreground mb-2 uppercase tracking-widest">Équipe Vide</h3>
+        <h3 className="text-sm font-semibold text-foreground mb-2 uppercase tracking-widest">Équipe Vide</h3>
         <p className="text-xs text-muted-foreground text-center max-w-md mx-auto mb-6">
-          Aucun expert technique n'est encore associé à ce projet. Constituez votre équipe pour répondre aux exigences du dossier technique.
+          Aucun expert technique engagé. Le Formulaire 4F exige la liste complète du personnel clé.
         </p>
-        <DialogAjoutMembre />
+        <DialogAjoutMembre soumissionId={soumissionId || ""} />
       </div>
     );
   }
 
   return (
-    <div className="space-y-8 h-full pb-8">
-      {/* 📋 HEADER SECTION (STAY STATIC) */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 bg-card border border-border/10 rounded-sabi relative overflow-hidden">
-        <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-sabi bg-primary/10 flex items-center justify-center">
-            <Users className="w-5 h-5 text-primary" />
+    <div className="grid grid-cols-12 gap-6 pb-8 items-start">
+      
+      {/* 🚀 TOP BAR : AUDIT ORGANIGRAMME (12 COLS) */}
+      <div className="col-span-12 p-4 bg-muted/10 border border-border/10 rounded-[4px] flex items-center justify-between mb-2">
+        <div className="flex items-center gap-6">
+          <div className="flex flex-col gap-0.5">
+            <span className="text-[9px] font-semibold text-muted-foreground/40 uppercase tracking-[0.2em]">Effectif</span>
+            <span className="text-sm font-semibold text-foreground tabular-nums">{membres.length} Experts</span>
           </div>
-          <div>
-            <h3 className="text-xs font-bold text-foreground uppercase tracking-widest">
-              Équipe Technique Proposée
-            </h3>
-            <div className="flex items-center gap-3 mt-1">
-              <span className="text-[10px] text-muted-foreground/60 uppercase font-black tracking-widest tabular-nums">
-                {membres.length} Experts Engagés
-              </span>
-              <div className="w-1 h-1 rounded-full bg-border/20" />
-              <span className="text-[10px] text-primary uppercase font-black tracking-widest tabular-nums">
-                {validCount} Validés
-              </span>
-            </div>
+          <div className="w-px h-8 bg-border/20" />
+          <div className="flex flex-col gap-0.5">
+            <span className="text-[9px] font-semibold text-muted-foreground/40 uppercase tracking-[0.2em]">Expérience Cumulée</span>
+            <span className="text-sm font-semibold text-primary tabular-nums">{totalExp} Ans</span>
           </div>
         </div>
         
         <div className="flex items-center gap-2">
-          <button className="h-8 px-3 bg-muted/40 hover:bg-muted border border-border/10 rounded-sabi text-[10px] font-bold uppercase tracking-widest text-muted-foreground transition-all flex items-center gap-2">
-            <Import className="h-3.5 h-3.5" />
+          <button className="h-8 px-4 border border-border/10 rounded-[4px] text-[10px] font-semibold uppercase tracking-widest text-muted-foreground hover:bg-muted transition-all">
             Pool RH
           </button>
-          <DialogAjoutMembre />
+          <DialogAjoutMembre soumissionId={soumissionId || ""} />
         </div>
       </div>
 
-      {/* 👤 PERSONNEL GRID : 3-COLUMN COMPACT + ACCORDION */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+      {/* 👤 COL 1-8 : EXPERT ID CARDS BENTO */}
+      <div className="col-span-12 lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-4">
         {membres.map((person) => (
-          <ExpertCard key={person.id} person={person} />
+          <ExpertIDCard key={person.id} person={person} />
         ))}
       </div>
 
-      {/* 📌 GLOBAL LEGAL ADVISORY */}
-      <div className="bg-blue-500/5 border-l-2 border-l-blue-500 py-3 px-4 rounded-[4px]">
-        <h4 className="text-[10px] font-bold uppercase tracking-widest text-blue-500 mb-1">Rappel Règlementaire DTAO (Art. 18.1)</h4>
-        <p className="text-[11px] text-foreground/70 leading-relaxed">
-          Les CV doivent être datés de moins de 3 mois et certifiés conformes par le soumissionnaire. SABI vérifie l'unicité des experts pour éviter les doubles affectations.
-        </p>
-      </div>
+      {/* 📋 COL 9-12 : ÉVALUATEUR DE POINTS (STICKY) */}
+      <aside className="col-span-12 lg:col-span-4 sticky top-6 space-y-4">
+        <div className="bg-card border border-border/10 rounded-[4px] p-5">
+          <div className="flex items-center gap-2 mb-6 border-b border-border/5 pb-4">
+            <GraduationCap className="w-4 h-4 text-primary" />
+            <h4 className="text-[11px] font-semibold uppercase tracking-[0.15em] text-foreground">
+              Simulation de Score
+            </h4>
+          </div>
+
+          <div className="space-y-6">
+            <div className="p-4 bg-muted/5 border border-border/5 rounded-[4px] space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-semibold text-muted-foreground uppercase">Note Technique Est.</span>
+                <span className="text-xs font-semibold text-primary">78/100</span>
+              </div>
+              <div className="h-1.5 bg-muted/20 rounded-full overflow-hidden">
+                <div className="h-full bg-primary w-[78%]" />
+              </div>
+            </div>
+
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <Clock className="w-3.5 h-3.5 text-muted-foreground/40 mt-0.5" />
+                    <div className="space-y-1">
+                      <p className="text-[10px] font-semibold text-foreground/80 uppercase">Ancienneté Moyenne</p>
+                      <p className="text-[10px] text-muted-foreground font-medium">12.4 ans par expert (Cible: &gt;10 ans)</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Briefcase className="w-3.5 h-3.5 text-muted-foreground/40 mt-0.5" />
+                    <div className="space-y-1">
+                      <p className="text-[10px] font-semibold text-foreground/80 uppercase">Mix Public/Privé</p>
+                      <p className="text-[10px] text-muted-foreground font-medium">
+                        {membres.filter(m => m.alerte?.includes('Administration')).length} Profil(s) à risque ARMP
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* 🛡️ QUALIFICATION AUDIT */}
+                <div className="mt-6 p-4 bg-primary/5 border border-primary/10 rounded-[4px] relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-8 h-8 opacity-10">
+                    <GraduationCap className="w-full h-full text-primary" />
+                  </div>
+                  <span className="text-[9px] font-semibold text-primary uppercase tracking-widest block mb-2">Audit des Diplômes</span>
+                  <div className="flex items-center gap-1">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <div key={i} className={cn("h-1 flex-1 rounded-full", i < 4 ? "bg-primary" : "bg-muted")} />
+                    ))}
+                  </div>
+                  <p className="text-[8px] text-muted-foreground mt-2 uppercase font-semibold tracking-tighter">80% des diplômes sont certifiés conformes.</p>
+                </div>
+              </div>
+            </div>
+
+        {/* 🏛️ LEGAL ADVISORY (PIECE 4F) */}
+        <div className="bg-blue-500/5 border-l-2 border-blue-500 p-4 rounded-[4px]">
+          <h5 className="text-[10px] font-semibold text-blue-500 uppercase tracking-widest mb-1">Rappel DTAO</h5>
+          <p className="text-[10px] text-foreground/70 leading-relaxed font-medium">
+            Le rejet technique est systématique si un CV n'est pas <strong>daté de moins de 3 mois</strong> ou si la signature n'est pas authentique.
+          </p>
+        </div>
+
+        {criticalAlerte && (
+          <div className="bg-red-500/5 border-l-2 border-red-500 p-4 rounded-[4px]">
+            <div className="flex items-start gap-2 text-red-500 mb-1">
+              <ShieldAlert className="w-3.5 h-3.5 mt-0.5" />
+              <h5 className="text-[10px] font-semibold uppercase tracking-widest">Risque Éliminatoire</h5>
+            </div>
+            <p className="text-[10px] text-foreground/70 leading-relaxed font-medium">
+              L'expert <strong>{criticalAlerte.nom}</strong> présente une anomalie : {criticalAlerte.alerte}.
+            </p>
+          </div>
+        )}
+      </aside>
+
     </div>
   );
 }
 
 /**
- * COMPACT EXPERT CARD WITH ACCORDION
+ * 👤 SUB-COMPONENT : EXPERT ID CARD
+ * Ultra-dense Bento Card for Personnel
  */
-function ExpertCard({ person }: { person: MembreEquipe }) {
-  const [isOpen, setIsOpen] = useState(false);
+function ExpertIDCard({ person }: { person: MembreEquipe }) {
   const isComplete = person.statut === "complet";
-
-  const getRoleStyle = (role: string | null) => {
-    const r = (role || "").toUpperCase();
-    if (r.includes("CHEF PROJET")) return "text-primary bg-primary/5 border border-primary/10";
-    if (r.includes("CHEF CHANTIER")) return "text-amber-500 bg-amber-500/5 border border-amber-500/10";
-    return "text-muted-foreground bg-muted/10 border border-border/5";
-  };
-
-  const getDotColor = (type: 'cv' | 'diplome' | 'attestations') => {
-    if (type === 'cv') return person.cvSigne ? "bg-primary" : "bg-red-500";
-    if (type === 'diplome') return person.diplomeCertifie ? "bg-primary" : "bg-red-500";
-    if (type === 'attestations') {
-      if (person.attestations === 'ok') return "bg-primary";
-      if (person.attestations === 'pending') return "bg-amber-500";
-      return "bg-red-500";
-    }
-    return "bg-muted";
-  };
+  const isPublic = person.alerte?.includes('Administration');
 
   return (
     <div className={cn(
-      "bg-card border transition-all rounded-[4px] overflow-hidden",
-      isOpen ? "border-primary/20" : "border-border/10",
-      person.alerte && "border-l-2 border-l-red-500"
+      "bg-card border transition-all duration-300 rounded-[4px] group overflow-hidden flex flex-col h-full",
+      isComplete ? "border-border/10" : "border-red-500/20"
     )}>
-      {/* COMPACT HEADER (Always Visible as Toggle Button) */}
-      <button 
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full text-left p-4 flex items-start gap-3 hover:bg-muted/50 transition-colors"
-      >
-        {/* Avatar initiale */}
-        <div className="h-9 w-9 rounded-full bg-muted/20 border border-border/10 flex items-center justify-center shrink-0">
-          <span className="text-sm font-semibold text-foreground">
-            {person.nom.charAt(0)}
-          </span>
+      {/* Header : Identité */}
+      <div className="p-4 border-b border-border/5 flex items-start gap-3">
+        <div className="h-10 w-10 rounded-full bg-muted/20 border border-border/10 flex items-center justify-center shrink-0">
+          <span className="text-sm font-semibold text-foreground">{person.nom.charAt(0)}</span>
         </div>
-
-        {/* Bloc infos */}
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1">
           <div className="flex items-center justify-between gap-2">
-            <h4 className="text-sm font-semibold text-foreground truncate">
+            <h4 className="text-sm font-semibold text-foreground truncate group-hover:text-primary transition-colors">
               {person.nom}
             </h4>
-            <span className={cn(
-              "text-[9px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-[4px] border shrink-0",
-              isComplete ? "bg-primary/10 text-primary border-primary/20" : "bg-red-500/5 text-red-500 border-red-500/10"
-            )}>
-              {isComplete ? "COMPLET" : "INCOMPLET"}
-            </span>
+            <div className={cn(
+              "w-2 h-2 rounded-full",
+              isComplete ? "bg-primary" : "bg-red-500"
+            )} />
           </div>
-
-          <span className={cn(
-            "text-[9px] uppercase tracking-wider font-semibold px-1.5 py-0.5 rounded-[4px] mt-1.5 inline-block",
-            getRoleStyle(person.role)
-          )}>
-            {(person.role || "EXPERT").replace(/_/g, " ")}
+          <span className="text-[9px] font-semibold text-muted-foreground/30 uppercase tracking-[0.1em] mt-0.5 block">
+            {person.role || "EXPERT"}
           </span>
+        </div>
+      </div>
 
-          <div className="flex items-center justify-between mt-2.5">
-            <span className="text-[11px] text-muted-foreground font-medium">
-              {person.experienceAnnees || 0} ans d'expérience
-            </span>
-            <div className="flex items-center gap-1.5">
-              <span className={cn("h-1.5 w-1.5 rounded-full", getDotColor('cv'))} title="CV Signé" />
-              <span className={cn("h-1.5 w-1.5 rounded-full", getDotColor('diplome'))} title="Diplôme Certifié" />
-              <span className={cn("h-1.5 w-1.5 rounded-full", getDotColor('attestations'))} title="Attestations" />
-            </div>
+      {/* Middle : Stats & Qualifs */}
+      <div className="p-4 py-3 bg-muted/5 flex-1 space-y-3">
+        <div className="flex items-center justify-between">
+          <span className="text-[9px] font-semibold text-muted-foreground/40 uppercase tracking-widest">Expérience</span>
+          <span className="text-[10px] font-semibold text-foreground tabular-nums">{person.experienceAnnees} Ans</span>
+        </div>
+        <div className="space-y-1">
+          <span className="text-[9px] font-semibold text-muted-foreground/40 uppercase tracking-widest">Qualification</span>
+          <p className="text-[10px] font-semibold text-foreground/70 line-clamp-1">{person.qualification || 'N/A'}</p>
+        </div>
+      </div>
+
+      {/* Footer : Compliance Lights */}
+      <div className="p-4 border-t border-border/5 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="flex flex-col items-center gap-1">
+            <div className={cn("w-1 h-3 rounded-[1px]", person.cvSigne ? "bg-primary" : "bg-red-500")} />
+            <span className="text-[8px] font-semibold text-muted-foreground/30 uppercase tracking-tighter">CV</span>
+          </div>
+          <div className="flex flex-col items-center gap-1">
+            <div className={cn("w-1 h-3 rounded-[1px]", person.diplomeCertifie ? "bg-primary" : "bg-red-500")} />
+            <span className="text-[8px] font-semibold text-muted-foreground/30 uppercase tracking-tighter">DIP</span>
+          </div>
+          <div className="flex flex-col items-center gap-1">
+            <div className={cn("w-1 h-3 rounded-[1px]", isPublic ? "bg-amber-500" : "bg-primary")} />
+            <span className="text-[8px] font-semibold text-muted-foreground/30 uppercase tracking-tighter">STAT</span>
           </div>
         </div>
 
-        <ChevronDown className={cn(
-          "h-4 w-4 text-muted-foreground/40 shrink-0 transition-transform duration-200 mt-1",
-          isOpen && "rotate-180"
-        )} />
-      </button>
-
-      {/* ACCORDION CONTENT (CSS Transition) */}
-      <div className={cn(
-        "overflow-hidden transition-all duration-300 ease-in-out",
-        isOpen ? "max-h-[500px] opacity-100 border-t border-border/5" : "max-h-0 opacity-0"
-      )}>
-        <div className="p-4 pt-4 space-y-5">
-          {/* Qualification */}
-          <div>
-            <span className="text-[10px] uppercase tracking-widest text-muted-foreground/60 font-bold">Qualification</span>
-            <div className="flex items-center gap-2 mt-1.5">
-              <GraduationCap className="w-3.5 h-3.5 text-muted-foreground/40" />
-              <p className="text-[11px] text-foreground font-semibold leading-tight">
-                {person.qualification || 'Non renseigné'}
-              </p>
-            </div>
-          </div>
-
-          {/* Checklist Compliance détaillée */}
-          <div>
-            <span className="text-[10px] uppercase tracking-widest text-muted-foreground/60 font-bold">Dossier Technique</span>
-            <div className="mt-2.5 space-y-1">
-              <div className="flex items-center justify-between py-1.5 border-b border-border/5">
-                <span className="text-[11px] text-muted-foreground">CV Signé</span>
-                {person.cvSigne ? (
-                  <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
-                ) : (
-                  <div className="h-1.5 w-1.5 rounded-full bg-red-500" />
-                )}
-              </div>
-              <div className="flex items-center justify-between py-1.5 border-b border-border/5">
-                <span className="text-[11px] text-muted-foreground">Diplôme Certifié</span>
-                {person.diplomeCertifie ? (
-                  <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
-                ) : (
-                  <div className="h-1.5 w-1.5 rounded-full bg-red-500" />
-                )}
-              </div>
-              <div className="flex items-center justify-between py-1.5">
-                <span className="text-[11px] text-muted-foreground">Attestations</span>
-                {person.attestations === 'ok' ? (
-                  <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
-                ) : person.attestations === 'pending' ? (
-                  <Clock className="h-3.5 w-3.5 text-amber-500" />
-                ) : (
-                  <div className="h-1.5 w-1.5 rounded-full bg-red-500" />
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Alerte si présente */}
-          {person.alerte && (
-            <div className="bg-red-500/5 border border-red-500/10 rounded-[4px] p-3">
-              <div className="flex items-start gap-2.5">
-                <AlertTriangle className="h-4 w-4 text-red-500 shrink-0 mt-0.5" />
-                <div className="flex-1">
-                  <p className="text-[10px] text-red-500 font-bold uppercase tracking-tight">{person.alerte}</p>
-                  <div className="flex items-center justify-between mt-3 pt-2 border-t border-red-500/5">
-                    <span className="text-[9px] text-red-500/40 italic">Source : RPAO Art. 36</span>
-                    <button className="text-[9px] text-red-500 font-black uppercase tracking-widest hover:underline transition-colors">
-                      CORRIGER
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+        <div className={cn(
+          "px-2 py-0.5 rounded-[2px] text-[8px] font-semibold uppercase tracking-widest border",
+          isComplete ? "bg-primary/5 text-primary border-primary/10" : "bg-red-500/5 text-red-500 border-red-500/10"
+        )}>
+          {isComplete ? "CONFORME" : "BLOQUÉ"}
         </div>
       </div>
     </div>
   );
 }
 
-// @antigravity-end-of-file

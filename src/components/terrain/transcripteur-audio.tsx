@@ -74,7 +74,7 @@ export function TranscripteurAudio({ soumissionId }: { soumissionId: string }) {
         {statut === 'idle' && (
           <>
             <Upload className="w-8 h-8 text-primary/40 mx-auto mb-3" />
-            <h4 className="text-[11px] font-bold text-foreground uppercase tracking-widest mb-1.5">
+            <h4 className="text-[11px] font-semibold text-foreground uppercase tracking-widest mb-1.5">
               Uploader une note audio
             </h4>
             <p className="text-[10px] text-muted-foreground/80 max-w-[200px] mx-auto leading-relaxed">
@@ -86,7 +86,7 @@ export function TranscripteurAudio({ soumissionId }: { soumissionId: string }) {
         {statut === 'processing' && (
           <div className="py-2">
             <Loader2 className="w-8 h-8 text-primary mx-auto mb-3 animate-spin" />
-            <h4 className="text-[11px] font-bold text-foreground uppercase tracking-widest mb-1">
+            <h4 className="text-[11px] font-semibold text-foreground uppercase tracking-widest mb-1">
               Transcription Gemini en cours...
             </h4>
             <p className="text-[10px] text-muted-foreground/80 tabular-nums">
@@ -98,9 +98,9 @@ export function TranscripteurAudio({ soumissionId }: { soumissionId: string }) {
         {statut === 'complete' && (
           <div className="py-2">
             <div className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center mx-auto mb-3">
-              <span className="text-emerald-500 font-black">✓</span>
+              <span className="text-emerald-500 font-semibold">✓</span>
             </div>
-            <h4 className="text-[11px] font-bold text-emerald-500 uppercase tracking-widest mb-1">
+            <h4 className="text-[11px] font-semibold text-emerald-500 uppercase tracking-widest mb-1">
               Transcription complétée
             </h4>
             <p className="text-[10px] text-muted-foreground/80">
@@ -112,9 +112,9 @@ export function TranscripteurAudio({ soumissionId }: { soumissionId: string }) {
         {statut === 'error' && (
           <div className="py-2">
             <div className="w-8 h-8 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-3">
-              <span className="text-red-500 font-black">X</span>
+              <span className="text-red-500 font-semibold">X</span>
             </div>
-            <h4 className="text-[11px] font-bold text-red-500 uppercase tracking-widest mb-1">
+            <h4 className="text-[11px] font-semibold text-red-500 uppercase tracking-widest mb-1">
               Échec de l'IA
             </h4>
             <p className="text-[10px] text-red-500/80">
@@ -128,7 +128,7 @@ export function TranscripteurAudio({ soumissionId }: { soumissionId: string }) {
       {transcription && (
         <div className="bg-primary/5 rounded-[4px] border border-primary/20 p-5 mt-4">
           <div className="flex items-center justify-between border-b border-primary/10 pb-3 mb-4">
-            <h3 className="text-[10px] font-black text-primary uppercase tracking-widest">
+            <h3 className="text-[10px] font-semibold text-primary uppercase tracking-widest">
               Rapport de Visite Synthétisé (IA)
             </h3>
           </div>

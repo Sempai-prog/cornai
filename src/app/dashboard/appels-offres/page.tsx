@@ -52,7 +52,7 @@ export default async function AppelsOffresPage({ searchParams }: PageProps) {
           <p>
             Surveillance et détection en temps réel des avis d'appel d'offres. 
             <span className="block mt-1">
-              Synchronisé avec <span className="text-foreground/40 font-black">COLEPS • ARMP</span> — Secteur BTP & Infrastructures.
+              Synchronisé avec <span className="text-foreground/40 font-semibold">COLEPS • ARMP</span> — Secteur BTP & Infrastructures.
             </span>
           </p>
         }

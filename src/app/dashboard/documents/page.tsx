@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 // ══════════════════════════════════════════
 // SABI — Centre de Conformité Administrative (ARMP)
 // ══════════════════════════════════════════
@@ -108,11 +110,11 @@ export default async function DocumentsPage() {
           {/* Liste des Documents */}
           <div className="bg-card border border-border/10 rounded-[4px] overflow-hidden shadow-none">
             <div className="px-5 py-4 border-b border-border/10 bg-white/[0.02] flex items-center justify-between">
-              <h3 className="text-[11px] font-bold tracking-widest text-muted-foreground/40 uppercase items-center flex gap-2">
+              <h3 className="text-[11px] font-semibold tracking-widest text-muted-foreground/40 uppercase items-center flex gap-2">
                 <FileText className="w-3.5 h-3.5 opacity-30" />
                 Dossier de Qualification (Enveloppe A)
               </h3>
-              <span className="text-[10px] text-muted-foreground/30 uppercase font-bold tracking-tighter">{allRows.length} pièces identifiées</span>
+              <span className="text-[10px] text-muted-foreground/30 uppercase font-semibold tracking-tighter">{allRows.length} pièces identifiées</span>
             </div>
             
             <div className="divide-y divide-border/10">
@@ -129,9 +131,9 @@ export default async function DocumentsPage() {
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <h4 className="text-sm font-bold text-foreground/80 tracking-tight uppercase">{item.name}</h4>
+                        <h4 className="text-sm font-semibold text-foreground/80 tracking-tight uppercase">{item.name}</h4>
                         {item.eliminatoire && (
-                          <span className="text-[8px] px-1.5 py-0.5 border border-red-500/20 text-red-500/60 font-black tracking-tighter uppercase rounded-[2px] bg-red-500/5">
+                          <span className="text-[8px] px-1.5 py-0.5 border border-red-500/20 text-red-500/60 font-semibold tracking-tighter uppercase rounded-[2px] bg-red-500/5">
                             Éliminatoire
                           </span>
                         )}
@@ -143,17 +145,17 @@ export default async function DocumentsPage() {
                   <div className="flex items-center gap-10">
                     <div className="text-right hidden sm:block">
                       <p className={cn(
-                        "text-[10px] font-bold tracking-wider uppercase",
+                        "text-[10px] font-semibold tracking-wider uppercase",
                         item.urgent ? "text-red-500" : item.warning ? "text-amber-500" : "text-muted-foreground/40"
                       )}>
                         {item.date}
                       </p>
-                      <p className="text-[9px] text-muted-foreground/20 font-bold uppercase tracking-tighter">Diagnostic SABI Scan</p>
+                      <p className="text-[9px] text-muted-foreground/20 font-semibold uppercase tracking-tighter">Diagnostic SABI Scan</p>
                     </div>
 
                     <div className="flex items-center gap-4">
                       <span className={cn(
-                        "px-2 py-0.5 rounded-[2px] text-[9px] font-black tracking-widest border transition-all",
+                        "px-2 py-0.5 rounded-[2px] text-[9px] font-semibold tracking-widest border transition-all",
                         item.isValide ? "bg-emerald-500/5 text-emerald-500 border-emerald-500/20" :
                         item.isExpired ? "bg-red-500/5 text-red-500 border-red-500/20" :
                         item.isEnCours ? "bg-indigo-500/5 text-indigo-500 border-indigo-500/20" :
@@ -170,7 +172,7 @@ export default async function DocumentsPage() {
             </div>
 
             <div className="p-4 bg-muted/5 border-t border-border/10 flex items-center justify-center">
-              <button className="text-[10px] font-bold text-muted-foreground/30 hover:text-muted-foreground/60 transition-colors uppercase tracking-[0.2em] flex items-center gap-2">
+              <button className="text-[10px] font-semibold text-muted-foreground/30 hover:text-muted-foreground/60 transition-colors uppercase tracking-[0.2em] flex items-center gap-2">
                 <Clock className="w-3.5 h-3.5" />
                 Historique d'Archivage (COLEPS)
               </button>
@@ -182,7 +184,7 @@ export default async function DocumentsPage() {
         <div className="space-y-6 sticky top-6">
           <div className="bg-card border border-border/10 rounded-[4px] p-6 space-y-8 shadow-none">
             <div>
-              <h3 className="text-[11px] font-black text-muted-foreground/30 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
+              <h3 className="text-[11px] font-semibold text-muted-foreground/30 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 opacity-30" />
                 Bilan Analytique
               </h3>
@@ -214,8 +216,8 @@ export default async function DocumentsPage() {
                   />
                 </svg>
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-4xl font-black text-foreground tracking-tighter">{stats.score}%</span>
-                  <span className="text-[10px] text-muted-foreground/30 font-bold uppercase tracking-widest mt-1">Santé Légale</span>
+                  <span className="text-4xl font-semibold text-foreground tracking-tighter">{stats.score}%</span>
+                  <span className="text-[10px] text-muted-foreground/30 font-semibold uppercase tracking-widest mt-1">Santé Légale</span>
                 </div>
               </div>
             </div>
@@ -225,7 +227,7 @@ export default async function DocumentsPage() {
                 <div className="p-4 bg-red-500/5 border border-red-500/10 rounded-[4px] flex gap-3 group/alert">
                   <TrendingDown className="w-5 h-5 text-red-500 shrink-0 mt-0.5 group-hover/alert:scale-110 transition-transform" />
                   <div>
-                    <p className="text-[11px] font-black text-red-500 leading-tight uppercase tracking-wider">Alerte : Dossier Critique</p>
+                    <p className="text-[11px] font-semibold text-red-500 leading-tight uppercase tracking-wider">Alerte : Dossier Critique</p>
                     <p className="text-[11px] text-red-500/60 mt-1 font-medium leading-relaxed italic">
                       {stats.eliminatoiresManquants} pièce(s) éliminatoire(s) sont absentes ou expirées. Votre entreprise ne peut pas soumissionner légalement.
                     </p>
@@ -237,7 +239,7 @@ export default async function DocumentsPage() {
                 <div className="p-4 bg-amber-500/5 border border-amber-500/10 rounded-[4px] flex gap-3">
                   <Clock className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-[11px] font-black text-amber-500 leading-tight uppercase tracking-wider">Anticipation</p>
+                    <p className="text-[11px] font-semibold text-amber-500 leading-tight uppercase tracking-wider">Anticipation</p>
                     <p className="text-[11px] text-amber-500/60 mt-1 font-medium leading-relaxed italic">
                       {stats.expirant} pièce(s) arrivent à échéance sous 30 jours. Prévoyez le renouvellement pour éviter tout blocage.
                     </p>
@@ -249,7 +251,7 @@ export default async function DocumentsPage() {
                 <div className="p-4 bg-emerald-500/5 border border-emerald-500/10 rounded-[4px] flex gap-3">
                   <ShieldCheck className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-[11px] font-black text-emerald-500 leading-tight uppercase tracking-wider">Éligibilité Totale</p>
+                    <p className="text-[11px] font-semibold text-emerald-500 leading-tight uppercase tracking-wider">Éligibilité Totale</p>
                     <p className="text-[11px] text-emerald-200/40 mt-1 font-medium leading-relaxed italic">
                       Votre blindage administratif est optimal. Toutes les pièces requises par le référentiel DTAO sont à jour.
                     </p>
@@ -266,8 +268,8 @@ export default async function DocumentsPage() {
                 <Info className="w-4 h-4 text-primary opacity-60" />
               </div>
               <div className="space-y-1.5">
-                <p className="text-[10px] font-black text-primary uppercase tracking-widest">Conseil Expert</p>
-                <p className="text-[11px] text-muted-foreground/60 leading-relaxed font-bold italic">
+                <p className="text-[10px] font-semibold text-primary uppercase tracking-widest">Conseil Expert</p>
+                <p className="text-[11px] text-muted-foreground/60 leading-relaxed font-semibold italic">
                   Rappel ARMP : Le <span className="text-primary">Certificat de Non-Faillite</span> est obsolète dans la plupart des DAO récents, remplacé par l'Attestation du Greffe du Tribunal (RCCM).
                 </p>
               </div>

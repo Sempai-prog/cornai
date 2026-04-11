@@ -108,9 +108,9 @@ export function TerrainClientPage({
       case "transcripteur":
         return <ModuleTranscripteur aoNom={aoNom} dtaoReference="DTAO v2024.1" audios={audios} soumissionId={soumissionId} />;
       case "garage":
-        return <ModuleGarage materiel={garageData} aoReference={aoNom} />;
+        return <ModuleGarage materiel={garageData} aoReference={aoNom} soumissionId={soumissionId} />;
       case "equipe":
-        return <ModuleEquipe membres={equipeData} />;
+        return <ModuleEquipe membres={equipeData} soumissionId={soumissionId} />;
       case "descente":
         return <ModuleDescente maitreOuvrage={aoInstitution} data={descenteData} />;
       case "coleps":
@@ -118,6 +118,7 @@ export function TerrainClientPage({
           <ModuleColeps
             pieces={compilationData}
             moduleStatuts={compilationModuleStatuses}
+            soumissionId={soumissionId || ""}
           />
         );
       default:
@@ -147,7 +148,7 @@ export function TerrainClientPage({
       {/* Footer Meta (SABI Quiet Style) */}
       <footer className="mt-12 flex flex-col md:flex-row items-center justify-between gap-4 border-t border-border pt-6 pb-2 opacity-40">
         <div className="flex flex-col gap-1">
-          <span className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground/60">
+          <span className="text-[10px] uppercase font-semibold tracking-widest text-muted-foreground/60">
             SABI Intelligence Locale • DTAO v2024.1
           </span>
           <span className="text-[9px] uppercase font-medium tracking-tight text-muted-foreground italic">
@@ -158,11 +159,11 @@ export function TerrainClientPage({
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-            <span className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground/60">
+            <span className="text-[10px] uppercase font-semibold tracking-widest text-muted-foreground/60">
               COLEPS Readiness : {score.percentage > 70 ? "High" : score.percentage > 30 ? "Medium" : "Low"}
             </span>
           </div>
-          <span className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground/40 border-l border-border pl-6">
+          <span className="text-[10px] uppercase font-semibold tracking-widest text-muted-foreground/40 border-l border-border pl-6">
             Ref: SABI-TR-2024
           </span>
         </div>

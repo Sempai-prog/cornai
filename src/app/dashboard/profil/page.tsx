@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 // ══════════════════════════════════════════
 // SABI — Pilotage de Capacité Métier (Profil Expert)
 // ══════════════════════════════════════════
@@ -32,7 +34,7 @@ export default async function ProfilCapacitePage() {
           <p>
             Pilotage des éligibilités aux marchés publics. 
             <span className="block mt-1">
-              Analyse de surface financière et technique — Standards <span className="text-foreground/40 font-black uppercase tracking-widest">ARMP / MINMAP</span>.
+              Analyse de surface financière et technique — Standards <span className="text-foreground/40 font-semibold uppercase tracking-widest">ARMP / MINMAP</span>.
             </span>
           </p>
         }
@@ -56,7 +58,7 @@ export default async function ProfilCapacitePage() {
         {/* LE FLUX (8/12) — CAPACITIES BENTO */}
         <div className="lg:col-span-8 flex flex-col min-w-0 gap-6">
           <div className="flex items-center justify-between h-6">
-            <h2 className="text-[11px] font-bold text-foreground/40 uppercase tracking-[0.2em]">
+            <h2 className="text-[11px] font-semibold text-foreground/40 uppercase tracking-[0.2em]">
               Surface Opérationnelle & Financière
             </h2>
           </div>
@@ -68,7 +70,7 @@ export default async function ProfilCapacitePage() {
                 <div className="h-10 w-10 bg-muted/10 rounded-[4px] flex items-center justify-center border border-border/10 transition-colors">
                   <Building2 className="h-5 w-5 text-slate-400 group-hover:text-primary transition-colors" />
                 </div>
-                <span className="text-[9px] font-bold text-primary/50 uppercase tracking-widest border border-primary/20 px-2 py-0.5 rounded-[2px] transition-colors">{profile.actif ? 'Vérifié' : 'Inactif'}</span>
+                <span className="text-[9px] font-semibold text-primary/50 uppercase tracking-widest border border-primary/20 px-2 py-0.5 rounded-[2px] transition-colors">{profile.actif ? 'Vérifié' : 'Inactif'}</span>
               </div>
               
               <div className="space-y-6">
@@ -94,12 +96,12 @@ export default async function ProfilCapacitePage() {
                 </div>
                 <div className="flex gap-1.5 items-center">
                   <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                  <span className="text-[9px] font-bold text-foreground/40 uppercase tracking-widest transition-colors">Solvabilité AA</span>
+                  <span className="text-[9px] font-semibold text-foreground/40 uppercase tracking-widest transition-colors">Solvabilité AA</span>
                 </div>
               </div>
 
               <div className="space-y-6">
-                <h3 className="text-[11px] font-bold text-foreground/30 uppercase tracking-[0.15em]">Chiffre d'Affaires (Réel)</h3>
+                <h3 className="text-[11px] font-semibold text-foreground/30 uppercase tracking-[0.15em]">Chiffre d'Affaires (Réel)</h3>
                 
                 <div className="space-y-4">
                   <EditableField 
@@ -116,17 +118,17 @@ export default async function ProfilCapacitePage() {
                   ].map((row, i) => (
                     <div key={i} className="flex items-center justify-between p-3 bg-muted/5 border border-border/5 rounded-[4px] opacity-60">
                       <div className="space-y-0.5">
-                        <span className="text-[10px] font-bold text-foreground/40 uppercase tracking-wider">{row.year}</span>
-                        <p className="text-[13px] font-bold text-foreground/80">{row.value}</p>
+                        <span className="text-[10px] font-semibold text-foreground/40 uppercase tracking-wider">{row.year}</span>
+                        <p className="text-[13px] font-semibold text-foreground/80">{row.value}</p>
                       </div>
-                      <span className="text-[9px] font-bold text-foreground/20 italic">Historique</span>
+                      <span className="text-[9px] font-semibold text-foreground/20 italic">Historique</span>
                     </div>
                   ))}
                 </div>
 
                 <div className="pt-4 border-t border-border/10">
                   <div className="flex items-center justify-between text-[11px]">
-                    <span className="font-bold text-foreground/30 uppercase tracking-widest">Capacité d'Autofinancement</span>
+                    <span className="font-semibold text-foreground/30 uppercase tracking-widest">Capacité d'Autofinancement</span>
                     <span className="font-semibold text-foreground/70">{formatXAF((profile.caDernierExercice || 0) * 0.15)}</span>
                   </div>
                 </div>
@@ -137,7 +139,7 @@ export default async function ProfilCapacitePage() {
           {/* CARTE 3 : RÉFÉRENCES TECHNIQUES */}
           <div className="flex flex-col gap-6 mt-4">
             <div className="flex items-center justify-between h-6">
-              <h2 className="text-[11px] font-bold text-foreground/40 uppercase tracking-[0.2em]">
+              <h2 className="text-[11px] font-semibold text-foreground/40 uppercase tracking-[0.2em]">
                 Références Techniques & Marchés Exécutés
               </h2>
             </div>
@@ -150,19 +152,19 @@ export default async function ProfilCapacitePage() {
                         <Briefcase className="h-4 w-4 text-slate-500" />
                       </div>
                       <div className="space-y-0.5">
-                        <p className="text-[11px] font-bold text-foreground/80 leading-tight line-clamp-1">{ref.objet || "Sans objet"}</p>
-                        <p className="text-[9px] font-bold text-foreground/30 uppercase tracking-widest">{ref.client} — {ref.annee}</p>
+                        <p className="text-[11px] font-semibold text-foreground/80 leading-tight line-clamp-1">{ref.objet || "Sans objet"}</p>
+                        <p className="text-[9px] font-semibold text-foreground/30 uppercase tracking-widest">{ref.client} — {ref.annee}</p>
                       </div>
                     </div>
                     <div className="text-right">
-                       <p className="text-[12px] font-bold text-foreground/70">{formatXAF(ref.montant || 0)}</p>
-                       <span className="text-[8px] font-bold text-primary/50 uppercase tracking-widest">{ref.typeMarche}</span>
+                       <p className="text-[12px] font-semibold text-foreground/70">{formatXAF(ref.montant || 0)}</p>
+                       <span className="text-[8px] font-semibold text-primary/50 uppercase tracking-widest">{ref.typeMarche}</span>
                     </div>
                  </div>
                )) : (
                  <div className="bg-muted/10 border border-dashed border-border/10 rounded-[4px] p-12 flex flex-col items-center justify-center gap-3">
                     <Briefcase className="h-8 w-8 text-foreground/5" />
-                    <p className="text-[10px] font-bold text-foreground/20 uppercase tracking-[0.3em]">Aucune référence technique enregistrée</p>
+                    <p className="text-[10px] font-semibold text-foreground/20 uppercase tracking-[0.3em]">Aucune référence technique enregistrée</p>
                  </div>
                )}
             </div>
@@ -172,7 +174,7 @@ export default async function ProfilCapacitePage() {
         {/* L'INSPECTEUR (4/12) — SCORE & ALIGNEMENT IA */}
         <div className="lg:col-span-4 flex flex-col gap-4 sticky top-6 self-start">
           <div className="flex items-center mb-6 h-6">
-            <h2 className="text-[11px] font-bold text-foreground/40 uppercase tracking-[0.2em]">
+            <h2 className="text-[11px] font-semibold text-foreground/40 uppercase tracking-[0.2em]">
               Analyse de Puissance
             </h2>
           </div>
@@ -183,7 +185,7 @@ export default async function ProfilCapacitePage() {
                 <ShieldCheck className="h-5 w-5 text-primary" />
               </div>
               <div className="space-y-0.5">
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/30">Complétude Profil</p>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground/30">Complétude Profil</p>
                 <p className="text-2xl font-semibold tracking-tighter text-foreground">{completionScore}%</p>
               </div>
             </div>
@@ -208,12 +210,12 @@ export default async function ProfilCapacitePage() {
           <div className="bg-card border border-border/10 rounded-[4px] p-6">
              <div className="flex items-center gap-3 pb-4 border-b border-border/10 mb-6">
                <RefreshCcw className="h-5 w-5 text-primary/60" />
-               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/30">
+               <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground/30">
                  Levier Stratégique
                </span>
              </div>
              <p className="text-[11px] text-foreground/60 font-medium leading-relaxed tracking-tight">
-               SABI synchronise automatiquement vos capacités avec le <span className="font-bold">CCTP</span> et le <span className="font-bold">RPAO</span> pour identifier les marchés où votre probabilité de succès dépasse 80%.
+               SABI synchronise automatiquement vos capacités avec le <span className="font-semibold">CCTP</span> et le <span className="font-semibold">RPAO</span> pour identifier les marchés où votre probabilité de succès dépasse 80%.
              </p>
           </div>
 

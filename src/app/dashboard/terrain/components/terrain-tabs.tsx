@@ -47,7 +47,7 @@ export function TerrainTabs({ currentTab, onTabChange, moduleStatuses }: Terrain
   };
 
   return (
-    <div className="flex items-center gap-2 p-1.5 bg-card border border-border/10 rounded-[4px] overflow-x-auto scrollbar-none mb-8">
+    <div className="flex items-center gap-2 p-1.5 bg-card border border-border/10 rounded-[4px] overflow-x-auto scrollbar-none mb-8 w-full">
       {TABS.map((tab) => {
         const Icon = tab.icon;
         const isActive = currentTab === tab.id;
@@ -58,7 +58,7 @@ export function TerrainTabs({ currentTab, onTabChange, moduleStatuses }: Terrain
             key={tab.id}
             onClick={() => onTabChange(tab.id)}
             className={cn(
-              "flex items-center gap-3 px-5 py-3 rounded-[4px] transition-all duration-300 relative group min-w-[140px] border",
+              "flex flex-1 items-center justify-center gap-3 px-5 py-3 rounded-[4px] transition-all duration-300 relative group min-w-[140px] border",
               isActive 
                 ? "bg-muted/50 text-foreground border-border" 
                 : "text-muted-foreground hover:bg-muted/20 hover:text-foreground/80 border-transparent shadow-none"
@@ -94,7 +94,7 @@ export function TerrainTabs({ currentTab, onTabChange, moduleStatuses }: Terrain
 
             <div className="flex flex-col items-start gap-0.5">
               <span className={cn(
-                "text-[10px] font-bold uppercase tracking-[0.1em] leading-none",
+                "text-[10px] font-semibold uppercase tracking-[0.1em] leading-none",
                 isActive ? "text-foreground" : "text-muted-foreground/60 transition-colors group-hover:text-muted-foreground"
               )}>
                 {tab.shortLabel}

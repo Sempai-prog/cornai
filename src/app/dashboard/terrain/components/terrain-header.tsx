@@ -23,7 +23,7 @@ export function TerrainHeader({ score }: TerrainHeaderProps) {
           Moteur d'intelligence documentaire pour l'offre technique.
           <span className="block mt-1">
             Transcription terrain et mise en conformité{" "}
-            <span className="text-foreground/40 uppercase font-black">
+            <span className="text-foreground/40 uppercase font-semibold">
               DTAO v2024.1
             </span>
             .

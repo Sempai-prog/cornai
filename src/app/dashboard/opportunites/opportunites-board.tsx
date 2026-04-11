@@ -76,9 +76,9 @@ export function OpportunitesBoard({ initialItems }: { initialItems: Opportunity[
         metadata="POSTE DE PILOTAGE — SÉLECTION IA"
         description={
           <p>
-            Opportunités qualifiées spécifiquement pour le profil <span className="text-primary font-bold">Antigravity BTP</span> par le moteur SABI Matcher.
+            Opportunités qualifiées spécifiquement pour le profil <span className="text-primary font-semibold">Antigravity BTP</span> par le moteur SABI Matcher.
             <span className="block mt-1">
-              Visualisation chirurgicale du flux <span className="text-foreground/40 font-black uppercase tracking-widest">ARMP / COLEPS</span>.
+              Visualisation chirurgicale du flux <span className="text-foreground/40 font-semibold uppercase tracking-widest">ARMP / COLEPS</span>.
             </span>
           </p>
         }
@@ -105,11 +105,11 @@ export function OpportunitesBoard({ initialItems }: { initialItems: Opportunity[
             <div className="relative">
               {/* Titre de section */}
               <div className="flex items-center gap-3 mb-6">
-                <span className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">
+                <span className="text-[10px] font-semibold text-primary uppercase tracking-[0.2em]">
                   Cycle de Vie des Soumissions
                 </span>
                 <div className="flex-1 h-px bg-primary/20" />
-                <span className="text-[10px] font-bold text-muted-foreground/40 uppercase tracking-widest">
+                <span className="text-[10px] font-semibold text-muted-foreground/40 uppercase tracking-widest">
                   {items.length} dossier{items.length !== 1 ? 's' : ''} actif{items.length !== 1 ? 's' : ''}
                 </span>
               </div>
@@ -138,19 +138,19 @@ export function OpportunitesBoard({ initialItems }: { initialItems: Opportunity[
                         {/* Label étape */}
                         <div className="flex items-center gap-3 flex-1">
                           <span className={cn(
-                            "text-[11px] font-black uppercase tracking-[0.2em]",
+                            "text-[11px] font-semibold uppercase tracking-[0.2em]",
                             isEmpty ? "text-muted-foreground/20" : "text-foreground/80"
                           )}>
                             {stage.label}
                           </span>
-                          <span className="text-[10px] font-bold text-muted-foreground/20 uppercase tracking-widest">
+                          <span className="text-[10px] font-semibold text-muted-foreground/20 uppercase tracking-widest">
                             {stage.sublabel}
                           </span>
                         </div>
 
                         {/* Compteur */}
                         <span className={cn(
-                          "text-[10px] font-black px-2 py-0.5 rounded-[2px] transition-colors",
+                          "text-[10px] font-semibold px-2 py-0.5 rounded-[2px] transition-colors",
                           stageOpps.length > 0
                             ? "bg-primary/10 text-primary border border-primary/20"
                             : "bg-muted/10 text-muted-foreground/20 border border-border/5"
@@ -185,7 +185,7 @@ export function OpportunitesBoard({ initialItems }: { initialItems: Opportunity[
         {/* SIDEBAR ANALYTICS */}
         <div className="lg:col-span-4 flex flex-col gap-4 sticky top-6 self-start shrink-0">
            <div className="flex items-center mb-6 h-6">
-             <h2 className="text-[11px] font-black text-foreground/40 uppercase tracking-[0.2em]">
+             <h2 className="text-[11px] font-semibold text-foreground/40 uppercase tracking-[0.2em]">
                Diagnostic Pipeline
              </h2>
            </div>
@@ -196,15 +196,15 @@ export function OpportunitesBoard({ initialItems }: { initialItems: Opportunity[
                   <Activity className="h-5 w-5 text-primary" />
                 </div>
                 <div className="space-y-0.5">
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/30">
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground/30">
                     Performance Match
                   </span>
-                  <p className="text-2xl font-extrabold tracking-tighter text-foreground tabular-nums">{avgScore}%</p>
+                  <p className="text-2xl font-semibold tracking-tighter text-foreground tabular-nums">{avgScore}%</p>
                 </div>
              </div>
              
              <p className="text-[11px] text-foreground/50 font-medium leading-relaxed tracking-tight">
-               Ce score d'adéquation diagnostique votre éligibilité technique selon les critères critiques du <span className="font-bold">RPAO</span>.
+               Ce score d'adéquation diagnostique votre éligibilité technique selon les critères critiques du <span className="font-semibold">RPAO</span>.
              </p>
            </div>
 
@@ -213,7 +213,7 @@ export function OpportunitesBoard({ initialItems }: { initialItems: Opportunity[
                 <div className="h-10 w-10 rounded-[4px] bg-amber-500/5 flex items-center justify-center border border-amber-500/10 text-amber-500">
                   <ShieldAlert className="h-5 w-5" />
                 </div>
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/30">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground/30">
                   Alerte Capacité
                 </span>
              </div>
@@ -279,16 +279,16 @@ function PipelineRow({ opportunity }: { opportunity: Opportunity }) {
       {/* Ligne 1 : Autorité · Secteur + Score + Statut */}
       <div className="flex items-center justify-between gap-3 mb-2.5">
         <div className="flex items-center gap-2 min-w-0">
-          <span className="text-[10px] font-black text-foreground/20 uppercase tracking-[0.2em] truncate group-hover:text-primary/60 transition-colors">
-            {opportunity.ac} <span className="opacity-40 font-bold ml-1">/ {opportunity.type}</span>
+          <span className="text-[10px] font-semibold text-foreground/20 uppercase tracking-[0.2em] truncate group-hover:text-primary/60 transition-colors">
+            {opportunity.ac} <span className="opacity-40 font-semibold ml-1">/ {opportunity.type}</span>
           </span>
         </div>
         <div className="flex items-center gap-3 shrink-0">
-          <span className={cn("text-[10px] font-black tracking-widest tabular-nums", scoreColor)}>
+          <span className={cn("text-[10px] font-semibold tracking-widest tabular-nums", scoreColor)}>
             {Math.round(opportunity.score || 0)}% MATCH
           </span>
           <span className={cn(
-            "text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-[2px] border",
+            "text-[8px] font-semibold uppercase tracking-widest px-1.5 py-0.5 rounded-[2px] border",
             statutConfig.bg, statutConfig.text, statutConfig.border
           )}>
             {statutLabel}
@@ -297,16 +297,16 @@ function PipelineRow({ opportunity }: { opportunity: Opportunity }) {
       </div>
 
       {/* Ligne 2 : Titre de l'AO */}
-      <p className="text-[13px] font-bold text-foreground/80 mb-3 line-clamp-2 leading-tight tracking-tight group-hover:text-foreground transition-colors">
+      <p className="text-[13px] font-semibold text-foreground/80 mb-3 line-clamp-2 leading-tight tracking-tight group-hover:text-foreground transition-colors">
         {opportunity.title}
       </p>
 
       {/* Ligne 3 : Métadonnées */}
       <div className="flex items-center justify-between pt-3 border-t border-border/5">
-        <div className="flex items-center gap-4 text-[10px] font-bold text-muted-foreground/30 uppercase tracking-widest">
+        <div className="flex items-center gap-4 text-[10px] font-semibold text-muted-foreground/30 uppercase tracking-widest">
           {/* Caution */}
           <span className="flex items-center gap-1.5">
-            CAUTION : <span className="text-foreground/40 font-black tabular-nums tracking-tighter">{opportunity.caution}</span>
+            CAUTION : <span className="text-foreground/40 font-semibold tabular-nums tracking-tighter">{opportunity.caution}</span>
           </span>
           {/* Enveloppes */}
           <span className="flex items-center gap-1.5">
@@ -317,13 +317,13 @@ function PipelineRow({ opportunity }: { opportunity: Opportunity }) {
             </div>
           </span>
           {/* Date limite */}
-          <span className={cn("font-black tracking-widest", opportunity.isUrgent ? "text-red-500/50" : "text-amber-500/30")}>
+          <span className={cn("font-semibold tracking-widest", opportunity.isUrgent ? "text-red-500/50" : "text-amber-500/30")}>
             {opportunity.deadline}
           </span>
         </div>
 
         {/* Bouton action */}
-        <div className="flex items-center gap-1 text-[10px] font-black text-primary hover:text-primary/80 uppercase tracking-[0.2em] transition-all opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0">
+        <div className="flex items-center gap-1 text-[10px] font-semibold text-primary hover:text-primary/80 uppercase tracking-[0.2em] transition-all opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0">
           TERRAIN
           <ChevronRight className="h-3.5 w-3.5" />
         </div>
@@ -335,7 +335,7 @@ function PipelineRow({ opportunity }: { opportunity: Opportunity }) {
 function EmptyStageRow({ stage }: { stage: typeof PIPELINE_STAGES[0] }) {
   return (
     <div className="bg-muted/5 border border-border/5 border-dashed rounded-[4px] p-6 flex items-center justify-center transition-colors hover:bg-muted/8">
-      <span className="text-[10px] text-muted-foreground/20 font-black uppercase tracking-[0.25em]">
+      <span className="text-[10px] text-muted-foreground/20 font-semibold uppercase tracking-[0.25em]">
         Aucun dossier en phase {stage.label.toLowerCase()}
       </span>
     </div>

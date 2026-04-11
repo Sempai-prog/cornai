@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils"
 export function GeneratePDFButton() {
   return (
     <Button 
-      className="w-full py-6 bg-foreground text-background text-[10px] font-black uppercase tracking-[0.2em] rounded-[4px] hover:opacity-90 transition-all flex items-center justify-center gap-2 group relative overflow-hidden"
+      className="w-full py-6 bg-foreground text-background text-[10px] font-semibold uppercase tracking-[0.2em] rounded-[4px] hover:opacity-90 transition-all flex items-center justify-center gap-2 group relative overflow-hidden"
       onClick={() => {
         toast.promise(
           new Promise((resolve) => setTimeout(resolve, 2000)),
@@ -23,7 +23,7 @@ export function GeneratePDFButton() {
     >
       <div className="flex items-center gap-2">
         GÉNÉRER ATTESTATION
-        <span className="text-[7.5px] font-black px-1.5 py-0.5 rounded-[2px] bg-primary text-background tracking-widest uppercase">
+        <span className="text-[7.5px] font-semibold px-1.5 py-0.5 rounded-[2px] bg-primary text-background tracking-widest uppercase">
           ALPHA
         </span>
       </div>
@@ -46,12 +46,12 @@ export function UploadZone() {
         <FileUp className="w-6 h-6 text-primary" />
       </div>
       <div className="text-center">
-        <p className="text-sm font-bold text-foreground/80 tracking-tight uppercase">Déposez une nouvelle pièce administrative</p>
+        <p className="text-sm font-semibold text-foreground/80 tracking-tight uppercase">Déposez une nouvelle pièce administrative</p>
         <p className="text-[11px] text-muted-foreground/40 mt-1 font-medium italic">SABI scanne et extrait automatiquement les dates d'expiration via Scan AI</p>
       </div>
       <div className="flex gap-2">
-        <span className="text-[9px] font-black px-2 py-0.5 bg-muted/10 rounded-[2px] text-muted-foreground/30 border border-border/10 tracking-widest">PDF</span>
-        <span className="text-[9px] font-black px-2 py-0.5 bg-muted/10 rounded-[2px] text-muted-foreground/30 border border-border/10 tracking-widest">MAX 10MB</span>
+        <span className="text-[9px] font-semibold px-2 py-0.5 bg-muted/10 rounded-[2px] text-muted-foreground/30 border border-border/10 tracking-widest">PDF</span>
+        <span className="text-[9px] font-semibold px-2 py-0.5 bg-muted/10 rounded-[2px] text-muted-foreground/30 border border-border/10 tracking-widest">MAX 10MB</span>
       </div>
     </div>
   )

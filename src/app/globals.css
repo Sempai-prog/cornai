@@ -1,12 +1,16 @@
 @import "tailwindcss";
 
-
-
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-satoshi), var(--font-inter), sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  --font-weight-sabi-light: 300;
+  --font-weight-sabi-regular: 400;
+  --font-weight-sabi-medium: 500;
+  --font-weight-sabi-semibold: 600;
 
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
@@ -47,20 +51,12 @@
 }
 
 @keyframes accordion-down {
-  from {
-    height: 0;
-  }
-  to {
-    height: var(--radix-accordion-content-height);
-  }
+  from { height: 0; }
+  to { height: var(--radix-accordion-content-height); }
 }
 @keyframes accordion-up {
-  from {
-    height: var(--radix-accordion-content-height);
-  }
-  to {
-    height: 0;
-  }
+  from { height: var(--radix-accordion-content-height); }
+  to { height: 0; }
 }
 @keyframes infinite-scroll {
   from { transform: translateX(0); }
@@ -69,13 +65,33 @@
 
 @layer base {
   :root {
-    --background: 240 10% 99%; /* #fcfcfd Clinical Light */
+    /* ══════════════════════════════════════
+       FAMILLES & GRAISSES — SABI V1.6
+       ══════════════════════════════════════ */
+    --font-heading: var(--font-satoshi);
+    --font-body: var(--font-inter);
+
+    --fw-light: 300;
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-semibold: 600;
+
+    /* TAILLES — Échelle compacte SABI */
+    --text-2xs: 0.625rem;
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.5rem;
+
+    --background: 240 10% 99%;
     --foreground: 222 47% 11%;
-    --card: 0 0% 100%;       /* #ffffff */
+    --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
-    --primary: 142 70% 49%; 
+    --primary: 142 70% 49%;
     --primary-foreground: 0 0% 98%;
     --secondary: 240 5% 96%;
     --secondary-foreground: 222 47% 11%;
@@ -85,16 +101,16 @@
     --accent-foreground: 222 47% 11%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 0 0% 0% / 0.05;   /* Clinical 5% border */
+    --border: 0 0% 0% / 0.05;
     --input: 0 0% 0% / 0.05;
     --ring: 142 70% 49%;
     --radius: 4px;
   }
 
   .dark {
-    --background: 240 7% 4%;   /* #0a0a0b Deep Night */
+    --background: 240 7% 4%;
     --foreground: 0 0% 98%;
-    --card: 240 5% 7%;         /* #111112 Deep Gray */
+    --card: 240 5% 7%;
     --card-foreground: 0 0% 98%;
     --popover: 240 7% 4%;
     --popover-foreground: 0 0% 98%;
@@ -108,7 +124,7 @@
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 100% / 0.05;   /* White 5% border */
+    --border: 0 0% 100% / 0.05;
     --input: 0 0% 100% / 0.05;
     --ring: 142 70% 49%;
   }
@@ -117,6 +133,11 @@
 @layer base {
   * {
     border-color: var(--color-border);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.08) transparent;
+  }
+  .dark * {
+    scrollbar-color: rgba(255, 255, 255, 0.08) transparent;
   }
   body {
     background-color: var(--color-background);
@@ -138,6 +159,7 @@
     display: none;
   }
 }
+
 /* Premium SaaS Scrollbars - Mode Aware */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
@@ -153,11 +175,4 @@
 }
 .dark ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.15);
-}
-* { 
-  scrollbar-width: thin; 
-  scrollbar-color: rgba(0, 0, 0, 0.08) transparent; 
-}
-.dark * {
-  scrollbar-color: rgba(255, 255, 255, 0.08) transparent;
 }

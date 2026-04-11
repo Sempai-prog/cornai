@@ -58,7 +58,7 @@ export function EditableField({
   return (
     <div className={cn("flex flex-col space-y-1 group/row transition-all", className)}>
       <div className="flex items-center justify-between">
-        <span className="text-[9px] font-bold text-foreground/20 uppercase tracking-[0.2em]">{label}</span>
+        <span className="text-[9px] font-semibold text-foreground/20 uppercase tracking-[0.2em]">{label}</span>
         {!isEditing && !isSaving && (
           <button 
             onClick={() => setIsEditing(true)}

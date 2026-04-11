@@ -13,6 +13,7 @@ export interface SearchResult {
   budget: string
   region: string
   deadline: string
+  daysRemaining: number // <-- Calculé côté serveur/mapper (J-X)
   type: string // ex: "AONO", "DC", "AAMI", "AONR"
   sector: "Travaux" | "Fournitures" | "Services" | "Intellectuelles" | string
   
@@ -57,6 +58,13 @@ export interface SearchResult {
   status?: "new" | "urgent" | "recommended" | "excellent" | "risky" | "incomplete"
   financement?: string // ex: "BIP 2026", "Fond Routier"
   isBlocked?: boolean // Flag pour appels bloqués
+}
+
+export interface CritereRPAO {
+  libelle: string           // "Chiffre d'affaires minimum"
+  exigence: string          // "500 M FCFA"
+  valeurPME: string         // "1.8 MD FCFA"
+  statut: 'ok' | 'attention' | 'bloquant'
 }
 
 export type SearchState = "initial" | "loading" | "results" | "no_results" | "error"

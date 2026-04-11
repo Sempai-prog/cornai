@@ -13,7 +13,7 @@ export function ProgressBar({ progress, label, className }: ProgressBarProps) {
   return (
     <div className={cn("space-y-2", className)}>
       {label && (
-        <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-tight text-muted-foreground">
+        <div className="flex justify-between items-center text-[10px] font-semibold uppercase tracking-tight text-muted-foreground">
           <span>{label}</span>
           <span>{progress}%</span>
         </div>

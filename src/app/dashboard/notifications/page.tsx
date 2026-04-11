@@ -16,7 +16,7 @@ export default async function NotificationsPage() {
           title="Notifications"
           description={
             <>
-              Suivez en temps réel les <span className="text-primary font-bold italic tracking-tight underline underline-offset-4 decoration-primary/30 decoration-2">nouveaux appels d'offres</span> et l'avancement de vos dossiers administratifs.
+              Suivez en temps réel les <span className="text-primary font-semibold italic tracking-tight underline underline-offset-4 decoration-primary/30 decoration-2">nouveaux appels d'offres</span> et l'avancement de vos dossiers administratifs.
             </>
           }
           cardA={{

@@ -41,11 +41,11 @@ export default function LoginPage() {
             <div className="w-7 h-7 bg-[#25D366] flex items-center justify-center rounded">
               <ShieldCheck className="w-4 h-4 text-white dark:text-black" />
             </div>
-            <span className="text-foreground font-black tracking-[0.2em] text-xs">SABI</span>
+            <span className="text-foreground font-semibold tracking-[0.2em] text-xs">SABI</span>
           </Link>
           
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-foreground tracking-tighter leading-none">
+            <h2 className="text-2xl font-semibold text-foreground tracking-tighter leading-none">
               Veille stratégique sur les marchés publics.
             </h2>
             <p className="text-sm text-muted-foreground font-medium leading-relaxed max-w-[280px]">
@@ -54,7 +54,7 @@ export default function LoginPage() {
             
             <ul className="space-y-3 pt-6">
               {["Alertes AONO en temps réel", "Analyse de conformité PME", "Assistance WhatsApp dédiée"].map((feat, i) => (
-                <li key={i} className="flex items-center gap-3 text-[10px] text-muted-foreground font-black tracking-widest">
+                <li key={i} className="flex items-center gap-3 text-[10px] text-muted-foreground font-semibold tracking-widest">
                   <div className="w-4 h-4 rounded-full bg-[#25D366]/10 dark:bg-[#25D366]/20 flex items-center justify-center">
                     <Check className="w-2.5 h-2.5 text-[#25D366]" />
                   </div>
@@ -67,7 +67,7 @@ export default function LoginPage() {
 
         <Link 
           href="/" 
-          className="text-[10px] font-bold text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 tracking-[0.2em]"
+          className="text-[10px] font-semibold text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 tracking-[0.2em]"
         >
           <ArrowLeft className="w-3 h-3" />
           RETOUR AU SITE
@@ -85,7 +85,7 @@ export default function LoginPage() {
           </div>
 
           <div className="mb-8 text-center md:text-left">
-            <h1 className="text-xl font-bold text-foreground tracking-tight mb-2">Connexion</h1>
+            <h1 className="text-xl font-semibold text-foreground tracking-tight mb-2">Connexion</h1>
             <p className="text-[11px] text-muted-foreground font-medium leading-relaxed">
               Entrez votre numéro WhatsApp pour accéder à votre espace SABI.
             </p>
@@ -97,7 +97,7 @@ export default function LoginPage() {
                 <Smartphone className="absolute left-4 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground/30 group-focus-within:text-[#25D366] transition-colors" />
                 <Input 
                   placeholder="699 99 99 99" 
-                  className="h-12 bg-background border-border dark:border-border/10 rounded pl-11 text-foreground font-bold text-xs focus-visible:ring-1 focus-visible:ring-[#25D366]/30 transition-all shadow-sm dark:shadow-none"
+                  className="h-12 bg-background border-border dark:border-border/10 rounded pl-11 text-foreground font-semibold text-xs focus-visible:ring-1 focus-visible:ring-[#25D366]/30 transition-all shadow-sm dark:shadow-none"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   required
@@ -107,7 +107,7 @@ export default function LoginPage() {
 
             <Button 
               type="submit" 
-              className="w-full h-12 bg-[#25D366] text-white dark:text-black font-extrabold text-[10px] rounded hover:bg-[#25D366]/90 transition-all active:scale-95 tracking-[0.2em] shadow-lg shadow-[#25D366]/10 dark:shadow-none"
+              className="w-full h-12 bg-[#25D366] text-white dark:text-black font-semibold text-[10px] rounded hover:bg-[#25D366]/90 transition-all active:scale-95 tracking-[0.2em] shadow-lg shadow-[#25D366]/10 dark:shadow-none"
               disabled={isLoading || !phoneNumber}
             >
               {isLoading ? "Vérification..." : "Continuer sur WhatsApp"}
@@ -119,19 +119,19 @@ export default function LoginPage() {
               <span className="w-full border-t border-border dark:border-border/10" />
             </div>
             <div className="relative flex justify-center">
-              <span className="bg-card dark:bg-card px-4 text-[9px] font-black text-muted-foreground/20 tracking-[0.3em] transition-colors duration-500">OU</span>
+              <span className="bg-card dark:bg-card px-4 text-[9px] font-semibold text-muted-foreground/20 tracking-[0.3em] transition-colors duration-500">OU</span>
             </div>
           </div>
 
           <Button 
             variant="outline" 
-            className="w-full h-12 bg-background/50 border-border dark:border-border/10 rounded text-foreground font-bold text-[10px] hover:bg-muted/30 transition-all tracking-[0.2em]"
+            className="w-full h-12 bg-background/50 border-border dark:border-border/10 rounded text-foreground font-semibold text-[10px] hover:bg-muted/30 transition-all tracking-[0.2em]"
           >
             <MessageCircle className="mr-3 h-4 w-4 text-[#25D366] fill-[#25D366]/10" />
             Lien direct rapide
           </Button>
 
-          <p className="mt-8 text-center text-[10px] text-muted-foreground/40 font-bold tracking-widest">
+          <p className="mt-8 text-center text-[10px] text-muted-foreground/40 font-semibold tracking-widest">
             Nouvelle PME ? {' '}
             <Link href="/register" className="text-[#25D366] hover:underline underline-offset-4 ml-1">
               Créer un profil

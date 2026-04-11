@@ -1,78 +1,93 @@
 'use server'
 
-import { GoogleGenerativeAI } from '@google/generative-ai'
 import { db } from '@/database/client'
-import { visites_terrain } from '@/database/schema'
+import { notesAudio } from '@/database/schema'
 import { eq } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
+import { uploadToR2 } from '@/lib/storage/r2'
+import { transcrireAudioGemini } from '@/lib/ai/gemini'
 
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENAI_API_KEY || 'dummy_for_build')
+/**
+ * Action principale pour uploader et transcrire une note audio (Sprint E.1)
+ */
+export async function uploadAudioNoteR2(
+  soumissionId: string,
+  formData: FormData
+) {
+  try {
+    const file = formData.get('audio') as File
+    if (!file) throw new Error("Fichier audio manquant")
 
+    // 1. Upload vers Cloudflare R2
+    const fileName = `audios/${soumissionId}/${Date.now()}_${file.name}`
+    const { url } = await uploadToR2(file, fileName)
+
+    // 2. Transcription via Gemini (Helper centralisé)
+    const arrayBuffer = await file.arrayBuffer()
+    const buffer = Buffer.from(arrayBuffer)
+    const transcriptionResult = await transcrireAudioGemini(buffer)
+    
+    if (!transcriptionResult.success) {
+      throw new Error(transcriptionResult.error || "Erreur de transcription")
+    }
+
+    // 3. Persistance en base de données
+    const [note] = await db.insert(notesAudio)
+      .values({
+        soumissionId,
+        nomFichier: file.name,
+        audioUrl: url,
+        tailleMb: (file.size / (1024 * 1024)).toFixed(2),
+        transcription: transcriptionResult.transcription,
+        statut: 'transcrit'
+      })
+      .returning()
+
+    revalidatePath(`/dashboard/soumissions/${soumissionId}/terrain/transcripteur`)
+    
+    return { 
+      success: true, 
+      noteId: note.id, 
+      transcription: transcriptionResult.transcription 
+    }
+
+  } catch (error: any) {
+    console.error('[Transcripteur] Erreur:', error)
+    return { success: false, error: error.message }
+  }
+}
+
+/**
+ * Version compatible avec l'ancienne UI (si nécessaire)
+ */
 export async function transcrireAudio(
   formData: FormData
 ): Promise<{ succes: boolean; transcription?: string; erreur?: string }> {
-  const audioBase64 = formData.get('audio') as string;
-  const mimeType = formData.get('mimeType') as string;
-  const soumissionId = formData.get('soumissionId') as string;
+  const audioFile = formData.get('audio') as File
+  const soumissionId = formData.get('soumissionId') as string
   
-  if (!audioBase64 || !soumissionId) {
-    return { succes: false, erreur: 'Données manquantes pour la transcription.' };
+  if (!audioFile || !soumissionId) {
+    return { succes: false, erreur: 'Données manquantes.' }
   }
+
+  const res = await uploadAudioNoteR2(soumissionId, formData)
+  
+  return { 
+    succes: res.success, 
+    transcription: res.transcription, 
+    erreur: res.error 
+  }
+}
+
+/**
+ * Supprimer une note audio
+ */
+export async function deleteAudioNote(noteId: string, soumissionId: string) {
   try {
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })
-    
-    const prompt = `
-      Tu es un assistant expert en marchés publics camerounais.
-      Transcris fidèlement cet audio de visite de site en terrain.
-      Structure la transcription ainsi :
-      
-      1. **Observations Générales** : Description du site
-      2. **Contraintes Identifiées** : Risques et difficultés terrain
-      3. **Accès et Logistique** : Informations sur l'accès au site
-      4. **Recommandations Techniques** : Conseils pour l'offre technique
-      
-      Langue : Transcris en français, même si l'audio est en pidgin ou en langue locale.
-    `
-    
-    const result = await model.generateContent([
-      prompt,
-      {
-        inlineData: {
-          mimeType,
-          data: audioBase64,
-        }
-      }
-    ])
-    
-    const transcription = result.response.text()
-    
-    // Sauvegarder en DB (seulement si l'ID est un UUID valide)
-    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(soumissionId);
-    
-    if (isUuid) {
-      await db.update(visites_terrain)
-        .set({ 
-          transcription,
-          transcriptionStatut: 'complete',
-          transcriptionDate: new Date()
-        })
-        .where(eq(visites_terrain.soumissionId, soumissionId))
-      
-      revalidatePath('/dashboard/terrain')
-    }
-    
-    return { succes: true, transcription }
-    
-  } catch (erreur) {
-    console.error('[Transcripteur] Erreur:', erreur)
-    
-    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(soumissionId);
-    if (isUuid) {
-      await db.update(visites_terrain)
-        .set({ transcriptionStatut: 'error' })
-        .where(eq(visites_terrain.soumissionId, soumissionId))
-    }
-    
-    return { succes: false, erreur: 'La transcription a échoué. Vérifiez la qualité audio ou la clé API.' }
+    await db.delete(notesAudio).where(eq(notesAudio.id, noteId))
+    revalidatePath(`/dashboard/soumissions/${soumissionId}/terrain/transcripteur`)
+    return { success: true }
+  } catch (error: any) {
+    return { success: false, error: error.message }
   }
 }

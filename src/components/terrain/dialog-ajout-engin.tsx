@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/select'
 import { Plus } from 'lucide-react'
 
-export function DialogAjoutEngin() {
+export function DialogAjoutEngin({ soumissionId }: { soumissionId?: string }) {
   const [ouvert, setOuvert] = useState(false)
   const [isPending, startTransition] = useTransition()
   
@@ -35,7 +35,7 @@ export function DialogAjoutEngin() {
   
   const onSubmit = (data: InputAjoutEngin) => {
     startTransition(async () => {
-      const resultat = await ajouterEnginGarage(data)
+      const resultat = await ajouterEnginGarage(data, soumissionId)
       
       if (resultat.succes) {
         toast.success('Engin ajouté au Garage', {
@@ -45,7 +45,7 @@ export function DialogAjoutEngin() {
         setOuvert(false)
       } else {
         toast.error('Erreur d\'enregistrement', {
-          description: resultat.erreur
+          description: 'erreur' in resultat ? (resultat as any).erreur : "Une erreur est survenue."
         })
       }
     })
@@ -56,7 +56,7 @@ export function DialogAjoutEngin() {
       <DialogTrigger asChild>
         <Button 
           size="sm" 
-          className="rounded-[4px] h-9 px-4 text-xs gap-1.5 font-bold uppercase tracking-widest bg-primary text-primary-foreground hover:bg-primary/90 transition-all"
+          className="rounded-[4px] h-9 px-4 text-xs gap-1.5 font-semibold uppercase tracking-widest bg-primary text-primary-foreground hover:bg-primary/90 transition-all"
         >
           <Plus className="w-3.5 h-3.5" />
           Ajouter Matériel
@@ -65,7 +65,7 @@ export function DialogAjoutEngin() {
       
       <DialogContent className="rounded-[4px] max-w-md bg-card/95 backdrop-blur-xl border-border/50">
         <DialogHeader>
-          <DialogTitle className="text-sm font-black uppercase tracking-widest text-foreground/80 flex items-center gap-2">
+          <DialogTitle className="text-sm font-semibold uppercase tracking-widest text-foreground/80 flex items-center gap-2">
             <div className="w-6 h-6 rounded-[4px] bg-primary/10 flex items-center justify-center">
                <Plus className="w-3.5 h-3.5 text-primary" />
             </div>
@@ -76,7 +76,7 @@ export function DialogAjoutEngin() {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pt-4">
           <div className="space-y-3">
              <div>
-               <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-1.5 block">
+               <label className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest mb-1.5 block">
                  Désignation métier <span className="text-primary">*</span>
                </label>
                <Input 
@@ -91,7 +91,7 @@ export function DialogAjoutEngin() {
                )}
              </div>
              <div>
-               <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-1.5 block">N° Carte Grise <span className="text-primary">*</span></label>
+               <label className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest mb-1.5 block">N° Carte Grise <span className="text-primary">*</span></label>
                <Input 
                  {...register('numeroCarteGrise')}
                  placeholder="AB-123-CD"
@@ -109,7 +109,7 @@ export function DialogAjoutEngin() {
           
           <div className="grid grid-cols-6 gap-3">
             <div className="col-span-3">
-              <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-1.5 block">Marque <span className="text-primary">*</span></label>
+              <label className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest mb-1.5 block">Marque <span className="text-primary">*</span></label>
               <Input 
                 {...register('marque')}
                 placeholder="Caterpillar"
@@ -122,7 +122,7 @@ export function DialogAjoutEngin() {
                )}
             </div>
             <div className="col-span-2">
-              <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-1.5 block">Modèle</label>
+              <label className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest mb-1.5 block">Modèle</label>
               <Input 
                 {...register('modele')}
                 placeholder="320D"
@@ -130,7 +130,7 @@ export function DialogAjoutEngin() {
               />
             </div>
              <div className="col-span-1">
-              <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-1.5 block">Année</label>
+              <label className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest mb-1.5 block">Année</label>
               <Input 
                 type="number"
                 {...register('annee', { valueAsNumber: true })}
@@ -141,13 +141,13 @@ export function DialogAjoutEngin() {
           
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-1.5 block">État / VGP <span className="text-primary">*</span></label>
+              <label className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest mb-1.5 block">État / VGP <span className="text-primary">*</span></label>
               <Controller
                  control={control}
                  name="etat"
                  render={({ field }) => (
                      <Select onValueChange={field.onChange} value={field.value}>
-                       <SelectTrigger className="rounded-[4px] h-9 text-xs font-bold uppercase tracking-tight">
+                       <SelectTrigger className="rounded-[4px] h-9 text-xs font-semibold uppercase tracking-tight">
                          <SelectValue placeholder="Sélectionner" />
                        </SelectTrigger>
                        <SelectContent>
@@ -161,13 +161,13 @@ export function DialogAjoutEngin() {
               />
             </div>
             <div>
-              <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-1.5 block">Propriété <span className="text-primary">*</span></label>
+              <label className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest mb-1.5 block">Propriété <span className="text-primary">*</span></label>
               <Controller
                  control={control}
                  name="proprietaire"
                  render={({ field }) => (
                      <Select onValueChange={field.onChange} value={field.value}>
-                       <SelectTrigger className="rounded-[4px] h-9 text-xs font-bold uppercase tracking-tight">
+                       <SelectTrigger className="rounded-[4px] h-9 text-xs font-semibold uppercase tracking-tight">
                          <SelectValue placeholder="Sélectionner" />
                        </SelectTrigger>
                        <SelectContent>
@@ -186,7 +186,7 @@ export function DialogAjoutEngin() {
               type="button"
               variant="outline"
               size="sm"
-              className="rounded-[4px] h-9 text-xs font-bold uppercase tracking-widest px-6"
+              className="rounded-[4px] h-9 text-xs font-semibold uppercase tracking-widest px-6"
               onClick={() => setOuvert(false)}
             >
               Annuler
@@ -194,7 +194,7 @@ export function DialogAjoutEngin() {
             <Button
               type="submit"
               size="sm"
-              className="rounded-[4px] h-9 text-xs font-bold uppercase tracking-widest px-6 bg-primary"
+              className="rounded-[4px] h-9 text-xs font-semibold uppercase tracking-widest px-6 bg-primary"
               disabled={isPending}
             >
               {isPending ? 'ENREGISTREMENT...' : 'VALIDER & AJOUTER'}

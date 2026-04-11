@@ -20,7 +20,7 @@ export function PaginationSabi({ page, totalPages, total, onPageChange }: Pagina
   return (
     <div className="flex items-center justify-between py-4 mt-6 border-t border-border/10">
       {/* Compteur d'items */}
-      <span className="text-[10px] uppercase font-bold text-muted-foreground/40 tracking-[0.2em] tabular-nums">
+      <span className="text-[10px] uppercase font-semibold text-muted-foreground/40 tracking-[0.2em] tabular-nums">
         {total} Appels d&apos;offres en base
       </span>
       
@@ -37,7 +37,7 @@ export function PaginationSabi({ page, totalPages, total, onPageChange }: Pagina
         </Button>
         
         <div className="flex items-center justify-center min-w-[60px] h-8 bg-muted/5 border border-border/10 rounded-[4px] px-3">
-          <span className="text-[11px] font-bold tabular-nums text-foreground/60 tracking-tight">
+          <span className="text-[11px] font-semibold tabular-nums text-foreground/60 tracking-tight">
             {page} <span className="text-muted-foreground/30 mx-1">/</span> {totalPages}
           </span>
         </div>

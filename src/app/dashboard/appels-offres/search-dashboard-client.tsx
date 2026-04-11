@@ -40,7 +40,10 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { SearchResultRow } from "@/components/search/search-result-row"
-import { SearchResult } from "@/components/search/search-types"
+import { SearchResult, CritereRPAO } from "@/components/search/search-types"
+import { createOrGetSoumission } from "@/app/actions/soumissions"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 // ───────────────────────────────────────────────────────────
 // CONFIGURATION MÉTIEUR (ARMP / Cameroun)
@@ -75,12 +78,28 @@ interface SearchDashboardClientProps {
 }
 
 export function SearchDashboardClient({ initialResults, pagination }: SearchDashboardClientProps) {
+  const router = useRouter()
   const { page, setPage, recherche, handleRecherche, secteur, setSecteur, region, setRegion, type, setType } = useSearchAppelsOffres()
   const [localSearch, setLocalSearch] = React.useState(recherche)
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(true)
   const [viewMode, setViewMode] = React.useState<"list" | "table">("list")
   const [openAccordions, setOpenAccordions] = React.useState<Record<string, boolean>>({ secteurs: true })
   const [isPending, startTransition] = React.useTransition()
+  
+
+  const handleEngager = async (id: string) => {
+    toast.promise(createOrGetSoumission(id), {
+      loading: "Engagement de l'affaire...",
+      success: (res) => {
+        if (res.success) {
+          router.push(`/dashboard/soumissions`)
+          return 'Affaire engagée ! Redirection vers le Kanban...'
+        }
+        throw new Error(res.error || 'Erreur inconnue')
+      },
+      error: (err) => `Échec : ${err.message}`
+    })
+  }
 
   // Synchronisation de la recherche locale avec le paramètre d'URL (nuqs)
   const onSearchChange = (val: string) => {
@@ -152,7 +171,7 @@ export function SearchDashboardClient({ initialResults, pagination }: SearchDash
                                  onChange={() => toggleFilter(cat.id, item.value)}
                               />
                               <span className={cn(
-                                 "text-[12px] font-bold transition-colors truncate tracking-tight uppercase max-w-[200px]",
+                                 "text-[12px] font-semibold transition-colors truncate tracking-tight uppercase max-w-[200px]",
                                  (
                                    cat.id === 'secteurs' ? secteur === item.value : 
                                    cat.id === 'regions' ? region === item.value : 
@@ -169,7 +188,7 @@ export function SearchDashboardClient({ initialResults, pagination }: SearchDash
                {/* Ribbon Side Info (Independent Card) */}
                <div className="p-4 bg-muted/10 border border-border/10 rounded-[4px] flex items-center gap-3 opacity-30 mt-auto whitespace-nowrap">
                    <ShieldCheck className="h-4 w-4" />
-                   <span className="text-[10px] font-bold uppercase tracking-widest leading-none">Protection: ARMP-V4</span>
+                   <span className="text-[10px] font-semibold uppercase tracking-widest leading-none">Protection: ARMP-V4</span>
                </div>
       </aside>
 
@@ -192,7 +211,7 @@ export function SearchDashboardClient({ initialResults, pagination }: SearchDash
                <ChevronRight className={cn("h-3 w-3 transition-transform duration-500", isSidebarOpen ? "rotate-180" : "rotate-0")} />
                
                {/* Tooltip Indication */}
-               <div className="absolute left-8 px-2 py-1 bg-popover text-popover-foreground text-[10px] font-bold uppercase tracking-widest rounded-[4px] border border-border opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap shadow-none">
+               <div className="absolute left-8 px-2 py-1 bg-popover text-popover-foreground text-[10px] font-semibold uppercase tracking-widest rounded-[4px] border border-border opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap shadow-none">
                   {isSidebarOpen ? "FERMER FILTRES" : "OUVRIR FILTRES"}
                </div>
             </button>
@@ -214,7 +233,7 @@ export function SearchDashboardClient({ initialResults, pagination }: SearchDash
                         handleRecherche.flush()
                       })
                     }}
-                    className="h-11 px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-[4px] shadow-none flex items-center gap-2 ml-2"
+                    className="h-11 px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-[4px] shadow-none flex items-center gap-2 ml-2"
                   >
                     <Zap className="size-4 fill-current" />
                     Scanner le Radar
@@ -240,7 +259,7 @@ export function SearchDashboardClient({ initialResults, pagination }: SearchDash
                     )}
                   >
                     <ListIcon className="h-3.5 w-3.5" />
-                    <span className="text-[10px] font-bold uppercase tracking-wider">Liste</span>
+                    <span className="text-[10px] font-semibold uppercase tracking-wider">Liste</span>
                   </button>
                   <button 
                     onClick={() => setViewMode("table")} 
@@ -250,7 +269,7 @@ export function SearchDashboardClient({ initialResults, pagination }: SearchDash
                     )}
                   >
                     <TableIcon className="h-3.5 w-3.5" />
-                    <span className="text-[10px] font-bold uppercase tracking-wider">Analyse</span>
+                    <span className="text-[10px] font-semibold uppercase tracking-wider">Analyse</span>
                   </button>
                </div>
             </div>
@@ -264,7 +283,10 @@ export function SearchDashboardClient({ initialResults, pagination }: SearchDash
             {viewMode === "list" ? (
                <div className="flex flex-col gap-3 pb-20">
                   {filteredResults.map((item) => (
-                     <SearchResultRow key={item.id} item={item} />
+                     <SearchResultRow 
+                       key={item.id} 
+                       item={item} 
+                     />
                   ))}
                </div>
             ) : (
@@ -289,6 +311,7 @@ export function SearchDashboardClient({ initialResults, pagination }: SearchDash
                </div>
             )}
          </div>
+
       </div>
     </div>
   )
@@ -321,7 +344,7 @@ function TableView({ results }: { results: SearchResult[] }) {
                 {/* 1. URGENCY INDICATOR (2px Pulse) */}
                 <div className={cn(
                   "absolute left-0 top-1/4 bottom-1/4 w-[1.5px] rounded-r-[4px]",
-                  parseInt(item.deadline) < 5 ? "bg-red-500" : parseInt(item.deadline) < 15 ? "bg-amber-500" : "bg-primary/50"
+                  item.daysRemaining < 5 ? "bg-red-500" : item.daysRemaining < 15 ? "bg-amber-500" : "bg-primary/50"
                 )} />
                 
                 <div className="w-2.5 shrink-0" />
@@ -329,7 +352,7 @@ function TableView({ results }: { results: SearchResult[] }) {
                 {/* 2. IDENTITY (AC + Type) */}
                 <div className="w-[120px] shrink-0 flex flex-col gap-0.5 overflow-hidden">
                    <span className="text-[10px] font-semibold text-foreground/40 uppercase tracking-tighter truncate">{item.id.split('-')[0]}</span>
-                   <span className="text-[10px] font-bold text-foreground/20 uppercase tracking-widest leading-none mt-0.5">{item.authority.split(' ')[0]}</span>
+                   <span className="text-[10px] font-semibold text-foreground/20 uppercase tracking-widest leading-none mt-0.5">{item.authority.split(' ')[0]}</span>
                 </div>
 
                 {/* 3. OBJECT (Title) */}

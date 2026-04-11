@@ -36,7 +36,7 @@ function HeaderCard({ label, value, subtext, color = "primary", progress, valueC
       <div className="flex flex-col gap-1.5 shrink-0 overflow-hidden">
         <div className={cn("w-6 h-[1.5px] transition-all duration-300", colorMap[color])} />
         <span className={cn(
-          "text-[9px] font-bold text-muted-foreground/30 leading-none uppercase tracking-widest whitespace-nowrap overflow-hidden text-ellipsis", 
+          "text-[9px] font-semibold text-muted-foreground/30 leading-none uppercase tracking-widest whitespace-nowrap overflow-hidden text-ellipsis", 
           labelClassName
         )}>
           {label}
@@ -46,7 +46,7 @@ function HeaderCard({ label, value, subtext, color = "primary", progress, valueC
       {/* 2. CENTER : MAIN VALUE (PERFECT VERTICAL CENTERING) */}
       <div className="flex-1 flex items-center justify-center py-2 overflow-hidden px-1">
         <span className={cn(
-          "text-2xl font-black tracking-tighter leading-[1.1] tabular-nums text-foreground/90 text-center line-clamp-2", 
+          "text-2xl font-semibold tracking-tighter leading-[1.1] tabular-nums text-foreground/90 text-center line-clamp-2", 
           valueClassName
         )}>
           {value}
@@ -64,7 +64,7 @@ function HeaderCard({ label, value, subtext, color = "primary", progress, valueC
         </div>
         
         <span className={cn(
-          "text-[8px] font-bold uppercase tracking-widest leading-none whitespace-nowrap overflow-hidden text-ellipsis", 
+          "text-[8px] font-semibold uppercase tracking-widest leading-none whitespace-nowrap overflow-hidden text-ellipsis", 
           progress !== undefined ? "text-muted-foreground/40" : textMap[color]
         )}>
           {subtext}
@@ -88,10 +88,10 @@ export function StandardPageHeader({ title, metadata, description, cardA, cardB 
       {/* Left: Metadata & Title */}
       <div className="space-y-4 flex-1">
         <div className="flex flex-col">
-          <span className="text-[12px] font-bold text-muted-foreground/40 mb-2">
+          <span className="text-[12px] font-semibold text-muted-foreground/40 mb-2">
             {metadata}
           </span>
-          <h1 className="text-4xl font-extrabold tracking-tighter text-foreground leading-none">
+          <h1 className="text-4xl font-semibold tracking-tighter text-foreground leading-none">
             {title}
           </h1>
         </div>

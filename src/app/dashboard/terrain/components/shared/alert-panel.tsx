@@ -44,7 +44,7 @@ export function AlertPanel({ type, title, message, icon = true }: AlertPanelProp
     )}>
       {icon && <Icon className={cn("w-5 h-5 shrink-0 mt-0.5", config.color)} />}
       <div className="space-y-1">
-        <h4 className={cn("text-sm font-bold uppercase tracking-wide", config.color)}>
+        <h4 className={cn("text-sm font-semibold uppercase tracking-wide", config.color)}>
           {title}
         </h4>
         <p className="text-xs text-muted-foreground leading-relaxed">

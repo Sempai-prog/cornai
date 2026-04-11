@@ -33,7 +33,7 @@ export function SoumissionCard({ item }: SubmissionCardProps) {
       )}
     >
        <div className="flex justify-between items-start mb-2">
-          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/20 group-hover:text-primary/60 transition-colors truncate max-w-[180px]">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground/20 group-hover:text-primary/60 transition-colors truncate max-w-[180px]">
             {item.ac}
           </span>
           <div className="flex items-center gap-1.5 shrink-0">
@@ -43,7 +43,7 @@ export function SoumissionCard({ item }: SubmissionCardProps) {
           </div>
        </div>
 
-       <h4 className="text-[12px] font-bold text-foreground/80 line-clamp-2 leading-snug mb-3 tracking-tight group-hover:text-foreground transition-colors">
+       <h4 className="text-[12px] font-semibold text-foreground/80 line-clamp-2 leading-snug mb-3 tracking-tight group-hover:text-foreground transition-colors">
           {item.title}
        </h4>
 
@@ -57,16 +57,16 @@ export function SoumissionCard({ item }: SubmissionCardProps) {
 
        <div className="pt-2 border-t border-border/10 flex items-center justify-between">
           <div className="flex flex-col">
-             <span className="text-[10px] font-black text-foreground tabular-nums tracking-tighter">
+             <span className="text-[10px] font-semibold text-foreground tabular-nums tracking-tighter">
                 {formatXAF(item.budget)}
              </span>
-             <span className="text-[8px] font-bold text-muted-foreground/30 uppercase tracking-widest">
+             <span className="text-[8px] font-semibold text-muted-foreground/30 uppercase tracking-widest">
                 BUDGET PRÉVISIONNEL
              </span>
           </div>
           
           <div className={cn(
-            "flex items-center gap-1 text-[9px] font-black tracking-widest px-1.5 py-0.5 rounded-[2px] tabular-nums border",
+            "flex items-center gap-1 text-[9px] font-semibold tracking-widest px-1.5 py-0.5 rounded-[2px] tabular-nums border",
             isUrgent ? "bg-red-500/5 text-red-500 border-red-500/10" : "bg-muted/10 text-muted-foreground/40 border-border/5"
           )}>
             <Clock className="size-2.5" />
@@ -88,7 +88,7 @@ function EnvelopeIndicator({ label, progress }: { label: string, progress: numbe
          isDone ? "bg-primary" : isPartial ? "bg-primary/40 animate-pulse" : "bg-muted/10"
        )} />
        <span className={cn(
-         "text-[9px] font-black uppercase tracking-widest",
+         "text-[9px] font-semibold uppercase tracking-widest",
          isDone ? "text-foreground/60" : "text-muted-foreground/20"
        )}>{label}</span>
     </div>

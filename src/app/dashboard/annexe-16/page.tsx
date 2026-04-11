@@ -2,6 +2,8 @@
 // SABI — Annexe 16 (Elite Standard V1.6)
 // ══════════════════════════════════════════
 
+export const dynamic = 'force-dynamic'
+
 import { StandardPageHeader } from "@/components/layout/standard-page-header"
 import { 
   ShieldCheck, 
@@ -57,8 +59,8 @@ export default async function Annexe16Page() {
           title={SABI_COPY.NAVIGATION.ANNEXE_16}
           description={
             <p>
-              Consultez la liste officielle des <span className="text-primary font-bold">pièces administratives</span> exigibles selon le Code des Marchés Publics du Cameroun. 
-              <span className="block mt-1 italic text-muted-foreground/40 text-[11px] uppercase tracking-widest font-bold">Source : Décret N°2018/366 du 20 juin 2018.</span>
+              Consultez la liste officielle des <span className="text-primary font-semibold">pièces administratives</span> exigibles selon le Code des Marchés Publics du Cameroun. 
+              <span className="block mt-1 italic text-muted-foreground/40 text-[11px] uppercase tracking-widest font-semibold">Source : Décret N°2018/366 du 20 juin 2018.</span>
             </p>
           }
           cardA={{
@@ -79,7 +81,7 @@ export default async function Annexe16Page() {
         {/* ─── LIVE DATA SECTION (Terrain Connection) ─── */}
         <div className="mt-8 mb-12">
            <div className="flex items-center gap-3 mb-6">
-              <span className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">
+              <span className="text-[10px] font-semibold text-primary uppercase tracking-[0.2em]">
                 Connexion Terrain — Visite de Site
               </span>
               <div className="flex-1 h-px bg-primary/20" />
@@ -94,10 +96,10 @@ export default async function Annexe16Page() {
                        <MapPin className="size-6 text-primary" />
                     </div>
                     <div className="space-y-1">
-                       <h4 className="text-[14px] font-bold text-foreground/80 tracking-tight">
+                       <h4 className="text-[14px] font-semibold text-foreground/80 tracking-tight">
                           {terrainData.aoNom}
                        </h4>
-                       <div className="flex items-center gap-4 text-[10px] font-bold text-muted-foreground/40 uppercase tracking-widest">
+                       <div className="flex items-center gap-4 text-[10px] font-semibold text-muted-foreground/40 uppercase tracking-widest">
                           <span className="flex items-center gap-1.5"><Calendar size={12} /> {formatDateline(terrainData.descenteData?.dateVisite || null)}</span>
                           <span className="flex items-center gap-1.5"><Clock size={12} /> {terrainData.descenteData?.heureVisite || "--:--"}</span>
                        </div>
@@ -106,8 +108,8 @@ export default async function Annexe16Page() {
 
                  <div className="flex items-center gap-3 relative z-10">
                     <div className="text-right">
-                       <span className="block text-[9px] font-black text-primary/60 uppercase tracking-widest">Certificat Localisation</span>
-                       <span className="text-[12px] font-bold tabular-nums text-foreground/60 tracking-tight">Généré via GPS Terrain</span>
+                       <span className="block text-[9px] font-semibold text-primary/60 uppercase tracking-widest">Certificat Localisation</span>
+                       <span className="text-[12px] font-semibold tabular-nums text-foreground/60 tracking-tight">Généré via GPS Terrain</span>
                     </div>
                     <CheckCircle2 className="size-5 text-emerald-500/60" />
                  </div>
@@ -115,7 +117,7 @@ export default async function Annexe16Page() {
            ) : (
               <div className="border border-dashed border-border/10 rounded-[4px] p-8 text-center bg-muted/5 group hover:bg-muted/10 transition-colors">
                  <AlertTriangle size={24} className="mx-auto text-amber-500/20 mb-3 group-hover:scale-110 transition-transform" />
-                 <p className="text-[11px] font-black text-foreground/20 uppercase tracking-[0.2em]">Aucune visite de terrain détectée pour la soumission active</p>
+                 <p className="text-[11px] font-semibold text-foreground/20 uppercase tracking-[0.2em]">Aucune visite de terrain détectée pour la soumission active</p>
                  <p className="text-[10px] text-muted-foreground/30 mt-1">Le Certificat de Localisation (Annexe 16) nécessite une validation par GPS.</p>
               </div>
            )}
@@ -130,7 +132,7 @@ export default async function Annexe16Page() {
               <div key={sIdx} className="space-y-6">
                 <div className="flex items-center gap-4">
                   <div className="h-px flex-1 bg-border/5" />
-                  <h3 className="text-[9px] font-black uppercase tracking-[0.3em] text-foreground/20">
+                  <h3 className="text-[9px] font-semibold uppercase tracking-[0.3em] text-foreground/20">
                     {section.category}
                   </h3>
                   <div className="h-px flex-1 bg-border/5" />
@@ -155,11 +157,11 @@ export default async function Annexe16Page() {
                           
                           <div className="space-y-0.5 min-w-0">
                             <div className="flex items-center gap-3">
-                              <h4 className="text-[13px] font-bold tracking-tight text-foreground/80 group-hover:text-foreground transition-colors truncate">
+                              <h4 className="text-[13px] font-semibold tracking-tight text-foreground/80 group-hover:text-foreground transition-colors truncate">
                                 {item.title}
                               </h4>
                               <span className={cn(
-                                "text-[8px] font-black px-1.5 py-0.5 rounded-[2px] tracking-widest tabular-nums",
+                                "text-[8px] font-semibold px-1.5 py-0.5 rounded-[2px] tracking-widest tabular-nums",
                                 item.importance === 'ÉLIMINATOIRE' 
                                   ? "bg-red-500/10 text-red-500 border border-red-500/20"
                                   : "bg-muted/10 text-muted-foreground/30 border border-border/10"
@@ -175,7 +177,7 @@ export default async function Annexe16Page() {
 
                         <div className="flex items-center gap-4 shrink-0">
                            <div className="text-right hidden sm:block">
-                              <span className="block text-[8px] font-black text-muted-foreground/20 tracking-widest uppercase">Référence</span>
+                              <span className="block text-[8px] font-semibold text-muted-foreground/20 tracking-widest uppercase">Référence</span>
                               <span className="text-[10px] font-mono tabular-nums text-muted-foreground/40">{item.id}-2024</span>
                            </div>
                            <ShieldCheck className={cn(
@@ -198,13 +200,13 @@ export default async function Annexe16Page() {
                <div className="absolute -right-4 -top-4 size-24 bg-primary/5 rounded-full blur-3xl transition-all group-hover:scale-150 duration-700" />
                <div className="flex items-center gap-3 relative">
                  <Scale className="size-4 text-primary" />
-                 <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-foreground/60">Flash Droit Public</h3>
+                 <h3 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground/60">Flash Droit Public</h3>
                </div>
                <p className="text-[12px] leading-relaxed text-foreground/50 relative font-medium">
-                 "Toute pièce manquante ou non conforme au dossier administratif peut être rattrapée dans un délai de <span className="text-primary font-bold">48h</span>, sauf mention contraire."
+                 "Toute pièce manquante ou non conforme au dossier administratif peut être rattrapée dans un délai de <span className="text-primary font-semibold">48h</span>, sauf mention contraire."
                </p>
                <div className="pt-4 border-t border-primary/10 relative">
-                 <button className="flex items-center gap-2 text-[10px] font-black text-primary uppercase tracking-widest hover:gap-3 transition-all">
+                 <button className="flex items-center gap-2 text-[10px] font-semibold text-primary uppercase tracking-widest hover:gap-3 transition-all">
                     DÉCRET 2018/366 <ExternalLink className="size-3" />
                  </button>
                </div>
@@ -212,7 +214,7 @@ export default async function Annexe16Page() {
 
             {/* Verification Checklist */}
             <div className="bg-card/30 border border-border/5 rounded-[4px] p-6 space-y-5">
-              <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/20">Vigilance Enveloppe A</h3>
+              <h3 className="text-[10px] font-semibold uppercase tracking-[0.2em] text-foreground/20">Vigilance Enveloppe A</h3>
               <div className="space-y-4">
                 {[
                   "Validité < 3 mois",
@@ -230,8 +232,8 @@ export default async function Annexe16Page() {
             
             <div className="p-6 border border-border/10 bg-primary/[0.02] rounded-[4px] transition-all hover:bg-primary/[0.05]">
               <FileText className="size-4 mb-3 text-primary" />
-              <h4 className="text-[11px] font-black uppercase tracking-widest mb-1 text-foreground/60">Génération Automatique</h4>
-              <p className="text-[10px] leading-relaxed text-muted-foreground uppercase font-bold tracking-tighter mb-4">Certificat de Visite de Site conforme ARMP</p>
+              <h4 className="text-[11px] font-semibold uppercase tracking-widest mb-1 text-foreground/60">Génération Automatique</h4>
+              <p className="text-[10px] leading-relaxed text-muted-foreground uppercase font-semibold tracking-tighter mb-4">Certificat de Visite de Site conforme ARMP</p>
               <BoutonAnnexe16 
                 soumissionId={terrainData.soumission?.id || ""} 
                 disabled={!hasVisite}

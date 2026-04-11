@@ -81,6 +81,9 @@ export function mapDBAOToUI(dbAo: any): SearchResult {
     budget: budgetDisplay,
     region: dbAo.regionExecution || "National",
     deadline: formattedDeadline,
+    daysRemaining: deadlineDate 
+      ? Math.max(0, Math.ceil((deadlineDate.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)))
+      : 0,
     type: typeMarche,
     sector: dbAo.secteur || "Général",
     cautionSoumission: dbAo.cautionMontant ? `${dbAo.cautionMontant.toLocaleString()} FCFA` : "Non spécifiée",

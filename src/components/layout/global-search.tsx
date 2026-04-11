@@ -104,7 +104,7 @@ export function GlobalSearch() {
           onValueChange={setQuery}
         />
         <CommandList className="max-h-[450px] scroll-smooth">
-          {loading && <div className="p-4 text-center text-[11px] text-muted-foreground animate-pulse font-bold tracking-widest uppercase">Analyse en cours...</div>}
+          {loading && <div className="p-4 text-center text-[11px] text-muted-foreground animate-pulse font-semibold tracking-widest uppercase">Analyse en cours...</div>}
           {!loading && !results && query.length < 2 && (
             <div className="p-10 text-center space-y-2">
               <Search className="size-8 mx-auto text-muted-foreground/20" />
@@ -128,7 +128,7 @@ export function GlobalSearch() {
                   <Target className="mr-2 h-4 w-4 text-primary/60" />
                   <div className="flex flex-col">
                     <span className="text-[13px] font-semibold line-clamp-1">{ao.titreComplet}</span>
-                    <span className="text-[10px] text-foreground/30 uppercase font-black">
+                    <span className="text-[10px] text-foreground/30 uppercase font-semibold">
                       {ao.institution} • {ao.numeroMarche || "AONO"}
                     </span>
                   </div>
@@ -152,7 +152,7 @@ export function GlobalSearch() {
                   <div className="flex flex-col">
                     <span className="text-[13px] font-semibold">{doc.pieceId}</span>
                     <span className={cn(
-                      "text-[10px] uppercase font-black italic",
+                      "text-[10px] uppercase font-semibold italic",
                       doc.statut === 'valide' ? "text-emerald-500/60" : "text-amber-500/60"
                     )}>
                       {doc.statut}
@@ -174,7 +174,7 @@ export function GlobalSearch() {
               <Gavel className="mr-2 h-4 w-4 text-primary/60" />
               <div className="flex flex-col">
                 <span className="text-[13px] font-semibold">Annexe 16 - Référentiel légal</span>
-                <span className="text-[10px] text-foreground/30 uppercase font-black">Code des Marchés 2018</span>
+                <span className="text-[10px] text-foreground/30 uppercase font-semibold">Code des Marchés 2018</span>
               </div>
             </CommandItem>
           </CommandGroup>

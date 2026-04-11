@@ -86,7 +86,7 @@ export function NotificationList({ initialNotifications }: NotificationListProps
         <div className="size-16 rounded-full bg-primary/5 flex items-center justify-center mb-6">
           <Bell className="size-6 text-primary/20" />
         </div>
-        <h3 className="text-xl font-bold tracking-tight text-foreground/80 mb-2">Aucune nouvelle notification</h3>
+        <h3 className="text-xl font-semibold tracking-tight text-foreground/80 mb-2">Aucune nouvelle notification</h3>
         <p className="text-[13px] text-muted-foreground/40 max-w-[280px]">
           Votre flux est vide. Vous recevrez des alertes ici lors de nouveaux appels d'offres matchés.
         </p>
@@ -96,7 +96,7 @@ export function NotificationList({ initialNotifications }: NotificationListProps
 
   return (
     <div className="flex flex-col">
-      <div className="px-6 py-4 flex items-center justify-between border-b border-border/5 bg-background/40 backdrop-blur-sm sticky top-0 z-10 font-bold uppercase tracking-[0.15em] text-[10px] text-muted-foreground/30">
+      <div className="px-6 py-4 flex items-center justify-between border-b border-border/5 bg-background/40 backdrop-blur-sm sticky top-0 z-10 font-semibold uppercase tracking-[0.15em] text-[10px] text-muted-foreground/30">
         <div className="flex items-center gap-2">
           <span>{notifications.length} ÉLÉMENTS</span>
           {notifications.some(n => !n.lu) && (
@@ -150,7 +150,7 @@ export function NotificationList({ initialNotifications }: NotificationListProps
               <div className="flex-1 min-w-0 flex flex-col gap-1 pr-6">
                 <div className="flex items-center justify-between gap-4">
                   <span className={cn(
-                    "font-bold text-[10px] uppercase tracking-wider mb-0.5 px-2 py-0.5 rounded-[2px]",
+                    "font-semibold text-[10px] uppercase tracking-wider mb-0.5 px-2 py-0.5 rounded-[2px]",
                     notif.lu ? "text-muted-foreground/20 bg-muted/5" : "text-primary bg-primary/5"
                   )}>
                     {getTypeLabel(notif.type)}
@@ -174,7 +174,7 @@ export function NotificationList({ initialNotifications }: NotificationListProps
                 {notif.referenceAo && (
                   <div className="mt-2.5 flex items-center pt-2.5 border-t border-border/5 group/link">
                     <div className="size-1.5 rounded-full bg-muted-foreground/10 mr-2 group-hover/link:bg-primary transition-colors" />
-                    <span className="text-[11px] font-bold text-muted-foreground/20 italic truncate group-hover/link:text-muted-foreground/40 transition-colors">
+                    <span className="text-[11px] font-semibold text-muted-foreground/20 italic truncate group-hover/link:text-muted-foreground/40 transition-colors">
                       {notif.referenceAo.numeroMarche || "Dossier"} : {notif.referenceAo.titreComplet}
                     </span>
                     <ChevronRight className="size-3 ml-2 text-muted-foreground/10 group-hover/link:translate-x-0.5 transition-all group-hover/link:text-primary" />
